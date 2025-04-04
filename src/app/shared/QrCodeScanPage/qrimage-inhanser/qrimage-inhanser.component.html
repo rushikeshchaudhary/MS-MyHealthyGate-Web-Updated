@@ -1,0 +1,20 @@
+<div class="row mx-0 px-0">
+  <div class="col-12 cross_icon">
+    <i class="fa fa-times-circle cross_icon_block" (click)="closeDialog()" aria-hidden="true"></i>
+  </div>
+  <div class="col-12 p-2 text-center">
+    <img
+      [src]="data.type == 'qrImage' ? data.qrImagePath : data.qrResultImagePath"
+      alt=""
+      class="img-fluid"
+      style="width: 200px; height: 200px;"
+    />
+  </div>
+</div>
+<!-- <img
+      [src]="data.type == 'qrImage' ? data.qrImagePath : data.qrResultImagePath"
+      style="height: 34vh; width: 100%"
+      alt=""
+    /> -->
+
+   

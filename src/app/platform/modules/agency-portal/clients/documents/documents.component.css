@@ -1,0 +1,55 @@
+.iconPointer{
+  color: rgb(3, 9, 41);
+  cursor: pointer;
+}
+.sortCss{
+  font-family:sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-top: 4px;
+}
+.datesearch div{
+  margin-left: 10px;
+  margin-right: 10px;
+  font-family: sans-serif;
+  font-weight: 500;
+}
+/* .datesearch label{
+  margin-left: 10px;
+  margin-right: 10px;
+} */
+.carditem, .carditems {
+    color: #7a7a7a;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 15px 56px 0px 15px;
+    overflow: hidden;
+}
+
+.carditem ul, .carditems ul {
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+}
+.carditem li {
+  display: inline-block;
+  width: 50%;
+}
+.carditems li {
+  display: block;
+}
+.carditem span, .carditems span {
+    color: rgba(0, 0, 0, 0.8);
+    font-weight: 500;
+}
+
+.filetype {
+    position: absolute;
+    right: 14px;
+    top: 28px;
+}
+.filter-btn {
+  display: inherit !important;
+  justify-content: inherit !important;
+  align-items: inherit !important;
+}

@@ -1,0 +1,46 @@
+.timer {
+    text-align: center;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    letter-spacing: -1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+  }
+  // .timer span {
+  //   font-size: 2em;
+  //   margin: 0 3px 0 15px;
+  // }
+  .timer span span{
+    width: 100%;
+    margin: 0 !important;
+    font-size: 20px !important;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    margin: 10px 0;
+  }
+  .timer span.impotant_time {
+    width: 60px;
+    // height: 60px;
+    margin: 0 8px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    font-size: 16px !important;
+    align-items: center;
+  }
+
+  .timer span {
+    width: 60px;
+    margin: 0 8px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+  
+    font-size: 16px !important;
+}
+.abc {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}

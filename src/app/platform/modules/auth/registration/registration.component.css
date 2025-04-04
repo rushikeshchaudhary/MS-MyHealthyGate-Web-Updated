@@ -1,0 +1,160 @@
+.login-container form.small-input .group {
+    position: relative;
+    margin-bottom: 15px;
+    width: 45%;
+    display: inline-block;
+}
+.login-container .group mat-datepicker-toggle {
+    position: absolute;
+    right: 1rem;
+    top: 1.65rem;
+}
+.login-container button.mat-icon-button {
+    width: 40px;
+    padding: 0;
+}
+.group .mat-select {
+    height: 38px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    font-size: 16px;
+}
+
+.form-style form.small-input{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+/* loader css */
+
+.full_loader {
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    background-color: rgba(255, 255, 255, 0.8);
+    height: 100%;
+    width: 100%;
+    z-index: 1001;
+}
+
+.circle_loader {
+    left: 0;
+    right: 0 !important;
+    margin: 0px auto !important;
+    display: block !important;
+    top: 50%;
+    position: fixed !important;
+    text-align: center;
+}
+
+.circle_loader.search_loader {
+    top: 15%;
+}
+
+.top0 {
+    top: 0px;
+}
+
+.circle_loader.page_loader {
+    left: 0%;
+}
+
+.circle_loader.tag_laoder {
+    position: absolute !important;
+    top: 15% !important;
+}
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    padding: 10px;
+    margin-bottom: 14px;
+    border-radius: 3px;
+}
+
+.logo h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #01385f;
+    text-align: center;
+}
+.log-reg-card .card {
+    border-radius: 2rem;
+}
+.btn-theme {
+    background-color: #17a2b8;
+    text-align: center;
+    border-radius: 3px !important;
+    color: #fff;
+    width: 60%;
+    margin: auto;
+    display: block;
+    box-shadow: 0 8px 17px 2px rgba(58, 58, 58, 0.14), 0 3px 14px 2px rgba(78, 78, 78, 0.12),
+        0 5px 5px -3px rgba(80, 80, 80, 0.2);
+    height: 54px;
+}
+.dont_acc {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #01385f;
+    margin-top: 1.5rem;
+    padding: 0 2.5rem;
+}
+.dont_acc a {
+    color: #1385ab;
+}
+.signup_txt {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 22px;
+    text-align: center;
+    color: #01385f;
+    padding: 0 1rem;
+}
+.signup_txt a {
+    color: #17a2b8;
+}
+.group .mat-select-trigger {
+    padding: 10px 5px;
+}
+.group .mat-select-trigger {
+    padding: 10px 5px;
+}
+.btn-theme {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.group {
+    position: relative;
+    margin-bottom: 1rem;
+}
+.group .control-label {
+    margin-bottom: 0;
+    font-size: 14px;
+}
+.group .icon_right {
+    position: absolute;
+    right: 1.5rem;
+    top: 2.5rem;
+}
+
+.country-field {
+    position: absolute;
+    left: 15px;
+    top: 4px;
+}
+
+.country-field .mat-form-field .mat-form-field-infix,
+.country-field .mat-form-field .mat-select {
+    width: 73px;
+}
+
+.country-field-sec input {
+    margin-left: 78px;
+    width: calc(100% - 78px);
+}

@@ -1,0 +1,247 @@
+<div class="readmin-panel panel_two pt-0 provider-dashboardchart">
+  <mat-tab-group>
+    <mat-tab label="Test Details">
+      <div mat-dialog-content>
+        <div class="col-md-12">
+          <table class="table table-bordered mt-3">
+            <thead>
+              <tr>
+                <th>Sr. No</th>
+                <th>{{"test_name"|translate}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let t of testList; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ t.TestName }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div mat-dialog-actions>
+        <button
+          mat-raised-button
+          class="cancel-btn"
+          (click)="closeDialog('close')"
+        >
+          {{"close"|translate}}
+        </button>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="view/upload results">
+      <div class="row mx-0 px-0 ml-2 p-2">
+        <div class="col-12">
+          <button
+            *ngIf="role === 'patient'"
+            mat-raised-button
+            class="mr-3"
+            color="primary"
+            title="upload document (pdf,jpeg,jpg)"
+            (click)="uploadDoc_Url('doc')"
+          >
+            {{"upload_document"|translate}}
+          </button>
+          <button
+            *ngIf="role === 'patient'"
+            mat-raised-button
+            color="primary"
+            title="upload url of document"
+            (click)="uploadDoc_Url('url')"
+          >
+            Upload Url
+          </button>
+        </div>
+        <div class="col-12 border my-2 p-2" *ngIf="fieldName == 'doc'">
+          <div class="row mx-0 px-0">
+            <!-- <div class="col-12">Upload document (pdf, jpeg, jpg)</div> -->
+            <div class="col-12 my-2 upload_pic" style="color: #107483">
+              <input
+                type="file"
+                multiple
+                name="uploadfile"
+                id="img"
+                #fileInput
+                (change)="handleImageChange($event, data.labReferralId)"
+                style="display: none"
+              />
+              <label for="img" style="cursor: pointer !important"
+                ><i class="fa fa-upload fa-2x" arai-hidden="true"></i>
+                &nbsp;&nbsp;{{"upload_document"|translate}}</label
+              >
+            </div>
+            <div class="col-12" *ngFor="let item of fileList; let i = index">
+              <span>{{ item.fileName }}</span
+              >&nbsp;&nbsp;<i
+                class="fa fa-close"
+                title="Remove"
+                (click)="deleteFile(i)"
+              ></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 border my-2 p-2" *ngIf="fieldName == 'url'">
+          <form
+            [formGroup]="form"
+            class="row mx-0 px-0"
+            class="readmin-form custom_form"
+          >
+            <div
+              class="col-12 my-2"
+              style="display: flex; justify-content: end"
+            >
+              <button mat-raised-button color="primary" (click)="addInput()">
+                Add Url
+              </button>
+            </div>
+
+            <!-- <div
+              class="col-12 my-2 p-2"
+              formArrayName="inputsUrlArray"
+              *ngFor="
+                let urlInput of form.get('inputsUrlArray')?.controls;
+                let ix = index
+              "
+            > -->
+            <div
+              class="col-12 my-2 p-2"
+              formArrayName="inputsUrlArray"
+              *ngFor="
+                let urlInput of inputsUrlArray.controls;
+                let ix = index
+              "
+            >
+              <div class="row" [formGroupName]="ix">
+                <div class="col-8">
+                  <mat-form-field class="example-full-width">
+                    <input
+                      matInput
+                      placeholder="Enter Url"
+                      formControlName="url"
+                    />
+                    <i
+                      class="fa fa-trash"
+                      matSuffix
+                      (click)="removeInput(ix)"
+                      style="cursor: pointer !important"
+                      aria-hidden="true"
+                    ></i>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="col-12">
+          <div class="row mx-0 px-0">
+            <div class="col-12 my-2">
+              <h4 style="text-decoration: underline">Documents</h4>
+              <div
+                class="p-2"
+                style="color: rgb(85, 85, 85)"
+                *ngIf="allData?.radilogyDocRes?.length === 0"
+              >
+                No document uploaded yet!
+              </div>
+              <div
+                class="p-1 ml-2"
+                *ngFor="let result of allData?.radilogyDocRes; let i = index"
+              >
+                {{ i + 1 }}.&nbsp; {{ result.originalFileName }}&nbsp;&nbsp;<i
+                  class="fa fa-download"
+                  style="cursor: pointer"
+                  title="Download"
+                  (click)="downloadFile(result.id, result.originalFileName)"
+                ></i>
+                &nbsp;<i
+                  class="fa fa-eye"
+                  style="cursor: pointer"
+                  (click)="viewDocument(result)"
+                  aria-hidden="true"
+                ></i>
+              </div>
+            </div>
+            <div class="col-12">
+              <h4 style="text-decoration: underline">Urls</h4>
+            </div>
+
+            <div class="col-12 mt-2">
+              <div
+                class="p-1 ml-2"
+                style="color: rgb(85, 85, 85)"
+                *ngIf="allData?.patientRadiologyDocumentUrlList?.length === 0"
+              >
+                No document url yet!
+              </div>
+              <div
+                class="p-1 ml-2"
+                *ngFor="
+                  let url of allData?.patientRadiologyDocumentUrlList;
+                  let i = index
+                "
+              >
+                {{ i + 1 }}.&nbsp;<span class="diacomImages">
+                  <a (click)="openUrlInNewWindow(url.radiologyReferralUrl)">{{
+                    url.radiologyReferralUrl
+                  }}</a>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-12 my-2">
+              <h4 style="text-decoration: underline">
+                DICOM Documents
+              </h4>
+            </div>
+            <div class="col-12 my-2">
+              <div
+                class="p-1 ml-2"
+                style="color: rgb(85, 85, 85)"
+                *ngIf="
+                  allData?.patientResultRadiologyDicomDocumentList?.length === 0
+                "
+              >
+                No Pacs document yet!
+              </div>
+              <div
+                class="col-12 ml-2 p-1"
+                style="padding-left: 31px"
+                *ngFor="
+                  let file of allData?.patientResultRadiologyDicomDocumentList;
+                  let i = index
+                "
+              >
+                {{ i + 1 }}.<span
+                  class="diacomImages"
+                  (click)="openDicomViewer(file)"
+                  >&nbsp;{{ file.fileName }}</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div mat-dialog-actions>
+        <button
+          mat-raised-button
+          class="cancel-btn"
+          (click)="closeDialog('close')"
+        >
+          {{"close"|translate}}
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          class="tex-uppercase"
+          (click)="onSubmit()"
+        >
+          {{"save"|translate}}
+        </button>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

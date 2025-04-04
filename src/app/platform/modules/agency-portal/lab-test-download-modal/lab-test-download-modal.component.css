@@ -1,0 +1,17 @@
+.downloadbutton{
+    background: none;
+    border: none;
+}
+.panel_two {
+    box-shadow: none !important;
+    background-color: white !important;
+}
+.blk_data {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f1eeee;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    color: #01385f;
+}

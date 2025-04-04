@@ -1,0 +1,75 @@
+<!--<div class="readmin-page-content">
+  <div>
+    <h2 class="page_title">Add Static Page</h2>
+  </div>
+  <div class="clearfix"></div>
+  <div class="readmin-panel">
+    <div class="panel-body">
+      <form class="reamin-from custom_form">
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput autofocus placeholder="Page Name" maxlength="50"
+                formControlName="locationName" [ngClass]="{'is-invalid':submitted && formControls.locationName.errors}"
+                required />
+              <mat-error *ngIf="formControls.locationName.errors">Please enter page name</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <div class="d-fliex flex-column mb-4">
+              <mat-checkbox color="primary">IsActive</mat-checkbox>
+            </div>
+          </div>
+        </div>
+        <div class="row col-sm-12">
+          <angular-editor [config]="config"></angular-editor>
+        </div>
+        <div class="row">
+          <div class="col-sm-6"><button class="cancel-btn" mat-raised-button>Cancel</button></div>
+          <div class="col-sm-6 pt20 text-right">
+            <button mat-raised-button color="primary">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>!-->
+<div class="row ">
+  <div class="col-sm-12">
+    <h3 class="nw-hdng">Add Static Page</h3>
+    <form id="staticPageForm" (ngSubmit)="onSubmit()" [formGroup]="pageForm" class="readmin-form custom_form">
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <input matInput autofocus placeholder="Page Name" formControlName="pageName"
+              [ngClass]="{'is-invalid':submitted && f['pageName'].errors}" required />
+            <mat-error *ngIf="f['pageName'].errors?.['required']">Please enter page name</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <div class="d-flex flex-column mb-4">
+            <mat-checkbox color="primary" formControlName="isActive">IsActive</mat-checkbox>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <angular-editor formControlName="pageContent" [config]="config"></angular-editor>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-between">
+          <button class="cancel-btn" mat-raised-button>Cancel</button>
+          <button mat-raised-button color="primary">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row" style="margin-top: 2rem;">
+  <div class="col-md-12 nw-hdng">Static Pages List</div>
+  <div class="col-md-12">
+    <app-data-table [inputColumns]="displayColumns" [inputSource]="allPages" [inputMeta]="metaData"
+      [inputButtons]="actionButtons" (onTableActionClick)="onTableActionClick($event)"></app-data-table>
+  </div>
+</div>

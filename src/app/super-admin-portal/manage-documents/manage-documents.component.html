@@ -1,0 +1,140 @@
+<div>
+  <h2 class="page_title">Manage Documents</h2>
+  <div class="clearfix"></div>
+  <div class="readmin-panel">
+    <div class="row">
+      <div class="col-12">
+        <div class="row text-centre mrgn">
+          <div class="col-2" *ngFor="let item of userRoles">
+            <button
+              class="w-100"
+              mat-button
+              (click)="creatorHandler(item)"
+              [ngClass]="selectedRole==item.RoleId ? 'active' : ''"
+            >
+              {{ item.RoleName }}
+            </button>
+          </div>
+          <!-- <div class="col-3 w-100 mrgn" (click)="tabActiveTwo(1)">
+            <button
+              class="w-100"
+              mat-button
+              (click)="creatorHandler('PROVIDER')"
+              [ngClass]="this.tab1Active ? 'active' : ''"
+            >
+              Provider's Document
+            </button>
+          </div> -->
+
+          <!-- <div class="col-3 w-100 mrgn" (click)="tabActiveTwo(2)">
+            <button
+              class="w-100"
+              mat-button
+              (click)="creatorHandler('LAB')"
+              [ngClass]="this.tab2Active ? 'active' : ''"
+            >
+              Lab's Document
+            </button>
+          </div> -->
+        </div>
+      </div>
+      <div class="col-sm-12 mt-5 d-flex justify-content-between">
+        <div
+          *ngIf="searchBox"
+          class="d-flex justify-content-between"
+          style="width: 42vw; flex-wrap: wrap;"
+        >
+          <div class="doc_search">
+            <mat-form-field appearance="outline">
+              <input
+                type="text"
+                matInput
+                placeholder="search document"
+                [(ngModel)]="filterString"
+                (ngModelChange)="searchDocument($event)"
+              />
+              <mat-icon class="iconPointer" matSuffix>search</mat-icon>
+            </mat-form-field>
+          </div>
+          <div class="mt-1">
+            <button
+              mat-raised-button
+              (click)="changeSearchHandler('toDate')"
+              color="primary"
+              style="height: 42px !important"
+            >
+              Search by date
+            </button>
+          </div>
+        </div>
+        <div *ngIf="!searchBox" class="d-flex datesearch">
+          <div>From</div>
+          <div class="doc_search">
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>mm/dd/yyyy</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                [max]="maxDate"
+                (dateChange)="addDateEvent('from', $event)"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div>To</div>
+          <div class="doc_search">
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>mm/dd/yyyy</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker1"
+                [max]="maxDate"
+                (dateChange)="addDateEvent('to', $event)"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker1"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div>
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="searcOnDatehHandler()"
+            >
+              Search
+            </button>
+          </div>
+          <div>
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="changeSearchHandler('toSearch')"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="clearfix"></div>
+    <div *ngIf="documentList != null && documentList.length > 0">
+      <app-data-table
+        [inputColumns]="displayColumns"
+        [inputSource]="filterDocumentList"
+        [inputMeta]="metaData"
+        [inputButtons]="actionButtons"
+        (onTableActionClick)="onTableActionClick($event)"
+        (onPageOrSortChange)="onPageOrSortChange($event)"
+      >
+      </app-data-table>
+    </div>
+  </div>
+</div>

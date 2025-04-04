@@ -1,0 +1,289 @@
+<section style="margin-top: 45px;">
+  <div class="our-specialities" id="specialities">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="sec-head">
+            <h2>{{'our_specialities'|translate}}</h2>
+            <!-- <h3>{{'meet_your_physician_online'|translate }}</h3> -->
+            <h3><span>{{'meet_your' | translate}} </span>
+              <div class="contented">
+                <div class="contented__container">
+                  <ul class="contented__container__list">
+                    <li class="contented__container__list__item">{{'physicians' | translate}}</li>
+                    <li class="contented__container__list__item">{{'nutritionist' | translate}}</li>
+                    <li class="contented__container__list__item">{{'paediatrics' | translate}}</li>
+                    <li class="contented__container__list__item">{{'psychiatrist' | translate}}</li>
+                  </ul>
+                </div>
+              </div>
+              <span>{{'online' | translate}}</span>
+            </h3>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="spec-card" (click)="RedirectToDoctorsList('Family Doctors')">
+            <div class="card-img" style="
+                background-image: url('../../../assets/img/specialities/7.png');
+              ">
+              <!-- <img src="../../../assets/img/specialities/2.png" alt=""> -->
+            </div>
+            <div class="card-cont">
+              <div class="small-icon">
+                <i class="icon-7 icomoon"></i>
+              </div>
+              <h2>{{'internal_medicine_family_doctor'|translate }}</h2>
+              <p>{{'internal_medicine_family_doctor_description'|translate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="spec-card" (click)="RedirectToDoctorsList('Ear Nose and Throat')">
+            <div class="card-img" style="background-image: url('../../../assets/img/specialities/5.png')">
+              <!-- <img src="../../../assets/img/specialities/demo.png" alt=""> -->
+            </div>
+            <div class="card-cont">
+              <div class="small-icon">
+                <i class="icon-5 icomoon"></i>
+              </div>
+              <h2>{{'nose_ears_and_throat_ent'|translate }}</h2>
+              <p>{{'nose_ears_and_throat_description'|translate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="spec-card" (click)="RedirectToDoctorsList('Paediatrics')">
+            <div class="card-img" style="
+                background-image: url('../../../assets/img/specialities/4.png');
+              ">
+              <!-- <img src="../../../assets/img/specialities/demo.png" alt=""> -->
+            </div>
+            <div class="card-cont">
+              <div class="small-icon">
+                <i class="icon-4 icomoon"></i>
+              </div>
+              <h2>{{'paediatrics'|translate }}</h2>
+              <p>{{'paediatrics_description'|translate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="spec-card" (click)="RedirectToDoctorsList('Respiratory')">
+            <div class="card-img" style="background-image: url('../../../assets/img/specialities/6.png')">
+            </div>
+            <div class="card-cont">
+              <div class="small-icon">
+                <i class="icon-6 icomoon"></i>
+              </div>
+              <h2>{{'respiratory_chest'|translate }}</h2>
+              <p>{{'respiratory_chest_description'|translate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <!-- *ngIf="this.showOnView" -->
+          <div class="spec-card" (click)="RedirectToDoctorsList('Women\'s Wellness')">
+            <div class="card-img" style="
+               background-image: url('../../../assets/img/specialities/17.PNG');
+             ">
+              <!-- <img src="../../../assets/img/specialities/4.png" alt=""> -->
+            </div>
+            <div class="card-cont">
+              <div class="small-icon">
+                <!-- <i class="icon-1 icomoon"></i> -->
+                <img src="../../../assets/img/solid_women.png" alt="">
+              </div>
+              <h2>{{'women_wellness'|translate }}</h2>
+              <p>{{'women_wellness_description'|translate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="spec-card" (click)="RedirectToDoctorsList('Nutritionist')">
+            <div class="card-img" style="background-image: url('../../../assets/img/specialities/3.png');">
+            </div>
+            <div class="card-cont">
+              <div class="small-icon">
+                <i class="icon-3 icomoon"></i>
+              </div>
+              <h2>{{'nutritionist'|translate }}</h2>
+              <p>{{'nutritionist_description'|translate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="spec-card" (click)="RedirectToDoctorsList('Mental Wellbeing')">
+            <div class="card-img" style="
+              background-image: url('../../../assets/img/specialities/1.png');
+            ">
+              <!-- <img src="../../../assets/img/specialities/4.png" alt=""> -->
+            </div>
+            <div class="card-cont">
+              <div class="small-icon">
+                <!-- <i class="icon-1 icomoon"></i> -->
+                <img src="../../../assets/img/mental-disorders.png" alt="">
+              </div>
+              <h2>{{'psychology_psychiatry'|translate }}</h2>
+              <p>{{'psychology_psychiatry_description'|translate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="spec-card" (click)="RedirectToDoctorsList('Dermatology')">
+            <div class="card-img" style="
+                background-image: url('../../../assets/img/specialities/16.PNG');
+              ">
+              <!-- <img src="../../../assets/img/specialities/3.png" alt=""> -->
+            </div>
+            <div class="card-cont">
+              <div class="small-icon">
+                <i class="icon-2 icomoon"></i>
+              </div>
+              <h2>{{'skin_care'|translate }}</h2>
+              <p>{{'skin_care_description'|translate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="spec-card" (click)="RedirectToDoctorsList('SpeechTherapy')">
+            <div class="card-img" style="
+                background-image: url('../../../assets/img/specialities/8.png');
+              ">
+              <!-- <img src="../../../assets/img/specialities/demo.png" alt=""> -->
+            </div>
+            <div class="card-cont">
+              <div class="small-icon">
+                <i class="icon-8 icomoon"></i>
+              </div>
+              <h2>{{'speech_therapy'|translate }}</h2>
+              <p>{{'speech_therapy_description'|translate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <!-- *ngIf="this.showOnView" -->
+          <div class="spec-card" (click)="RedirectToDoctorsList('Men\'s Wellness')">
+            <div class="card-img" style="
+                background-image: url('../../../assets/img/specialities/14.png.PNG');
+              ">
+              <!-- <img src="../../../assets/img/specialities/5.png" alt=""> -->
+            </div>
+            <div class="card-cont">
+              <div class="small-icon">
+                <i class="icon-10 icomoon">
+                </i>
+              </div>
+              <h2>{{'men_wellness'|translate }}</h2>
+              <p>{{'men_wellness_description'|translate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <!-- *ngIf="this.showOnView" -->
+          <div class="spec-card" (click)="RedirectToDoctorsList('Urology')">
+            <div class="card-img" style="
+                background-image: url('../../../assets/img/specialities/11.png');
+              ">
+              <!-- <img src="../../../assets/img/specialities/6.png" alt=""> -->
+            </div>
+            <div class="card-cont">
+              <div class="small-icon">
+                <i class="icon-11 icomoon"></i>
+              </div>
+              <h2>{{'urologist'|translate }}</h2>
+              <p>{{'urologist_description'|translate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <!-- *ngIf="this.showOnView" -->
+          <div class="spec-card" (click)="RedirectToDoctorsList('Orthopedic')">
+            <div class="card-img" style="background-image: url('../../../assets/img/specialities/12.png')">
+              <!-- <img src="../../../assets/img/specialities/demo.png" alt=""> -->
+            </div>
+            <div class="card-cont">
+              <div class="small-icon">
+                <i class="icon-12 icomoon"></i>
+              </div>
+              <h2>{{'orthopaedics'|translate }}</h2>
+              <p>{{'orthopaedics_description'|translate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <!-- *ngIf="this.showOnView" -->
+          <div class="spec-card" (click)="RedirectToDoctorsList('Oncologists')">
+            <div class="card-img" style="
+                background-image: url('../../../assets/img/specialities/15.PNG');
+              ">
+              <!-- <img src="../../../assets/img/specialities/8.png" alt=""> -->
+            </div>
+            <div class="card-cont">
+              <div class="small-icon">
+                <i class="icon-13 icomoon"></i>
+              </div>
+              <h2>{{'oncologist'|translate }}</h2>
+              <p>{{'oncologist_description'|translate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <!-- *ngIf="this.showOnView" -->
+          <div class="spec-card" (click)="RedirectToDoctorsList('Gastroenterology and Hepatology')">
+            <div class="card-img" style="
+               background-image: url('../../../assets/img/specialities/9.png');
+             ">
+              <!-- <img src="../../../assets/img/specialities/4.png" alt=""> -->
+            </div>
+            <div class="card-cont">
+              <div class="small-icon">
+                <!-- <i class="icon-1 icomoon"></i> -->
+                <i class="fa fa-wheelchair-alt" aria-hidden="true"></i>
+              </div>
+              <h2>{{'Gastroenterology_and_Hepatology'|translate }}</h2>
+              <p>{{'Gastroenterology_Description'|translate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="spec-card" (click)="RedirectToDoctorsList('Immunology')">
+            <div class="card-img" style="background-image: url('../../../assets/img/specialities/19.PNG')">
+            </div>
+            <div class="card-cont">
+              <div class="small-icon">
+                <i class="icon-6 icomoon"></i>
+              </div>
+              <h2>{{'Immunology'|translate }}</h2>
+              <p>{{'Immunology_Description'|translate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="spec-card" (click)="RedirectToDoctorsList('Bariatric Surgeries')">
+            <div class="card-img" style="background-image: url('../../../assets/img/specialities/20.PNG')">
+            </div>
+            <div class="card-cont">
+              <div class="small-icon">
+                <i class="icon-6 icomoon"></i>
+              </div>
+              <h2>{{'Weight_Managment'|translate }}</h2>
+              <p>{{'Weight_Managment_Description'|translate }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12 d-flex justify-content-center">
+          <button class="login-btn radius-btn" (click)="moreSpecialityClick()">{{"For More Specialities"|translate}}</button>
+        </div>
+        <!-- <div class="col-md-12">
+          <div class="text-center link-text">
+            <a href="javascript:void(0)" (click)="showAllServices()">{{(!this.showOnView) ? 'View All' : 'Hide All'}}
+              <mat-icon>{{(!this.showOnView) ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</mat-icon></a>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</section>

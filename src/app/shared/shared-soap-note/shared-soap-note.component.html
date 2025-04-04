@@ -1,0 +1,13 @@
+<div class="shopnote-table-width">
+  <app-data-table
+  [inputColumns]="displaySoapNoteColumns"
+  [inputSource]="allSoapNotes"
+  [inputMeta]="metaData"
+  (onTableActionClick)="onTableActionClick($event)"
+  title="Go to profile page"
+  onmouseover="this.style.cursor='pointer'"
+  (onPageOrSortChange)="onPageOrSortChange($event)"
+  [inputButtons]="actionButtons"
+>
+</app-data-table>
+</div>

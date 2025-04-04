@@ -1,0 +1,33 @@
+.mat-dialog-actions{
+    flex-wrap: inherit !important;
+    padding: 0 !important;
+    padding-bottom: 20px !important;
+
+}
+.mat-raised-button.mat-primary{
+    margin-left: 10px;
+}
+.mat-checkbox{
+    position: relative;
+    top:25px;
+}
+.additem{
+    bottom:15px !important;
+    right: 135px;
+}
+.removeitem{
+    bottom: 15px;
+    right: 105px;
+}
+@media all and (max-width:768px){
+  .mat-checkbox{
+    top:0;
+  }
+  .mob-btn-css{
+    float: left;
+    margin-top: 18px;
+  }
+  .custom_modal .mat-dialog-actions{
+    display: block !important;
+  }
+}

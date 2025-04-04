@@ -1,0 +1,69 @@
+<div>
+  <h2 class="page_title">{{ 'manage_template' | translate }}</h2>
+  <div class="clearfix"></div>
+  <div class="readin-panel">
+    <div class="no-gutters">
+      <div class="col-md-5 pull-right justify-content-md-end d-flex">
+        <button mat-raised-button color="primary" class="add-primary-btn" form="templateForm" [disabled]="submitted"
+          (click)="saveTemplateForm()">
+          <span>{{ submitted ? 'Saving Template...' : ('save_template' | translate) }}</span>
+        </button>
+      </div>
+      <div class="col-md-12 justify-content-start pull-left">
+        <div class="row">
+          <div class="col-sm-12 mtm-27">
+            <form class="readmin-form custom_form" id="templateForm" #documentForm="ngForm">
+              <div class="row">
+                <div class="col-sm-6">
+                  <mat-form-field class="example-full-width">
+                    <input matInput [(ngModel)]="templateName" name="templateName" placeholder="{{ 'template_name' | translate }}"
+                      required />
+                    <mat-error *ngIf="documentForm.controls['templateName']?.invalid && (documentForm.controls['templateName']?.dirty || documentForm.controls['templateName']?.touched)">
+                      Please enter template name
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <mat-form-field class="example-full-width">
+                    <mat-select placeholder="{{ 'select_template_category' | translate }}" [(ngModel)]="templateCategoryId"
+                      (selectionChange)="onMasterCategorySelect($event)" name="templateCategoryId" required>
+                      <mat-option *ngFor="let option of masterTemplateCategory" [value]="option.id">
+                        {{ option.masterCategoryName }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="documentForm.controls['templateCategoryId']?.invalid">
+                      {{ 'please_select_template_category' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-6" *ngIf="templateCategoryId > 0">
+                  <mat-form-field class="example-full-width">
+                    <mat-select placeholder="{{ 'select_template_subcategory' | translate }}" [(ngModel)]="templateSubCategoryId"
+                      name="templateSubCategoryId" required>
+                      <mat-option *ngFor="let option of masterTemplateSubCategory" [value]="option.id">
+                        {{ option.masterSubCategoryName }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="documentForm.controls['templateSubCategoryId']?.invalid">
+                      {{ 'please_select_template_subcategory' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <!-- Form.io integration using @formio/angular -->
+    <!-- <formio [form]="form" [options]="formioOptions" (change)="onChange($event)"></formio> -->
+    <!-- <form-builder
+    [form]="form"
+    [options]="formioOptions"
+    (change)="onChange($event)"
+  ></form-builder> -->
+  </div>
+</div>

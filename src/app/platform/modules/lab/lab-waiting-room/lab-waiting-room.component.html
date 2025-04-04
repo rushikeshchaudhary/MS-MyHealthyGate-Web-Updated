@@ -1,0 +1,16 @@
+<div class="readmin-panel pt-0 provider-dashboardchart">
+  <mat-tab-group (selectedIndexChange)="onTabChange($event)">
+    <mat-tab>
+      <ng-template mat-tab-label> {{"documents"|translate}} </ng-template>
+      <app-lab-appointment-document></app-lab-appointment-document>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label> {{"vitals"|translate}} </ng-template>
+      <app-lab-appointment-vitals></app-lab-appointment-vitals>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label> Pre Existing Medication </ng-template>
+      <app-lab-appointment-pre-medication></app-lab-appointment-pre-medication>
+    </mat-tab>
+  </mat-tab-group>
+</div>

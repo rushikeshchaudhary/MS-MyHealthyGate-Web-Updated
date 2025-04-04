@@ -1,0 +1,168 @@
+<header>
+  <div class="container container1">
+    <div class="row">
+      <h1 class="col-3">
+        <a [routerLink]="['/']">
+          <img class="img-fluid" src="../assets/img/my_healthy_gate_logo.svg" alt="logo" class="site-logo" />
+        </a>
+      </h1>
+      <div class="header-right p-0 col-9 d-flex justify-content-md-between justify-content-end align-items-center">
+        <nav class="navbar navbar-expand-md p-0 navbar-light">
+          <button class="navbar-toggler mr-2" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/our-speciality']" routerLinkActive="active">{{ "our_speciality" | translate }}</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/health-services']" routerLinkActive="active">{{ "health_services" |translate }}</a>
+              </li>
+              <!-- <li class="nav-item">
+                                <a class="nav-link" [routerLink]="['/contact-us']" routerLinkActive="active">Contact Us</a>
+                            </li> -->
+              <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/doctor-list']" routerLinkActive="active">{{ "our_doctors" |translate }}</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/providers']">{{ "for_providers" | translate }}</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" id="dropdownMenuButton" data-toggle="dropdown">{{"resource" | translate}}<i
+                    class="fa fa-chevron-down"></i>
+                  <div class="dropdown">
+                    <!-- <button class="btn btn-secondary dropdown-toggle" type="button"  aria-haspopup="true" aria-expanded="false">
+                        Dropdown button
+                      </button> -->
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" [routerLink]="['/about-us']">{{"About_us"|translate}}</a>
+                      <a class="dropdown-item" [routerLink]="['/faq']">{{"faqs"|translate}}</a>
+                      <a class="dropdown-item" [routerLink]="['/privacy-policy']">{{"patient_privacy" |translate}}</a>
+                      <a class="dropdown-item"
+                        [routerLink]="['/terms-and-conditions']">{{"terms_and_conditions"|translate}}</a>
+                      <a class="dropdown-item"
+                        [routerLink]="['/terms-and-conditions']">{{"refund_policy"|translate}}</a>
+                      <a class="dropdown-item" [routerLink]="['/blog']">{{"blog"|translate}}</a>
+                      <a class="dropdown-item" [routerLink]="['/contact-us']">{{"contact_us"|translate}}</a>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+
+        <div class="d-flex align-items-center dropdown registerLoginSec" *ngIf="!IsLogin">
+          <!-- *ngIf="!IsLogin" -->
+          <button type="button" color="primary" class="register-btn radius-btn" (click)="registerClick()"
+            data-toggle="dropdown">
+            <!-- (click)="openDialogRegister()"  -->
+            <i class="fa fa-registered d-block d-sm-none" aria-hidden="true"></i><span class="d-none d-sm-block">{{
+              'sign_up' | translate }}</span>
+          </button>
+          <button type="button" class="login-btn radius-btn" (click)="loginClick()">
+            <!-- (click)="openDialogLogin()" -->
+            <i class="fa fa-sign-in d-block d-sm-none" aria-hidden="true"></i><span class="d-none d-sm-block">{{ 'login'
+              | translate }}</span>
+          </button>
+          <button class="lang-btn radius-btn " [matMenuTriggerFor]="menu" style="margin-left: 16px;"
+            title="change language">
+            <!-- <span class="l-title">Language</span> -->
+            <span class="l-title"><img class="lang-img" src="../assets/img/lang-icon-MHG.png" /></span>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button id="langDrop" mat-menu-item (click)="useLanguage('en');">
+              <span class="l-title">ENG</span>
+            </button>
+            <button id="langDrop" mat-menu-item (click)="useLanguage('ar');">
+              <span class="l-title">AR</span>
+            </button>
+          </mat-menu>
+
+        </div>
+        <!-- <div class="d-flex align-items-center" *ngIf="IsLogin && headerInfo"> -->
+        <div class="d-flex align-items-center" *ngIf="IsLogin && userInfo">
+          <span class="welcomeName" title="Patient" *ngIf="headerInfo">
+            {{
+            userInfo.firstName +
+            " " +
+            (userInfo.middleName || "") +
+            " " +
+            userInfo.lastName
+            }}
+          </span>
+          <div class="brdr-lght">
+            <button title="Favourites" class="bell-icon" mat-icon-button (click)="btnClick();">
+              <i class="fa fa-star faa-ring animated-hover" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="brdr-lght">
+            <button aria-haspopup="true" class="bell-icon mat-icon-button" mat-icon-button [matMenuTriggerFor]="message"
+              title="Notifications">
+              <i class="fa fa-bell faa-ring animated-hover" aria-hidden="true"></i>
+              <span *ngIf="documentNotifications.length > 0" class="no_noti">{{
+                documentNotifications.length
+                }}</span>
+            </button>
+            <mat-menu #message="matMenu" class="natification_box">
+              <div class="main-head">
+                <h3>{{"notifications"|translate}}</h3>
+                <button type="button">
+                  <i class="zmdi zmdi-format-clear-all"></i>
+                </button>
+              </div>
+              <div [ngStyle]="{ height: '300px' }">
+                <ng-scrollbar>
+                  <div mat-menu-item class="read-noti" *ngFor="let doc of documentNotifications">
+                    <div>{{ doc.notificationAction }}</div>
+                    <div>
+                      {{ doc.message }}
+                      <span class="block"><i class="fa fa-clock-o">&nbsp;{{ doc.timeStamp | date: "MMM d, y, h:mm a"
+                          }}</i></span>
+                    </div>
+                    <!-- <i class="zmdi zmdi-close"></i> -->
+                  </div>
+                </ng-scrollbar>
+              </div>
+              <!-- <div class="main-head show-all"><button type="button">Show all notifications</button></div> -->
+              <div *ngIf="documentNotifications.length == 0" class="main-head show-all">
+                <button type="button">No notifications</button>
+              </div>
+            </mat-menu>
+          </div>
+          <div *ngIf="headerInfo" class="user-dropdown" title="Go to dashboard">
+            <button [matMenuTriggerFor]="profile" class="request-loader">
+              <img src="{{ userInfo.photoThumbnailPath || '../assets/img/noimage3.png' }}" alt="user"
+                class="profile-pic img-fluid" /><i class="fa fa-chevron-down"></i>
+            </button>
+            <mat-menu #profile="matMenu">
+              <div class="setting_menu">
+                <button mat-menu-item *ngFor="let item of headerInfo.userNavigations" (click)="onSelectUserMenu(item)">
+                  <span [innerHtml]="item.iconName"></span>
+                  {{ item.displayName }}
+                </button>
+              </div>
+            </mat-menu>
+          </div>
+
+          <button class="lang-btn radius-btn" [matMenuTriggerFor]="menu" style="margin-left: 5px"
+            title="change language">
+            <span class="l-title"><img class="lang-img" src="../assets/img/lang-icon-MHG.png" /></span>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button id="langDrop" mat-menu-item (click)="useLanguage('en')">
+              <span class="l-title">ENG</span>
+            </button>
+            <button id="langDrop" mat-menu-item (click)="useLanguage('ar')">
+              <span class="l-title">AR</span>
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

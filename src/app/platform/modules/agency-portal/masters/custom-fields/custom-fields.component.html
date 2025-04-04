@@ -1,0 +1,35 @@
+<h2 class="page_title mt-3">{{'manage_custom_fields'|translate}}</h2>
+<div class="patient-container">
+
+  <div class="clearfix"></div>
+  <div class="readmin-panel audit_block">
+    <div class="no-gutters row">
+      <div class="col-md-7">
+        <div class="row">
+          <div class="col-7 mtm-27">
+            <form class="readmin-form custom_form pos">
+              <button class="search-button"></button>
+              <mat-form-field class="example-full-width">
+                <input matInput [(ngModel)]="searchText" name="searchText" (keyup)="applyFilter()"
+                  placeholder="{{'search'|translate}}">
+              </mat-form-field>
+            </form>
+          </div>
+          <div class="col-5 filter-btn">
+            <button class="clear-btn" mat-raised-button (click)="clearFilters()">{{'clear_all'|translate}}</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5 d-flex justify-content-end">
+        <button mat-raised-button color="primary" class="add-primary-btn" (click)="openDialog()">
+          <i class="fa fa-plus" aria-hidden="true"></i><span>{{'add_custom_field'|translate}}</span></button>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+
+
+    <app-data-table [inputColumns]="displayedColumns" [inputSource]="customFieldData" [inputMeta]="metaData"
+      [inputButtons]='actionButtons' (onPageOrSortChange)="onPageOrSortChange($event)" (onTableActionClick)="onTableActionClick($event)">
+    </app-data-table>
+  </div>
+</div>

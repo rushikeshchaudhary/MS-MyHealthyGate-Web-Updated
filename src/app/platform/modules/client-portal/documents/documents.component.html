@@ -1,0 +1,153 @@
+<div class="patient-container">
+  <div class="readmin-panel">
+    <div class="row">
+      <div class="col-12">
+        <form>
+          <mat-form-field appearance="fill">
+            <mat-label>{{"select_user" | translate}}</mat-label>
+            <mat-select (selectionChange)="onUserChange($event.value)">
+              <mat-option value="Patient"> My documents </mat-option>
+              <mat-option value="Provider">{{"provider_documents" | translate}} </mat-option>
+              <mat-option value="Lab">{{"lab_s_documents" | translate}} </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </form>
+        <!-- <div class="row text-center doc_btns">
+          <div class="col-3 px-0 w-100 mrgn" (click)="tabActiveTwo(1)">
+            <button
+              class="w-100"
+              mat-button
+              (click)="creatorHandler('Patient')"
+              [ngClass]="this.tab1Active ? 'active' : ''"
+            >
+              {{ "self_documents" | translate }}
+            </button>
+          </div>
+          <div class="col-3 px-0 w-100 mrgn" (click)="tabActiveTwo(2)">
+            <button
+              class="w-100"
+              mat-button
+              (click)="creatorHandler('Provider')"
+              [ngClass]="this.tab2Active ? 'active' : ''"
+            >
+              {{ "provider_documents" | translate }}
+            </button>
+          </div>
+          <div class="col-3 px-0 w-100 mrgn" (click)="tabActiveTwo(3)">
+            <button
+              class="w-100"
+              mat-button
+              (click)="creatorHandler('Lab')"
+              [ngClass]="this.tab3Active ? 'active' : ''"
+            >
+              {{ "lab_s_documents" | translate }}
+            </button>
+          </div>
+        </div> -->
+      </div>
+      <div class="col-sm-12 mt-5 d-flex justify-content-between">
+        <div
+          *ngIf="searchBox"
+          class="d-flex justify-content-between"
+          style="width: 42vw; flex-wrap: wrap;"
+        >
+          <div class="doc_search">
+            <mat-form-field appearance="outline">
+              <input
+                type="text"
+                matInput
+                placeholder="{{ 'search_documents' | translate }}"
+                [(ngModel)]="filterString"
+                (ngModelChange)="searchHandlar($event)"
+              />
+              <mat-icon class="iconPointer" matSuffix>{{"search"|translate}}</mat-icon>
+            </mat-form-field>
+          </div>
+          <div style="margin-top: 6px">
+            <button
+              mat-raised-button
+              (click)="changeSearchHandler('toDate')"
+              color="primary"
+              style="height: 42px !important"
+            >
+              {{ "search_by_date" | translate }}
+            </button>
+          </div>
+        </div>
+        <div *ngIf="!searchBox" class="d-flex datesearch">
+          <div>{{"from" | translate}}</div>
+          <div>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>dd/mm/yyyy</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                [max]="maxDate"
+                (dateChange)="addDateEvent('from', $event)"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div>{{"to" | translate}}</div>
+          <div>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>dd/MM/yyyy</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker1"
+                [max]="maxDate"
+                (dateChange)="addDateEvent('to', $event)"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker1"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div>
+            <button mat-raised-button color="primary" (click)="searchBydate()">
+              {{ "search" | translate }}
+            </button>
+          </div>
+          <div>
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="changeSearchHandler('toSearch')"
+            >
+              {{"cancel" | translate}}
+            </button>
+          </div>
+        </div>
+        <div style="margin-top: 6px">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="createModal('add', null)"
+          >
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            {{ "upload_document" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="clearfix"></div>
+    <div>
+      <app-data-table
+        [inputColumns]="displayColumns"
+        [inputSource]="filterDocumentList"
+        [inputMeta]="metaData"
+        [inputButtons]="actionButtons"
+        (onTableActionClick)="onTableActionClick($event)"
+        (onPageOrSortChange)="onPageOrSortChange($event)"
+      >
+      </app-data-table>
+    </div>
+  </div>
+</div>

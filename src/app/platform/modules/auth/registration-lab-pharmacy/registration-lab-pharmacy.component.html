@@ -1,0 +1,370 @@
+<!--<app-auth>
+
+    <div class="row doclogin no-gutters form-block">
+        <div class="col-md-12">
+            <div class="logo mb-4 crsr-pntr">
+                <a routerLink='/' title="Go To Home">
+                    <img class="img-fluid" *ngIf="organizationModel"
+                        src="{{this.organizationModel || '../assets/img/telehealth-logo.svg'}}" class="site-logo" />
+                    <img src="../../../../../assets/img/colored-logo.svg" class="site-logo" />
+                </a>
+            </div>
+            <h3 class="pb-3 fw-300 text-center">Sign Up</h3>
+            <div *ngIf="registrationForm" class="form-style">
+                <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="small-input">
+                    <div *ngIf="errorMessage" class="alert-danger">{{errorMessage}}</div>
+
+                    <div class="group">
+                        <label>{{isPharmacy ?'Pharmacy Name':'Lab Name'}}</label>
+                        <input type="text" autofocus formControlName="labPharmacyName" pattern="[a-zA-Z ]*"
+                            [ngClass]="{'is-invalid':submitted && f.labPharmacyName.errors}" required>
+                        <mat-error *ngIf="f.labPharmacyName.errors && submitted">Please enter Lab / Pharmacy Name
+                        </mat-error>
+                        <mat-error *ngIf="f.labPharmacyName.errors?.pattern">
+                            Lab / Pharmacy Name '{{f.labPharmacyName.value}}' not valid,allowed only alphnumeric
+                            characters.
+                        </mat-error>
+                    </div>
+                    <div class="group">
+                        <label>First Name</label>
+                        <input type="text" autofocus formControlName="firstName" pattern="[a-zA-Z ]*"
+                            [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" required>
+                        <mat-error *ngIf="f.firstName.errors && submitted">
+                            Please enter first name
+                        </mat-error>
+                        <mat-error *ngIf="f.firstName.errors?.pattern">
+                            First Name '{{f.firstName.value}}' not valid, allowed only alphanumeric characters.
+                        </mat-error>
+                    </div>
+
+                    <div class="group">
+                        <label>Last Name</label>
+                        <input type="text" autofocus formControlName="lastName" pattern="[a-zA-Z ]*"
+                            [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" required>
+                        <mat-error *ngIf="f.lastName.errors && submitted">
+                            Please enter last name
+                        </mat-error>
+                        <mat-error *ngIf="f.lastName.errors?.pattern">
+                            Last Name '{{f.lastName.value}}' not valid, allowed only alphanumeric characters.
+                        </mat-error>
+                    </div>
+
+                    <div class="group">
+                        <label>Email</label>
+                        <input type="text" autofocus formControlName="email"
+                            [ngClass]="{ 'is-invalid': submitted && f.email.errors }" required>
+                        <mat-error *ngIf="f.email.errors?.['required'] && submitted">
+                            Please enter email
+                        </mat-error>
+                        <mat-error *ngIf=" f.email.errors?.email && submitted">
+                            Please enter a valid email id
+                        </mat-error>
+                    </div>
+
+                    <div class="group">
+                        <label>Phone</label>
+                        <input type="tel" autofocus appPhoneNumber maxlength="14" formControlName="phone"
+                            [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" required>
+                        <mat-error *ngIf="f.phone.errors?.['required'] && submitted">
+                            Please enter phone
+                        </mat-error>
+                        <mat-error *ngIf="f.phone.errors?.pattern && submitted ">
+                            Please enter valid phone
+                        </mat-error>
+                        <mat-error *ngIf="f.phone.errors?.minlength && submitted ">
+                            Please enter valid phone
+                        </mat-error>
+                    </div>
+
+                    <div class="group">
+                        <label>Password</label>
+                        <input [type]="isShowPassword ? 'text' : 'password'" autocomplete="new-password"
+                            formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+                            required>
+                        <i (click)="isShowPassword = !isShowPassword" class="fa" [ngClass]="{
+                        'fa-eye-slash': !isShowPassword,
+                        'fa-eye': isShowPassword
+                      }"></i>
+                        <mat-error *ngIf="f.password.errors?.['required'] && submitted">
+                            Please enter password
+                        </mat-error>
+                        <mat-error *ngIf="f.password.errors?.strong && submitted && f.password.value">
+                            Password must contain atleast one uppercase,lowercase character,number and special
+                            character.
+                        </mat-error>
+
+                    </div>
+
+                    <div class="group">
+                        <label>Re-enter Password</label>
+                        <input [type]="isShowRePassword ? 'text' : 'password'" autocomplete="new-password"
+                            formControlName="confirmPassword"
+                            [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" required>
+                        <i (click)="isShowRePassword = !isShowRePassword" class="fa" [ngClass]="{
+                        'fa-eye-slash': !isShowRePassword,
+                        'fa-eye': isShowRePassword
+                      }"></i>
+                        <mat-error *ngIf="f.confirmPassword.errors?.['required'] && submitted">
+                            Please re-enter password
+                        </mat-error>
+                        <mat-error *ngIf="f.confirmPassword.errors?.notSame && submitted">
+                            Confirm password does not match
+                        </mat-error>
+                    </div>
+
+                    <div class="group">
+                        <label>Date of Birth</label>
+                        <input matInput readonly [matDatepicker]="dob" [max]="maxDate" formControlName="dob"
+                            [ngClass]="{ 'is-invalid': submitted && f.dob.errors }" required>
+                        <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+                        <mat-datepicker startView="multi-year" #dob></mat-datepicker>
+
+                        <mat-error *ngIf="f.dob.errors?.age">
+                            Age should be greater than 18 years
+                        </mat-error>
+
+                        <mat-error *ngIf="f.dob.errors && submitted">
+                            Please enter DOB
+                        </mat-error>
+                    </div>
+
+                    <div class="group">
+
+                        <label>Gender</label>
+                        <mat-select formControlName="gender" matInput
+                            [ngClass]="{ 'is-invalid': submitted && f.gender.errors }" required>
+                            <mat-option *ngFor="let genderVal of masterGender" [value]="genderVal.id">
+                                {{genderVal.value}}
+                            </mat-option>
+                        </mat-select>
+
+                        <mat-error *ngIf="f.gender.errors && submitted">
+                            Please select gender
+                        </mat-error>
+                    </div>
+
+                    <button type="submit" class="btn btn-theme" [disabled]="loading">
+                        Sign Up
+                    </button>
+                </form>
+
+                <p class="dont_acc">
+                    Already have an account?<a href="javascript:void(0)" (click)="toSignInpage()">
+                        Log In</a>
+                </p>
+                <p class="signup_txt">
+                    By signing up, you agree to myHealthyGate
+                    <a href="javascript:void(0);" (click)="opentermconditionmodal()">Terms and Conditions</a>
+                    &
+                    <a href="javascript:void(0);" (click)="opentermconditionmodal()">Privacy Policy</a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</app-auth>
+<div *ngIf="showLoader">
+    <div class="full_loader">
+        <div class="circle_loader page_loader">
+            <img src="/assets/loader.gif" alt="" />
+        </div>
+    </div>
+</div>-->
+
+<!--For testing purpose-->
+
+<div *ngIf="registrationForm" class="form-style">
+  <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="small-input">
+    <div *ngIf="errorMessage" class="alert-danger row">{{ errorMessage }}</div>
+
+    <div class="group col-md-6">
+      <label class="control-label">{{ formType | translate }} {{ (formType | translate) == 'Radiology'? 'Center' :
+        'Clinic' }} {{ "Name" | translate }}</label>
+      <input type="text" autofocus formControlName="labPharmacyName" pattern="[a-zA-Z ]*"
+        [ngClass]="{ 'is-invalid': submitted && f['labPharmacyName'].errors }" required class="form-control" />
+      <mat-error *ngIf="f['labPharmacyName'].errors && submitted">Please enter {{ formType }} Name
+      </mat-error>
+      <mat-error *ngIf="f['labPharmacyName'].errors?.['pattern']">
+        {{ formType }} Name '{{ f['labPharmacyName'].value }}' not valid,allowed
+        only alphnumeric characters.
+      </mat-error>
+    </div>
+    <div class="group col-md-6">
+      <label class="control-label">{{ "first_name" | translate }}</label>
+      <input type="text" autofocus formControlName="firstName" pattern="[a-zA-Z ]*"
+        [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }" required class="form-control" />
+      <mat-error *ngIf="f['firstName'].errors && submitted">
+        Please enter first name
+      </mat-error>
+      <mat-error *ngIf="f['firstName'].errors?.['pattern']">
+        First Name '{{ f['firstName'].value }}' not valid, allowed only
+        alphanumeric characters.
+      </mat-error>
+    </div>
+
+    <div class="group col-md-6">
+      <label class="control-label">{{ "middle_name" | translate }}</label>
+      <input type="text" autofocus formControlName="middleName" pattern="[a-zA-Z ]*"
+        class="form-control" />
+      <!-- [ngClass]="{ 'is-invalid': submitted && f.middleName.errors }" required  -->
+        <!-- <mat-error *ngIf="f.middleName.errors && submitted">
+        Please enter middle name
+      </mat-error>
+      <mat-error *ngIf="f.middleName.errors?.pattern">
+        Middle Name '{{ f.middleName.value }}' not valid, allowed only alphanumeric
+        characters.
+      </mat-error> -->
+    </div>
+
+    <div class="group col-md-6">
+      <label class="control-label">{{ "last_name" | translate }}</label>
+      <input type="text" autofocus formControlName="lastName" pattern="[a-zA-Z ]*"
+        [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors }" required class="form-control" />
+      <mat-error *ngIf="f['lastName'].errors && submitted">
+        Please enter last name
+      </mat-error>
+      <mat-error *ngIf="f['lastName'].errors?.['pattern']">
+        Last Name '{{ f['lastName'].value }}' not valid, allowed only alphanumeric
+        characters.
+      </mat-error>
+    </div>
+
+    <div class="group col-md-12">
+      <label class="control-label">{{ "email" | translate }}</label>
+      <input type="text" autofocus formControlName="email" [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
+        required class="form-control" />
+      <mat-error *ngIf="f['email'].errors?.['required'] && submitted">
+        Please enter email
+      </mat-error>
+      <mat-error *ngIf="f['email'].errors?.['email'] && submitted">
+        Please enter a valid email id
+      </mat-error>
+    </div>
+
+    <div class="group col-md-3">
+      <!-- <div class="country-field-sec"> -->
+        <!-- <app-phone-number  [countryId]="0" [selectedCountryPhoneCode]="selectedPhoneCode"
+          (phoneCodeChangeEvent)="phoneCodeChange($event)"></app-phone-number> -->
+          <app-phone-number  [countryId]="0"
+          (phoneCodeChangeEvent)="phoneCodeChange($event)"></app-phone-number>
+      <!-- </div> -->
+    </div>
+    <div class="group col-md-8">
+      <!-- <div class="country-field-sec"> -->
+        <!-- <app-phone-number class="country-field" [countryId]="0" [selectedCountryPhoneCode]="selectedPhoneCode"
+          (phoneCodeChangeEvent)="phoneCodeChange($event)"></app-phone-number> -->
+
+        <label class="control-label">{{ "phone" | translate }}</label>
+        <input type="tel" autocomplete="off" autofocus maxlength="10" formControlName="phone"
+          [ngClass]="{ 'is-invalid': submitted && f['phone'].errors }" required class="form-control" />
+        <mat-error *ngIf="f['phone'].errors?.['required'] && submitted">
+          Please enter phone
+        </mat-error>
+        <mat-error *ngIf="f['phone'].errors?.['pattern'] && submitted">
+          Please enter valid phone
+        </mat-error>
+        <mat-error *ngIf="f['phone'].errors?.['minlength'] && submitted">
+          Please enter valid phone
+        </mat-error>
+      <!-- </div> -->
+    </div>
+
+    <div class="group col-md-6">
+      <label class="control-label">{{ "password" | translate }}</label>
+      <input [type]="isShowPassword ? 'text' : 'password'" autocomplete="new-password" formControlName="password"
+        [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" required class="form-control" />
+      <i (click)="isShowPassword = !isShowPassword" class="fa icon_right" [ngClass]="{
+          'fa-eye-slash': !isShowPassword,
+          'fa-eye': isShowPassword
+        }"></i>
+      <mat-error *ngIf="f['password'].errors?.['required'] && submitted">
+        Please enter password
+      </mat-error>
+      <mat-error *ngIf="f['password'].errors?.['strong'] && submitted && f['password'].value">
+        Password must contain atleast one uppercase,lowercase character,number
+        and special character.
+      </mat-error>
+    </div>
+
+    <div class="group col-md-6">
+      <label class="control-label">{{ "re_enter_password" | translate }}</label>
+      <input [type]="isShowRePassword ? 'text' : 'password'" autocomplete="new-password"
+        formControlName="confirmPassword" [ngClass]="{ 'is-invalid': submitted && f['confirmPassword'].errors }" required
+        class="form-control" />
+      <i (click)="isShowRePassword = !isShowRePassword" class="fa icon_right" [ngClass]="{
+          'fa-eye-slash': !isShowRePassword,
+          'fa-eye': isShowRePassword
+        }"></i>
+      <mat-error *ngIf="f['confirmPassword'].errors?.['required'] && submitted">
+        Please re-enter password
+      </mat-error>
+      <mat-error *ngIf="f['confirmPassword'].errors?.['notSame'] && submitted">
+        Confirm password does not match
+      </mat-error>
+    </div>
+
+    <!-- <div class="group col-md-6 dob_input">
+      <label class="control-label">{{ "date_of_birth" | translate }}</label>
+      <input matInput readonly [matDatepicker]="dob" [min]="minDate" [max]="maxDate" formControlName="dob"
+        [ngClass]="{ 'is-invalid': submitted && f.dob.errors }" required class="form-control" />
+      <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+      <mat-datepicker startView="multi-year" #dob></mat-datepicker>
+
+      <mat-error *ngIf="f.dob.errors?.age">
+        Age should be greater than 18 years
+      </mat-error>
+
+      <mat-error *ngIf="f.dob.errors && submitted">
+        Please enter DOB
+      </mat-error>
+    </div> -->
+
+    <!-- <div class="group col-md-12">
+      <label class="control-label">{{ "gender" | translate }}</label>
+      <mat-select formControlName="gender" matInput [ngClass]="{ 'is-invalid': submitted && f.gender.errors }" required
+        class="form-control">
+        <mat-option *ngFor="let genderVal of masterGender" [value]="genderVal.id">
+          {{ genderVal.value }}
+        </mat-option>
+      </mat-select>
+
+      <mat-error *ngIf="f.gender.errors && submitted">
+        Please select gender
+      </mat-error>
+    </div> -->
+    
+    <div class="group col-md-12">
+      <app-google-address-input
+        [control]="userModel.address"
+        (onAddressChange)="handleAddressChange($event)">
+      </app-google-address-input>
+      <!-- <input type="text" formControlName="address" class="form-control" />  -->
+    </div>
+
+    <!-- <div class="group col-md-12">
+      <label class="control-label">Address</label>
+      <input type="text" formControlName="address" class="form-control" />
+    </div> -->
+
+    <button type="submit" class="btn btn-theme" [disabled]="loading">
+      {{ "Sign_up" | translate }}
+    </button>
+  </form>
+  <div *ngIf="showFooter">
+    <p class="dont_acc">
+      {{ "already_have_an_account" | translate }}?<a href="javascript:void(0)" (click)="toSignInpage()">
+        {{ "log_in" | translate }}</a>
+    </p>
+    <p class="signup_txt">
+      {{ "by_signing_up_you_agree_to_myhealthygate" | translate }}
+      <a href="javascript:void(0);" (click)="opentermconditionmodal()">{{
+        "terms_and_conditions" | translate
+        }}</a>
+      &
+      <a href="javascript:void(0);" (click)="opentermconditionmodal()">{{
+        "privacy_policy" | translate
+        }}</a>
+    </p>
+  </div>
+</div>

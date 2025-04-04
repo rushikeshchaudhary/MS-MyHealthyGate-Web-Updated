@@ -1,0 +1,591 @@
+<div class="provider-container">
+  <div class="row align-items-center">
+    <div class="col-md-4">
+      <div class="btn-group"></div>
+    </div>
+    <div class="col-md-4 text-center">
+      <!-- <h3><i class="fa fa-calendar-o" aria-hidden="true"></i> {{ view === CalendarView.Month? (viewDate|date:'MMM-yyyy')
+        : view === CalendarView.Day? (viewDate|date:'dd-MMM-yyyy (EEEE)') : (viewDate|date:'dd-MMM-yyyy') }}</h3> -->
+      <h3>
+        <i class="fa fa-calendar-o" aria-hidden="true"></i>
+        {{ viewDate | calendarDate : view + "ViewTitle" : "en" }}
+      </h3>
+    </div>
+    <div class="col-md-4 text-right month-day-week">
+      <div class="btn-group">
+        <div class="btn btn-primary" mwlCalendarToday [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay( 'Today')">
+          <!-- [class.active]="prevTodayNext === 'Today'"> -->
+          {{ "today" | translate }}
+        </div>
+        <div class="btn btn-primary" (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">
+          <i class="fa fa-th" aria-hidden="true"></i> {{ "month" | translate }}
+        </div>
+        <div class="btn btn-primary" (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">
+          <i class="fa fa-th-list" aria-hidden="true"></i>
+          {{ "week" | translate }}
+        </div>
+        <div class="btn btn-primary" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">
+          <i class="fa fa-bars" aria-hidden="true"></i> {{ "day" | translate }}
+        </div>
+        <!-- <div
+          class="btn btn-primary"
+          mwlCalendarPreviousView
+          [view]="view"
+          [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay($event, 'Previous')"
+          [class.active]="prevTodayNext === 'Previous'"
+        > -->
+        <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay('Previous')" [class.active]="prevTodayNext === 'Previous'">
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
+        </div>
+        <!-- <div
+          class="btn btn-primary"
+          mwlCalendarNextView
+          [view]="view"
+          [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay($event, 'Next')"
+          [class.active]="prevTodayNext === 'Next'"
+        > -->
+
+        <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay('Next')" [class.active]="prevTodayNext === 'Next'">
+          <i class="fa fa-angle-right" aria-hidden="true"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr />
+
+  <div class="row align-items-center">
+    <div class="col-md-8">
+      <div class="indicate-slot" *ngIf="getRole() == 'PROVIDER'">
+        <label><img src="../../../../../../assets/img/online.png" alt="" />
+          {{ "online" | translate }}</label>
+        <label><img src="../../../../../../assets/img/stethoscope.png" alt="" />
+          {{ "face_to_face" | translate }}</label>
+        <label><img src="../../../../../../assets/img/home.png" alt="" />
+          {{ "home_visit" | translate }}</label>
+        <label><img src="../../../../../../assets/img/online-blue.png" alt="" />
+          {{ "online_and_face_to_face" | translate }}</label>
+        <label><img src="../../../../../../assets/img/online-blue.png" alt="" />
+          {{ "appointment" | translate }}</label>
+        <!-- <mat-form-field appearance="fill">
+          <mat-label>Select Patient</mat-label>
+          <mat-select [(value)]="selected" (selectionChange)="statusChangeHandler($event.value)">
+            <mat-option *ngFor="let patient of patientList" [value]="patient">
+              {{patient.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field> -->
+      </div>
+      <div class="indicate-slot" *ngIf="getRole() == 'LAB'">
+        <!-- <label><img src="../../../../../../assets/img/online.png" alt=""> Online</label> -->
+        <label><img src="../../../../../../assets/img/stethoscope.png" alt="" />
+          {{ "face_to_face" | translate }}</label>
+        <label><img src="../../../../../../assets/img/home.png" alt="" />
+          {{ "home_visit" | translate }}</label>
+        <!-- <label><img src="../../../../../../assets/img/online-blue.png" alt=""> Online and Face To Face</label> -->
+        <!-- <label><img src="../../../../../../assets/img/online-blue.png" alt=""> Appointment</label> -->
+        <!-- <mat-form-field appearance="fill">
+          <mat-label>Select Patient</mat-label>
+          <mat-select [(value)]="selected" (selectionChange)="statusChangeHandler($event.value)">
+            <mat-option *ngFor="let patient of patientList" [value]="patient">
+              {{patient.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field> -->
+      </div>
+    </div>
+    <div class="col-md-3 pull-right">
+      <form id="searchPatientForm" #documentForm="ngForm" class="readmin-form custom_form search_custom_form mt-0"
+        [formGroup]="searchPatientForm">
+        <mat-form-field class="custom-field example-full-width">
+          <input matInput placeholder="{{ 'select_patient' | translate }}" formControlName="searchPatient"
+            [(ngModel)]="filterString" [matAutocomplete]="auto" (ngModelChange)="documentTypeHandler($event)" />
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let patient of filterMasterSearchPatients" [value]="patient.nameWithMRN"
+              (onSelectionChange)="statusChangeHandler(patient)">
+              {{ patient.nameWithMRN }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+    </div>
+    <div class="col-md-1 pull-right filter-btn">
+      <button class="clear-btn" mat-raised-button (click)="clearFilter()">
+        {{ "clear_all" | translate }}
+      </button>
+    </div>
+  </div>
+  <div class="custom-dropdown cal-responsive">
+    <div [ngSwitch]="view">
+      <!-- <context-menu #basicMenu> -->
+      <!--<ng-template [enabled]="appointId != 0" contextMenuItem let-item (execute)="addEvent($event, '2')">
+        View Appointment
+      </ng-template>
+      <ng-template [enabled]="!appointId==0 || isRescheduleShow && isvalidDate" contextMenuItem (execute)="addEvent($event.item,'3')">
+                    <span class="disabled"> Reschedule</span>
+                </ng-template> 
+      <ng-template [enabled]="appointId != 0 && isvalidDate" contextMenuItem (execute)="addEvent($event.item, '3')">
+        <span class="disabled"> Reschedule</span>
+      </ng-template>
+      <ng-template [enabled]="appointId != 0 && isvalidDate" contextMenuItem
+        (execute)="addEvent($event.item, '4')">Cancel
+        Appointment
+      </ng-template>-->
+      <!-- <ng-template [enabled]="!appointId==0 || isRescheduleShow && isvalidDate" contextMenuItem (execute)="addEvent($event.item,'3')">
+                    <span class="disabled"> Reschedule</span>
+                </ng-template> -->
+      <!-- <ng-template
+          contextMenuItem
+          [enabled]="appointId != 0"
+          let-item
+          (execute)="addEvent($event, '2')"
+        >
+          {{ "view_appointment" | translate }}
+        </ng-template>
+        <ng-template
+          contextMenuItem
+          [enabled]="appointId != 0 && isvalidDate"
+          (execute)="addEvent($event.item, '3')"
+        >
+          <span class="disabled">{{ "reschedule" | translate }}</span>
+        </ng-template>
+        <ng-template
+          contextMenuItem
+          [enabled]="appointId != 0 && isvalidDate"
+          (execute)="addEvent($event.item, '4')"
+        >
+          {{ "cancel_appointment" | translate }}
+        </ng-template> -->
+      <!-- <ng-template contextMenuItem [enabled]="appointId != 0" (execute)="addEvent($event.item, '5')">Set Reminder
+        </ng-template> -->
+      <!-- <ng-template
+          contextMenuItem
+          [enabled]="appointId != 0 && !isPending && isvalidDate"
+          (execute)="addEvent($event.item, '7')"
+        >
+          {{ "send_invitation" | translate }}
+        </ng-template>
+
+        <ng-template
+          contextMenuItem
+          [enabled]="appointId == 0"
+          (execute)="addEvent($event.item, '8')"
+        >
+          {{ "set_availability" | translate }}
+        </ng-template>
+
+        <ng-template
+          contextMenuItem
+          [enabled]="appointId == 0"
+          (execute)="addEvent($event.item, '9')"
+        >
+          {{ "other" | translate }}
+        </ng-template>
+      </context-menu> -->
+      <!-- <span style="visibility: hidden; position: fixed" [style.left.px]="menuPosition.x" 
+      [style.top.px]="menuPosition.y" style="position: absolute; visibility: hidden;"
+        [matMenuTriggerFor]="menu" #menuTriggerElement>
+    </span> -->
+
+      <span style="visibility: hidden; position: fixed"
+      [style.left]="menuPosition.x"
+      [style.top]="menuPosition.y"
+        [matMenuTriggerFor]="menu" #menuTriggerElement>
+      </span>
+
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item [disabled]="appointId == 0" (click)="addEvent($event, '2')">
+          {{ "view_appointment" | translate }}
+        </button>
+
+        <button mat-menu-item [disabled]="appointId == 0 || !isvalidDate" (click)="addEvent($event, '3')">
+          <span class="disabled">{{ "reschedule" | translate }}</span>
+        </button>
+
+        <button mat-menu-item [disabled]="appointId == 0 || !isvalidDate" (click)="addEvent($event, '4')">
+          {{ "cancel_appointment" | translate }}
+        </button>
+
+        <button mat-menu-item [disabled]="appointId == 0 || isPending || !isvalidDate" (click)="addEvent($event, '7')">
+          {{ "send_invitation" | translate }}
+        </button>
+
+        <button mat-menu-item [disabled]="appointId != 0" (click)="addEvent($event, '8')">
+          {{ "set_availability" | translate }}
+        </button>
+
+        <button mat-menu-item [disabled]="appointId != 0" (click)="addEvent($event, '9')">
+          {{ "other" | translate }}
+        </button>
+      </mat-menu>
+
+      <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" (contextmenu)="onContextMenu($event)"
+        [viewDate]="viewDate" [events]="events" [refresh]="refresh" (dayClicked)="dayClicked($event.day)"
+        (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)"
+        [cellTemplate]="customCellTemplate">
+      </mwl-calendar-month-view>
+      <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" (contextmenu)="onContextMenu($event)"
+        [viewDate]="viewDate" [events]="events" [refresh]="refresh"
+        (eventClicked)="handleEvent('Clicked', $event.event.meta)" (hourSegmentClicked)="weekClicked($event)"
+        (eventTimesChanged)="eventTimesChanged($event)" [eventTemplate]="weekViewEventTemplate" [hourSegments]="4">
+      </mwl-calendar-week-view>
+      <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
+        [refresh]="refresh" (contextmenu)="onContextMenu($event)"
+        (eventClicked)="handleEvent('Clicked', $event.event.meta)" (hourSegmentClicked)="weekClicked($event)"
+        (eventTimesChanged)="eventTimesChanged($event)" [eventTemplate]="dayViewEventTemplate" [hourSegments]="4">
+      </mwl-calendar-day-view>
+
+      <!-- Custom Template For Day  -->
+      <ng-template #dayViewEventTemplate let-dayEvent="dayEvent" let-locale="locale" let-eventClicked="eventClicked"
+        let-tooltipPlacement="tooltipPlacement" let-tooltipTemplate="tooltipTemplate"
+        let-tooltipAppendToBody="tooltipAppendToBody">
+        <div class="cal-event d-flex" [style.color]="getColor(dayEvent.event.visitType)"
+          [style.background]="getBackground(dayEvent.event.visitType)" style="width: 400px" matTooltip="{{
+            dayEvent.event.meta.type == 'appointment'
+              ? ''
+              : dayEvent.event.visitType == 1
+              ? '(Online) '
+              : dayEvent.event.visitType == 2
+              ? '(Face To Face) '
+              : dayEvent.event.visitType == 3
+              ? '(Home Visit) '
+              : dayEvent.event.visitType == 4
+              ? '(Online and Face To Face) '
+              : dayEvent.event.visitType == 0
+              ? dayEvent.event.title
+              : ''
+          }}
+          {{ dayEvent.event.start | date : 'hh:mm a' }}-{{
+            dayEvent.event.end | date : 'hh:mm a'
+          }} 
+          {{
+            dayEvent.event.meta.type == 'appointment'
+              ? dayEvent.event.title
+              : ''
+          }}" matTooltipPosition="above" (contextmenu)="onContextMenu($event, dayEvent.event)">
+          <span *ngIf="dayEvent.event.visitType == 1">
+            <img src="../../../../../../assets/img/online.png" alt="" />
+          </span>
+          <span *ngIf="dayEvent.event.visitType == 2">
+            <img src="../../../../../../assets/img/stethoscope.png" alt="" />
+          </span>
+          <span *ngIf="dayEvent.event.visitType == 3">
+            <img src="../../../../../../assets/img/home.png" alt="" />
+          </span>
+          <span *ngIf="dayEvent.event.visitType == 4">
+            <img src="../../../../../../assets/img/online-blue.png" alt="" />
+          </span>
+          <span *ngIf="dayEvent.event.visitType == 5">
+            <img src="../../../../../../assets/img/online-blue.png" alt="" />
+          </span>
+          <span *ngIf="dayEvent.event.visitType == 0">
+            <img style="width: 15px" src="../../../../../../assets/img/invitation-icon.svg" alt="" />
+          </span>
+
+          <span [innerHtml]="dayEvent.event.logo"></span>
+          <span *ngIf="dayEvent.event.meta.type == 'event'" class="month-event-txt-s crsr-ptr mr-1">
+            {{ dayEvent.event.start | date : "hh:mm a" }}-{{
+            dayEvent.event.end | date : "hh:mm a"
+            }}
+          </span>
+          <span *ngIf="dayEvent.event.meta.type == 'block'" class="month-event-txt-s crsr-ptr mr-1" style="
+            font-weight: bold !important;
+            padding-left: 10px;
+            color: rgb(7, 91, 139) !important;
+          ">
+            {{ dayEvent.event.title }}
+          </span>
+
+          <span *ngIf="dayEvent.event.meta.type == 'appointment'" (contextmenu)="onContextMenu($event, dayEvent.event)"
+            class="month-event-txt-s crsr-ptr">
+            {{ dayEvent.event.title }}
+          </span>
+
+          <span *ngFor="let a of dayEvent.event.actions">
+            <span (click)="monthViewActionCliked(a, dayEvent.event)" [innerHtml]="a.label"></span>
+          </span>
+        </div>
+      </ng-template>
+
+      <!-- Custom Template For Week  -->
+      <ng-template #weekViewEventTemplate let-weekEvent="weekEvent" let-locale="locale" let-eventClicked="eventClicked"
+        let-tooltipPlacement="tooltipPlacement" let-tooltipTemplate="tooltipTemplate"
+        let-tooltipAppendToBody="tooltipAppendToBody">
+        <div class="cal-event week-slots-custom d-flex flex-wrap" [style.color]="getColor(weekEvent.event.visitType)"
+          [style.background]="getBackground(weekEvent.event.visitType)" style="word-wrap: break-word !important"
+          matTooltip="{{
+            weekEvent.event.meta.type == 'appointment'
+              ? ''
+              : weekEvent.event.visitType == 1
+              ? '(Online) '
+              : weekEvent.event.visitType == 2
+              ? '(Face To Face) '
+              : weekEvent.event.visitType == 3
+              ? '(Home Visit) '
+              : weekEvent.event.visitType == 4
+              ? '(Online and Face To Face) '
+              : weekEvent.event.visitType == 0
+              ? weekEvent.event.title
+              : ''
+          }}
+          {{ weekEvent.event.start | date : 'hh:mm a' }}-{{
+            weekEvent.event.end | date : 'hh:mm a'
+          }} 
+          {{
+            weekEvent.event.meta.type == 'appointment'
+              ? weekEvent.event.title
+              : ''
+          }}" matTooltipPosition="above" (contextmenu)="onContextMenu($event, weekEvent.event)">
+          <div>
+            <span *ngIf="weekEvent.event.visitType == 1">
+              <img src="../../../../../../assets/img/online.png" alt="" />
+            </span>
+            <span *ngIf="weekEvent.event.visitType == 2">
+              <img src="../../../../../../assets/img/stethoscope.png" alt="" />
+            </span>
+            <span *ngIf="weekEvent.event.visitType == 3">
+              <img src="../../../../../../assets/img/home.png" alt="" />
+            </span>
+            <span *ngIf="weekEvent.event.visitType == 4">
+              <img src="../../../../../../assets/img/online-blue.png" alt="" />
+            </span>
+            <span *ngIf="weekEvent.event.visitType == 5">
+              <img src="../../../../../../assets/img/online-blue.png" alt="" />
+            </span>
+            <span *ngIf="weekEvent.event.visitType == 0">
+              <img style="width: 15px" src="../../../../../../assets/img/invitation-icon.svg" alt="" />
+            </span>
+
+            <span [innerHtml]="weekEvent.event.logo"></span>
+            <span *ngIf="weekEvent.event.meta.type == 'event'" class="month-event-txt-s crsr-ptr mr-1">
+              {{ weekEvent.event.start | date : "hh:mm a" }}-{{
+              weekEvent.event.end | date : "hh:mm a"
+              }}
+            </span>
+
+            <span *ngIf="weekEvent.event.meta.type == 'block'" class="month-event-txt-s crsr-ptr mr-1" style="
+                font-weight: bold !important;
+                color: rgb(7, 91, 139) !important;
+              ">
+              {{ weekEvent.event.title }}
+            </span>
+
+            <span *ngIf="weekEvent.event.meta.type == 'appointment'"
+              (contextmenu)="onContextMenu($event, weekEvent.event)" class="month-event-txt-s crsr-ptr">
+              {{ weekEvent.event.title }}
+            </span>
+          </div>
+
+          <div *ngIf="weekEvent.event.meta.type == 'block'">
+            <span *ngFor="let a of weekEvent.event.actions">
+              <span (click)="monthViewActionCliked(a, weekEvent.event)" [innerHtml]="a.label"></span>
+            </span>
+          </div>
+          <span *ngIf="weekEvent.event.meta.type != 'block'">
+            <span *ngFor="let a of weekEvent.event.actions">
+              <span (click)="monthViewActionCliked(a, weekEvent.event)" [innerHtml]="a.label"></span>
+            </span>
+          </span>
+        </div>
+      </ng-template>
+
+      <!-- Custom Template For Month  -->
+      <ng-template #customCellTemplate let-day="day">
+        <!-- <div (contextmenu)="onContextMenu($event, null, day.date)"> -->
+        <div (contextmenu)="onContextMenu($event, null)">
+          <div class="custom-month-evnts-box" *ngIf="day.events && day.events.length > 0">
+            <span class="month-day-num" (click)="dayClicked(day)">{{
+              toDateString(day.date)
+              }}</span>
+
+            <div *ngFor="let e of day.events; let i = index">
+              <div *ngIf="isDayOpened(day.date)" class="month-view-day-box">
+                <span tooltip-class="month-title-tip-view" content-type="html" placement="top"
+                  class="cal-day-badge month-slots-custom" [ngClass]="getBgClass(i, e)"
+                  [class]="e.meta.type == 'appointment' ? e.cssClass : null" (click)="
+                    e.meta.type == 'appointment'
+                      ? addEvent($event, '2')
+                      : null
+                  " matTooltip="{{
+                    e.meta.type == 'appointment'
+                      ? ''
+                      : e.visitType == 1
+                      ? '(Online) '
+                      : e.visitType == 2
+                      ? '(Face To Face) '
+                      : e.visitType == 3
+                      ? '(Home Visit) '
+                      : e.visitType == 4
+                      ? '(Online and Face To Face) '
+                      : e.visitType == 0
+                      ? e.title
+                      : ''
+                  }}
+                {{ e.start | date : 'hh:mm a' }}-{{ e.end | date : 'hh:mm a' }} 
+                {{ e.meta.type == 'appointment' ? e.title : '' }}" matTooltipPosition="above">
+                  <span *ngIf="e.visitType == 1">
+                    <img src="../../../../../../assets/img/online.png" alt="" />
+                  </span>
+                  <span *ngIf="e.visitType == 2">
+                    <img src="../../../../../../assets/img/stethoscope.png" alt="" />
+                  </span>
+                  <span *ngIf="e.visitType == 3">
+                    <img src="../../../../../../assets/img/home.png" alt="" />
+                  </span>
+                  <span *ngIf="e.visitType == 4">
+                    <img src="../../../../../../assets/img/online-blue.png" alt="" />
+                  </span>
+                  <span *ngIf="e.visitType == 5">
+                    <img src="../../../../../../assets/img/online-blue.png" alt="" />
+                  </span>
+
+                  <span *ngIf="e.visitType == 0">
+                    <img style="width: 15px" src="../../../../../../assets/img/invitation-icon.svg" alt="" />
+                  </span>
+
+                  <span [innerHtml]="e.logo"></span>
+                  <span *ngIf="e.meta.type == 'event'" class="month-event-txt-s crsr-ptr mr-1">
+                    {{ e.start | date : "hh:mm a" }}-{{
+                    e.end | date : "hh:mm a"
+                    }}
+                  </span>
+
+                  <span *ngIf="e.meta.type == 'block'" class="month-event-txt-s crsr-ptr mr-1" style="
+                      color: rgb(7, 91, 139) !important;
+                      padding: 10px;
+                      font-weight: bold !important;
+                    ">
+                    {{ e.title }}
+                  </span>
+
+                  <span *ngIf="e.meta.type == 'appointment'" (contextmenu)="onContextMenu($event, e)"
+                    class="month-event-txt-s crsr-ptr">
+                    {{ e.title }}
+                  </span>
+
+
+                  <span *ngFor="let a of e.actions">
+                    <span (click)="monthViewActionCliked(a, e)" [innerHtml]="a.label"></span>
+                  </span>
+                </span>
+                <div *ngIf="i === day.events.length - 1" class="cal-day-badge month-slots-custom show-more"
+                  (click)="closeShowAllEvents(day.date)">
+                  <div class="show-blk">
+                    <span class="show-more-text">{{ "less" | translate }}</span>
+                    <span class="material-icons bg-dark-icon">
+                      arrow_drop_up
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="!isDayOpened(day.date)" class="month-view-day-box">
+                <ng-template *ngIf="
+                    i < EVENT_LIMIT;
+                    then showEventsBlock;
+                    else showMoreBlock
+                  ">
+                </ng-template>
+
+                <ng-template #showEventsBlock>
+                  <span content-type="html" tooltip-class="month-title-tip-view" placement="top"
+                    class="cal-day-badge month-slots-custom" [ngClass]="getBgClass(i, e)"
+                    [class]="e.meta.type == 'appointment' ? e.cssClass : null" (click)="
+                      e.meta.type == 'appointment'
+                        ? addEvent($event, '2')
+                        : null
+                    " matTooltip="{{
+                      e.meta.type == 'appointment'
+                        ? ''
+                        : e.visitType == 1
+                        ? '(Online) '
+                        : e.visitType == 2
+                        ? '(Face To Face) '
+                        : e.visitType == 3
+                        ? '(Home Visit) '
+                        : e.visitType == 4
+                        ? '(Online and Face To Face) '
+                        : e.visitType == 0
+                        ? e.title
+                        : ''
+                    }}
+                  {{ e.start | date : 'hh:mm a' }}-{{
+                      e.end | date : 'hh:mm a'
+                    }} 
+                  {{ e.meta.type == 'appointment' ? e.title : '' }}" matTooltipPosition="above">
+                    <span *ngIf="e.visitType == 1">
+                      <img src="../../../../../../assets/img/online.png" alt="" />
+                    </span>
+                    <span *ngIf="e.visitType == 2">
+                      <img src="../../../../../../assets/img/stethoscope.png" alt="" />
+                    </span>
+                    <span *ngIf="e.visitType == 3">
+                      <img src="../../../../../../assets/img/home.png" alt="" />
+                    </span>
+                    <span *ngIf="e.visitType == 4">
+                      <img src="../../../../../../assets/img/online-blue.png" alt="" />
+                    </span>
+                    <span *ngIf="e.visitType == 5">
+                      <img src="../../../../../../assets/img/online-blue.png" alt="" />
+                    </span>
+
+                    <span *ngIf="e.visitType == 0">
+                      <img style="width: 15px" src="../../../../../../assets/img/invitation-icon.svg" alt="" />
+                    </span>
+
+                    <span [innerHtml]="e.logo"></span>
+                    <span *ngIf="e.meta.type == 'event'" class="month-event-txt-s crsr-ptr mr-1">
+                      {{ e.start | date : "hh:mm a" }}-{{
+                      e.end | date : "hh:mm a"
+                      }}
+                    </span>
+                    <span *ngIf="e.meta.type == 'block'" class="month-event-txt-s crsr-ptr mr-1" style="
+                        color: rgb(0, 0, 0) !important;
+                        font-size: 16px;
+                        padding: 10px;
+                      ">
+                      {{ e.title }}
+                    </span>
+
+                    <span *ngIf="e.meta.type == 'appointment'" (contextmenu)="onContextMenu($event, e)"
+                      class="month-event-txt-s crsr-ptr">
+                      {{ e.title }}
+                    </span>
+
+                    <span *ngFor="let a of e.actions" style="float: left">
+                      <span (click)="monthViewActionCliked(a, e)" [innerHtml]="a.label"></span>
+                    </span>
+                  </span>
+                </ng-template>
+
+                <ng-template #showMoreBlock>
+                  <ng-container *ngIf="i === EVENT_LIMIT">
+                    <div class="cal-day-badge month-slots-custom show-more" (click)="openShowAllEvents(day.date)">
+                      <div class="show-blk">
+                        <span class="show-more-text">
+                          {{ day.events.length - EVENT_LIMIT }}
+                          {{ "more" | translate }}</span>
+                        <span class="material-icons bg-dark-icon">arrow_drop_down
+                        </span>
+                      </div>
+                    </div>
+                  </ng-container>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+
+          <div class="crsr-ptr" *ngIf="day.events && day.events.length == 0">
+            <div class="w-100">
+              <span class="custom-blank">{{ toDateString(day.date) }}</span>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,256 @@
+<div class="patient-container">
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-xs-12">
+      <h2 class="page_title">Visit Details</h2>
+      <span *ngIf="endAppointmentNote" style="color: red"
+        >Note : Appointment time is completed, please go to past appointment for
+        more information about the appointment</span
+      >
+    </div>
+    <div class="col-lg-6 col-md-6 col-xs-12">
+      <div class="checkin-btns pull-right">
+        <button
+          class="mr-3"
+          mat-raised-button
+          color="primary"
+          (click)="onAudioVideoTest()"
+        >
+          Test Audio-Video
+        </button>
+        <button mat-raised-button class="mr-3" color="primary" (click)="call()">
+          Call
+        </button>
+        <!-- <button [disabled]="showEndSessionBtn" mat-raised-button color="primary" (click)="EndSession()">
+          End Session
+        </button> -->
+        <!-- <button  mat-raised-button color="primary" (click)="EndSession()">
+          End Session
+        </button> -->
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div
+      class="client_profile"
+      *ngIf="patientAppointmentDetails && staffDetails"
+    >
+      <div class="clientbox">
+        <div class="user_pic activec">
+          <img
+            src="{{
+              staffDetails.photoThumbnail || '../assets/img/noimage2.png'
+            }}"
+            alt=""
+          />
+          <i class="fa fa-circle" aria-hidden="true"></i>
+        </div>
+
+        <div class="userlinks">
+          <p>
+            <a aria-current="false" href="javascript:void(0);"
+              >Dr.&nbsp;{{ staffDetails.staffName }}</a
+            >
+          </p>
+        </div>
+        <div class="client_detail">
+          <p>
+            <b>Appointment Date</b>&nbsp;:&nbsp;
+            <span>{{
+              patientAppointmentDetails.startDateTime || ""
+                | date : "mediumDate"
+            }}</span>
+          </p>
+          <p>
+            <b>Time</b>&nbsp;:&nbsp;
+            <span
+              >{{
+                patientAppointmentDetails.startDateTime || ""
+                  | date : "shortTime"
+              }}&nbsp;-&nbsp;{{
+                patientAppointmentDetails.endDateTime || "" | date : "shortTime"
+              }}</span
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="row" *ngIf="callStartStop">
+      <div class="col-md-4"></div>
+      <div class="col-md-8" id="divVideoTool">
+        <app-video-chat
+          *ngIf="patientAppointmentDetails"
+          [patientAppointmentDetails]="patientAppointmentDetails"
+          [patientAppointmentId]="appointmentId"
+        ></app-video-chat>
+      </div>
+    </div>
+    <!-- <app-mean-video *ngIf="patientAppointmentDetails && patientAppointmentDetails.isTelehealthAppointment" [display-name]='patientAppointmentDetails.patientName'
+    [app-id]='appointmentId'></app-mean-video> -->
+  </div>
+  <!-- <div class="row">
+  <div class="col-12">
+    <div class="panel_title">
+      <h3>Vital: </h3>
+      <i class="flaticon flaticon-bathroom"></i>
+    </div>
+  </div>
+  <div class="col-sm-12">
+    <div class="row">
+      <app-data-table [inputColumns]="displayedColumns" [inputSource]="vitalListingData" [inputMeta]="metaData">
+      </app-data-table>
+    </div>
+  </div>
+</div> -->
+
+  <!-- <div class="row">
+  <div class="col-12">
+    <div class="panel_title">
+      <h3>Medication: </h3>
+      <i class="flaticon flaticon-bathroom"></i>
+    </div>
+  </div>
+  <div class="col-sm-12">
+    <div class="row">
+      <div class="col-sm-6 mt-20 immunize custom-card custom-card-header">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>
+              Medicine : {{medication.medicine}}
+            </mat-card-title>
+            <mat-card-actions>
+              <button  mat-button (click)="openDialog(medication.id)"><i class="fa fa-pencil"></i></button>
+              <button *ngIf="isPatient" mat-button (click)="delete(medication.id)"><i class="fa fa-close"></i></button>
+            </mat-card-actions>
+          </mat-card-header>
+          <mat-card-content class="d-flex justify-content-start">
+            <div>
+              <p>Dose : <span>{{medication.dose}} mg</span></p>
+              <p>Start Date : <span>{{medication.startDate}}</span></p>
+            </div>
+            <div class="ml-4">
+              <p>Strength : <span>{{medication.strength}}</span></p>
+              <p>End Date : <span>{{medication.endDate}}</span></p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div> -->
+  <div class="clearfix"></div>
+  <div class="readmin-panel soap-note-blk">
+    <div class="row" style="margin-bottom: 35px">
+      <div class="col-md-4 pl-0">
+        <div class="readmin-left-panel">
+          <div class="col-12">
+            <h2>Note</h2>
+          </div>
+          <div class="col-12">
+            <angular-editor
+              id="templateNote"
+              [(ngModel)]="htmlContent"
+              [config]="editorConfig"
+            ></angular-editor>
+          </div>
+          <div class="col-12">
+            <button
+              name="Save"
+              [disabled]="htmlContent == ''"
+              mat-raised-button
+              color="accent"
+              (click)="onSubmitEncounterCheckInNotes($event)"
+              class="text-uppercase"
+            >
+              {{ "Save Note" }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-8 pr-0">
+        <div class="readmin-right-panel">
+          <div class="row">
+            <div class="col-12">
+              <mat-tab-group
+                (selectedTabChange)="loadComponent($event)"
+                [disableRipple]="'true'"
+                [selectedIndex]="selectedIndex"
+              >
+                <ng-container *ngFor="let tab of PatientTab; let i = index">
+                  <mat-tab
+                    [class]="tab.class"
+                    class="mat-tab-label-active"
+                    label="{{ tab.TabName }}"
+                  >
+                  </mat-tab>
+                </ng-container>
+              </mat-tab-group>
+              <div #tabContent></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--main row-->
+    <div class="col-12" *ngIf="false">
+      <div class="form-group">
+        <mat-form-field class="example-full-width">
+          <mat-select
+            placeholder="Select Patient's Options"
+            (selectionChange)="selectChangeHandler($event)"
+          >
+            <mat-option *ngFor="let tab of moduleTabs" [value]="tab.id">
+              {{ tab.displayName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <ng-container *ngIf="selectPatientOption == 7">
+        <app-client-soap-note
+          [encryptedPatientId]="encrytPatientId"
+        ></app-client-soap-note>
+      </ng-container>
+      <ng-container *ngIf="selectPatientOption == 8">
+        <app-medication [encryptedPatientId]="encrytPatientId"></app-medication>
+      </ng-container>
+      <ng-container *ngIf="selectPatientOption == 9">
+        <app-prescription
+          [encryptedPatientId]="encrytPatientId"
+        ></app-prescription>
+      </ng-container>
+      <ng-container *ngIf="selectPatientOption == 10">
+        <app-icd [encryptedPatientId]="encrytPatientId"></app-icd>
+      </ng-container>
+      <!-- <ng-container *ngIf="selectPatientOption == 11">
+      <app-history [encryptedPatientId]="encrytPatientId"></app-history>
+    </ng-container> -->
+      <ng-container *ngIf="selectPatientOption == 12">
+        <app-client-insurance
+          [encryptedPatientId]="encrytPatientId"
+        ></app-client-insurance>
+      </ng-container>
+
+      <ng-container *ngIf="selectPatientOption == 13">
+        <app-immunization
+          [encryptedPatientId]="encrytPatientId"
+        ></app-immunization>
+      </ng-container>
+      <ng-container *ngIf="selectPatientOption == 6">
+        <app-vitals [encryptedPatientId]="encrytPatientId"></app-vitals>
+      </ng-container>
+      <ng-container *ngIf="selectPatientOption == 14">
+        <app-allergies [encryptedPatientId]="encrytPatientId"></app-allergies>
+      </ng-container>
+      <ng-container *ngIf="selectPatientOption == 5">
+        <app-documents [encryptedPatientId]="encrytPatientId"></app-documents>
+      </ng-container>
+    </div>
+  </div>
+</div>

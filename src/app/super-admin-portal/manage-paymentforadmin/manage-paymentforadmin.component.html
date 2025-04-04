@@ -1,0 +1,48 @@
+<div class="p-3">
+  <h2 class="page-title mt-5">Manage Payments</h2>
+<div class="readmin-panel one">
+  <mat-tab-group
+    [(selectedIndex)]="selectedTabIndex"
+    (click)="onTabChange(selectedTabIndex)"
+  >
+    <div *ngFor="let tab of moduleTabs; let index = index">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span>{{ tab.displayName }}</span>
+        </ng-template>
+      </mat-tab>
+    </div>
+  </mat-tab-group>
+</div>
+  <div class="">
+    <ng-container *ngIf="selectedTabDisplayName == 'PaymentHistory'">
+      <app-super-admin-payment-history></app-super-admin-payment-history>
+    </ng-container>
+    <ng-container *ngIf="selectedTabDisplayName == 'RefundHistory'">
+      <app-total-refund-history></app-total-refund-history>
+    </ng-container>
+     <ng-container *ngIf="selectedTabDisplayName == 'ManageFees'">
+      <app-manage-fees-refunds></app-manage-fees-refunds>
+    </ng-container> 
+  </div>
+
+  <!-- <div *ngIf="moduleTabs && moduleTabs.length > 0" class="mod-tabs">
+          <div class="readmin-panel pt-0">
+            <mat-tab-group
+              [(selectedIndex)]="selectedTabIndex"
+              (click)="onTabChange(selectedTabIndex)"
+            >
+              <div *ngFor="let tab of moduleTabs; let index = index">
+                <mat-tab *ngIf="tab.displayName != 'View Client List'">
+                  <ng-template mat-tab-label>
+                    <span>{{ tab.displayName }}</span>
+                  </ng-template>
+                </mat-tab>
+              </div>
+            </mat-tab-group>
+          </div>
+        </div> -->
+  <!--<router-outlet *ngIf="headerInfo && headerInfo.user"></router-outlet>-->
+</div>
+
+

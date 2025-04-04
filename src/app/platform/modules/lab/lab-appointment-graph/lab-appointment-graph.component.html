@@ -1,0 +1,327 @@
+<div class="readmin-panel pt-0 provider-dashboardchart">
+  <mat-tab-group (selectedTabChange)="onTabChanged($event)">
+    <mat-tab label="Lab Refferals">
+      <form class="readmin-form custom_form flex-wrap" id="testFormGroup" #documentForm="ngForm"
+      [formGroup]="testFormGroup">
+                  <div class="row">
+                    <div class="col-lg-3 col-sm-6">
+                      <mat-form-field class="example-full-width pos">
+                        <input matInput (keyup)="getAllLabReferralList(this.currentUser.id)"
+                          placeholder="{{'search_here'|translate}}" formControlName="searchKey" />
+                        <button class="search-button"></button>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                      <mat-form-field class="example-full-width">
+                        <input matInput readonly [matDatepicker]="rangeStartDate" (dateChange)="applyStartDateFilter($event)"
+                          placeholder="{{'from_date'|translate}}" formControlName="rangeStartDate" />
+                        <mat-datepicker-toggle matSuffix [for]="rangeStartDate"></mat-datepicker-toggle>
+                        <mat-datepicker #rangeStartDate></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                      <mat-form-field class="example-full-width">
+                        <input matInput readonly [matDatepicker]="rangeEndDate" (dateChange)="applyEndDateFilter($event)"
+                          placeholder="{{'to_date'|translate}}" formControlName="rangeEndDate" />
+                        <mat-datepicker-toggle matSuffix [for]="rangeEndDate"></mat-datepicker-toggle>
+                        <mat-datepicker #rangeEndDate></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-lg-2 col-sm-6 filter-btn">
+                      <button class="clear-btn" mat-raised-button (click)="clearFilters()">
+                        {{"clear_all"|translate}}
+                      </button>
+                    </div>
+                  </div>
+                </form>
+            
+                  <!-- <div id="accordion">
+                    <div class="card p-0">
+                      <div class="card-header" id="headingOne">
+                        <div class="d-flex justify-content-between" data-toggle="collapse" data-target="#collapseOne"
+                          aria-expanded="true" aria-controls="collapseOne">
+                          <h2 class="head-filter m-0">{{'filter'|translate}}</h2>
+                          <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        </div>
+                      </div>
+                      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body filter_blk mb-2">
+                          <div class="row">
+                            <div class="col-sm-3 pos">
+                              <label class="type_label">Filter By Name : </label>
+                              <mat-form-field class="exmaple-full-width" appearance="fill">
+                                <input
+                                  matInput
+                                  name="searchText"
+                                  formControlName="searchText"
+                                  placeholder="{{'search'|translate}}"
+                                  (keyup)="searchFilter($event)"
+                                />
+                                <button _ngcontent-c21="" class="search-button"></button>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-4 col-12">
+                              <label class="type_label">Referral Status : </label>
+                              <div>
+                                <mat-form-field class="example-full-width">
+                                  <mat-label>{{"select_status"|translate}}</mat-label>
+                                  <mat-select [(value)]="selected" formControlName="referralstatus" (selectionChange)="statusChangeHandler($event.value)">
+                                    <mat-option *ngFor="let status of referralStatus" [value]="status">
+                                      {{status}}
+                                    </mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-4 col-12">
+                              <label class="type_label">&nbsp;</label>
+                              <mat-form-field class="example-full-width">
+                                <input matInput readonly [matDatepicker]="referralDate" (dateChange)="applyreferralDateFilter($event)"
+                                  placeholder="Refferal Date" formControlName="referralDate" />
+                                <mat-datepicker-toggle matSuffix [for]="referralDate"></mat-datepicker-toggle>
+                                <mat-datepicker #referralDate></mat-datepicker>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-4 col-12">
+                              <label class="type_label">&nbsp;</label>
+                              <mat-form-field class="example-full-width">
+                                <input matInput readonly [matDatepicker]="endreferralDate" (dateChange)="applyendreferralDateFilter($event)"
+                                  placeholder="End Refferal Date" formControlName="endreferralDate" />
+                                <mat-datepicker-toggle matSuffix [for]="endreferralDate"></mat-datepicker-toggle>
+                                <mat-datepicker #endreferralDate></mat-datepicker>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-4 col-12">
+                              <label class="type_label">&nbsp;</label>
+                              <mat-form-field class="example-full-width">
+                                <input matInput readonly [matDatepicker]="testDate" (dateChange)="applyTestDateFilter($event)"
+                                  placeholder="Test Date" formControlName="testDate" />
+                                <mat-datepicker-toggle matSuffix [for]="testDate"></mat-datepicker-toggle>
+                                <mat-datepicker #testDate></mat-datepicker>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-4 col-12">
+                              <label class="type_label">&nbsp;</label>
+                              <mat-form-field class="example-full-width">
+                                <input matInput readonly [matDatepicker]="endtestDate" (dateChange)="applyendTestDateFilter($event)"
+                                  placeholder="End Test Date" formControlName="endtestDate" />
+                                <mat-datepicker-toggle matSuffix [for]="endtestDate"></mat-datepicker-toggle>
+                                <mat-datepicker #endtestDate></mat-datepicker>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-lg-6 col-md-3 col-sm-3 col-12 filter-btn block_filter">
+                              <button class="clear-btn" mat-raised-button (click)="clearFilters()">
+                                {{"clear_all"|translate}}
+                              </button>
+                              <div class="totalCount">
+                                <label class="type_label">
+                                  Count:{{totalReferral}}
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div> -->
+      <!-- <div class="dash-table">
+        <ng-scrollbar [trackX]="true" [autoHide]="true">
+          <div class="col-md-12 mt-3">
+            <app-data-table [inputColumns]="displayColumns" [inputSource]="labReferrals" [inputMeta]="metaData"
+              (onTableActionClick)="onTableActionClick($event)" [inputButtons]="actionButtons"></app-data-table>
+          </div>
+        </ng-scrollbar>
+      </div> -->
+      <div class="row">
+        <div class="table-responsive mt-15">
+          <mat-table #table [dataSource]="labReferrals" class="table table-hover customtable group-table table-bordered">
+            
+            <ng-container matColumnDef="Patient Name">
+              <mat-header-cell *matHeaderCellDef>{{"patient_name" | translate}} </mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                {{ element.patientName }}
+              </mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="Provider Name">
+              <mat-header-cell *matHeaderCellDef>{{"provider_name" | translate}}</mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                {{ element.staffName }}
+              </mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="Test Name">
+              <mat-header-cell *matHeaderCellDef>{{"test_name"|translate}}</mat-header-cell>
+              <mat-cell [title]="element.testName" *matCellDef="let element" class="test_name_block"
+                style="display: flex; flex-direction: column">
+                <div *ngFor="let item of element.testName.split('|'); let i = index" style="width: 100%">
+                  <div *ngIf="i < 3" style="
+                      white-space: nowrap;
+                      text-overflow: ellipsis;
+                      overflow: hidden;
+                      width: 100%;
+                    ">
+                    &#x2022;&nbsp;{{ item }}
+                  </div>
+                </div>
+  
+                <div *ngIf="element.testName.split('|').length > 3"
+                  style="width: 100%; display: flex; justify-content: right">
+                  .....
+                </div>
+              </mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="Status">
+              <mat-header-cell *matHeaderCellDef> {{"status" | translate}} </mat-header-cell>
+              <mat-cell *matCellDef="let element; let i = index">
+                <mat-select [(ngModel)]="element.status" (selectionChange)="onStatusChange($event, element)">
+                  <mat-option *ngFor="let status of statusArray" [value]="status">
+                    {{ status }}
+                  </mat-option>
+                </mat-select>
+              </mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="Notes">
+              <mat-header-cell *matHeaderCellDef> {{"notes" | translate}} </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{ element.notes }} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="Collection Date">
+              <mat-header-cell *matHeaderCellDef>
+                {{"collection_date"|translate}}
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                {{
+                element.testCollectionDate
+                ? (element.testCollectionDate | date : "dd-MM-yyyy")
+                : "----"
+                }}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="QrCode">
+              <mat-header-cell *matHeaderCellDef> QrCode </mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <span *ngIf="element.qrImagePath != ''">
+                  <img [src]="element.qrImagePath" alt="" (click)="imageInhancer(element, 'qrImage')" />
+                </span>
+                <span *ngIf="element.qrImagePath == ''"> ---- </span>
+              </mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="Actions">
+              <mat-header-cell *matHeaderCellDef>
+                {{ "actions" | translate }}
+              </mat-header-cell>
+              <mat-cell *matCellDef="let row" class="insurance_block">
+                <div class="dropdown">
+                  <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <button class="btn viewww" (click)="downloadInsuranceTemplate(row)" title="download insurance">
+                      Download Insurance
+                    </button>
+                    <button class="btn viewww" (click)="viewInsuranceDocument(row)" title="view insurance">
+                      View Insurance
+                    </button>
+                    <button class="btn viewww" (click)="downloadTemplate(row)" title="download referral">
+                      Download Referral
+                    </button>
+  
+                    <button class="btn viewww" (click)="viewDocument(row)" title="view referral">
+                      View Referral
+                    </button>
+                    <button class="btn viewww" (click)="openFileUploadModal(row)" title="view test details/result">
+                      View Test Details
+                    </button>
+                  </div>
+                </div>
+              </mat-cell>
+            </ng-container>
+  
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+          </mat-table>
+  
+          <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 15, 20, 25]" [showFirstLastButtons]="true"
+            (page)="setPagePaginator($event)" [length]="totalSize">
+          </mat-paginator>
+        </div>
+      </div>
+
+    
+    </mat-tab>
+    <!-- <mat-tab>
+      <ng-template mat-tab-label> Appointments Graph </ng-template>
+
+      <div>
+         <app-bar-chart
+            class="bar-dash"
+          >
+          </app-bar-chart>
+      </div>
+    </mat-tab>-->
+    <mat-tab>
+      <ng-template mat-tab-label> {{"accepted_approved_appointments"|translate}}</ng-template>
+      <div class="row">
+        <div class="col-md-12">
+        <app-lab-appointments [isLoadDashboardAppointment]="isLoadAppointment"></app-lab-appointments>
+
+
+          <!-- <div class="dash-table">
+            <ng-scrollbar [trackX]="true" [autoHide]="true">
+              <app-data-table
+                stickyHeader="true"
+                (onTableActionClick)="onTableRowClick($event)"
+                [showTooltip]="showTooltip"
+                [inputColumns]="invitedDisplayedColumns"
+                [inputSource]="approvedAppointment"
+                [inputMeta]="metaDataPrescription"
+                [inputButtons]="allAppointmentsActionButtons"
+              ></app-data-table>
+            </ng-scrollbar>
+          </div> -->
+        </div>
+      </div>
+      <ng-template> {{"view_appointment"|translate}} </ng-template>
+      <ng-template>
+        <span class="disabled"> {{"reschedule"|translate}}</span>
+      </ng-template>
+      <ng-template>{{"cancel_appointment"|translate}} </ng-template>
+      <ng-template>Set Reminder </ng-template>
+      <ng-template> {{"set_availability"|translate}} </ng-template>
+      <ng-template> {{"send_invitation"|translate}} </ng-template>
+    </mat-tab>
+<!--
+    <mat-tab label="Cancelled Appointments">
+      <div class="dash-table">
+        <ng-scrollbar [trackX]="true" [autoHide]="true">
+          <app-data-table
+            [inputColumns]="invitedDisplayedColumns"
+            [inputMeta]="metaDataPrescription"
+            [inputSource]="cancelAppointment"
+          ></app-data-table>
+        </ng-scrollbar>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Pending Invitation Appointments">
+      <div class="dash-table">
+        <ng-scrollbar [trackX]="true" [autoHide]="true">
+          <app-data-table
+            stickyHeader="true"
+            [inputColumns]="invitedDisplayedColumns"
+            [inputButtons]="invitedActionButtons"
+            [inputSource]="pendingsAppointment"
+            [inputMeta]="metaDataPrescription"
+            (onTableActionClick)="onPendingInvitationTableActionClick($event)"
+          ></app-data-table>
+        </ng-scrollbar>
+      </div>
+    </mat-tab> -->
+  </mat-tab-group>
+</div>

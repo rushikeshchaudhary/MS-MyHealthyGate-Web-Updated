@@ -1,0 +1,54 @@
+<div class="patient-container">
+  <app-client-header
+    [clientId]="clientId"
+    [headerText]="header"
+  ></app-client-header>
+  <div class="readmin-panel">
+    <div *ngIf="isHistoryShareable" class="panel-body">
+      <div class="row">
+        <div class="col-md-12 justify-content-between d-flex align-items-center">
+          <div class="gridlist">
+            <i class="fa fa-list" (click)="toggleView('grid')"></i>
+            <i class="fa fa-area-chart ml-3" (click)="toggleView('chart')"></i>
+          </div>
+          <button
+            *ngIf="addPermission"
+            mat-raised-button
+            color="primary"
+            class="add-primary-btn"
+            (click)="openDialog()"
+          >
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            <span>{{"add_vitals"|translate}}</span>
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="!isGrid" class="mt-15">
+        <app-line-chart
+          [lineChartData]="lineChartData"
+          [lineChartLabels]="lineChartLabels"
+        ></app-line-chart>
+        <!-- <canvas baseChart height="80" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+                  [chartType]="lineChartType"></canvas> -->
+      </div>
+      <div *ngIf="isGrid">
+        <app-data-table
+          [inputColumns]="displayedColumns"
+          [inputSource]="vitalListingData"
+          [inputMeta]="metaData"
+          [inputButtons]="actionButtons"
+          (onPageOrSortChange)="onPageOrSortChange($event)"
+          (onTableActionClick)="onTableActionClick($event)"
+        >
+        </app-data-table>
+      </div>
+    </div>
+    <div *ngIf="!isHistoryShareable" class="m-3">
+      <h3>
+        <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
+        Patient don't want to share his vitals
+      </h3>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,635 @@
+<div class="patient-container">
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-xs-12">
+      <h2 class="page_title">Visit Details</h2>
+    </div>
+    <div class="col-lg-6 col-md-6 col-xs-12">
+      <div class="checkin-btns pull-right">
+        <button name="back" mat-raised-button color="primary" class="text-uppercase"
+          (click)="onBackClick()">Back</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- client header component start -->
+  <div class="client_profile" *ngIf="patientAppointmentDetails && patientAppointmentDetails.patientID">
+    <div class="client-head">
+      <a (click)="onNavigate('/web/client/profile')" aria-current="false" href="javascript:void(0);">
+        <h3>{{clientHeaderModel.patientBasicHeaderInfo.name}}</h3>
+      </a>
+      <div class="quick rr">
+        <ul>
+          <li class="red">
+            <a href="#" title="Tags">
+              <i class="fa fa-tag"></i>
+            </a>
+            <div class="quicksubmenu tagbox plr-10">
+              <ul class="tags">
+                <li *ngFor="let tag of clientHeaderModel.patientTagsHeaderInfo">
+                  <span class="tagafter" [ngStyle]="{backgroundColor: tag.colorCode}"></span>
+                  <span class="tag" [ngStyle]="{backgroundColor: tag.colorCode}">{{tag.tag}}</span>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="blue">
+            <a href="#" title="Contact">
+              <i class="fa fa-phone"></i>
+            </a>
+            <ul class="quicksubmenu">
+              <li>
+                <i class="fa fa-phone" aria-hidden="true"></i>{{clientHeaderModel.patientBasicHeaderInfo.phone||''}}
+              </li>
+              <li class="msg">
+                <i class="fa fa-envelope" aria-hidden="true"></i>{{clientHeaderModel.patientBasicHeaderInfo.email||''}}
+              </li>
+              <li>
+                <i class="fa fa-map-marker"
+                  aria-hidden="true"></i>{{clientHeaderModel.patientBasicHeaderInfo.address||''}}
+              </li>
+            </ul>
+          </li>
+          <li class="green">
+            <a href="#" title="Bio-Psych Social Intake">
+              <i class="fa fa-user-md"></i>
+            </a>
+            <div class="quicksubmenu">
+              <p>
+                <b>{{clientHeaderModel.patientBasicHeaderInfo.primaryProvider||''}}</b>
+                <span>-</span>
+              </p>
+              <p *ngFor="let allergy of clientHeaderModel.patientAllergyHeaderInfo">{{allergy.allergen||''}}</p>
+              <p *ngIf="clientHeaderModel.patientAllergyHeaderInfo.length==0">No allergies found</p>
+            </div>
+          </li>
+          <li class="orange">
+            <a (click)="onNavigate('/web/client/scheduling')" title="My Appointments" href="javascript:void(0);">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="clientbox">
+      <div class="client_detail">
+        <div class="dashboard-btn-card">
+          <div class="user_pic activec">
+            <img src="{{clientHeaderModel.patientBasicHeaderInfo.photoThumbnailPath}}" alt="" />
+            <!-- <i class="fa fa-circle" aria-hidden="true"></i> -->
+          </div>
+
+          <!-- <div class="userlinks">
+            <p>
+              <a (click)="onNavigate('/web/client/profile')"
+              aria-current="false" href="javascript:void(0);">{{clientHeaderModel.patientBasicHeaderInfo.name}}</a>
+            </p>
+          </div> -->
+        </div>
+        <div class="dashboard-btn-card">
+          <label>Gender</label><br>
+          <button mat-raised-button class="mr-3">
+            {{ clientHeaderModel.patientBasicHeaderInfo.gender || "" }} <span><img src="../../../../../../assets/img/gender.svg" alt=""></span>
+          </button>
+        </div>
+        <div class="dashboard-btn-card">
+          <label>D.O.B:</label><br>
+          <button mat-raised-button class="mr-3">
+            {{ clientHeaderModel.patientBasicHeaderInfo.dob || "" }} <span><img src="../../../../../../assets/img/dob.svg" alt=""></span>
+          </button>
+        </div>
+        <div class="dashboard-btn-card">
+          <!-- <label>SSN:</label><br> -->
+          <label>National ID No./Medicare No.</label><br>
+          <button mat-raised-button class="mr-3">
+            {{ clientHeaderModel.patientBasicHeaderInfo.ssn || "" }} <span><img src="../../../../../../assets/img/ssn.svg" alt=""></span>
+          </button>
+        </div>
+        <div class="dashboard-btn-card">
+          <label>MRN:</label><br>
+          <button mat-raised-button class="mr-3">
+            {{ clientHeaderModel.patientBasicHeaderInfo.mrn || "" }} <span><img src="../../../../../../assets/img/mrn.svg" alt=""></span>
+          </button>
+        </div>
+        <div class="dashboard-btn-card">
+          <label>Appointment</label><br>
+          <button mat-raised-button class="mr-3">
+            {{ patientAppointmentDetails.mode || "" }}<span><img src="../../../../../../assets/img/stethoscope.svg" alt=""></span>
+          </button>
+        </div>
+        <div class="dashboard-btn-card">
+          <label>Appointment Date</label><br>
+          <button mat-raised-button class="mr-3">
+            {{ (patientAppointmentDetails.startDateTime | date : 'dd/MM/yyyy') || "" }} <span><img src="../../../../../../assets/img/appoint-date.svg" alt=""></span>
+          </button>
+        </div>
+        <!-- <div class="dashboard-btn-card">
+          <label>Seen By</label><br>
+          <button mat-raised-button class="mr-3">
+            12/25/1961 <span><img src="../../../../../../assets/img/seen-by.svg" alt=""></span>
+          </button>          
+        </div> -->
+      </div>
+    </div>
+  </div>
+  <!-- client header component end -->
+
+  <div class="readmin-panel">
+    <form id="soapForm" #documentForm="ngForm" class="readmin-form custom_form" [formGroup]="soapForm">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="readmin-left-panel">
+            <div class="row">
+              <div class="col-12">
+                <div class="panel_title">
+                  <h3>Vital: </h3>
+                  <i class="flaticon flaticon-bathroom"></i>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="row">
+                  <app-data-table [inputColumns]="displayedColumns" [inputSource]="vitalListingData"
+                    [inputMeta]="metaData">
+                  </app-data-table>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="panel_title">
+                  <h3>Lab Referral: </h3>
+                  <i class="flaticon flaticon-bathroom"></i>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="row">
+                  <app-data-table [inputColumns]="displayColumnsLab" [inputSource]="labReferralList"
+                    [inputMeta]="metaDataLab" (onTableActionClick)="onTableActionClickLab($event)"
+                    [inputButtons]="actionButtonsLab">
+                  </app-data-table>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="panel_title">
+                  <h3>Radiology Referral: </h3>
+                  <i class="flaticon flaticon-bathroom"></i>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="row">
+                  <app-data-table [inputColumns]="displayColumnsRadio" [inputSource]="radiologyReferralList"
+                    [inputMeta]="metaDataRadio" (onTableActionClick)="onTableActionClickLab($event)"
+                    [inputButtons]="actionButtonsRadio">
+                  </app-data-table>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="panel_title">
+                  <h3>Assessment Questions:</h3>
+                  <i class="flaticon flaticon-bathroom"></i>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="row">
+                  <app-data-table [inputColumns]="displayColumnsQuestions" [inputSource]="questionAnswers"
+                    [inputMeta]="metaDataRadio">
+                  </app-data-table>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="panel_title">
+                  <h3>Medication: </h3>
+                  <i class="flaticon flaticon-bathroom"></i>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="mt-20 immunize custom-card custom-card-header"
+                  *ngFor="let medication of medicationList">
+                  <mat-card>
+                    <mat-card-header>
+                      <mat-card-title>
+                        Medicine : {{medication.medicine}}
+                      </mat-card-title>
+                      <mat-card-actions>
+                        <!--<button  mat-button (click)="openDialog(medication.id)"><i class="fa fa-pencil"></i></button>-->
+                        <button *ngIf="false" mat-button (click)="delete(medication.id)"><i
+                            class="fa fa-close"></i></button>
+                      </mat-card-actions>
+                    </mat-card-header>
+                    <mat-card-content class="d-flex justify-content-start">
+                      <div>
+                        <p>Dose : <span>{{medication.dose}} mg</span></p>
+                        <p>Start Date : <span>{{medication.startDate}}</span></p>
+                      </div>
+                      <div class="ml-4">
+                        <p>Strength : <span>{{medication.strength}}</span></p>
+                        <p>End Date : <span>{{medication.endDate}}</span></p>
+                      </div>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="panel_title">
+                  <h3>Prescription: </h3>
+                  <i class="flaticon flaticon-bathroom"></i>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="row">
+                  <div class="table-responsive">
+                    <table mat-table [dataSource]="dataSourcePre"
+                      class="table table-hover customtable group-table mat-table">
+                      <!-- Checkbox Column -->
+                      <ng-container matColumnDef="drugName">
+                        <th mat-header-cell *matHeaderCellDef>Drug Name</th>
+                        <td mat-cell *matCellDef="let element">{{ element.drugName }}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="strength">
+                        <th mat-header-cell *matHeaderCellDef>Strength</th>
+                        <td mat-cell *matCellDef="let element">{{ element.strength }}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="directions">
+                        <th mat-header-cell *matHeaderCellDef>Directions</th>
+                        <td mat-cell *matCellDef="let element">{{ element.directions }}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="startDate">
+                        <th mat-header-cell *matHeaderCellDef>Start Date</th>
+                        <td mat-cell *matCellDef="let element">{{ element.startDate }}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="endDate">
+                        <th mat-header-cell *matHeaderCellDef>End Date</th>
+                        <td mat-cell *matCellDef="let element">{{ element.endDate }}</td>
+                      </ng-container>
+
+                      <tr mat-header-row *matHeaderRowDef="displayedColumnsPre"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumnsPre"></tr>
+                    </table>
+                    <mat-paginator [length]="metaDataPre['totalRecords']" [pageIndex]="metaDataPre['currentPage'] - 1"
+                      [pageSize]="metaDataPre['pageSize']" (page)="onPageOrSortChangePre($event)" showFirstLastButtons>
+                    </mat-paginator>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="panel_title">
+                  <h3>Immunization: </h3>
+                  <i class="flaticon flaticon-bathroom"></i>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="row">
+                  <div class="col-sm-6 mt-20 immunize custom-card custom-card-header"
+                    *ngFor="let immunization of immunizationList">
+                    <mat-card>
+                      <mat-card-header>
+                        <mat-card-title>
+                          {{ immunization.vaccineName }}
+                        </mat-card-title>
+                      </mat-card-header>
+                      <mat-card-content>
+                        <p>
+                          Amount :
+                          <span>{{
+                            immunization.amountAdministered > 0
+                            ? immunization.amountAdministered
+                            : "0"
+                            }}
+                            ml</span>
+                        </p>
+                        <p>
+                          Administered Date :
+                          <span>{{
+                            immunization.administeredDate | date : "dd-MM-yyyy"
+                            }}</span>
+                        </p>
+                        <p>
+                          Route Of Administration :
+                          <span>{{ immunization.routeOfAdministration }}</span>
+                        </p>
+                        <p>
+                          Administration Site :
+                          <span>{{ immunization.administrationSite }}</span>
+                        </p>
+                        <p>
+                          Immunity Status : <span>{{ immunization.conceptName }}</span>
+                        </p>
+                      </mat-card-content>
+                    </mat-card>
+                    <div class="rejectedmsg" *ngIf="immunization.rejectedImmunization">
+                      <p>
+                        <span class="redfont">Rejected!</span> Reason:
+                        {{ immunization.rejectionReasonNote }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="panel_title">
+                  <h3>SOAP And Plan information</h3>
+                  <i class="flaticon flaticon-bathroom"></i>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                      <!-- <div class="col-sm-6">
+                        <p>
+                          <b>Selected Template</b>
+                          <span>{{PatientEncounterDetails && PatientEncounterDetails.}}</span>
+                        </p>
+                      </div> -->
+                <ng-scrollbar class="formio-form-div soap-note-form">
+                  <formio [form]='jsonFormData' [submission]="initialFormValues" [options]="formioOptions"
+                    (submit)="onSubmitTemplate($event)" [viewOnly]="true" [hideComponents]="['button']">
+                  </formio>
+                </ng-scrollbar>
+                <div class="shopnote-table-width">
+                  <app-data-table
+                  [inputColumns]="displaySoapNoteColumns"
+                  [inputSource]="allSoapNotes"
+                  [inputMeta]="metaData"
+                  (onTableActionClick)="onTableActionClickSoap($event)"
+                  title="Go to profile page"
+                  onmouseover="this.style.cursor='pointer'"
+                  (onPageOrSortChange)="onPageOrSortChange($event)"
+                  [inputButtons]="actionButtons"
+                >
+                </app-data-table>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <p>
+                  <b>Patient Plan:</b>
+                  <span>{{' '+PatientEncounterNotes}}</span>
+                </p>
+              </div>
+              <div class="col-sm-12 button_style">
+                <button mat-raised-button color="primary" (click)="downloadTemplate('view')" style="float: right; margin-right: 5px;">
+                  <i class="fa fa-eye"></i> View Template
+                </button>             
+                <button mat-raised-button color="primary" (click)="downloadTemplate('download')" style="float: right;">
+                  <i class="fa fa-download"></i> Download Template
+                </button>
+              </div>
+              <div class="col-sm-12">
+                <p>
+                  <b>Patient Notes:</b>
+                  <!-- <span>{{' '+PatientEncounterCheckInNotes}}</span> -->
+                </p>
+                <div class="ml-2" [innerHtml]="PatientEncounterCheckInNotes"></div>
+              </div>
+
+              <div class="col-sm-12">
+                <!-- <mat-form-field class="example-full-width">
+                  <textarea placeholder="Notes" maxlength="1000" rows="6" matInput formControlName="nonBillableNotes" required [readonly]="isSoapCompleted"></textarea>
+                  <mat-error *ngIf="formControls.nonBillableNotes.errors?.required">
+                    Please enter notes
+                  </mat-error>
+                </mat-form-field> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="readmin-right-panel">
+            <div class="row">
+              <div class="col-12">
+                <div class="d-flex justify-content-between">
+                  <div class="panel_title no_margin">
+                    <h3>Appointment Details</h3>
+                    <i class="flaticon flaticon-medical-4"></i>
+                  </div>
+                </div>
+                <div class="soap_detail">
+                  <div class="row">
+                    <!-- <div class="col-sm-6">
+                      <p>
+                        <b>Appointment :</b>
+                        <span>{{patientAppointmentDetails && patientAppointmentDetails.patientName}}</span>
+                      </p>
+                    </div>
+                    <div class="col-sm-6">
+                      <p>
+                        <b>Appointment Date :</b>
+                        <span>{{patientAppointmentDetails && patientAppointmentDetails.startDateTime|date:'dd/MM/yyyy'}}</span>
+                      </p>
+                    </div>
+                    <div class="col-sm-6">
+                      <p>
+                        <b>Appointment Time:</b>
+                        <span>{{appointmentStartTime + ' - ' +  appointmentEndTime}}</span>
+                      </p>
+                    </div>
+                    <div class="col-sm-6">
+                      <p>
+                        <b>Seen By :</b>
+                        <span>{{ staffDetails && staffDetails.staffName }}</span>
+                      </p>
+                    </div>
+                    <div class="col-sm-6">
+                      <p>
+                        <b>Service Type :</b>
+                        <span>{{ (patientAppointmentDetails && patientAppointmentDetails.isDirectService) ? 'Direct' : 'Indirect'
+                          }}
+                        </span>
+                      </p>
+                    </div>
+                    <div class="col-sm-6">
+                      <p>
+                        <b>Service Location :</b>
+                        <span>{{patientAppointmentDetails && patientAppointmentDetails.serviceLocationID}}</span>
+                      </p>
+                    </div> -->
+                    <div class="col-sm-4 pl-0">
+                      <div class="detail-card">
+                        <label>Start Time</label>
+                        <p>{{appointmentStartTime}}</p>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="detail-card">
+                        <label>End time</label>
+                        <p>{{appointmentEndTime}}</p>
+                      </div>
+                    </div>
+                    <div class="col-sm-4 pr-0">
+                      <div class="detail-card">
+                        <label>Location :</label>
+                        <p>{{patientAppointmentDetails && patientAppointmentDetails.locationName}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="d-flex justify-content-between">
+                  <div class="panel_title no_margin">
+                    <h3>Medication</h3>
+                    <i class="flaticon flaticon-medical-4"></i>
+                  </div>
+                </div> -->
+                <!-- <div class="soap_detail detail_wd">
+                  <div class="img-sec">
+                    <img src="../../../../../../assets/img/medication.svg" alt="">
+                  </div>
+                  <div class="detail-cont">
+                    <div class="detail_sec">
+                      <label>Dolo</label>
+                      <p>4 Mg</p>
+                    </div>
+                    <div class="detail_sec">
+                      <label>Strength</label>
+                      <p>3 Tabs a day</p>
+                    </div>
+                    <div class="detail_sec">
+                      <label>Start Date</label>
+                      <p>2023-03-16 - 18:30:00</p>
+                    </div>
+                    <div class="detail_sec">
+                      <label>End Date</label>
+                      <p>2023-03-16 - 18:30:00</p>
+                    </div>
+                  </div>
+                </div> -->
+                <!-- <div class="soap_detail detail_wd">
+                  <div class="img-sec">
+                    <img src="../../../../../../assets/img/medication.svg" alt="">
+                  </div>
+                  <div class="detail-cont">
+                    <div class="detail_sec">
+                      <label>Metformin</label>
+                      <p>500 Mg</p>
+                    </div>
+                    <div class="detail_sec">
+                      <label>Strength</label>
+                      <p>3 Tabs a day</p>
+                    </div>
+                    <div class="detail_sec">
+                      <label>Start Date</label>
+                      <p>2023-03-16 - 18:30:00</p>
+                    </div>
+                    <div class="detail_sec">
+                      <label>End Date</label>
+                      <p>2023-03-16 - 18:30:00</p>
+                    </div>
+                  </div>
+                </div> -->
+                <!-- <div class="soap_detail detail_wd">
+                  <div class="img-sec">
+                    <img src="../../../../../../assets/img/immunization.svg" alt="">
+                  </div>
+                  <div class="detail-cont">
+                    <div class="detail_sec">
+                      <label>Diptheria, Tetanus, Toxoids and Acellular Pertussi</label>
+                      <p>300 ML</p>
+                    </div>
+                    <div class="detail_sec">
+                      <label>Administered Date</label>
+                      <p>15/03/2023</p>
+                    </div>
+                    <div class="detail_sec">
+                      <label>Route iof Administration</label>
+                      <p>IVInteravenous</p>
+                    </div>
+                    <div class="detail_sec">
+                      <label>Administration Site</label>
+                      <p>LT Left Thigh</p>
+                    </div>
+                    <div class="detail_sec">
+                      <label>Immunity Status</label>
+                      <p>Diptheria (Disorder)</p>
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="row">
+        <div class="col-sm-12 pt20 text-right false">
+          <span>
+            <button class="cancel-btn float-left" mat-raised-button (click)="onBackClick()">Cancel</button>
+            <button [disabled]="submittedSign || submitted" mat-raised-button color="primary" class="text-uppercase mr-3"
+                (click)="openSignDialog()">
+                {{ submittedSign ? 'Saving sign' : 'Add Sign'}}
+              </button>
+            <button *ngIf="!isSoapCompleted" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="submitted || (!isAllSigned)"
+              class="text-uppercase">
+              {{ submitted ? 'Saving...' : 'Save'}}</button>
+          </span>
+        </div>
+      </div> -->
+
+      <div class="row" *ngIf="employeeSign.bytes || patientSign.bytes || guardianSign.bytes">
+        <div class="col-12">
+          <div class="panel_title mt-24">
+            <h3>Signature</h3>
+            <i class="flaticon flaticon-medical-1"></i>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-4" *ngIf="employeeSign.bytes">
+          <div id="showCanvasImageEmployee">
+            <div class="row">
+              <div class="col-12">
+                <div class="sign">
+                  <img class="img-fluid" src="data:image/png;base64,{{employeeSign.bytes}}" alt="">
+                  <h3>{{employeeSign.name}}
+                    <span>(Employee)</span>
+                  </h3>
+                  <p>
+                    <span>Date :</span>{{employeeSign.date}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-4" *ngIf="patientSign.bytes">
+          <div id="showCanvasImageEmployee">
+            <div class="row">
+              <div class="col-12">
+                <div class="sign">
+                  <img class="img-fluid" src="data:image/png;base64,{{patientSign.bytes}}" alt="">
+                  <h3>{{patientSign.name}}
+                    <span>(Client)</span>
+                  </h3>
+                  <p>
+                    <span>Date :</span>{{patientSign.date}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-4" *ngIf="guardianSign.bytes">
+          <div id="showCanvasImageEmployee">
+            <div class="row">
+              <div class="col-12">
+                <div class="sign">
+                  <img class="img-fluid" src="data:image/png;base64,{{guardianSign.bytes}}" alt="">
+                  <h3>{{guardianSign.name}}
+                    <span>(Guardian)</span>
+                  </h3>
+                  <p>
+                    <span>Date :</span>{{guardianSign.date}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

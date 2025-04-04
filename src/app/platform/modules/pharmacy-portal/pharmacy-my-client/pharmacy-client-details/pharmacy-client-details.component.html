@@ -1,0 +1,48 @@
+<div class="p-3">
+  <!-- <h2 class="page-title">Lab Client Details</h2> -->
+
+  <mat-tab-group [(selectedIndex)]="selectedTabIndex" (click)="onTabChange(selectedTabIndex)">
+    <div *ngFor="let tab of moduleTabs; let index = index">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span>{{ tab.displayName }}</span>
+        </ng-template>
+      </mat-tab>
+    </div>
+  </mat-tab-group>
+  <div class="p-4" *ngIf="selectedTabDisplayName == 'Profile Summary'">
+    <ng-container >
+      <app-client-profile></app-client-profile>
+    </ng-container>   
+  </div>
+  <div class="p-4" *ngIf="selectedTabDisplayName == 'Health Coverage Plan'">
+    <ng-container >
+      <app-health-plan-coverage></app-health-plan-coverage>
+    </ng-container>   
+  </div>
+  <!-- <div class="p-4" *ngIf="selectedTabDisplayName == 'Lab Refferal'">
+    <ng-container >
+      <app-lab-refferral-clients></app-lab-refferral-clients>
+    </ng-container>   
+  </div>
+  <div class="p-4" *ngIf="selectedTabDisplayName == 'Radiology Refferal'">
+    <ng-container >
+      <app-radiology-refferral-clients></app-radiology-refferral-clients>
+    </ng-container>   
+  </div> -->
+  <div class="p-4" *ngIf="selectedTabDisplayName == 'Insurance'">
+    <ng-container >
+      <app-clientinsuance></app-clientinsuance>
+    </ng-container>   
+  </div>
+  <div class="p-4" *ngIf="selectedTabDisplayName == 'Allergies'">
+    <ng-container >
+      <app-allergies></app-allergies>
+    </ng-container>   
+  </div>
+  <div class="p-4" *ngIf="selectedTabDisplayName == 'E-prescription'">
+    <ng-container >
+      <app-pharmacy-prescription></app-pharmacy-prescription>
+    </ng-container>   
+  </div>
+</div>

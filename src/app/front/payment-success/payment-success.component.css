@@ -1,0 +1,45 @@
+.app-booked {
+    padding: 20px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.appointment-panel {
+    background-color: #fff;
+    font-family: 'Raleway', sans-serif;
+    padding: 7rem 0 4rem 0;
+}
+.appointment-panel h3 {
+    font-size: 3.5rem;
+    font-weight: 600;
+}
+
+.appointment-panel .title {
+    color: #2f2660;
+    font-size: 2rem;
+    font-family: 'Raleway', sans-serif;
+    text-align: center;
+    font-weight: 600;
+}
+
+.appointment-panel small {
+    display: block;
+    color: rgba(0, 0, 0, 0.80);
+    font-size: 15px;
+    margin: 0px;
+}
+
+.appointment-panel i {
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.appointment-panel i.fa-times {
+    color: red;
+}
+.app-booked{
+    background-color: #01385f14;
+    padding: 1.5rem;
+    border: 2px solid #01385f;
+}

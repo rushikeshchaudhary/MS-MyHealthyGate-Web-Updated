@@ -1,0 +1,119 @@
+<div class="custom_modal">
+    <h3 mat-dialog-title>{{headerText}}</h3>
+    <div mat-dialog-content>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <form id="guardianForm" #documentForm="ngForm" class="readmin-form custom_form"
+                    [formGroup]="guardianForm">
+                    <div class="row">
+                        <div class="col-sm-4 require">
+                            <mat-form-field class="example-full-width">
+                                <input matInput autofocus placeholder="{{'first_name'|translate}}" maxlength="40"
+                                    formControlName="guardianFirstName" pattern="[a-zA-Z ]*"
+                                    [ngClass]="{ 'is-invalid': submitted && formControls['guardianFirstName'].errors }"
+                                    required />
+                                <mat-error *ngIf="formControls['guardianFirstName'].errors?.['required']">
+                                    {{'please_enter_first_name'|translate}}
+                                </mat-error>
+                                <mat-error *ngIf="formControls['guardianFirstName'].errors?.['pattern']">
+                                    {{'first_name'|translate}} '{{formControls['guardianFirstName'].value}}' not valid.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-4">
+                            <mat-form-field class="example-full-width">
+                                <input matInput autofocus placeholder="{{'middle_name'|translate}}" maxlength="40"
+                                    formControlName="guardianMiddleName" />
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-4 require">
+                            <mat-form-field class="example-full-width">
+                                <input matInput autofocus placeholder="{{'last_name'|translate}}" pattern="[a-zA-Z ]*" maxlength="40"
+                                    formControlName="guardianLastName"
+                                    [ngClass]="{ 'is-invalid': submitted && formControls['guardianLastName'].errors }"
+                                    required />
+                                <mat-error *ngIf="formControls['guardianLastName'].errors?.['required']">
+                                    {{'please_enter_last_name'|translate}}
+                                </mat-error>
+                                <mat-error *ngIf="formControls['guardianLastName'].errors?.['pattern']">
+                                    {{'last_name'|translate}} '{{formControls['guardianLastName'].value}}' not valid.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <mat-form-field class="example-full-width">
+                                <input matInput autofocus placeholder="{{'email'|translate}}" maxlength="60"
+                                    formControlName="guardianEmail" />
+                                <mat-error *ngIf="formControls['guardianEmail'].errors?.['email']">
+                                    {{'Please_enter_a_valid_email_address'|translate}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-4">
+                            <!-- <mat-form-field class="example-full-width">
+                                <input appPhoneNumber matInput autofocus placeholder="Phone" minlength="14" maxlength="19" formControlName="guardianHomePhone" />
+                                <mat-error *ngIf="formControls.guardianHomePhone.errors?.minlength">
+                                    Please enter valid phone number
+                                </mat-error>
+                            </mat-form-field> -->
+                            <div class="d-flex country-field-sec">
+                                <app-phone-number class="country-field" [countryId]="0"
+                                    [selectedCountryPhoneCode]="selectedPhoneCode"
+                                    (phoneCodeChangeEvent)="phoneCodeChange($event)"></app-phone-number>
+
+                                <mat-form-field class="country-mat-field example-full-width">
+                                    <input matInput autofocus maxlength="15" placeholder="{{'phone_number'|translate}}"
+                                        formControlName="guardianHomePhone" [ngClass]="{
+                                            'is-invalid': submitted && formControls['guardianHomePhone'].errors
+                                          }" required />
+                                    <mat-error *ngIf="formControls['guardianHomePhone'].errors?.['required']">
+                                        {{'please_enter_Phone_number'|translate}}
+                                    </mat-error>
+                                    <mat-error *ngIf="formControls['guardianHomePhone'].errors?.['minlength']">
+                                        {{'please_enter_valid_Phone'|translate}}
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+
+                            <mat-form-field class="example-full-width">
+                                <mat-select placeholder="{{'relationship'|translate}}" formControlName="relationshipID" matInput
+                                    [ngClass]="{ 'is-invalid': submitted && formControls['relationshipID'].errors }"
+                                    required>
+                                    <mat-option *ngFor="let rel of masterRelationship" [value]="rel.id">
+                                        {{rel.value}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="formControls['relationshipID'].errors?.['required']">
+                                    {{'please_select_relationship'|translate}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <mat-checkbox formControlName="isGuarantor">
+                                {{'is_guarantor'|translate}}?
+                            </mat-checkbox>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions class="justify-content-between">
+        <button mat-raised-button class="cancel-btn" (click)="closeDialog('close')">{{'close'|translate}}</button>
+        <div class="d-flex">
+            <button name="Save" mat-raised-button color="primary" (click)="onSubmit($event)" form="guardianForm"
+                class="text-uppercase" [disabled]="submitted" cdkFocusInitial>{{submitted ? 'Saving...' : ('save' | translate)}}</button>
+            <button name="SaveAddMore" mat-raised-button color="accent" (click)="onSubmit($event)" form="guardianForm"
+                class="text-uppercase ml-3" [disabled]="submitted" cdkFocusInitial
+                *ngIf="guardianModel.id==null || guardianModel.id==0">{{submitted ? 'Saving...' : ('save_and_add_more' | translate)}}</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-md-12 pull-right justify-content-md-end d-flex">
+    <button mat-raised-button color="primary" class="add-primary-btn" (click)="openDialog()">
+      <i class="fa fa-plus" aria-hidden="true"></i>
+      <span>{{'add_guardian_guarentor'|translate}}</span>
+    </button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-4 col-sm-6 mt-20 custom-card custom-card-header" *ngFor="let guardian of guardianList">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          {{guardian.guardianFirstName+' ' +(guardian.guardianMiddleName||'')+' '+guardian.guardianLastName}}
+        </mat-card-title>
+        <mat-card-actions>
+          <button mat-button (click)="openDialog(guardian.id)"><i class="fa fa-pencil"></i></button>
+          <button mat-button (click)="delete(guardian.id)"><i class="fa fa-close"></i></button>
+        </mat-card-actions>
+      </mat-card-header>
+      <!-- <div mat-card-avatar class="example-header-image"></div> -->
+      <mat-card-content>
+        <p><span>{{'relationship'|translate}} : </span>{{guardian.relationshipName}}</p>
+        <p><span>{{'phone'|translate}} : </span>{{guardian.guardianHomePhone}}</p>
+        <p><span>{{'email'|translate}} : </span>{{guardian.guardianEmail}}</p>
+      </mat-card-content>
+
+    </mat-card>
+  </div>
+
+  <!--//need to change below code to actually work on Guardian screen, currently implemented from early screen-->
+  <div class="col-sm-12 d-sm-flex justify-content-between pt-3 actions-btn">
+    <button name="previous" mat-raised-button color="accent" (click)="onPrevious($event)" class="text-uppercase ml-3"
+      [disabled]="submitted">
+      <!-- {{submitted ? 'Continuing...' : ('continue' | translate)}} -->
+      {{"previous"|translate}}
+    </button>
+    <button name="Continue" mat-raised-button color="accent" (click)="onSubmit($event)" class="text-uppercase ml-3"
+      [disabled]="submitted">
+      <!-- {{submitted ? 'Continuing...' : ('continue' | translate)}} -->
+      {{"next"|translate}}
+    </button>
+  </div>
+</div>

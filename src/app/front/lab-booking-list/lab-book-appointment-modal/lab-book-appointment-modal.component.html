@@ -1,0 +1,518 @@
+<div class="row no-gutters book_appoint lab_book_appoint" *ngIf="isProfileLoaded">
+  <div class="policy-blk cstm-tp">
+    <i
+      class="fa fa-close"
+      aria-hidden="true"
+      (click)="closeDialog('close')"
+    ></i>
+  </div>
+  <div class="col-sm-4 p-3 appt-drpanel">
+    <div class="drpanel-block">
+      <div class="doctor-img">
+        <img
+          class="img-fluid profile-img"
+          src="{{
+            labData.photoThumbnailPath ||
+              '../../../assets/img/profile-picture.png'
+          }}"
+          alt="doctor"
+        />
+      </div>
+      <h4 class="doc-name">
+        <a href="doctor-profile.html">{{ labData.fullName }}</a>
+      </h4>
+      <!-- <div class="d-flex">
+        <h5 class="doc-department" *ngFor="let spl of staffSpecialities">
+          {{ spl.speciality }}
+        </h5>
+      </div> -->
+      <!-- <p class="doc-speciality">{{spl.speciality}}</p> -->
+      <div class="rating">
+        <i class="fa fa-star filled" aria-hidden="true"></i>
+        <i class="fa fa-star filled" aria-hidden="true"></i>
+        <i class="fa fa-star filled" aria-hidden="true"></i>
+        <i class="fa fa-star filled" aria-hidden="true"></i>
+        <i class="fa fa-star"></i>
+        <span class="d-inline-block average-rating"> (17)</span>
+      </div>
+      <!-- <div class="clinic-services">
+        <span *ngFor="let taxonomy of staffTaxonomy">{{
+          taxonomy.taxonomyName
+        }}</span>
+      </div> -->
+    </div>
+
+    <div class="clini-infos">
+      <ul>
+        <li>
+          <i class="fa fa-phone" aria-hidden="true"></i>
+          {{ labData.phoneNumber }}
+        </li>
+        <li>
+          <i class="fa fa-envelope" aria-hidden="true"></i
+          ><a href="mailto:userInfo.email" target="_top">{{ labData.email }}</a>
+        </li>
+        <li>
+          <i class="fa fa-map-marker" aria-hidden="true"></i
+          ><a href="javascipt:void(0)">{{ labData.addres }}</a>
+        </li>
+        <!-- <li *ngIf="confirmation.type=='Free'"><label>Consultation Fee  </label> {{0.00 | currency:'INR':'symbol-narrow'}}</li> -->
+        <!-- <li *ngIf="confirmation.type=='New' && confirmation.mode=='Online'"><label>Consultation Fee </label>
+                    {{userInfo.payRate | currency:'INR':'symbol-narrow'}}</li>
+                <li *ngIf="confirmation.type=='New' && confirmation.mode=='Face to Face'"><label>Consultation Fee
+                    </label> {{userInfo.ftFpayRate | currency:'INR':'symbol-narrow'}}</li>
+                <li *ngIf="confirmation.type=='New' && confirmation.mode=='Home Visit'"><label>Consultation Fee </label>
+                    {{userInfo.homeVisitPayRate | currency:'INR':'symbol-narrow'}}</li>
+                <li *ngIf="confirmation.type=='Follow-up' && IsPreviousFollowup"><label>Consultation Fee </label>
+                    {{userInfo.followUpPayRate | currency:'INR':'symbol-narrow'}}
+                </li> -->
+
+        <!-- <li *ngIf="confirmation.type=='Follow-up' && IsPreviousFollowup==false" class="book-appt-type mt-1">
+                    <label>Consultation Fee :</label> {{userInfo.payRate | currency:'USD':'symbol-narrow'}}
+                </li> -->
+      </ul>
+    </div>
+  </div>
+  <div class="col-sm-8">
+    <div class="appointment-panel">
+      <div class="title">
+        <div *ngIf="isNotBooked" class="book_title">
+          <h3>{{ 'book_an_appointement' | translate }}</h3>
+          <p>
+            {{ 'please_select_a_date_and_time_and_then_pay_to_confirm_your_appointment' | translate }}
+          </p>
+        </div>
+        <div *ngIf="!isNotBooked"> {{"appointment_booked"| translate}}</div>
+      </div>
+      <div class="appointment-content" *ngIf="isNotBooked">
+        <!-- <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+        {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
+      </button> -->
+        <mat-horizontal-stepper [linear]="isLinear" #stepper>
+          <mat-step [stepControl]="firstFormGroup">
+            <form [formGroup]="firstFormGroup">
+              <ng-template matStepLabel>{{"select_date_and_time"|translate}}</ng-template>
+
+              <!-- <div class="row mt-3 mb-1">
+                                <div class="col-md-7">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Select day for booking</mat-label>
+                                        <input matInput [matDatepicker]="picker" placeholder="Please select date" [min]="todayDate" (dateChange)="onDateChange($event)" readonly formControlName="appointmentDate">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker opened="true"></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div> -->
+              <div class="book-type">
+                <div class="book-appt-type">
+                  <label class="type_label">{{"appointment_type"|translate}} </label>
+                  <div>
+                    <mat-radio-group>
+                      <mat-radio-button
+                        (change)="onTypeChange(type)"
+                        [checked]="type === 'New'"
+                        class="example-radio-button"
+                        *ngFor="let type of appointmenType"
+                        [value]="type"
+                      >
+                      {{ type === 'New' ? ('new' | translate) : type }}
+                    </mat-radio-button>
+                    </mat-radio-group>
+                    <span
+                      *ngIf="!lastFollowupData && showLoader"
+                      class="more-load"
+                    ></span>
+                    <div
+                      *ngIf="lastFollowupData && confirmation.type != 'New'"
+                      style="display: inline; padding-left: 10px"
+                    >
+                      <a
+                        title="click to see details"
+                        href="javascript:void(0k)"
+                        (click)="openLastFollowup()"
+                      >
+                        Last New Appt. :{{
+                          lastFollowupData.startDateTime | date: 'dd/MM/yyyy'
+                        }}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="book-appt-type">
+                  <label class="type_label">{{"appointment_mode"|translate}} </label>
+                  <div>
+                    <mat-radio-group>
+                      <mat-radio-button
+                        (change)="onModeChange(mode)"
+                        [checked]="mode === 'Face to Face'"
+                        class="example-radio-button"
+                        *ngFor="let mode of appointmentMode"
+                        [value]="mode"
+                      >
+                        {{ mode === 'Face to Face' ? ('face_to_face' | translate) : mode &&
+                         mode === 'Home Visit' ? ('home_visit' | translate) : mode }}
+                      </mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                </div>
+                <!-- <div
+                  *ngIf="
+                    confirmation.type == 'New' && confirmation.mode == 'Online'
+                  "
+                  class="book-appt-type"
+                >
+                  <label class="type_label">Consultation Fee :</label>
+                  <strong>{{
+                    labData.payRate | currency: "JOD":"symbol-narrow"
+                  }}</strong>
+                </div> -->
+                <div
+                  *ngIf="
+                    confirmation.type == 'New' &&
+                    confirmation.mode == 'Face to Face'
+                  "
+                  class="book-appt-type"
+                >
+                  <label class="type_label">{{"consultation_fee"|translate}}</label>
+                  <strong>{{
+                    labData.ftFpayRate | currency: "JOD":"symbol-narrow"
+                  }}</strong>
+                </div>
+                <div
+                  *ngIf="
+                    confirmation.type == 'New' &&
+                    confirmation.mode == 'Home Visit'
+                  "
+                  class="book-appt-type"
+                >
+                  <label class="type_label">{{"consultation_fee"|translate}}</label>
+                  <strong>{{
+                    labData.homeVisitPayRate | currency: "JOD":"symbol-narrow"
+                  }}</strong>
+                </div>
+                <!-- <div
+                  *ngIf="confirmation.type == 'Follow-up' && IsPreviousFollowup"
+                  class="book-appt-type"
+                >
+                  <label class="type_label">Consultation Fee :</label>
+                  <strong>{{
+                    labData.followUpPayRate | currency: "JOD":"symbol-narrow"
+                  }}</strong>
+                </div> -->
+              </div>
+
+              <mat-card>
+                <mat-calendar
+                  [selected]="firstFormGroup.get('appointmentDate')?.value"
+                  (selectedChange)="onDateChange($event)"
+                ></mat-calendar>
+              </mat-card>
+              <ng-scrollbar>
+                <div [ngStyle]="{ height: '120px' }">
+                  <div
+                    *ngIf="
+                      !providerAvailiabilitySlots.length &&
+                      !showLoader &&
+                      this.formGroup1['appointmentDate'].value != ''
+                    "
+                    class="alert alert-danger"
+                  >
+                    Provider is not available on this date. Please choose
+                    another date.
+                  </div>
+                  <div class="text-center" *ngIf="showLoader">
+                    <span class="more-load"></span>
+                  </div>
+                  <div class="timing-slot">
+                    <div
+                      class="indicate-slot"
+                      class="indicate-slot"
+                      *ngIf="providerAvailiabilitySlots.length"
+                    >
+                      <label class="pr-2"
+                        ><i class="fa fa-circle-o" aria-hidden="true"></i>
+                        {{"available" |translate}}</label
+                      >
+                      <label class="pr-2"
+                        ><i class="fa fa-circle" aria-hidden="true"></i>
+                        {{"selected" |translate}}</label
+                      >
+                      <label class="pr-2"
+                        ><i class="fa fa-circle" aria-hidden="true"></i>
+                        {{"reserved" |translate}}</label
+                      >
+                      <label class="pr-2"
+                        ><i class="fa fa-circle" aria-hidden="true"></i>
+                        {{"unavailable" |translate}}</label
+                      >
+                    </div>
+                    <ul class="pl-0">
+                      <li
+                        *ngFor="let slot of providerAvailiabilitySlots"
+                        [class.available-slot]="slot.isAvailable"
+                        [class.selected-slot]="slot.isSelected"
+                        [class.reserved-slot]="slot.isReserved"
+                        [class.unavail-slot]="slot.isPassed"
+                      >
+                        <button
+                          mat-raised-button
+                          [disabled]="!slot.isAvailable"
+                          (click)="onSlotSelect(slot)"
+                          type="button"
+                        >
+                          {{ slot.startTimeftm }} to {{ slot.endTimeftm }}
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </ng-scrollbar>
+              <div class="d-flex justify-content-end cstm-btn">
+                <button
+                  class="link-btn mr-3 min-w-100"
+                  mat-button
+                  (click)="closeModal()"
+                >
+                {{"close" |translate}}
+                </button>
+                <button
+                  class="next-btn"
+                  mat-raised-button
+                  matStepperNext
+                  [disabled]="
+                    confirmation.startTime == undefined ||
+                    confirmation.endTime == undefined ||
+                    confirmation.startTime == null ||
+                    confirmation.endTime == null
+                  "
+                >
+                  {{"next" |translate}}
+                </button>
+              </div>
+            </form>
+          </mat-step>
+          <mat-step>
+            <form [formGroup]="thirdFormGroup">
+              <ng-template matStepLabel>{{"book_and_pay"|translate}}</ng-template>
+              <div
+                *ngIf="
+                  confirmation.startTime == undefined ||
+                  confirmation.endTime == undefined ||
+                  confirmation.startTime == null ||
+                  confirmation.endTime == null
+                "
+                class="alert alert-danger"
+              >
+                Please select appointment slot first to book in previous step,
+                then pay here.
+              </div>
+              <div
+                class="pay-step hgt-scroll"
+                *ngIf="
+                  confirmation.startTime != undefined &&
+                  confirmation.endTime != undefined &&
+                  (confirmation.startTime != null ||
+                    confirmation.endTime != null)
+                "
+              >
+                <h3>
+                  {{"you_are_requesting_booking_for"|translate}}
+                  <!-- <span *ngFor="let spl of staffSpecialities">{{
+                    spl.speciality
+                  }}</span> -->
+                  <br />
+                  {{ confirmation.date | date: "fullDate" }} between
+                  {{ confirmation.startTime }} to
+                  {{ confirmation.endTime }}
+                </h3>
+                <!-- <h6>Once you complete the payment We will send you an email with a booking confirmation.</h6> -->
+                <h6>
+                  <b>{{"we_will_send_you_an_email"|translate}}</b>
+                </h6>
+                <!-- <div *ngIf="confirmation.type=='Follow-up' && IsPreviousFollowup==false" class="book-appt-type mt-1">
+                                    <label>Consultation Fee :</label> {{userInfo.payRate | currency:'USD':'symbol-narrow'}}
+                                </div> -->
+
+                <!-- <li><span> </span> </li>
+                    <li><span>Appointment Mode : </span> {{confirmation.mode}}</li> -->
+                <!-- <li><span>Date : </span> {{confirmation.date | date:'fullDate'}}</li>
+                    <li><span>Time : </span> {{confirmation.startTime}} - {{confirmation.endTime}}</li> -->
+
+                <div class="row">
+                  <div class="col-sm-4 mt-3">
+                    <div
+                      class="d-flex justify-content-md-start mt-15"
+                    >
+                      <button
+                        mat-raised-button
+                        color="primary"
+                        (click)="createModal()"
+                      >
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        {{"upload_document"|translate}}
+                      </button>
+                    </div>
+                    <!-- <div class="uplaod_pic browse-doc">
+                                            <label class="browse">
+                                                <i class="la la-upload la-2x" aria-hidden="true"></i>
+                                                <span>Upload Files </span>
+                                                <input type="file" (change)="handleImageChange($event)">
+                                            </label>
+                                        </div>
+                                        <p class="ins_photo">(Browse any jpg, jpeg, png, .txt, .doc file.)</p> -->
+                  </div>
+                  <div class="col-sm-7 mt-3">
+                    <div
+                      class="uploading-data d-flex justify-content-start align-items-start"
+                      *ngFor="let file of fileList; let i = index"
+                    >
+                      <p class="d-flex justify-content-between">
+                        <span
+                          class="d-flex flex-column align-items-start fnt-sze"
+                        >
+                          {{ file.fileName }}
+                        </span>
+                        <button
+                          type="button"
+                          title="Delete"
+                          class="tbactionbtn cstm-cancel-btn"
+                          (click)="removeFile(i)"
+                        >
+                          <i class="fa fa-times" aria-hidden="true"></i>
+                        </button>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="receipt cstm-add">
+                    <div class="mailto">
+                      <span class="receipt-name">
+                        <mat-chip-list #chipList>
+                          <div class="select-box col-md-12 pd-0">
+                            <input
+                              #userInput
+                              [formControl]="userControl"
+                              class="search__input"
+                              [matAutocomplete]="auto"
+                              placeholder="State your symptom or ailment for which you wish to contact"
+                              (matChipInputTokenEnd)="add($event)"
+                            />
+                          </div>
+                          <br />
+                          <!-- <div class="col-md-12 pd-0">
+                                            <mat-chip class="chiplist" *ngFor="let spt of symptoms" [selectable]="selectable"
+                                            [removable]="removable" (removed)="remove(spt)">
+                                            {{spt.value}}
+                                            <mat-icon matChipRemove>cancel</mat-icon>
+                                          </mat-chip>
+                                          </div> -->
+                        </mat-chip-list>
+                        <mat-autocomplete
+                          #auto="matAutocomplete"
+                          (optionSelected)="selected($event)"
+                        >
+                          <mat-option
+                            *ngFor="let fts of filteredSymptoms$ | async"
+                            [value]="fts"
+                          >
+                            {{ fts.label }}
+                          </mat-option>
+                        </mat-autocomplete>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="d-flex flex-column mb-4 terms-check">
+                      <mat-checkbox (change)="termsandconditionchecked($event)">
+                        {{"terms_and_conditions"| translate}}
+                      </mat-checkbox>
+                    </div>
+                  </div>
+                  <div class="col-md-7">
+                    <div class="d-flex flex-column mb-4 terms-check">
+                      <mat-checkbox (change)="checkboxchecked($event)">
+                        {{"notify_if_any_prior_appointment"| translate}}
+                      </mat-checkbox>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <button class="link-btn" mat-button matStepperPrevious>
+                    {{"back"| translate}}
+                  </button>
+                  <span
+                    class="followupError"
+                    *ngIf="
+                      confirmation.type.toLowerCase() == 'follow-up' &&
+                      !IsPreviousFollowup
+                    "
+                  >
+                    You don't have any previous appointment with this provider
+                    within allowed days.</span
+                  >
+                  <span class="followupError" *ngIf="showselecttermscondition">
+                    {{"please_select_terms_and_conditions"|translate}}</span
+                  >
+                  <!-- <button mat-raised-button color="primary" form="thirdFormGroup" (click)="openCheckout()" [disabled]="submitted"> {{submitted ? 'Please wait...' : 'Pay Now'}}</button> -->
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    form="thirdFormGroup"
+                    (click)="openCheckout()"
+                    [disabled]="
+                      submitted ||
+                      (confirmation.type.toLowerCase() == 'follow-up' &&
+                        !IsPreviousFollowup)
+                    "
+                  >
+                    {{"book_now"| translate}}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </mat-step>
+        </mat-horizontal-stepper>
+      </div>
+
+      <div *ngIf="!isNotBooked">
+        <div class="app-booked" style="text-align: center">
+          <h3>{{"thank_you" | translate}}</h3>
+          <p>
+            {{"Your_appointment_has_been_successfully_booked_with_us_for"| translate}} <br />
+            <!-- <span *ngFor="let spl of staffSpecialities">{{
+              spl.speciality
+            }}</span> -->
+            on {{ confirmation.date | date: "fullDate" }} between
+            {{ confirmation.startTime }} to {{ confirmation.endTime }}.
+          </p>
+          <p class="mt-3">
+            Please check your email for further assistance. We will contact you
+            as soon as possible.
+          </p>
+          <div class="d-flex justify-content-center mt-3">
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="closeDialog('close')"
+            >
+              Done
+            </button>
+          </div>
+          <br />
+          <div class="d-flex justify-content-center mt-3">
+            <button mat-raised-button color="primary">
+              Prior Appointment Formalities
+            </button>
+          </div>
+          <!-- <img src="{{Message.imgSrc}}" alt="user-register-icon" /> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lds-facebook" *ngIf="!isProfileLoaded"><div></div><div></div><div></div></div>

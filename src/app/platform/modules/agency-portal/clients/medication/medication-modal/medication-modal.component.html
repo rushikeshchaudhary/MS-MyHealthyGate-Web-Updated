@@ -1,0 +1,384 @@
+<div *ngIf="!isEdit" class="custom_modal">
+  <h3 mat-dialog-title>{{ headerText }}</h3>
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-sm-12">
+        <form
+          id="medicationAddForm"
+          #documentForm="ngForm"
+          class="readmin-form custom_form"
+          [formGroup]="medicationAddForm"
+        >
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{ 'medicine' | translate }}(medicine strength e.g.,100mg, 50ml, etc.)</mat-label>
+                <input
+                  matInput
+                  maxlength="100"
+                  formControlName="medicine"
+                  [ngClass]="{
+                    'is-invalid': submitted && addFormControls['medicine'].errors
+                  }"
+                  required
+                />
+                <mat-error *ngIf="addFormControls['medicine'].errors?.['required']">
+                  Please enter medicine
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{ 'dose' | translate }} (number of tablets, ml )</mat-label>
+                <input
+                  matInput
+                  appNumbersOnly
+                  maxlength="5"
+                  formControlName="dose"
+                  [ngClass]="{
+                    'is-invalid': submitted && addFormControls['dose'].errors
+                  }"
+                  required
+                />
+                <mat-error *ngIf="addFormControls['dose'].errors?.['required']">
+                  Please enter dose
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{ 'frequency' | translate }} (Select how many times)</mat-label>
+                <mat-select formControlName="frequencyID" matInput
+                  [ngClass]="{ 'is-invalid': submitted && medicationAddForm.get('frequencyID')?.errors }">
+                  <mat-option *ngFor="let rel of masterFrequencyType" [value]="rel.id">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="medicationAddForm.get('frequencyID')?.hasError('required')">
+                  Please select frequency
+                </mat-error>
+              </mat-form-field>
+            </div>
+            
+            <!--<div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <mat-select placeholder="Frequency" formControlName="frequencyID" matInput [ngClass]="{
+                    'is-invalid':
+                      submitted && addFormControls.frequencyID.errors
+                  }" required>
+                  <mat-option *ngFor="let rel of masterFrequencyType" [value]="rel.id">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-select>
+
+                <mat-error *ngIf="addFormControls.frequencyID.errors?.required">
+                  Please select frequency
+                </mat-error>
+              </mat-form-field>
+            </div>-->
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  placeholder="{{'strength'|translate}}"
+                  formControlName="strength"
+                  [ngClass]="{
+                    'is-invalid': submitted && addFormControls['strength'].errors
+                  }"
+                />
+                <!-- <mat-error *ngIf="formControls.strength.errors?.required">
+                        Please enter strength
+                    </mat-error> -->
+              </mat-form-field>
+            </div>
+            <!--<div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  placeholder="Strength"
+                  formControlName="strength"
+                  [ngClass]="{
+                    'is-invalid': submitted && addFormControls.strength.errors
+                  }"
+                />
+                 <mat-error *ngIf="formControls.strength.errors?.required">
+                        Please enter strength
+                    </mat-error> 
+                                </mat-form-field>
+            </div>-->
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  readonly
+                  [matDatepicker]="startDate"
+                  placeholder="{{'start_date'|translate}}"
+                  formControlName="startDate"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="startDate"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #startDate></mat-datepicker>
+                <mat-error *ngIf="addFormControls['startDate'].errors?.['required']">
+                  {{"please_enter_start_date"|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  readonly
+                  [matDatepicker]="endDate"
+                  [min]="addFormControls['startDate'].value"
+                  [ngClass]="{
+                    'is-invalid': submitted && addFormControls['endDate'].errors
+                  }"
+                  placeholder="{{'end_date'|translate}}"
+                  formControlName="endDate"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="endDate"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #endDate></mat-datepicker>
+                <mat-error *ngIf="addFormControls['endDate'].errors?.['required']">
+                  Please enter end date
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="d-flex justify-content-between">
+    <button mat-raised-button class="cancel-btn" (click)="closeDialog('close')">
+      {{'close'|translate}}
+    </button>
+    <div class="d-flex">
+      <button
+        name="Save"
+        mat-raised-button
+        color="accent"
+        (click)="onSubmit($event)"
+        form="medicationAddForm"
+        class="text-uppercase"
+        [disabled]="submitted"
+        cdkFocusInitial
+      >
+        {{ submitted ? "Saving..." :  ('save'|translate)}}
+      </button>
+      <button
+        name="SaveAddMore"
+        mat-raised-button
+        color="primary"
+        (click)="onSubmit($event)"
+        form="medicationAddForm"
+        class="text-uppercase ml-3"
+        [disabled]="submitted"
+        cdkFocusInitial
+      >
+        {{ submitted ? "Saving..." : ('save_and_add_more'|translate) }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Form -->
+<div *ngIf="isEdit" class="custom_modal">
+  <h3 mat-dialog-title>{{ headerText }}</h3>
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-sm-12">
+        <form
+          id="medicationEditForm"
+          #documentForm="ngForm"
+          class="readmin-form custom_form"
+          [formGroup]="medicationEditForm"
+        >
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  placeholder="{{'medicine'|translate}}"
+                  maxlength="100"
+                  formControlName="medicine"
+                  [ngClass]="{
+                    'is-invalid': submitted && editFormControls['medicine'].errors
+                  }"
+                  required
+                />
+                <mat-error *ngIf="editFormControls['medicine'].errors?.['required']">
+                  Please enter medicine
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  appNumbersOnly
+                  placeholder="{{'dose'|translate}}"
+                  maxlength="5"
+                  formControlName="dose"
+                  [ngClass]="{
+                    'is-invalid': submitted && editFormControls['dose'].errors
+                  }"
+                  required
+                />
+                <mat-error *ngIf="editFormControls['dose'].errors?.['required']">
+                  Please enter dose
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  placeholder="{{'frequency'|translate}}"
+                  formControlName="frequencyID"
+                  [matAutocomplete]="auto1"
+                  [(ngModel)]="filterString"
+                  [ngClass]="{
+                    'is-invalid':
+                      submitted && editFormControls['frequencyID'].errors
+                  }"
+                  required
+                  (ngModelChange)="frequencyTypeHandler($event)"
+                />
+                <mat-autocomplete #auto1="matAutocomplete">
+                  <mat-option
+                    *ngFor="let rel of filtermasterFrequencyTypes"
+                    [value]="rel.value"
+                    matTooltip="{{ rel.value }}"
+                    matToolTipPosition="above"
+                    (onSelectionChange)="onSelectChange(rel, 'frequency')"
+                  >
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+
+            <!--<div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <mat-select placeholder="Frequency" formControlName="frequencyID" matInput [ngClass]="{
+                    'is-invalid':
+                      submitted && editFormControls.frequencyID.errors
+                  }" required>
+                  <mat-option *ngFor="let rel of masterFrequencyType" [value]="rel.id">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-select>
+
+                <mat-error *ngIf="editFormControls.frequencyID.errors?.required">
+                  Please select frequency
+                </mat-error>
+              </mat-form-field>
+            </div>-->
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  placeholder="{{'strength'|translate}}"
+                  formControlName="strength"
+                  [ngClass]="{
+                    'is-invalid': submitted && editFormControls['strength'].errors
+                  }"
+                />
+                <!-- <mat-error *ngIf="formControls.strength.errors?.required">
+                        Please enter strength
+                    </mat-error> -->
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  readonly
+                  [matDatepicker]="startDate"
+                  placeholder="{{'start_date'|translate}}"
+                  formControlName="startDate"
+                  required
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="startDate"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #startDate></mat-datepicker>
+                <mat-error *ngIf="editFormControls['startDate'].errors?.['required']">
+                  {{"please_enter_start_date"|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  readonly
+                  [matDatepicker]="endDate"
+                  [min]="editFormControls['startDate'].value"
+                  [ngClass]="{
+                    'is-invalid': submitted && editFormControls['endDate'].errors
+                  }"
+                  placeholder="{{'end_date'|translate}}"
+                  formControlName="endDate"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="endDate"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #endDate></mat-datepicker>
+                <mat-error *ngIf="editFormControls['endDate'].errors?.['required']">
+                  Please enter end date
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="d-flex justify-content-between">
+    <button mat-raised-button class="cancel-btn" (click)="closeDialog('close')">
+      {{"close"|translate}}
+    </button>
+    <div class="d-flex">
+      <button
+        name="Save"
+        mat-raised-button
+        color="accent"
+        (click)="onEditSubmit($event)"
+        form="medicationEditForm"
+        class="text-uppercase"
+        [disabled]="submitted"
+        cdkFocusInitial
+      >
+        {{ submitted ? "Saving..." : ("save"|translate) }}
+      </button>
+      <button
+        name="SaveAddMore"
+        mat-raised-button
+        color="primary"
+        (click)="onEditSubmit($event)"
+        form="medicationEditForm"
+        class="text-uppercase ml-3"
+        [disabled]="submitted"
+        cdkFocusInitial
+      >
+        {{ submitted ? "Saving..." : ("save_and_add_more"|translate) }}
+      </button>
+    </div>
+  </div>
+</div>

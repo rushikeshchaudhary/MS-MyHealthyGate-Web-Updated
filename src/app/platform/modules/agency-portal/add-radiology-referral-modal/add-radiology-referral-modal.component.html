@@ -1,0 +1,252 @@
+<div class="custom_modal">
+  <h3 mat-dialog-title>{{"add_radiology_referral"|translate}}</h3>
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-sm-12">
+        <form
+          class="readmin-form custom_form"
+          [formGroup]="labReferralForm"
+          (ngSubmit)="onSubmit()"
+        >
+          <div class="row">
+            <div class="col-sm-6" *ngIf="patientId == 0">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  placeholder="{{'patient_name'|translate}}"
+                  formControlName="patientId"
+                  [matAutocomplete]="auto1"
+                  [(ngModel)]="filterPatientName"
+                  [ngClass]="{
+                    'is-invalid': submitted && formControls['patientId'].errors
+                  }"
+                  required
+                  (ngModelChange)="patientTypeHandler($event)"
+                />
+
+                <mat-autocomplete #auto1="matAutocomplete">
+                  <mat-option
+                    *ngFor="let p of filterPatientList"
+                    [value]="p.fullName"
+                    matTooltip="{{ p.fullName }}"
+                    matToolTipPosition="above"
+                    (onSelectionChange)="onSelectChange(p, 'patient')"
+                  >
+                    {{ p.fullName }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <!-- <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  placeholder="Radiology Center Name"
+                  formControlName="labId"
+                  [matAutocomplete]="auto2"
+                  [(ngModel)]="filterLabName"
+                  [ngClass]="{
+                    'is-invalid': submitted && formControls.labId.errors
+                  }"
+                  required
+                  (ngModelChange)="labTypeHandler($event)"
+                />
+
+                <mat-autocomplete #auto2="matAutocomplete">
+                  <mat-option
+                    *ngFor="let p of filterLabList"
+                    [value]="p.labName"
+                    matTooltip="{{ p.labName }}"
+                    matToolTipPosition="above"
+                    (onSelectionChange)="onSelectChange(p, 'lab')"
+                  >
+                    {{ p.labName }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field> -->
+              <mat-form-field class="example-full-width">
+                <mat-label>Select Lab Name</mat-label>
+                <mat-select
+                  placeholder="Select Radiology Center Name"
+                  (ngModelChange)="labTypeHandler($event)"
+                  formControlName="labId"
+                  [(ngModel)]="filterLabName"
+                >
+                  <!-- <ngx-mat-select-search
+                    [formControl]="filterCtrl"
+                    [searching]="searching"
+                    placeholderLabel="Search"
+                    noEntriesFoundLabel="No records found!"
+                  ></ngx-mat-select-search> -->
+                  <!-- <mat-option
+                    *ngFor="let option of testingspeciality | async"
+                    [value]="option.testID"
+                  >
+                    {{ option.testName }}
+                  </mat-option> -->
+                  <mat-option
+                    *ngFor="let p of labsList"
+                    [value]="p"
+                    matTooltip="{{ p.labName }}"
+                  >
+                    {{ p.labName }}
+                  </mat-option>
+                </mat-select>
+                <!-- <mat-error *ngIf="formControls.labId.errors && submitted"
+                  >Please select Radiology Center Name</mat-error
+                > -->
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <mat-form-field class="example-full-width">
+                <mat-label>Select Test Name</mat-label>
+                <mat-select
+                  placeholder="Select Test"
+                  multiple
+                  formControlName="testId"
+                  required
+                >
+                      <!-- intentionally commented code for running the application -->
+                  <ngx-mat-select-search
+                    [formControl]="filterCtrl"
+                    [searching]="searching"
+                    placeholderLabel="Search"
+                    noEntriesFoundLabel="No records found!"
+                  ></ngx-mat-select-search>
+                  <mat-option
+                    *ngFor="let option of testingspeciality | async"
+                    [value]="option.testID"
+                  >
+                    {{ option.testName }}
+                  </mat-option>
+                  <mat-option
+                    *ngFor="let test of masterRadiologyTests"
+                    [value]="test.testID"
+                    >{{ test.testName }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formControls['testId'].errors && submitted"
+                  >Please select test name</mat-error
+                >
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <mat-form-field
+                matInput
+                class="example-full-width textarea-field"
+              >
+                <textarea
+                  name="notesArea"
+                  placeholder="{{'notes'|translate}}"
+                  rows="3"
+                  matInput
+                  formControlName="notes"
+                ></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+          <!-- <div class="row">
+            <div class="col-sm-6">
+              <div class="panel_title">
+                <h3>Upload Logo</h3>
+                <i class="flaticon flaticon-commerce"></i>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="panel_title">
+                <h3>Upload Stamp</h3>
+                <i class="flaticon flaticon-commerce"></i>
+              </div>
+            </div>
+          </div> -->
+          <!-- <div class="row">
+            <div class="col-sm-6">
+              <div class="uplaod_pic">
+                <div>
+                  <label class="browse">
+                    <img *ngIf="logoImagePreview" [src]="logoImagePreview"
+                      onerror="this.src='../../../../../../assets/img/noimage.png';" alt="Preview" />
+                    <span *ngIf="logoImagePreview">Change</span>
+                    <i *ngIf="!logoImagePreview" class="fa fa-upload fa-2x" aria-hidden="true"></i>
+                    <input type="file" formControlName="logo" (change)="handleLogoImageChange($event)" />
+                  </label>
+                </div>
+                <div>
+                  <label class="browse bg-red" *ngIf="logodataURL" (click)="removeLogoImage()">
+                    <span *ngIf="logoImagePreview"></span>
+                    <i *ngIf="logoImagePreview" class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                  </label>
+                </div>
+              </div>
+              <p class="ins_photo">(Browse any jpg, jpeg, bmp, png file.)</p>
+            </div>
+            <div class="col-sm-6">
+              <div class="uplaod_pic">
+                <div>
+                  <label class="browse">
+                    <img *ngIf="stampImagePreview" [src]="stampImagePreview"
+                      onerror="this.src='../../../../../../assets/img/noimage.png';" alt="Preview" />
+                    <span *ngIf="stampImagePreview">Change</span>
+                    <i *ngIf="!stampImagePreview" class="fa fa-upload fa-2x" aria-hidden="true"></i>
+                    <input type="file" formControlName="stamp" (change)="handleStampImageChange($event)" />
+                  </label>
+                </div>
+                <div>
+                  <label class="browse bg-red" *ngIf="stampdataURL" (click)="removeStampImage()">
+                    <span *ngIf="stampImagePreview"></span>
+                    <i *ngIf="stampImagePreview" class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                  </label>
+                </div>
+              </div>
+              <p class="ins_photo">(Browse any jpg, jpeg, bmp, png file.)</p>
+            </div>
+          </div> -->
+        </form>
+
+        <!-- <div class="row mt-4">
+          <div class="col-sm-12">
+            <span>{{"signature"|translate}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 border">
+            <signature-pad
+              [options]="signaturePadOptions"
+              (onEndEvent)="drawComplete()"
+            ></signature-pad>
+          </div>
+          <div class="col-sm-6 d-flex justify-content-left">
+            <button
+              class="cancel-btn ml-3"
+              mat-raised-button
+              (click)="onClear()"
+            >
+              Clear
+            </button>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions style="display: flex; justify-content: space-between;">
+    <button mat-raised-button class="cancel-btn" (click)="closeDialog('close')">
+      {{"close"|translate}}
+    </button>
+    <button
+      name="Save"
+      mat-raised-button
+      color="primary"
+      form="labReferralForm"
+      class="text-uppercase"
+      [disabled]="labReferralForm.invalid"
+      (click)="onSubmit()"
+      cdkFocusInitial
+    >
+      {{ submitted ? "Saving..." : ("save"|translate) }}
+    </button>
+  </div>
+</div>

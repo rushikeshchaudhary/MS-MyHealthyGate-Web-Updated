@@ -1,0 +1,48 @@
+.policy-blk .section-heading{
+    font-size: 24px;
+    margin-bottom: 12px;
+    margin-top: 25px;
+    color: #01385f !important;
+}
+.policy-blk .fa{
+    position: absolute;
+    top: -0px;
+    right: -5px;
+    background-color: #2f2660;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    color: #fff;
+    padding: 6px 10px;
+    cursor: pointer;
+    z-index: 99;
+}
+.terms-block{
+    height: calc(100% - 50px);
+    overflow: auto;
+}
+.wedo-box {
+    text-align: center;
+}
+.btn-theme {
+    background-color: #17a2b8;
+    text-align: center;
+    border-radius: 3px !important;
+    color: #fff;
+    width: 35%;
+    margin: auto;
+    display: block;
+    box-shadow: 0 8px 17px 2px rgba(58, 58, 58, 0.14), 0 3px 14px 2px rgba(78, 78, 78, 0.12),
+        0 5px 5px -3px rgba(80, 80, 80, 0.2);
+    height: 54px;
+    margin-bottom: 20px;
+}
+.cdk-overlay-pane{
+    width: 45% !important;
+    }
+    .mat-dialog-container{
+        border-radius: 10px !important;
+    }
+    .wedo-box p{
+        color: #4b6d97;
+    }

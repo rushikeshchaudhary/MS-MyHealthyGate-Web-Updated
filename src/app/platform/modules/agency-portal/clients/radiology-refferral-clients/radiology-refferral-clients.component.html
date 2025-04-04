@@ -1,0 +1,204 @@
+<div class="readmin-panel">
+  <h2 class="page-title">{{"radiology_refferal"|translate}}</h2>
+  <div class="clearfix"></div>
+  <div class="container-fluid">
+    <form class="readmin-form custom_form" id="testFormGroup" #documentForm="ngForm" [formGroup]="testFormGroup">
+      <div class="row">
+        <div class="col-lg-2 col-sm-6 pos">
+          <mat-form-field class="example-full-width">
+            <input matInput (keyup)="getAllLabReferrals()" placeholder="{{'search_here'|translate}}" formControlName="searchKey" />
+          </mat-form-field>
+          <button class="search-button"></button>
+        </div>
+        <div class="col-lg-2 col-sm-6">
+          <mat-form-field class="example-full-width">
+            <input matInput readonly [matDatepicker]="rangeStartDate" (dateChange)="applyStartDateFilter($event)"
+              placeholder="{{'start_date'|translate}}" formControlName="rangeStartDate" />
+            <mat-datepicker-toggle matSuffix [for]="rangeStartDate"></mat-datepicker-toggle>
+            <mat-datepicker #rangeStartDate></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-2 col-sm-6">
+          <mat-form-field class="example-full-width">
+            <input matInput readonly [matDatepicker]="rangeEndDate" (dateChange)="applyEndDateFilter($event)"
+              placeholder="{{'end_date'|translate}}" formControlName="rangeEndDate" />
+            <mat-datepicker-toggle matSuffix [for]="rangeEndDate"></mat-datepicker-toggle>
+            <mat-datepicker #rangeEndDate></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-2 col-sm-6 filter-btn">
+          <button class="clear-btn" mat-raised-button (click)="clearFilters()">
+            {{"clear_all"|translate}}
+          </button>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <button mat-raised-button color="primary" (click)="createReferral()" style="float: right">
+            <i class="fa fa-plus" aria-hidden="true" style="margin-right: 10px;"></i>{{"add_radiology_referral"|translate}}
+          </button>
+        </div>
+      </div>
+    </form>
+    <!-- <div class="row">
+      <div class="row col-12 col-md-12">
+        <div class="col-md-4">
+          <form class="searchclient">
+            <input [(ngModel)]="searchKey" name="searchKey" type="text" class="pateintsearch"
+              placeholder="Search here..." (ngModelChange)="searchChanged($event)" />
+            <button class="serchclose-btn" type="reset" (click)="searchKey = ''; getAllLabReferrals();">
+              <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+          </form>
+        </div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          <button mat-raised-button color="primary" (click)="createReferral()" style="float: right;">
+            <i class="fa fa-plus" aria-hidden="true"></i>Add RadiologyReferral
+          </button>
+        </div>
+      </div>
+    </div> -->
+    <div class="row">
+      <!-- <div class="col-md-12">
+        <app-data-table [inputColumns]="displayColumns" [inputSource]="radiologyReferralList" [inputMeta]="metaData"
+          (onTableActionClick)="onTableActionClick($event)" [inputButtons]="actionButtons">
+        </app-data-table>
+      </div> -->
+
+      <div class="table-responsive mt-15">
+        <mat-table #table [dataSource]="radiologyReferralList"
+          class="table table-hover customtable group-table table-bordered">
+          <ng-container matColumnDef="Radiology Name">
+            <mat-header-cell *matHeaderCellDef>
+              {{"radiology_name"|translate}}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.fullLabName }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Patient Name">
+            <mat-header-cell *matHeaderCellDef> {{"patient_name"|translate}} </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.patientName }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Test Name">
+            <mat-header-cell *matHeaderCellDef> {{"test_name"|translate}} </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="test_name_block">
+              {{ element.testName }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Status">
+            <mat-header-cell *matHeaderCellDef> {{"status"|translate}} </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.status }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Notes">
+            <mat-header-cell *matHeaderCellDef> {{"notes"|translate}} </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.notes }} </mat-cell>
+          </ng-container>
+          <!-- 
+          <ng-container matColumnDef="SampleCollected">
+            <mat-header-cell *matHeaderCellDef> SampleCollected </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <mat-slide-toggle [checked]="element.isSampleCollected"
+                (click)="changeStatus(element)"></mat-slide-toggle> </mat-cell>
+          </ng-container> -->
+
+          <ng-container matColumnDef="Collection Date">
+            <mat-header-cell *matHeaderCellDef>
+              {{"collection_date"|translate}}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <span *ngIf="element.isSampleCollected">
+                {{ element.testCollectionDate | date : 'dd/MM/yyyy' }}
+              </span>
+              <span *ngIf="!element.isSampleCollected"> ---- </span>
+            </mat-cell>
+          </ng-container>
+
+          <!-- <ng-container matColumnDef="Insurance/ Others">
+            <mat-header-cell *matHeaderCellDef>
+              Insurance/ Others
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <button class="btn btn-primary buttons" (click)="downloadInsuranceTemplate(row)">
+                <i class="fa fa-download" aria-hidden="true"></i>
+              </button>
+
+              <button class="btn btn-info buttons" (click)="viewInsuranceDocument(row)">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+              </button>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Referral">
+            <mat-header-cell *matHeaderCellDef> Referral </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <button class="btn btn-primary buttons" (click)="downloadTemplate(row)">
+                <i class="fa fa-download" aria-hidden="true"></i>
+              </button>
+
+              <button class="btn btn-info buttons" (click)="viewDocument(row)">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+              </button>
+            </mat-cell>
+          </ng-container> -->
+
+          <ng-container matColumnDef="Actions">
+            <mat-header-cell *matHeaderCellDef> {{"actions"|translate}} </mat-header-cell>
+            <mat-cell *matCellDef="let row" class="show insurance_block">
+              <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <button class="btn viewww" (click)="downloadInsuranceTemplate(row)">
+                    Download Insurance
+                    <!-- <i class="fa fa-download" aria-hidden="true"></i> -->
+                  </button>
+                  <button class="btn viewww" (click)="viewInsuranceDocument(row)">
+                    <!-- <i class="fa fa-eye" aria-hidden="true"></i> -->
+                    View Insurance
+                  </button>
+                  <button class="btn viewww" (click)="downloadTemplate(row)">
+                    <!-- <i class="fa fa-download" aria-hidden="true"></i> -->
+                    Download Template
+                  </button>
+                  <button class="btn viewww" (click)="viewDocument(row)">
+                    <!-- <i class="fa fa-eye" aria-hidden="true"></i> -->
+                    View Document
+                  </button>
+                  <button class="btn viewww" (click)="openTestDownloadModal(row)">
+                    Download Test
+                    <!-- <i class="fa fa-upload" aria-hidden="true"></i> -->
+                    </button>
+                </div>
+              </div>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="QrCode">
+            <mat-header-cell *matHeaderCellDef> QrCode </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <span *ngIf="element.qrImagePath != ''">
+                <img [src]="element.qrImagePath" alt="" (click)="imageInhancer(element,'qrImage')" />
+              </span>
+              <span *ngIf="element.qrImagePath == ''"> ---- </span>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+
+        <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 15, 20, 25]" [showFirstLastButtons]="true"
+          (page)="setPagePaginator($event)" [length]="totalSize">
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>

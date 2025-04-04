@@ -1,0 +1,92 @@
+/*Import Button*/
+.importccd {
+    height: 30px;
+}
+.importccd button {
+    height: 30px;
+    line-height: 30px;
+}
+.client_detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+  
+.client_detail div {
+    display: inline-block;
+    margin: 0;
+    line-height: 22px;
+}
+  
+  
+.client_detail p b {
+    color: #7a7a7a;
+    font-weight: 500;
+}
+  
+.client_detail .dashboard-btn-card:nth-child(1) button {
+    background: #4140AF !important;
+}
+
+.client_detail .dashboard-btn-card:nth-child(2) button {
+    background: #0080BC !important;
+}
+
+.client_detail .dashboard-btn-card:nth-child(3) button {
+    background: #D8666F !important;
+}
+
+.client_detail .dashboard-btn-card:nth-child(4) button {
+    background: #4E6CDB !important;
+}
+
+.client_detail .dashboard-btn-card:nth-child(5) button {
+    background: #099C77 !important;
+}
+
+.client_detail .dashboard-btn-card:nth-child(6) button {
+    background: #C39403 !important;
+}
+
+.client_detail .dashboard-btn-card:nth-child(7) button {
+    background: #009CCF !important;
+}
+
+.client_profile .clientbox .client_detail label {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.client_profile .clientbox .client_detail button {
+    background: #4140AF;
+    color: #fff;
+    width: 100%;
+}
+.client_detail div .user_pic {
+    /* width: 60px; */
+}
+.client_profile .clientbox .client_detail button span {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.client_profile .clientbox .client_detail button span img {
+    width: 20px;
+}
+
+.certificate h2 {
+font-style: normal;
+font-weight: 600;
+font-size: 20px;
+line-height: 30px;
+color: #01385F;
+}
+.dashboard-btn-card h2 {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #014971;
+}

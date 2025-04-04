@@ -1,0 +1,9 @@
+.cross_icon{
+    display: flex;
+    justify-content: end;
+    padding: 0;
+}
+.cross_icon_block{
+    font-size: 25px;
+    color: #014971;
+}

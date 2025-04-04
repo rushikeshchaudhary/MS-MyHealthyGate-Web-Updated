@@ -1,0 +1,66 @@
+<div class="p-3">
+  <!-- <h2 class="page-title">Lab Client Details</h2> -->
+
+  <mat-tab-group [(selectedIndex)]="selectedTabIndex" (click)="onTabChange(selectedTabIndex)">
+    <div *ngFor="let tab of moduleTabs; let index = index">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span>{{ tab.displayName }}</span>
+        </ng-template>
+      </mat-tab>
+    </div>
+  </mat-tab-group>
+  <div class="p-4">
+    <ng-container *ngIf="selectedTabDisplayName == 'Profile Summary'">
+      <app-client-profile></app-client-profile>
+    </ng-container>   
+  </div>
+  <!-- <div class="p-4">
+    <ng-container *ngIf="selectedTabDisplayName == 'Documents'">
+      <app-clientdocuments></app-clientdocuments>
+    </ng-container>   
+  </div> -->
+  <div class="p-4">
+    <ng-container *ngIf="selectedTabDisplayName == 'Health Coverage Plan'">
+      <app-health-plan-coverage></app-health-plan-coverage>
+    </ng-container>   
+  </div>
+  <div class="p-4">
+    <ng-container *ngIf="selectedTabDisplayName == 'Radiology Refferal'">
+      <app-radiology-refferral-clients></app-radiology-refferral-clients>
+    </ng-container>   
+  </div>
+  <div class="p-4">
+    <ng-container *ngIf="selectedTabDisplayName == 'Insurance'">
+      <app-clientinsuance></app-clientinsuance>
+    </ng-container>   
+  </div>
+  <div class="p-4">
+    <ng-container *ngIf="selectedTabDisplayName == 'Allergies'">
+      <app-allergies></app-allergies>
+    </ng-container>   
+  </div>
+  <!-- <div class="p-4">
+    <ng-container *ngIf="selectedTabDisplayName == 'Past Appointments'">
+      <app-clientpastappointments></app-clientpastappointments>
+    </ng-container>   
+  </div> -->
+
+  <!-- <div *ngIf="moduleTabs && moduleTabs.length > 0" class="mod-tabs">
+          <div class="readmin-panel pt-0">
+            <mat-tab-group
+              [(selectedIndex)]="selectedTabIndex"
+              (click)="onTabChange(selectedTabIndex)"
+            >
+              <div *ngFor="let tab of moduleTabs; let index = index">
+                <mat-tab *ngIf="tab.displayName != 'View Client List'">
+                  <ng-template mat-tab-label>
+                    <span>{{ tab.displayName }}</span>
+                  </ng-template>
+                </mat-tab>
+              </div>
+            </mat-tab-group>
+          </div>
+        </div> -->
+  <!--<router-outlet *ngIf="headerInfo && headerInfo.user"></router-outlet>-->
+</div>

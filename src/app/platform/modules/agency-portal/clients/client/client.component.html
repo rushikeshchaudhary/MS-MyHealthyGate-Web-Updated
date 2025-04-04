@@ -1,0 +1,35 @@
+<div class="patient-container">
+  <app-client-header
+    *ngIf="clientId != null && clientId != undefined && clientId > 0"
+    [clientId]="clientId"
+    [headerText]="header"
+  ></app-client-header>
+
+  <div class="d-flex justify-content-between">
+    <h2 class="page_title"> {{"manage_add_client"|translate}}</h2>
+    <!-- <div class="importccd">
+      <label>Import CCDA</label>
+      <input type="file" mat-raised-button color="primary" class="add-primary-btn" (change)="importCCDA($event)"/>
+    </div> -->
+  </div>
+
+  <div class="readmin-panel user-block">
+    <mat-tab-group
+      (selectedTabChange)="loadComponent($event)"
+      [disableRipple]="'true'"
+      [selectedIndex]="selectedIndex"
+    >
+      <mat-tab
+        *ngFor="let tab of clientTabs; let i = index"
+        class="mat-tab-label-active"
+        label="{{ tab }}"
+        [disabled]="clientId == null && i > 0"
+      >
+      </mat-tab>
+
+      <!-- <mat-tab *ngFor="let tab of clientTabs;let i=index" class="mat-tab-label-active" label={{tab}} [disabled]="(clientId==null && tab!='Demographic Info')?true:false">
+      </mat-tab> -->
+    </mat-tab-group>
+    <div #tabContent></div>
+  </div>
+</div>

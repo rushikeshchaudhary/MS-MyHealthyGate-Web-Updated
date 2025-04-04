@@ -1,0 +1,68 @@
+.test_name_block {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    max-height: 7em;
+    line-height: 1.5em;
+}
+.mat-cell {
+    padding: 10px 5px;
+    color: #01385f;
+}
+.insurance_block button.btn.viewww {
+    background: transparent;
+    font-size: 14px;
+    /* opacity: 0.5; */
+    font-weight: 500 !important;
+}
+.dropdown-toggle::after{
+    content: inherit;
+}
+.insurance_block{
+    overflow: visible;
+}
+.insurance_block button#dropdownMenuButton {
+        /* background: #17a2b8; */
+        color: white;
+        padding: 0px 10px;
+        background: linear-gradient(90.06deg, #014971 0.32%, #03BECA 100.49%) !important;
+        border: none;
+}
+.mat-row:nth-child(even) {
+    /* background-color: #e4fbff; */
+    background-color: #eafcff;
+    /* margin: 10px 0;
+    border-radius: 10px; */
+    border-bottom: 1px solid #f5f1f1 !important;
+  }
+  .mat-row .mat-cell {
+    font-weight: 400;
+  }
+  .mat-row {
+    background: white;
+    /* border-radius: 10px; */
+    padding: 0 0 0 10px;
+    border-bottom: 1px solid #f5f1f1 !important;
+  }
+  .mat-header-row {
+    background: white;
+    padding: 0 0 0 10px;
+    border-bottom: 1px solid #f5f1f1 !important;
+}
+  .table-responsive{
+    overflow-x: auto;
+  }
+  .mat-paginator {
+    background-color: inherit;
+}
+.mat-header-cell {
+    padding: 5px;
+    font-size: 15px !important;
+    white-space: nowrap;
+    color: #01385f;
+}
+.download_block{
+    padding: 0 10px;
+}

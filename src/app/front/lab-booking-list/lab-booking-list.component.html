@@ -1,0 +1,301 @@
+<div class="container-fluid mb-7">
+  <div class="row">
+    <div class="col-12 count-list">
+      <h3></h3>
+      <div class="d-flex">
+        <!-- <button
+          mat-raised-button
+          color="primary"
+          [routerLink]="['/urgentcare-providers']"
+          routerLinkActive="active"
+        >
+          Urgent Care
+        </button> -->
+        <div class="sortBy align-items-center">
+          <span class="sort_width">{{'sort_by'|translate}} :</span>
+          <ng-select class="custom-ng-select" placeholder="'select'|translate"> </ng-select>
+          <div class="list-grid-btn d-flex">
+            <i class="fa fa-bars pr-2" aria-hidden="true"></i>
+            <i class="fa fa-th-large" aria-hidden="true"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-4 search-filter">
+      <mat-accordion [multi]="true">
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <i class="fa fa-filter" aria-hidden="true"></i>{{'search'|translate}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="filter-widget">
+            <mat-form-field>
+              <input #prosearchtext matInput placeholder="'search'|translate" />
+            </mat-form-field>
+
+            <ng-select
+              placeholder="{{'search_by_location'|translate}}"
+              bindLabel="locationName"
+              bindValue="id"
+            ></ng-select>
+          </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <i class="fa fa-calendar" aria-hidden="true"></i>{{'date'|translate}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="filter-widget mb-3">
+                  <!-- intentionally commented code for running the application -->
+            <!-- <ng-datepicker class="custom-ng-datepicker" #tempselectedDate>
+            </ng-datepicker> -->
+          </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <i class="fa fa-user-md" aria-hidden="true"></i> {{'select_speciality'|translate}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="filter-widget">
+            <div class="d-flex flex-column">
+              <ng-scrollbar>
+                <div [ngStyle]="{ height: '130px' }">
+                  <ng-container>
+                    <mat-checkbox> </mat-checkbox>
+                  </ng-container>
+                </div>
+              </ng-scrollbar>
+              <div class="d-flex justify-content-between">
+                <span class="more-widget">{{'less'|translate}}...</span>
+                <span class="more-widget">{{'more'|translate}}...</span>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <i class="fa fa-stethoscope" aria-hidden="true"></i> {{'Select_services'|translate}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="filter-widget">
+            <div class="d-flex flex-column">
+              <ng-scrollbar>
+                <div [ngStyle]="{ height: '300px' }">
+                  <ng-container>
+                    <mat-checkbox> </mat-checkbox>
+                  </ng-container>
+                </div>
+              </ng-scrollbar>
+              <div class="d-flex justify-content-between">
+                <span class="more-widget">{{'less'|translate}}...</span>
+                <span class="more-widget">{{'more'|translate}}...</span>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <i class="fa fa-venus-mars" aria-hidden="true"></i> {{'gender'|translate}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="filter-widget">
+            <div class="d-flex flex-column">
+              <ng-container>
+                <mat-checkbox> </mat-checkbox>
+              </ng-container>
+            </div>
+          </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <i class="fa fa-calendar" aria-hidden="true"></i> {{'consultation_fee'|translate}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="filter-widget price-range mb-3">
+            <!-- <ngx-slider></ngx-slider> -->
+          </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <i class="fa fa-star-half-o" aria-hidden="true"></i> {{'client_review'|translate}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="filter-widget">
+            <div class="d-flex flex-column rating">
+              <mat-checkbox id="5" #temprating>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <span> (5)</span>
+              </mat-checkbox>
+              <mat-checkbox id="4" #temprating>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <span> (4)</span>
+              </mat-checkbox>
+              <mat-checkbox id="3" #temprating>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <span> (3)</span>
+              </mat-checkbox>
+              <mat-checkbox id="2" #temprating>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <span> (2)</span>
+              </mat-checkbox>
+              <mat-checkbox id="1" #temprating>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <span> (1)</span>
+              </mat-checkbox>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <mat-card class="mb-3">
+        <mat-card-content>
+          <div class="filter-btn">
+            <!-- <button mat-raised-button color="primary" (click)="applyFilter()" [disabled]="seaching">{{!seaching ? 'Search Filters' : 'Searching...'}}</button> -->
+            <button mat-raised-button>{{'clear_filter'|translate}}</button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="col-lg-9 col-md-8">
+      <div class="row">
+        <div class="{{ doctorWidgetClass }}" *ngFor="let lab of labList">
+          <div class="doctor-widget">
+            <mat-card>
+              <i class="fa fa-star-o"></i>
+              <mat-card-content>
+                <div class="doc-info">
+                  <div class="doc-info-left">
+                    <div class="doctor-img">
+                      <img
+                        class="img-fluid profile-img"
+                        src="{{
+                          lab.photoThumbnailPath ||
+                            '../../../assets/img/noimage.png'
+                        }}"
+                        alt="Lab"
+                      />
+                    </div>
+                    <div class="doc-info-cont">
+                      <h4 class="doc-name">
+                        <a>{{lab.fullName}}</a>
+                      </h4>
+                      <h5 class="doc-department">
+                        <ng-container>
+                          {{ lab.labName }}
+                          
+                        </ng-container>
+                      </h5>
+                      <!-- <div class="row">
+                        <star-rating value="{{ provider.average }}" totalstars="5" checkedcolor="#f4c150"
+                          uncheckedcolor="#e5e5e5" size="18px" readonly="true"></star-rating>
+                        <span class="d-inline-block average-rating">()</span>
+                      </div> -->
+                      <!-- <div class="cfee">
+                        Fee :
+                        {{ provider.payRate | currency: "INR":"symbol-narrow" }}
+                      </div> -->
+
+                      <!-- <div class="mb-2">
+                        <a herf="javascript:void(0);" class="cancl-pol-txt"
+                          >Cancellation Policy</a
+                        >
+                      </div> -->
+
+                      <!-- <div class="clinic-services">
+                        <span></span>
+                      </div> -->
+                    </div>
+                  </div>
+                  <div class="doc-info-right">
+                    <div class="clini-infos">
+                      <ul>
+                        <li>
+                          <i class="fa fa-phone" aria-hidden="true"></i>
+                          {{lab.phone}}
+                        </li>
+                        <li>
+                          <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                          <a
+                            href="mailto:sofiabrient_maxhospital@gmail.com?Subject=Hello%20again"
+                            target="_top"
+                          >{{lab.email}}</a>
+                        </li>
+                        <li class="addres">
+                          <i class="fa fa-map-marker" aria-hidden="true"></i>
+                          {{ lab.addres }}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="clinic-booking">
+                    <div class="chk-availability">
+                      <a
+                        href="javascript:void(0)"
+                        class="link-btn green-outline-btn"
+                        >{{'view_profile'|translate}}</a
+                      >
+                      <!-- <label><i class="fa fa-calendar-o" aria-hidden="true"></i> Availability</label>
+                                            <div>
+                                                <button class="{{avail.class}}" title='{{avail.title}}' [disabled]="avail.disabled" type="text" *ngFor="let avail of provider.availabilities | unique:avail" (click)="bookAppointment(provider.staffId,provider.providerId)">{{avail.day | slice : 0 :3}} </button>
+                                            </div> -->
+                    </div>
+                    <div class="clinic-btn dr-list-btn">
+                      <!-- <div class="fee-sec">
+                        <h3>See fees</h3>
+                        <h4><i class="fa fa-rupee" aria-hidden="true"></i> 100.00 </h4>
+                      </div> -->
+                      <button mat-raised-button color="primary" (click)="
+                      bookAppointment(lab)
+                    ">
+                    {{'book_now'|translate}}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div  class="alert alert-danger">
+      Your search did not matched any results. Please try a different search.
+    </div> -->
+    <div class="text-center" *ngIf="showLoader" style="display: none">
+      <span class="more-load"></span>
+    </div>
+  </div>
+</div>

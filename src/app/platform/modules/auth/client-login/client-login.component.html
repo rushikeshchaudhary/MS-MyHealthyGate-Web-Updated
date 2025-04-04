@@ -1,0 +1,93 @@
+<!--patient Login block-->
+<app-auth>
+  <div class="row patlogin no-gutters form-block">
+    <div class="col-md-12">
+      <div class="logo mb-4 crsr-pntr">
+        <a routerLink="/" title="Go To Home">
+          <img
+            src="../../../../../assets/img/colored-logo.svg"
+            class="site-logo"
+          />
+        </a>
+        <h3 class="pb-3 fw-300">Login to your account</h3>
+      </div>
+      <div class="form-style">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div *ngIf="errorMessage" class="alert-danger">
+            {{ errorMessage }}
+          </div>
+          <div class="group">
+            <label>Username</label>
+            <input
+              type="text"
+              autofocus
+              placeholder="Username"
+              formControlName="username"
+              [ngClass]="{ 'is-invalid': submitted && f['username'].errors }"
+              required
+            />
+            <mat-error *ngIf="f['username'].errors && submitted">
+              Please enter username
+            </mat-error>
+          </div>
+
+          <div class="group">
+            <label>Password</label>
+            <input
+              placeholder="Password"
+              [type]="isShowPassword ? 'text' : 'password'"
+              formControlName="password"
+              [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
+              required
+            />
+            <i
+              (click)="isShowPassword = !isShowPassword"
+              class="fa"
+              [ngClass]="{
+                'fa-eye-slash': !isShowPassword,
+                'fa-eye': isShowPassword
+              }"
+            ></i>
+            <mat-error *ngIf="f['password'].errors && submitted">
+              Please enter password
+            </mat-error>
+          </div>
+          <div
+            class="d-flex align-items-center justify-content-between w-100 mobile-space"
+          >
+            <!-- <div class="d-flex align-items-center"><input name="" type="checkbox" value="" /> <span class="pl-2">Remember Me</span></div> -->
+            <!-- <div class="frgt-txt">
+              <a [routerLink]="['/web/forgot-password']">Forget Password?</a>
+            </div> -->
+          </div>
+            <button
+              type="submit"
+              class="btn btn-theme"
+              [disabled]="loading"
+            >
+            <span *ngIf="!loading"> {{'log_in'|translate}}</span>
+            <span *ngIf="loading"> Loading...</span>
+            </button>
+        </form>
+        <p class="dont_acc">
+          Don't have an account?<a [routerLink]="['/web/sign-up']"
+            > Sign Up</a
+          >
+        </p>
+        <p class="signup_txt">
+          By signing up, you agree to myHealthyGate
+          <a href="javascript:void(0);" (click)="opentermconditionmodal()"
+            >Terms and Conditions</a
+          >
+          &
+          <a href="javascript:void(0);" (click)="opentermconditionmodal()"
+            >Privacy Policy</a
+          >
+        </p>
+      </div>
+    </div>
+    <!-- <div class="col-md-6 d-none d-md-block">
+        <img src="../../../../../assets/login-patient.png" class="img-fluid" style="min-height:100%;" />
+        </div> -->
+  </div>
+</app-auth>

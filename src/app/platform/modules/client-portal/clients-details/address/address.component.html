@@ -1,0 +1,350 @@
+<div class="row">
+  <div class="col-sm-12 nw-adress-form">
+    <form
+      id="addressForm"
+      #documentForm="ngForm"
+      class="readmin-form custom_form"
+      [formGroup]="addressForm"
+    >
+      <div formArrayName="addresses">
+        <div
+          *ngFor="let address of addresses.controls;
+            let ix = index
+          "
+        >
+          <div formGroupName="{{ ix }}">
+            <div class="row" *ngIf="ix > 1">
+              <div class="col-sm-4 require pdl-40">
+                <mat-form-field class="example-full-width">
+                  <mat-select
+                    placeholder="{{ 'address_type' | translate }}"
+                    formControlName="addressTypeId"
+                    matInput
+                    required
+                  >
+                    <mat-option
+                      *ngFor="let adType of masterAddressType"
+                      [value]="adType.id"
+                    >
+                      {{ adType.value }}
+                    </mat-option>
+                  </mat-select>
+                  <!-- <mat-error *ngIf="countryID.errors">
+                    Please select country
+                  </mat-error>-->
+                </mat-form-field>
+                <button
+                  *ngIf="ix > 1 || addresses.length > 2"
+                  type="button"
+                  class="additem remove-btn tp-30"
+                  title="Remove row"
+                  (click)="removeAdress(ix)"
+                >
+                  <b
+                    class="fa fa-minus-square orangefont"
+                    aria-hidden="true"
+                  ></b>
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <div
+                *ngIf="ix == 0 || ix == 1"
+                class="col-sm-12 justify-content-sm-between align-items-end"
+              >
+                <div class="panel_title">
+                  <h3>
+                    <ng-container *ngIf="ix == 0">{{
+                      "primary_address" | translate
+                    }}</ng-container>
+                    <ng-container *ngIf="ix == 1">{{
+                      "mailing_address" | translate
+                    }}</ng-container>
+                  </h3>
+                  <i
+                    [ngClass]="{
+                      flaticon: true,
+                      'flaticon-placeholder': ix == 0,
+                      'flaticon-location': ix == 1
+                    }"
+                  ></i>
+                </div>
+                <div class="pb-2 pull-right" *ngIf="ix == 1">
+                  <mat-checkbox
+                    [checked]="sameAsPrimary"
+                    (change)="sameAsPrimaryClick($event)"
+                  >
+                    {{ "same_as_primary_address" | translate }}
+                  </mat-checkbox>
+                </div>
+              </div>
+              <div class="col-sm-8 require">
+                <app-google-address-input
+                  [control]="getAddressControl(ix)"
+                  [placeholder]="addressTran"
+                  (onAddressChange)="handleAddressChange($event, ix)"
+                ></app-google-address-input>
+              </div>
+              <div class="col-sm-4 require">
+                <mat-form-field class="example-full-width">
+                  <input
+                    matInput
+                    autofocus
+                    placeholder="{{ 'apt_unit' | translate }}"
+                    maxlength="15"
+                    formControlName="apartmentNumber"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-4 require">
+                <mat-form-field class="example-full-width">
+                  <mat-select
+                    (selectionChange)="updateValue($event.value)"
+                    placeholder="{{ 'country' | translate }}"
+                    formControlName="countryId"
+                    matInput
+                    required
+                  >
+                    <mat-option
+                      *ngFor="let country of masterCountry"
+                      [value]="country.id"
+                    >
+                      {{ country.value }}
+                    </mat-option>
+                  </mat-select>
+                  <!-- <mat-error *ngIf="countryID.errors">
+                  Please select country
+                </mat-error>-->
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4 require">
+                <mat-form-field class="example-full-width">
+                  <input
+                    matInput
+                    autofocus
+                    placeholder="{{ 'city' | translate }}"
+                    maxlength="50"
+                    formControlName="city"
+                  />
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4 require">
+                <mat-form-field class="example-full-width">
+                  <mat-select
+                    placeholder="{{ 'state' | translate }}"
+                    formControlName="stateId"
+                    matInput
+                    required
+                  >
+                    <mat-option
+                      *ngFor="let state of masterState"
+                      [value]="state.id"
+                    >
+                      {{ state.value }}
+                    </mat-option>
+                  </mat-select>
+                  <!-- <mat-error *ngIf="stateID.errors">
+                  Please select state
+                </mat-error>-->
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-4 require">
+                <mat-form-field class="example-full-width">
+                  <input
+                    appZipcode
+                    matInput
+                    autofocus
+                    placeholder="{{ 'zip' | translate }}"
+                    maxlength="10"
+                    formControlName="zip"
+                    required
+                  />
+                  <!-- <mat-error *ngIf="zip.errors?.required">
+                  Please enter zip
+                </mat-error> -->
+                </mat-form-field>
+              </div>
+
+              <!-- <div class="col-sm-4 require">
+                <mat-form-field class="example-full-width">
+                  <mat-select
+                    placeholder="{{ 'location' | translate }}"
+                    formControlName="patientLocationId"
+                    matInput
+                    required
+                  >
+                    <mat-option
+                      *ngFor="let loc of masterPatientLocation"
+                      [value]="loc.id"
+                    >
+                      {{ loc.value }}
+                    </mat-option>
+                  </mat-select>
+
+                </mat-form-field>
+              </div> -->
+              <!-- <mat-error *ngIf="patientLocationId.errors">
+                Please select state
+              </mat-error> -->
+            </div>
+          </div>
+          <div class="row">
+            <div *ngIf="ix == 1" class="col-sm-12">
+              <div class="panel_title">
+                <h3>{{ "additional_address" | translate }}</h3>
+                <i class="flaticon flaticon-placeholder"></i>
+                <div class="additionalAddressBtn">
+                  <button
+                    type="button"
+                    class="addnum"
+                    title="Add row"
+                    (click)="addAdditionalAddress()"
+                  >
+                    <b
+                      class="fa fa-plus-square greenfont"
+                      aria-hidden="true"
+                    ></b>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div formArrayName="phoneNumbers">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="panel_title">
+              <h3>{{ "phone_number" | translate }}</h3>
+              <i class="flaticon flaticon-agenda"></i>
+            </div>
+          </div>
+        </div>
+        <div
+          *ngFor="let number of phoneNumbers.controls;
+            let ix = index
+          "
+        >
+          <div formGroupName="{{ ix }}">
+            <div class="row pdr-40 parent_div">
+              <div class="col-sm-4 require">
+                <mat-form-field class="example-full-width">
+                  <mat-select
+                    placeholder="{{ 'contact_type' | translate }}"
+                    formControlName="phoneNumberTypeId"
+                    matInput
+                    required
+                  >
+                    <mat-option
+                      *ngFor="let type of masterPhoneType"
+                      [value]="type.id"
+                    >
+                      {{ type.value }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4 require">
+                <div class="country-field-sec">
+                  <app-phone-number
+                    class="country-field"
+                    [countryId]="0"
+                    [index]="ix"
+                    [selectedCountryPhoneCode]="selectedPhoneCode"
+                    (phoneCodeChangeEvent)="phoneCodeChange($event,ix)"
+                  ></app-phone-number>
+
+                  <mat-form-field class="country-mat-field example-full-width">
+                    <input
+                      matInput
+                      autofocus
+                      maxlength="17"
+                      placeholder="{{ 'phone_number' | translate }}"
+                      formControlName="phoneNumber"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-sm-4 require">
+                <mat-form-field class="example-full-width">
+                  <mat-select
+                    placeholder="{{ 'preferences' | translate }}"
+                    formControlName="preferenceID"
+                    matInput
+                    required
+                  >
+                    <mat-option
+                      *ngFor="let pref of masterPhonePreferences"
+                      [value]="pref.id"
+                    >
+                      {{ pref.value }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div>
+                <button
+                  *ngIf="ix > 0 || phoneNumbers['controls'].length > 1"
+                  type="button"
+                  class="additem removeitem"
+                  title="Remove row"
+                  (click)="removePhoneNumber(ix)"
+                >
+                  <b
+                    class="fa fa-minus-square orangefont"
+                    aria-hidden="true"
+                  ></b>
+                </button>
+                <button
+                  *ngIf="ix + 1 === phoneNumbers['controls'].length"
+                  type="button"
+                  class="additem"
+                  title="Add row"
+                  (click)="addAdditionalPhoneNumber()"
+                >
+                  <b class="fa fa-plus-square greenfont" aria-hidden="true"></b>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div
+          class="col-sm-12 d-sm-flex justify-content-sm-end pt-3 actions-btn"
+        >
+          <button
+            name="Save"
+            mat-raised-button
+            color="primary"
+            (click)="onSubmit($event)"
+            form="addressForm"
+            class="text-uppercase"
+            [disabled]="submitted"
+            cdkFocusInitial
+          >
+            {{ submitted ? "Saving..." : ("save" | translate) }}
+          </button>
+          <button
+            name="SaveContinue"
+            mat-raised-button
+            color="accent"
+            (click)="onSubmit($event)"
+            form="addressForm"
+            class="text-uppercase ml-3"
+            [disabled]="submitted"
+          >
+            {{ submitted ? "Saving..." : ("save_and_continue" | translate) }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

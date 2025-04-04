@@ -1,0 +1,783 @@
+<section class="home-banner">
+  <div class="banner-content">
+    <video playsinline autoplay muted loop poster="polina.jpg" id="bgvid">
+      <source src="../../../assets/img/slider-bgvideo.mp4" type="video/webm">
+      <source src="../../../assets/img/slider-bgvideo.mp4" type="video/mp4">
+    </video>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>{{"your_gate_to_health"|translate}}</h2>
+          <h4>{{'wherever_you_are'|translate}}</h4>
+        </div>
+
+        <div class="col-md-12">
+          <p>{{'connect_to_expert_sof_yourc_hoice'|translate}}</p>
+          <form>
+            <div class="form-group">
+              <img src="../assets/img/placeholder-doctor.svg" alt="" />
+              <ng-select [(ngModel)]="selectedSpeciality" (click)="changeSpeciality($event)" name="speciality"
+                class="custom-ng-select" [placeholder]="'speciality'|translate" [items]="speciality" bindLabel="value"
+                bindValue="id">
+              </ng-select>
+            </div>
+            <div class="form-group">
+              <img src="../assets/img/placeholder-stethoscope.svg" alt="" />
+              <ng-select name="ConsultationType" class="custom-ng-select"
+                placeholder="'consultation_type'|translate" [items]="selectedConsultationType" bindLabel="value"
+                bindValue="id">
+              </ng-select>
+            </div>
+
+            <div class="form-group">
+              <img src="../assets/img/placeholder-calander.svg" alt="" />
+                    <!-- intentionally commented code for running the application -->
+              <!-- <ng-datepicker [(ngModel)]="selectedDate" name="date" class="custom-ng-datepicker" [options]="options">
+              </ng-datepicker> -->
+            </div>
+            <button mat-raised-button class="search-btn" (click)="doctorListingRedirection()">
+              <i class="fa fa-search" aria-hidden="true"></i> {{"search"|translate}}
+            </button>
+          </form>
+          <div class="row need-sec">
+            <!-- <div class="col-md-3">
+              <p><b>Not sure what you need</b></p>
+              <div class="btn-sec">
+                <a
+                  href="javascript:void(0)"
+                  (click)="openSymptomChecker()"
+                  class="radius-btn white-btn"
+                  >Symptoms Checker</a
+                >
+              </div>
+            </div> -->
+            <!-- <div class="col-md-3">
+              <p>{{'need_a_doctor_now'|translate}}</p>
+              <div class="btn-sec">
+                <a href="javascript:void(0)"(click)="openSymptomChecker()"class="radius-btn white-btn">See First Available</a>
+                <a [routerLink]="['/urgentcare-providers']"
+                  class="radius-btn white-btn">{{'see_first_available'|translate}}</a>
+                <p class="no_emergency">({{'no_emergency_services'|translate}})</p>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="our-specialities" id="specialities">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="sec-head">
+            <h2>{{'our_specialities'|translate}}</h2>
+            <!-- <h3>{{'meet_your_physician_online'|translate }}</h3> -->
+            <h3><span>{{'meet_your' | translate}} </span>
+              <div class="contented">
+                <div class="contented__container">
+                  <ul class="contented__container__list">
+                    <li class="contented__container__list__item">{{'physicians' | translate}}</li>
+                    <li class="contented__container__list__item">{{'nutritionist' | translate}}</li>
+                    <li class="contented__container__list__item">{{'paediatrics' | translate}}</li>
+                    <li class="contented__container__list__item">{{'psychiatrist' | translate}}</li>
+                  </ul>
+                </div>
+              </div>
+              <span>{{'online' | translate}}</span>
+            </h3>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="spec-card" (click)="RedirectToDoctorsList('Family Doctors')">
+            <div class="card-img" style="
+                background-image: url('../../../assets/img/specialities/7.png');
+              ">
+              <!-- <img src="../../../assets/img/specialities/2.png" alt=""> -->
+            </div>
+            <div class="card-cont">
+              <div class="small-icon">
+                <i class="icon-7 icomoon"></i>
+              </div>
+              <h2>{{'internal_medicine_family_doctor'|translate }}</h2>
+              <p>{{'internal_medicine_family_doctor_description'|translate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="spec-card" (click)="RedirectToDoctorsList('Ear Nose and Throat')">
+            <div class="card-img" style="background-image: url('../../../assets/img/specialities/5.png')">
+              <!-- <img src="../../../assets/img/specialities/demo.png" alt=""> -->
+            </div>
+            <div class="card-cont">
+              <div class="small-icon">
+                <i class="icon-5 icomoon"></i>
+              </div>
+              <h2>{{'nose_ears_and_throat_ent'|translate }}</h2>
+              <p>{{'nose_ears_and_throat_description'|translate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="spec-card" (click)="RedirectToDoctorsList('Paediatrics')">
+            <div class="card-img" style="
+                background-image: url('../../../assets/img/specialities/4.png');
+              ">
+              <!-- <img src="../../../assets/img/specialities/demo.png" alt=""> -->
+            </div>
+            <div class="card-cont">
+              <div class="small-icon">
+                <i class="icon-4 icomoon"></i>
+              </div>
+              <h2>{{'paediatrics'|translate }}</h2>
+              <p>{{'paediatrics_description'|translate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="spec-card" (click)="RedirectToDoctorsList('Respiratory')">
+            <div class="card-img" style="background-image: url('../../../assets/img/specialities/6.png')">
+            </div>
+            <div class="card-cont">
+              <div class="small-icon">
+                <i class="icon-6 icomoon"></i>
+              </div>
+              <h2>{{'respiratory_chest'|translate }}</h2>
+              <p>{{'respiratory_chest_description'|translate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="spec-card" (click)="RedirectToDoctorsList('Nutritionist')">
+            <div class="card-img" style="background-image: url('../../../assets/img/specialities/3.png');">
+            </div>
+            <div class="card-cont">
+              <div class="small-icon">
+                <i class="icon-3 icomoon"></i>
+              </div>
+              <h2>{{'nutritionist'|translate }}</h2>
+              <p>{{'nutritionist_description'|translate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="spec-card" (click)="RedirectToDoctorsList('Mental Wellbeing')">
+            <div class="card-img" style="
+                background-image: url('../../../assets/img/specialities/1.png');
+              ">
+              <!-- <img src="../../../assets/img/specialities/4.png" alt=""> -->
+            </div>
+            <div class="card-cont">
+              <div class="small-icon">
+                <i class="icon-1 icomoon"></i>
+              </div>
+              <h2>{{'psychology_psychiatry'|translate }}</h2>
+              <p>{{'psychology_psychiatry_description'|translate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="spec-card" (click)="RedirectToDoctorsList('Dermatology')">
+            <div class="card-img" style="
+                background-image: url('../../../assets/img/specialities/2.png');
+              ">
+              <!-- <img src="../../../assets/img/specialities/3.png" alt=""> -->
+            </div>
+            <div class="card-cont">
+              <div class="small-icon">
+                <i class="icomoon icon-2"></i>
+              </div>
+              <h2>{{'skin_care'|translate }}</h2>
+              <p>{{'skin_care_description'|translate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="spec-card" (click)="RedirectToDoctorsList('SpeechTherapy')">
+            <div class="card-img" style="
+                background-image: url('../../../assets/img/specialities/8.png');
+              ">
+              <!-- <img src="../../../assets/img/specialities/demo.png" alt=""> -->
+            </div>
+            <div class="card-cont">
+              <div class="small-icon">
+                <i class="icon-8 icomoon"></i>
+              </div>
+              <h2>{{'speech_therapy'|translate }}</h2>
+              <p>{{'speech_therapy_description'|translate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="text-center link-text">
+            <a href="javascript:void(0)" (click)="showAllServices()">{{"view_all"|translate}}
+              <mat-icon>keyboard_arrow_down</mat-icon>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="our-services">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="sec-head">
+          <h2>{{'our_services'|translate }}</h2>
+          <h3>{{'we_made_it_easy_n_convenient'|translate }}</h3>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="tab-btn-sec tab-mrg">
+          <!-- Nav pills -->
+          <ul class="nav nav-pills" role="tablist">
+            <li class="nav-item" (click)="tabActiveTwo(1)">
+              <a class="nav-link" [ngClass]="this.tab1Active ? 'active' : ''"><i class="fa fa-user"
+                  aria-hidden="true"></i> {{'for_patients'|translate}}</a>
+            </li>
+            <li class="nav-item" (click)="tabActiveTwo(2)">
+              <a class="nav-link" [ngClass]="this.tab2Active ? 'active' : ''"><i class="fa fa-user-md"
+                  aria-hidden="true"></i> {{'for_doctors'|translate}}</a>
+            </li>
+            <li class="nav-item" (click)="tabActiveTwo(3)">
+              <a class="nav-link" [ngClass]="this.tab3Active ? 'active' : ''"><i class="fa fa-home"
+                  aria-hidden="true"></i> {{'for_clinics'|translate}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div id="" class="tab-pane active">
+        <owl-carousel-o [options]="customOptions" *ngIf="this.tab1Active">
+          <ng-template carouselSlide>
+            <div class="serv-card">
+              <div class="serv-icon-sec">
+                <img src="../../../assets/img/health-wallet.svg" alt="" />
+                <h3> {{'my_healthy_wallet'|translate}}</h3>
+              </div>
+              <p>{{'manage_all_your_records_n_app'|translate}}</p>
+            </div>
+          </ng-template>
+          <ng-template carouselSlide>
+            <div class="serv-card bg-red">
+              <div class="serv-icon-sec">
+                <img src="../../../assets/img/appoint-book.svg" alt="" />
+                <h3>{{'appointement_booking'|translate}}</h3>
+              </div>
+              <p>
+                {{'book_your_video_home'|translate}}
+              </p>
+            </div>
+          </ng-template>
+          <ng-template carouselSlide>
+            <div class="serv-card bg-green">
+              <div class="serv-icon-sec">
+                <img src="../../../assets/img/privacy.svg" alt="" />
+                <h3>{{'privacy'|translate}}</h3>
+              </div>
+              <p>
+                {{'attend_you_appointement'|translate}}
+              </p>
+            </div>
+          </ng-template>
+          <!--<ng-template carouselSlide>
+            <div class="serv-card">
+              <img src="../../../assets/img/appoint-book.svg" alt="" />
+              <h3>{{'appointement_booking'|translate}}</h3>
+              <p>
+                {{'book_your_video_home'|translate}}
+              </p>
+            </div>
+          </ng-template>-->
+          <ng-template carouselSlide>
+            <div class="serv-card">
+              <div class="serv-icon-sec">
+                <img src="../../../assets/img/beond-treatment.svg" alt="" />
+                <h3>{{"beyond_treatment"|translate}}</h3>
+              </div>
+              <p>
+                {{"A_gateway_beyond_medical_treatment_such_as_weight_management_mental_health_counseling"|translate}}
+              </p>
+            </div>
+          </ng-template>
+          <ng-template carouselSlide>
+            <div class="serv-card bg-red">
+              <div class="serv-icon-sec">
+                <img src="../../../assets/img/convenience.svg" alt="" />
+                <h3>{{"convenience"|translate}}</h3>
+              </div>
+              <p>
+                {{"prescriptions_requests_sents_directly_to_your_pharmacies_labs_or_radiology_centers" |translate}}
+              </p>
+            </div>
+          </ng-template>
+        </owl-carousel-o>
+      </div>
+      <div id="" class="container">
+        <owl-carousel-o [options]="customOptionsTwo" *ngIf="this.tab2Active">
+          <ng-template carouselSlide>
+            <div class="serv-card">
+              <div class="serv-icon-sec">
+                <img src="../../../assets/img/personalise-dashboard.svg" alt="" />
+                <h3>{{'personalized_dashboard'|translate}}</h3>
+              </div>
+              <p>{{'dashboard_that_summerize'|translate}}
+              </p>
+            </div>
+          </ng-template>
+          <ng-template carouselSlide>
+            <div class="serv-card bg-red">
+              <div class="serv-icon-sec">
+                <img src="../../../assets/img/appoint-book.svg" alt="" />
+                <h3>{{'plan_you_schedule'|translate}}</h3>
+              </div>
+              <p>{{'set_your_availability'|translate}}
+              </p>
+            </div>
+          </ng-template>
+          <ng-template carouselSlide>
+            <div class="serv-card bg-green">
+              <div class="serv-icon-sec">
+                <img src="../../../assets/img/digital-trasform.svg" alt="" />
+                <h3>{{'your_digital_transformation'|translate}}</h3>
+              </div>
+              <p>
+                {{'electronics_forms_and_prescriptions_predefined_templates_with_your_own_personal_video_and_logo'|translate}}
+              </p>
+            </div>
+          </ng-template>  
+          <ng-template carouselSlide>
+            <div class="serv-card">
+              <div class="serv-icon-sec">
+                <img src="../../../assets/img/wordwide-access.svg" alt="" />
+                <h3>{{"worldwide_access"|translate}}</h3>
+              </div>
+              <p>{{"Patient_accesibility_worldwide"| translate}}
+              </p>
+            </div>
+          </ng-template>
+          <ng-template carouselSlide>
+            <div class="serv-card bg-red">
+              <div class="serv-icon-sec">
+                <img src="../../../assets/img/record-mgt.svg" alt="" />
+                <h3>{{"easy_record_management"|translate}}</h3>
+              </div>
+              <p>{{"Manage_your_patient_records_history_previous_visits_and_your_saved_notes"|translate}}
+              </p>
+            </div>
+          </ng-template>
+        </owl-carousel-o>
+      </div>
+      <div id="" class="container">
+        <owl-carousel-o [options]="customOptionsThree" *ngIf="this.tab3Active">
+          <ng-template carouselSlide>
+            <div class="serv-card">
+              <div class="serv-icon-sec">
+                <img src="../../../assets/img/health-wallet.svg" alt="" />
+                <!-- <h3>{{'my_healthy_wallet'|translate}}</h3>
+                <p>{{'manage_all_your_records_n_app' |translate }}</p> -->
+                <h3>{{"mobile_electronic_medical_records"|translate}} </h3>
+              </div>
+              <p>EMR/ EHR : manage patients details and follow ups wherever you are</p>
+            </div>
+          </ng-template>
+          <ng-template carouselSlide>
+            <div class="serv-card bg-red">
+              <div class="serv-icon-sec">
+                <img src="../../../assets/img/appoint-book.svg" alt="" />
+                <!-- <h3>{{'appointement_booking'|translate}}</h3>
+                <p>
+                  {{'book_your_video_home'|translate}}
+
+                </p> -->
+                <h3>{{"digital_booking"|translate}} </h3>
+              </div>
+              <p>Ability to accept, decline or reschedule
+
+                Home visits, face to face and Online</p>
+            </div>
+          </ng-template>
+          <ng-template carouselSlide>
+            <div class="serv-card bg-green">
+              <div class="serv-icon-sec">
+                <img src="../../../assets/img/privacy.svg" alt="" />
+                <!-- <h3>{{'privacy'|translate}}</h3>
+                <p>
+                  Attend your appointments in your own privacy. Your data is
+                  secure with HIPPA Compliance
+                </p> -->
+                <h3>{{"multiple_locations_multiple_doctors"|translate}}</h3>
+              </div>
+              <p>Manage multiple staff in multiple locations using your master key</p>
+            </div>
+          </ng-template>
+          <ng-template carouselSlide>
+            <div class="serv-card">
+              <div class="serv-icon-sec">
+                <img src="../../../assets/img/appoint-book.svg" alt="" />
+                <!-- <h3>{{'appointement_booking'|translate}}</h3>
+                <p>
+                  {{'book_your_video_home'|translate}}
+
+                </p> -->
+                <h3>{{"manage_clinic_hours_ans_scheduling"|translate}} </h3>
+              </div>
+              <p>Set availability for each doctor and block unavailable days </p>
+            </div>
+          </ng-template>
+          <!-- <ng-template carouselSlide>
+            <div class="serv-card">
+              <img src="../../../assets/img/beond-treatment.svg" alt="" />
+              <h3>Beyond Treatment</h3>
+              <p>
+                A Gateway beyond medical treatment such as weight management, mental health counseling and home care
+              </p>
+            </div>
+          </ng-template> -->
+          <!-- <ng-template carouselSlide>
+            <div class="serv-card">
+              <img src="../../../assets/img/convenience.svg" alt="" />
+              <h3>Convenience</h3>
+              <p>
+                Prescriptions/requests sent directly to your pharmacies, labs or radiology centers
+              </p>
+            </div>
+          </ng-template> -->
+        </owl-carousel-o>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how_it_work">
+  <div class="container">
+    <div class="sub_heading">
+      <h2>{{'how_it_works'|translate}}</h2>
+      <h3>{{'easy_quick_convenient'|translate}}</h3>
+      <p>{{'Web_App'|translate}}</p>
+    </div>
+    <div class="how_work_area">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="how_left_area">
+            <div class="how_card">
+              <div>
+                <h3>{{'Sign_up'|translate}}</h3>
+                <p>{{"Browse_the_multifeatured_platform_and_join_free_membership_for_booking" | translate}}</p>
+              </div>
+              <h4>01</h4>
+            </div>
+            <div class="how_card">
+              <div>
+                <h3>{{'select_your_care'|translate}}</h3>
+                <p>{{"Select_the_type_of_treatment_you_are_looking_for" | translate}}</p>
+              </div>
+              <h4>02</h4>
+            </div>
+            <div class="how_card">
+              <div>
+                <h3>{{'change_choose_a_doctor_to_choose_a_doctor_specialist'|translate}}</h3>
+                <p>
+                  {{"You_can_check_doctors_profile_and_review_and_make_you_preferred_selection"|translate}}
+                </p>
+              </div>
+              <h4>03</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="how_mobile">
+            <img src="../../../assets/img/mobile-image.png" alt="" />
+          </div>
+        </div>
+        <!-- //////////////////////// -->
+        <div class="col-md-4" hidden>
+          <div class="d-flex justify-content-center h-100">
+            <div class="how_mobile col-md-9">
+              <!-- <img src="../../../assets/img/mobile-image.png" alt="" /> -->
+              <iframe loading="lazy" style="border-radius: 0px;
+                            width: 100%;
+                            height: 100%;
+                            border: none !important;" src="../../../assets/video/home_page.mp4" title="---"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen frameborder="0"></iframe>
+            </div>
+          </div>
+        </div>
+        <!-- ///////////////////////// -->
+        <div class="col-md-4">
+          <div class="how_right_area">
+            <div class="how_card">
+              <h4>04</h4>
+              <div>
+                <h3>{{'book_your_appointment'|translate}}</h3>
+                <p>{{"You_can_choose_to_book_a_home_visit_online_or_face_to_face_where_available_at_a_click_of_a_button"
+                  |translate}}
+                </p>
+              </div>
+            </div>
+            <div class="how_card">
+              <h4>05</h4>
+              <div>
+                <h3>{{'save_n_manage_your_records'|translate}}</h3>
+                <p>{{"All_your_health_documents_results_and_appointments_are_saved_in_My_Care_Library"
+                  |translate}}
+                </p>
+              </div>
+            </div>
+            <!-- <div class="how_card">
+              <h4>05</h4>
+              <div>
+                <h3>{{'book_your_appointment'|translate}}</h3>
+                <p>You can choose to book a home visit, online or face to face where available at a click of a button
+                </p>
+              </div>
+            </div> -->
+            <!-- <div class="how_card">
+              <h4>06</h4>
+              <div>
+                <h3>Save and manage your records</h3>
+                <p>
+                  Select from multiple specialities including medical doctors,
+                  psychology, experts, dieticians, speach patholigist,
+                  physiotherapist and much more
+                </p>
+              </div>
+            </div> -->
+          </div>
+        </div>
+        <div class="col-lg-12 provider_btm">
+          <h4 class="provider_text">{{'for_providers_n_clinics'|translate}}</h4>
+          <button class="btn btn-primary btn-green" (click)="howItWorksClick()">
+            {{'click_here'|translate}} <span>></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="brand_logo">
+  <div class="container-fluid">
+    <owl-carousel-o [options]="customLogoOptions">
+      <ng-template carouselSlide>
+        <img src="../../../assets/img/Lyft_Logo.svg" alt="" />
+      </ng-template>
+      <ng-template carouselSlide>
+        <img src="../../../assets/img/Adidas_Logo_Grey.svg" alt="" />
+      </ng-template>
+      <ng-template carouselSlide>
+        <img src="../../../assets/img/PayPal_Logo_Grey.svg" alt="" />
+      </ng-template>
+      <ng-template carouselSlide>
+        <img src="../../../assets/img/SurveyMonkey_Logo_Grey.svg" alt="" />
+      </ng-template>
+      <ng-template carouselSlide>
+        <img src="../../../assets/img/Pinterest_Logo.svg" alt="" />
+      </ng-template>
+      <ng-template carouselSlide>
+        <img src="../../../assets/img/vitess-stacked-grey.svg" alt="" />
+      </ng-template>
+    </owl-carousel-o>
+  </div>
+</section>
+<section class="meet_doctors" id="our-doctors">
+  <div class="container">
+    <div class="sub_heading">
+      <h2>{{"meet_our_great_doctors"|translate}}</h2>
+      <p>
+        {{'multiple_health_services'|translate}}
+      </p>
+    </div>
+    <div class="doctors_area">
+      <owl-carousel-o [options]="customDoctorOptions">
+        <ng-template carouselSlide>
+          <div class="doctor_card">
+            <img src="../../../assets/img/Image-2.png" alt="" />
+            <h3>Dr. Lindsey Botosh</h3>
+            <p>Pediatrician</p>
+          </div>
+        </ng-template>
+        <ng-template carouselSlide>
+          <div class="doctor_card">
+            <img src="../../../assets/img/Image-1.png" alt="" />
+            <h3>Dr. Jon Doe</h3>
+            <p>Dentist</p>
+          </div>
+        </ng-template>
+        <ng-template carouselSlide>
+          <div class="doctor_card">
+            <img src="../../../assets/img/Image.png" alt="" />
+            <h3>Dr. Mathew Kalra</h3>
+            <p>Cardiologist</p>
+          </div>
+        </ng-template>
+        <ng-template carouselSlide>
+          <div class="doctor_card">
+            <img src="../../../assets/img/Image-3.png" alt="" />
+            <h3>Dr. Jasmin Toma</h3>
+            <p>Orthopedics</p>
+          </div>
+        </ng-template>
+      </owl-carousel-o>
+    </div>
+  </div>
+</section>
+
+<!-- <section class="member_plan">
+  Taken Backup of some section of this section with date 20230626
+  <div class="container">
+    <div class="sub_heading">
+      <h2>{{'membership_plans'|translate}}</h2>
+      <p>{{'become_a_member_to_book_appointment'|translate}}
+      </p>
+      <label class="switch_t">
+        <span class="toggle_left_text">{{'bill_monthly'|translate}}</span>
+        <input type="checkbox" checked />
+        <span class="slider_t round"></span>
+        <span class="toggle_right_text">{{'bill_anually'|translate}}</span>
+      </label>
+    </div>
+    <div class="member_area">
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          <div class="member_card best-plan">
+            <h3>Save More <span>With Best Plans.</span></h3>
+            <p>Choose a plan and get onboard in few minutes and get $10 credits for your next payment.</p>
+            <div class="arrow-sec">
+              <img src="../../../assets/img/right-arrow-img.svg" alt="">
+            </div>
+            
+            <img src="../../../assets/img/plan-img.svg" alt="">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="member_card">
+            <h3>{{'basic'|translate}}</h3>
+            <div *ngFor="let basic of basicPlan">
+              <div [innerHTML]="basic.descriptions | translate"></div>
+            </div>
+           
+            <p class="plan_cost" *ngFor="let basic of basicPlan">${{basic.amountPerClient}} /<span>
+                {{'start_free'|translate}}
+              </span></p>
+            <button class="btn btn-primary btn-green btn-block" (click)="loginClick()">
+              {{'start_free'|translate}}
+            </button>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="member_card">
+            <h3> {{'premium'|translate}}</h3>
+            <div *ngFor="let premium of premiumPlan">
+              <div [innerHTML]="premium.descriptions"></div>
+            </div>
+           
+            <p class="plan_cost" *ngFor="let premium of premiumPlan">${{premium.amountPerClient}}
+              /<span>{{'month'|translate}}</span>
+            </p>
+            <button class="btn btn-primary btn-dark-green btn-block" (click)="loginClick()">
+              {{'start_your_membership'|translate}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<section class="review_section">
+  <div class="container">
+    <div class="sub_heading">
+      <h2><span>{{'testimonials'|translate}}</span></h2>
+    </div>
+    <div class="review_area">
+      <owl-carousel-o [options]="customTestiOptions">
+        <ng-template carouselSlide *ngFor="let testimonial of allTestimonial">
+          <div class="review_card">
+            <div class="review_detail">
+              <img [src]="testimonial.profilePic" alt="" />
+              <div>
+                <h3>{{testimonial.name}}</h3>
+                <p>{{testimonial.organizationName}}</p>
+              </div>
+            </div>
+            <p class="review_msg">
+              {{testimonial.description}}
+            </p>
+          </div>
+        </ng-template>
+
+      </owl-carousel-o>
+    </div>
+  </div>
+</section>
+
+<section *ngIf="isMemberShipRectangle" class="rectangle_ad">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <img src="{{memberRecPath}}" alt="">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section *ngIf="!isMemberShipRectangle" class="square_ad">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4" *ngFor="let item of membershipAd">
+        <img src="{{item.photoPath}}" alt="">
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="book_appoint">
+  <div class="container">
+    <div class="appoint_area">
+      <div class="row">
+        <div class="col-md-6 border-right">
+          <div class="btn btn-primary btn-book-appoint" [routerLink]="['/doctor-list']">
+            {{'book_an_appointment'|translate}}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="btn btn-primary btn-start-membership" [routerLink]="['/web/sign-up']">
+            {{'start_my_membership'|translate}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section *ngIf="isFooterRectangle" class="rectangle_ad">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <img src="{{footerRecPath}}" alt="">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <section *ngIf="!isFooterRectangle" class="square_ad">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4" *ngFor="let item of footerAd">
+        <img src="{{item.photoPath}}" alt="">
+      </div>
+
+    </div>
+  </div>
+</section> -->

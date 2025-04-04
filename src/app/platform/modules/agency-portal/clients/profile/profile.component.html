@@ -1,0 +1,695 @@
+<div class="patient-container">
+  <h2 class="page_title sm-title"> {{'profile_summary'|translate}}</h2>
+  <div class="top-btns mb-3">
+    <button mat-raised-button color="primary" class="text-uppercase" (click)="addPatientNotes()">
+      <i class="fa fa-pencil" aris-hidden="true"></i>{{'Add_patient_notes'|translate}}
+    </button>
+    <button name="ccda" mat-raised-button color="primary" class="text-uppercase" (click)="getPatientCCDA()"
+      cdkFocusInitial [disabled]="downloadingCcda">
+      <i class="fa fa fa-download" aria-hidden="true"></i> {{ downloadingCcda ? 'Downloading...' : 'CCDA'}} </button>
+    <button name="save" mat-raised-button color="primary" class="text-uppercase"
+      (click)="updatePatientPortalVisibility(isPortalActivate, clientProfileModel.patientInfo[0])">
+      <i class="fa fa-circle-o-notch" aria-hidden="true"></i> {{ isPortalActivate ? 'Deactivate' : 'Activate'}}
+    </button>
+
+    <button *ngIf="editClientPermission" name="Save" mat-raised-button color="primary" (click)="editProfile()"
+      class="text-uppercase" cdkFocusInitial>
+      <i class="fa fa fa-pencil" aria-hidden="true"></i> {{'profile'|translate}}
+    </button>
+  </div>
+  <div class="clearfix"></div>
+  <div class="row">
+    <!-- Loader -->
+    <div [class.hidden]="!isDataLoading">
+      <div class="full_loader">
+        <div class="circle_loader page_loader">
+          <img src="{{ loaderImage }}" alt="" />
+        </div>
+      </div>
+    </div>
+    <!-- Profile -->
+    <div class="col-md-12 col-lg-6 mb-30">
+      <div class="readmin-panel crop pd-15">
+        <div class="quick rr">
+          <ul>
+            <li class="red">
+              <a title="Tags" href="javascript:void(0);">
+                <i class="fa fa-tag"></i>
+              </a>
+              <div class="quicksubmenu tagbox plr-10">
+                <ul class="tags">
+                  <li *ngFor="let tag of clientHeaderModel.patientTagsHeaderInfo">
+                    <span class="tagafter" [ngStyle]="{backgroundColor: tag.colorCode}"></span>
+                    <span class="tag" [ngStyle]="{backgroundColor: tag.colorCode}">{{tag.tag}}</span>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="blue">
+              <a title="Contact" href="javascript:void(0);">
+                <i class="fa fa-phone"></i>
+              </a>
+              <ul class="quicksubmenu">
+                <li *ngIf="clientHeaderModel.patientBasicHeaderInfo.phone">
+                  <i class="fa fa-phone" aria-hidden="true"></i>{{clientHeaderModel.patientBasicHeaderInfo.phone||''}}
+                </li>
+                <li class="msg" *ngIf="clientHeaderModel.patientBasicHeaderInfo.email">
+                  <i class="fa fa-envelope" aria-hidden="true"></i>{{clientHeaderModel.patientBasicHeaderInfo.email||''}}
+                </li>
+                <li *ngIf="clientHeaderModel.patientBasicHeaderInfo.address">
+                  <i class="fa fa-map-marker"
+                    aria-hidden="true"></i>{{clientHeaderModel.patientBasicHeaderInfo.address||''}}
+                </li>
+              </ul>
+            </li>
+            <li class="green">
+              <a title="Bio-Psych Social Intake" href="javascript:void(0);">
+                <i class="fa fa-user-md"></i>
+              </a>
+              <div class="quicksubmenu">
+                <p>
+                  <b>{{clientHeaderModel.patientBasicHeaderInfo.primaryProvider||''}}</b>
+                  <span>-</span>
+                </p>
+                <p *ngFor="let allergy of clientHeaderModel.patientAllergyHeaderInfo">{{allergy.allergen||''}}</p>
+                <p *ngIf="clientHeaderModel.patientAllergyHeaderInfo.length==0">{{'no_allergies_found'|translate}}</p>
+              </div>
+            </li>
+            <li class="orange">
+                <a title="My Appointments" href="javascript:void(0);" (click)="onNavigate()">
+                  <i class="fa fa-calendar" aria-hidden="true"></i>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="profilebg d-sm-flex justify-content-sm-start">
+          <div class="clientpic">
+            <!-- <span *ngIf="clientProfileModel.patientInfo[0]==undefined" class="userletter"></span> -->
+            <img *ngIf="
+                clientProfileModel &&
+                clientProfileModel.patientInfo &&
+                clientProfileModel.patientInfo[0]
+              " src="{{ clientProfileModel.patientInfo[0].photoThumbnailPath }}"
+              onerror="this.src='../../../../../../assets/img/noimage.png';" alt="profilePic" />
+          </div>
+          <div class="personal-dt d-sm-flex justify-content-sm-start flex-sm-column">
+            <h2 class="ppname">
+              {{clientProfileModel.patientInfo[0] &&
+              clientProfileModel.patientInfo[0] != undefined
+              ? clientProfileModel.patientInfo[0].name
+              : ""
+              }}
+            </h2>
+            <p>
+              <i class="la la-user"></i>
+              <span>{{
+                clientProfileModel.patientInfo[0] &&
+                clientProfileModel.patientInfo[0] != undefined &&
+                (clientProfileModel.patientInfo[0].gender || "")
+                }}</span>
+            </p>
+            <p>
+              <i class="la la-calendar-o"></i>
+              <span>{{
+                clientProfileModel.patientInfo[0] &&
+                clientProfileModel.patientInfo[0] != undefined &&
+                (clientProfileModel.patientInfo[0].age +
+                "
+                yrs" ||
+                "")
+                }}</span>
+            </p>
+            <p>
+              <i class="la la-share-alt-square"></i>
+              <span>{{'national_id_number'|translate}} :
+                {{
+                clientProfileModel.patientInfo[0] != undefined &&
+                (clientProfileModel.patientInfo[0].ssn || "")
+                }}</span>
+            </p>
+            <p>
+              <i class="la la-medkit"></i>
+              <span>{{'mrn'|translate}} ( {{'medical_record_number'|translate}} ) :
+                {{
+                  clientProfileModel.patientInfo[0] &&
+                clientProfileModel.patientInfo[0] != undefined &&
+                (clientProfileModel.patientInfo[0].mrn || "")
+                }}</span>
+            </p>
+            <p>
+              <mat-slide-toggle [disabled]="!statusPermission" checked="{{
+                  clientProfileModel.patientInfo != undefined &&
+                  clientProfileModel.patientInfo.length > 0
+                    ? clientProfileModel.patientInfo[0].isActive
+                    : false
+                }}" (change)="changeStatus($event)">{{'active'|translate}}</mat-slide-toggle>
+            </p>
+            <p>
+              <mat-slide-toggle [disabled]="!lockPermission" checked="{{
+                  clientProfileModel.patientInfo != undefined &&
+                  clientProfileModel.patientInfo.length > 0
+                    ? clientProfileModel.patientInfo[0].isBlock
+                    : false
+                }}" (change)="
+                  changeUserStatus($event, clientProfileModel.patientInfo[0])
+                ">{{'lock_account'|translate}}</mat-slide-toggle>
+            </p>
+            <!-- <div class="d-flex align-items-center top-btns mt-4">
+                        <button name="Save" mat-raised-button color="primary" (click)="checkEligibilityModal()" class="text-uppercase" cdkFocusInitial>
+              <i class="fa fa-check-square-o" aria-hidden="true"></i> Eligibility</button>
+                    </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Profile -->
+    <div class="col-lg-6 col-md-12">
+      <div class="row">
+        <div class="col-sm-12 mb-30">
+          <div class="readmin-panel crop appoint pd-15">
+            <div class="lineheader">
+              <p>{{'personal_details'|translate}}</p>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="ppdetail client_detail">
+                  <p>
+                    <i class="la la-phone-square"></i>
+                    <span>{{clientProfileModel.patientInfo[0] &&
+                      clientProfileModel.patientInfo[0] != undefined &&
+                      (clientProfileModel.patientInfo[0].patientEmergencyContactPhone || "") +
+                      "(" +
+                      "Mobile" +
+                      ")"
+                      }}</span>
+                  </p>
+                  <p>
+                    <i class="la la-envelope-o"></i>
+                    <span>{{
+                      (clientProfileModel.patientInfo[0] && clientProfileModel.patientInfo[0] != undefined &&
+                      clientProfileModel.patientInfo[0].email) ||
+                      ""
+                      }}</span>
+                  </p>
+                  <address>
+                    <p>
+                      <i class="fa fa-map-marker" aria-hidden="true"></i>
+                      <span>{{
+                        (clientProfileModel.patientInfo[0] && clientProfileModel.patientInfo[0] != undefined &&
+                        clientProfileModel.patientInfo[0].address) ||
+                        ""
+                        }}
+                        <a  style="cursor: pointer;color: #17a2b8; border-bottom: 1px solid #17a2b8;"
+                        (click)="getDirection(clientProfileModel.patientInfo[0].address)"
+                        class="direction"
+                        >Get Directions.</a></span>
+
+
+
+                    </p>
+
+                  </address>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 mb-30">
+          <div class="readmin-panel crop appoint pd-15">
+            <div class="lineheader">
+              <p>
+                <a>{{'appointment_details'|translate}}</a>
+              </p>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 lastdr">
+                <h3>{{'upcoming_appointment'|translate}}</h3>
+                <div *ngIf="
+                    clientProfileModel.upcomingAppointmentDetails &&
+                    clientProfileModel.upcomingAppointmentDetails.length > 0
+                  ">
+                  <div class="latestdoctor">
+                    <img src="{{
+                        (clientProfileModel.upcomingAppointmentDetails !=
+                          undefined &&
+                          clientProfileModel.upcomingAppointmentDetails.length >
+                            0 &&
+                          clientProfileModel.upcomingAppointmentDetails[0]
+                            .staffImageUrl) ||
+                          ''
+                      }}" onerror="this.src='../../../../../../assets/img/noimage.png';" alt="profilePic" />
+                  </div>
+                  <div class="latestcontent">
+                    <ul>
+                      <li>
+                        {{
+                        (clientProfileModel.upcomingAppointmentDetails !=
+                        undefined &&
+                        clientProfileModel.upcomingAppointmentDetails
+                        .length > 0 &&
+                        clientProfileModel.upcomingAppointmentDetails[0]
+                        .upcomingAppointmentStaff) ||
+                        ""
+                        }}
+                      </li>
+                      <li>
+                        {{
+                        clientProfileModel.upcomingAppointmentDetails !=
+                        undefined &&
+                        clientProfileModel.upcomingAppointmentDetails
+                        .length > 0 &&
+                        clientProfileModel.upcomingAppointmentDetails[0]
+                        .upcomingAppointment | date : "dd/MM/yyyy hh:mm a" 
+                        }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div *ngIf="
+                    clientProfileModel.upcomingAppointmentDetails == null ||
+                    clientProfileModel.upcomingAppointmentDetails.length == 0
+                  ">
+                  {{'no_appointment_found'|translate}}
+                </div>
+              </div>
+              <div class="col-sm-6 lastdr">
+                <h3>{{'last_appointment'|translate}}</h3>
+                <div *ngIf="
+                    clientProfileModel.lastAppointmentDetails &&
+                    clientProfileModel.lastAppointmentDetails.length > 0
+                  ">
+                  <div class="latestdoctor">
+                    <img src="{{
+                        (clientProfileModel.lastAppointmentDetails !=
+                          undefined &&
+                          clientProfileModel.lastAppointmentDetails.length >
+                            0 &&
+                          clientProfileModel.lastAppointmentDetails[0]
+                            .staffImageUrl) ||
+                          ''
+                      }}" onerror="this.src='../../../../../../assets/img/noimage.png';" alt="profilePic" />
+                  </div>
+                  <div class="latestcontent">
+                    <ul>
+                      <li>
+                        {{
+                        (clientProfileModel.lastAppointmentDetails !=
+                        undefined &&
+                        clientProfileModel.lastAppointmentDetails.length >
+                        0 &&
+                        clientProfileModel.lastAppointmentDetails[0]
+                        .lastAppointmentStaff) ||
+                        ""
+                        }}
+                      </li>
+                      <li>
+                        {{
+                        clientProfileModel.lastAppointmentDetails !=
+                        undefined &&
+                        clientProfileModel.lastAppointmentDetails.length >
+                        0 &&
+                        clientProfileModel.lastAppointmentDetails[0]
+                        .lastAppointment | date : 'dd/MM/yyyy'
+                        }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div *ngIf="
+                    clientProfileModel.lastAppointmentDetails == null ||
+                    clientProfileModel.lastAppointmentDetails.length == 0
+                  ">
+                  {{'no_appointment_found'|translate}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Notes -->
+    <div class="col-md-12 col-lg-6 mb-30">
+      <div class="readmin-panel crop vitalbox pd-15">
+        <div class="lineheader">
+          <p>
+            <a>{{'notes'|translate}}</a>
+          </p>
+          <span>{{'last_update'|translate}} -
+            {{
+              clientProfileModel.notes[0] && clientProfileModel.notes[0].createdDate
+                ? (clientProfileModel.notes[0].createdDate | date: 'dd/MM/yyyy')
+                : ''
+            }}</span>
+        </div>
+        <div>
+          <p>
+            <span [innerHtml]="(clientProfileModel.notes[0] != undefined && clientProfileModel.notes[0].patientNotes) || ''"></span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- Address -->
+    <div class="col-md-12 col-lg-6 mb-30">
+      <div class="readmin-panel crop vitalbox pd-15">
+        <div class="lineheader">
+          <p>
+            <a>{{'vitals'|translate}}</a>
+          </p>
+          <span>{{'last_update'|translate}} -
+            {{
+              clientProfileModel.patientVitals[0] && clientProfileModel.patientVitals[0].vitalDate
+                ? (clientProfileModel.patientVitals[0].vitalDate | date: 'dd/MM/yyyy')
+                : ''
+            }}
+            Expl</span>
+        </div>
+        <div class="vitald">
+          <ul>
+            <li>
+              <span>{{'heart_beat'|translate}}</span>
+              <i class="flaticon-healthy orangefont"></i>
+              <font class="orangefont">{{
+                (clientProfileModel.patientVitals[0] != undefined &&
+                clientProfileModel.patientVitals[0].heartRate) ||
+                ""
+                }}
+              </font>
+            </li>
+            <li>
+              <span>{{'blood_pressure'|translate}}</span>
+              <i class="flaticon-medical-3 greenfont"></i>
+              <font class="greenfont">{{
+                ((clientProfileModel.patientVitals[0] != undefined &&
+                clientProfileModel.patientVitals[0].bpDiastolic) ||
+                "") +
+                "/" +
+                ((clientProfileModel.patientVitals[0] != undefined &&
+                clientProfileModel.patientVitals[0].bpSystolic) ||
+                "")
+                }}</font>
+            </li>
+            <li>
+              <span>{{'bmi'|translate}}</span>
+              <i class="flaticon-black bluefont"></i>
+              <font class="bluefont">{{
+                (clientProfileModel.patientVitals[0] != undefined &&
+                clientProfileModel.patientVitals[0].bmi) ||
+                ""
+                }}
+              </font>
+            </li>
+            <li>
+              <span>{{'temperature'|translate}}</span>
+              <i class="flaticon-weather brownfont"></i>
+              <font class="brownfont">{{
+                ((clientProfileModel.patientVitals[0] != undefined &&
+                clientProfileModel.patientVitals[0].temperature) ||
+                "") + " (°C)"
+                }}
+              </font>
+            </li>
+            <li>
+              <span>{{'height'|translate}}</span>
+              <i class="flaticon-man yellowfont"></i>
+              <font class="yellowfont">{{
+                ((clientProfileModel.patientVitals[0] != undefined &&
+                clientProfileModel.patientVitals[0].heightIn) ||
+                "") + "Cm"
+                }}
+              </font>
+            </li>
+            <li>
+              <span>{{'weight'|translate}}</span>
+              <i class="flaticon-scales purplefont"></i>
+              <font class="purplefont">{{
+                ((clientProfileModel.patientVitals[0] != undefined &&
+                clientProfileModel.patientVitals[0].weightLbs) ||
+                "") + "Kg"
+                }}</font>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Appointment -->
+    <!-- <div class="col-md-12 col-lg-6 mb-30">
+    <div class="readmin-panel crop pd-15">
+      <div class="lineheader">
+        <p>
+          <a>Diagnosis</a>
+        </p>
+      </div>
+      <div class="profile-diagnos">
+        <p *ngFor="let diag of clientProfileModel.patientDiagnosisDetails">
+          <span>{{diag.code +' '+diag.description}}</span>
+        </p>
+        <p *ngIf="clientProfileModel.patientDiagnosisDetails==undefined || clientProfileModel.patientDiagnosisDetails.length==0">
+          <span>No diagnosis found</span>
+        </p>
+      </div>
+    </div>
+  </div> -->
+    <!-- Diagnosis -->
+    <div class="col-md-12 col-lg-6 mb-30">
+      <div class="readmin-panel crop pd-15">
+        <div class="lineheader">
+          <p>{{'tags'|translate}}</p>
+        </div>
+        <div class="quicksubmenu tagbox mhgt80">
+          <ul class="tags">
+            <li *ngFor="let tag of clientProfileModel.patientTagsModel">
+              <span class="tagafter" [ngStyle]="{ backgroundColor: tag.colorCode }"></span>
+              <span class="tag" [ngStyle]="{ backgroundColor: tag.colorCode }">{{ tag.tag }}</span>
+            </li>
+            <li *ngIf="
+                clientProfileModel.patientTagsModel == undefined &&
+                clientProfileModel.patientTagsModel.length == 0
+              " class="tag">
+              No tags found.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Tags -->
+    <!-- <div class="col-md-12 col-lg-6 mb-30">
+        <div class="readmin-panel crop pd-15">
+            <div class="lineheader">
+                <p>
+                    <a>Allergies</a>
+                </p>
+            </div>
+            <div class="ptprofile_allergy mhgt80">
+                <ul>
+                    <li *ngFor="let allergy of clientProfileModel.patientAllergyModel">{{allergy.allergen +', '}}</li>
+                    <li *ngIf="clientProfileModel.patientAllergyModel==null || clientProfileModel.patientAllergyModel.length==0">No allergies found.</li>
+                </ul>
+            </div>
+        </div>
+    </div> -->
+    <!-- Allergies -->
+
+    <div class="col-sm-12 mt-30">
+      <div class="readmin-panel">
+        <!-- <mat-tab-group (selectedTabChange)="loadComponent($event)" [selectedIndex]="selectedIndex">
+                <mat-tab *ngFor="let tab of profileTabs;let i=index" class="mat-tab-label-active" label={{tab}} [disabled]="(clientId==null && tab!='Demographic Info')?true:false">
+                </mat-tab>
+            </mat-tab-group> -->
+        <!-- <div *ngIf="selectedIndex==0 && clientProfileModel.patientDiagnosisDetails!=null && clientProfileModel.patientDiagnosisDetails!=undefined"
+        class="row">
+        <div class="col-sm-6 mt-20 custom-card custom-card-header" *ngFor="let diagnosis of clientProfileModel.patientDiagnosisDetails ">
+          <mat-card>
+            <mat-card-content>
+              <p>Diagnosis Date:
+                <span> {{diagnosis.diagnosisDate | date}}</span>
+              </p>
+              <p>Diagnosis:
+                <span>{{diagnosis.code}}</span>
+              </p>
+              <p>
+                <i matTooltip="diagnosis.description" matTooltipClass="example-tooltip" class="fa fa-info-circle infoIcon" aria-hidden="true"></i>
+                <span> {{diagnosis.description}} </span>
+              </p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div> -->
+
+        <!-- <div *ngIf="selectedIndex==0" class="row">
+                <div class="col-sm-6 mt-20 custom-card custom-card-header" *ngFor="let allergy of clientProfileModel.patientAllergyModel ">
+                    <mat-card>
+                        <mat-card-content>
+                            <p>Allergy Type:
+                                <span> {{allergy.allergyType}}</span>
+                            </p>
+                            <p>Reaction:
+                                <span> {{allergy.reaction}}</span>
+                            </p>
+                            <p>Allergy Type:
+                                <span> {{allergy.isActive==true?"Active":"Inactive"}}</span>
+                            </p>
+                            <p>
+                                <span> {{allergy.allergen}}</span>
+                            </p>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+                <div class="col-sm-6 mt-20 custom-card custom-card-header" *ngIf="clientProfileModel.patientAllergyModel ==null || clientProfileModel.patientAllergyModel == undefined || clientProfileModel.patientAllergyModel.length == 0">
+                    <mat-card> <mat-card-content >
+                        No Allergy Found
+                    </mat-card-content></mat-card>
+                </div>
+            </div> -->
+
+        <!-- <div *ngIf="selectedIndex==2 && clientProfileModel.patientAllergyModel!=null && clientProfileModel.patientAllergyModel!=undefined" class="row">
+        <div class="col-sm-6 mt-20 custom-card custom-card-header" *ngFor="let allergy of clientProfileModel.patientAllergyModel ">
+          <mat-card>
+            <mat-card-content>
+              <p>Allergy Type:
+                <span> {{allergy.allergyType}}</span>
+              </p>
+              <p>Reaction:
+                <span> {{allergy.reaction}}</span>
+              </p>
+              <p>Allergy Type:
+                <span [ngClass]="{'greenfont': allergy.isActive, 'yellowfont': !allergy.isActive}"> {{allergy.isActive==true?"Active":"Inactive"}}</span>
+              </p>
+              <p>
+                <span> {{allergy.allergen}}</span>
+              </p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+
+      <div *ngIf="selectedIndex==4 && clientProfileModel.patientAllergyModel!=null && clientProfileModel.patientAllergyModel!=undefined" class="row">
+        <div class="col-sm-6 mt-20 custom-card custom-card-header" *ngFor="let allergy of clientProfileModel.patientAllergyModel ">
+          <mat-card>
+            <mat-card-content>
+              <p>Allergy Type:
+                <span> {{allergy.allergyType}}</span>
+              </p>
+              <p>Reaction:
+                <span> {{allergy.reaction}}</span>
+              </p>
+              <p>Allergy Type:
+                <span [ngClass]="{'greenfont': allergy.isActive, 'yellowfont': !allergy.isActive}"> {{allergy.isActive==true?"Active":"Inactive"}}</span>
+              </p>
+              <p>
+                <span> {{allergy.allergen}}</span>
+              </p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div> -->
+
+        <!-- <div *ngIf="selectedIndex==1" class="row">
+                <div class="col-sm-6 mt-20 custom-card custom-card-header" *ngFor="let med of clientProfileModel.patientMedicationModel ">
+                    <mat-card>
+                        <mat-card-content>
+                            <p>Medicine:
+                                <span> {{med.medicine}}</span>
+                            </p>
+                            <p>Dose:
+                                <span> {{med.dose}}</span>
+                            </p>
+                            <p>Frequency:
+                                <span> {{med.frequency}}</span>
+                            </p>
+                            <p>Strength:
+                                <span> {{med.strength}}</span>
+                            </p>
+                            <p>Start Date:
+                                <span> {{med.startDate | date}}</span>
+                            </p>
+                            <p>End Date:
+                                <span> {{med.endDate | date}}</span>
+                            </p>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+                <div class="col-sm-6 mt-20 custom-card custom-card-header" *ngIf="clientProfileModel.patientMedicationModel ==null || clientProfileModel.patientMedicationModel == undefined || clientProfileModel.patientMedicationModel.length ==0">
+                    <mat-card> <mat-card-content >
+                        No Medical Found
+                    </mat-card-content></mat-card>
+                </div>
+            </div> -->
+
+        <!-- <div *ngIf="selectedIndex==2 && clientProfileModel.patientLabTestModel!=null && clientProfileModel.patientLabTestModel!=undefined" class="row">
+                <div class="col-sm-6 mt-20 custom-card custom-card-header" *ngFor="let hist of clientProfileModel.patientLabTestModel ">
+                    <mat-card>
+                        <mat-card-content>
+                            <p>
+                                <span> No Record Found</span>
+                            </p>
+                            <p>Relationship:
+                <span> {{hist.relationshipName}}</span>
+              </p>
+              <p>DOB:
+                <span> {{hist.dob |date}}</span>
+              </p>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div> -->
+        <!-- <div *ngIf="selectedIndex==2" class="row">
+                <div class="col-sm-6 mt-20 custom-card custom-card-header" *ngFor="let hist of patientMedicalFamilyHistoryModel ">
+                    <mat-card>
+                        <mat-card-content>
+                            <p>
+                                <span> {{hist.firstName +' '+hist.lastName}}</span>
+                            </p>
+                            <p>Relationship:
+                                <span> {{hist.relationshipName}}</span>
+                            </p>
+                            <p>DOB:
+                                <span> {{hist.dob | date: 'dd/MM/yyyy' }}</span>
+                            </p>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+                <div class="col-sm-6 mt-20 custom-card custom-card-header" *ngIf="patientMedicalFamilyHistoryModel ==null || patientMedicalFamilyHistoryModel == undefined">
+                    <mat-card> <mat-card-content >
+                        No Family History Found
+                    </mat-card-content></mat-card>
+                </div>
+            </div> -->
+
+        <!-- <div *ngIf="selectedIndex==3" class="row">
+
+              <div class="col-sm-6 mt-20 custom-card custom-card-header" *ngFor="let ins of insuranceModel" >
+              <mat-card>
+                <mat-card-content>
+                    <p>INSURANCE COMPANY:
+                        <span> {{ins.insuranceCompanyName}}</span>
+                    </p>
+                    <p>ISSUE DATE:
+                        <span> {{ins.cardIssueDate | date: 'dd/MM/yyyy'}}</span>
+                    </p>
+                    <p>ID NUMBER:
+                        <span> {{ins.insuranceIDNumber}}</span>
+                    </p>
+                    <p>PLAN NAME:
+                        <span> {{ins.insurancePlanName}}</span>
+                    </p>
+                    <p>COMPANY ADDRESS:
+                        <span> {{ins.insuranceCompanyAddress}}</span>
+                    </p>
+                </mat-card-content>
+            </mat-card>
+            </div>
+            <div class="col-sm-6 mt-20 custom-card custom-card-header" *ngIf="insuranceModel ==null || insuranceModel == undefined">
+                <mat-card> <mat-card-content >
+                    No Insurance Found
+                </mat-card-content></mat-card>
+            </div>
+            </div> -->
+      </div>
+    </div>
+
+    <!-- <div *ngIf="clientProfileModel && clientProfileModel.patientInfo[0]">
+    <app-chat-widget [title]="clientProfileModel.patientInfo[0].name" [imgSource]="clientProfileModel.patientInfo[0].photoThumbnailPath"
+      [fromUserId]="userId" [toUserId]="clientProfileModel.patientInfo[0].userID" [allMessageArray]="chatHistoryData"></app-chat-widget>
+  </div> -->
+  </div>
+</div>

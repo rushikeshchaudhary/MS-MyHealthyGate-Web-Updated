@@ -1,0 +1,164 @@
+<div class="custom_modal">
+  <h3 mat-dialog-title>{{"upload_documents"|translate}}</h3>
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-sm-12">
+        <form
+          id="addDocumentForm"
+          #documentForm="ngForm"
+          class="readmin-form custom_form"
+          [formGroup]="addDocumentForm"
+        >
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  placeholder="{{'select_patient'|translate}}"
+                  formControlName="PatientName"
+                  [(ngModel)]="patientName"
+                  (ngModelChange)="patientFilterHandler($event)"
+                  [ngClass]="{
+                    'is-invalid': submitted && formControls['PatientName'].errors
+                  }"
+                  [matAutocomplete]="auto2"
+                  required
+                />
+                <mat-autocomplete #auto2="matAutocomplete">
+                  <mat-option
+                    *ngFor="let patient of filterPatientList"
+                    value="{{patient.firstName}} {{patient.lastName}}"
+                    (onSelectionChange)="patientChangeHandler(patient)"
+                  >
+                  {{ patient.firstName}} {{ patient.lastName}} ({{patient.patientId}})
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="formControls['documentType'].errors">
+                  {{"please_select_patient"|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  placeholder="{{'document_type'|translate}}"
+                  formControlName="documentType"
+                  [(ngModel)]="filterString"
+                  [ngClass]="{
+                    'is-invalid':
+                      submitted && formControls['expirationDate'].errors
+                  }"
+                  [matAutocomplete]="auto"
+                  required
+                  (ngModelChange)="documentTypeHandler($event)"
+                />
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option
+                    *ngFor="let doc of filtermasterDocumentTypes"
+                    [value]="doc.value"
+                    (onSelectionChange)="onSelFunc(doc)"
+                  >
+                    {{ doc.value }}
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="formControls['documentType'].errors">
+                  {{"please_select_document_type"|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  [min]="todayDate"
+                  [matDatepicker]="expirationDate"
+                  placeholder="{{'expiration_date'|translate}}"
+                  formControlName="expirationDate"
+                  [ngClass]="{
+                    'is-invalid':
+                      submitted && formControls['expirationDate'].errors
+                  }"
+                  readonly
+                  required
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="expirationDate"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #expirationDate></mat-datepicker>
+                <mat-error *ngIf="formControls['expirationDate'].errors">
+                  {{"please_enter_expiration_date"|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  autofocus
+                  placeholder="{{'title'|translate}}"
+                  maxlength="100"
+                  formControlName="title"
+                  [ngClass]="{
+                    'is-invalid': submitted && formControls['title'].errors
+                  }"
+                  required
+                />
+                <mat-error *ngIf="formControls['title'].errors?.['required']">
+                  {{"please_enter_title"|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="col-sm-12 pd-0 mt-3">
+                <div class="uplaod_pic">
+                  <label class="browse">
+                    <i class="fa fa-upload fa-2x" aria-hidden="true"></i>
+                    <input type="file" (change)="handleImageChange($event)" />
+                  </label>
+                </div>
+                <!-- <p class="ins_photo">(Browse any jpg, jpeg, bmp, png file.)</p> -->
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <span>
+                <p *ngFor="let file of fileList; let i = index">
+                  {{ file.fileName }}
+                  <button
+                    type="button"
+                    title="Delete"
+                    class="tbactionbtn"
+                    (click)="removeFile(i)"
+                  >
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                  </button>
+                </p>
+              </span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button class="cancel-btn" (click)="closeDialog('close')">
+      {{"close"|translate}}
+    </button>
+    <button
+      name="Save"
+      mat-raised-button
+      color="primary"
+      (click)="onSubmit()"
+      form="addDocumentForm"
+      class="text-uppercase"
+      [disabled]="submitted"
+      cdkFocusInitial
+    >
+      {{ submitted ? "Uploading..." : "Save" }}
+    </button>
+  </div>
+</div>

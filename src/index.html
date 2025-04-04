@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <base href="/" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- bootstrap css -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- material icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css" />
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWFzlIODzSGLaDDz_VIXvRite6DAKvXU0&libraries=places"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <!-- <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/angular-calendar@0.27.1/css/angular-calendar.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <script>
+        window.addEventListener("beforeunload", function(e) {
+            // handleWindowClose()
+
+            // // var log = e;
+            localStorage.removeItem("otSession");
+            // var confirmationMessage = "\o/";
+
+            // (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+            // return confirmationMessage; //Webkit, Safari, Chrome etc.
+        });
+
+        // function handleWindowClose() {
+        //   
+        //   if ((window.event.clientX < 0) || (window.event.clientY < 0)) {
+        //     event.returnValue = "Browser Closed";
+        //   }
+        // }
+    </script>
+    <style type="text/css">
+        .cal-week-view .cal-time-events {
+          max-height: 600px;
+          overflow-y: auto;
+        }
+
+        .cal-day-view .cal-hour-rows {
+          max-height: 700px;
+          overflow-y: auto;
+        }
+
+        .cal-day-headers {
+          margin-right: 14.5px;
+        }
+      
+        .cal-day-columns {
+          height: 100%;
+        }      
+      </style>
+</head>
+
+<body>
+    <app-root></app-root>
+    
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+
+</html>

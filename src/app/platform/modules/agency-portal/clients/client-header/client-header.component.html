@@ -1,0 +1,159 @@
+<div class="row" *ngIf="clientId != null && clientId > 0">
+  <div class="col-12 d-flex justify-content-between certificate">
+    <h2 class="page_title">{{ headerText }}</h2>
+  </div>
+</div>
+<div class="client_profile">
+  <!-- <div class="clientbox">
+      <div class="user_pic activec">
+        <img src="{{clientHeaderModel.patientBasicHeaderInfo.photoThumbnailPath}}" onerror="this.src='../../../../../../assets/img/noimage.png';" alt="profilePic" />
+        <i class="fa fa-circle" aria-hidden="true"></i>
+      </div>
+
+      <div class="userlinks">
+        <p>
+          <a (click)="onNavigate('/web/client/profile')"
+          aria-current="false" title="Go to profile" href="javascript:void(0);">{{clientHeaderModel.patientBasicHeaderInfo.name}}</a>
+        </p>
+      </div> -->
+  <!-- <div class="client_detail">
+        <p>
+          <b>Gender :</b>
+          <span>{{clientHeaderModel.patientBasicHeaderInfo.gender||''}}</span>
+        </p>
+        <p>
+          <b>D.O.B :</b>
+          <span>{{clientHeaderModel.patientBasicHeaderInfo.dob||''}}</span>
+        </p>
+        <p>
+          <b>SSN: </b>
+          <span>{{clientHeaderModel.patientBasicHeaderInfo.ssn||''}}</span>
+        </p>
+        <p>
+          <b>MRN : </b>
+          <span>{{clientHeaderModel.patientBasicHeaderInfo.mrn||''}}</span>
+        </p>
+      </div> -->
+  <div class="client-head">
+    <a (click)="onNavigate('Profile')" aria-current="false" href="javascript:void(0);">
+      <h3>{{ clientHeaderModel.patientBasicHeaderInfo.name || "" }}</h3>
+    </a>
+    <div class="quick rr">
+      <ul>
+        <li class="red">
+          <a title="Tags" href="javascript:void(0);">
+            <i class="fa fa-tag"></i>
+          </a>
+          <div class="quicksubmenu tagbox plr-10">
+            <ul class="tags">
+              <li *ngFor="let tag of clientHeaderModel.patientTagsHeaderInfo">
+                <span class="tagafter" [ngStyle]="{ backgroundColor: tag.colorCode }"></span>
+                <span class="tag" [ngStyle]="{ backgroundColor: tag.colorCode }">{{ tag.tag }}</span>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li class="blue">
+          <a title="Contact" href="javascript:void(0);">
+            <i class="fa fa-phone"></i>
+          </a>
+          <ul class="quicksubmenu">
+            <li *ngIf="clientHeaderModel?.patientBasicHeaderInfo?.phone">
+              <i class="fa fa-phone" aria-hidden="true"></i>{{ clientHeaderModel.patientBasicHeaderInfo.phone || "" }}
+            </li>
+            <li class="msg" *ngIf="clientHeaderModel?.patientBasicHeaderInfo?.email">
+              <i class="fa fa-envelope" aria-hidden="true"></i>{{ clientHeaderModel.patientBasicHeaderInfo.email || ""
+              }}
+            </li>
+            <li *ngIf="clientHeaderModel?.patientBasicHeaderInfo?.address">
+              <i class="fa fa-map-marker" aria-hidden="true"></i>{{ clientHeaderModel.patientBasicHeaderInfo.address
+              || "" }}
+            </li>
+          </ul>
+        </li>
+        <li class="green">
+          <a title="Bio-Psych Social Intake" href="javascript:void(0);">
+            <i class="fa fa-user-md"></i>
+          </a>
+          <div class="quicksubmenu">
+            <p>
+              <b>{{
+                clientHeaderModel.patientBasicHeaderInfo.primaryProvider || ""
+                }}</b>
+              <span>-</span>
+            </p>
+            <p *ngFor="let allergy of clientHeaderModel.patientAllergyHeaderInfo">
+              {{ allergy.allergen || "" }}
+            </p>
+            <p *ngIf="clientHeaderModel.patientAllergyHeaderInfo.length == 0">
+              No allergies found
+            </p>
+          </div>
+        </li>
+        <li class="orange">
+          <a title="My Appointments" href="javascript:void(0);" (click)="onNavigate()">
+            <i class="fa fa-calendar" aria-hidden="true"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="clientbox">
+    <div class="client_detail">
+      <div class="dashboard-btn-card">
+        <div class="user_pic activec">
+          <img src="{{
+              clientHeaderModel.patientBasicHeaderInfo.photoThumbnailPath ||
+                '../assets/img/noimage2.png'
+            }}" alt="" />
+          <!-- <i class="fa fa-circle" aria-hidden="true"></i> -->
+        </div>
+        <!-- <div class="userlinks">
+                <p>
+                  <a (click)="onNavigate('/web/client/profile')" aria-current="false" href="javascript:void(0);">{{
+                    clientHeaderModel.patientBasicHeaderInfo.name }}</a>
+                </p>
+              </div> -->
+      </div>
+      <div class="dashboard-btn-card">
+        <label>{{'Gender'|translate}}</label><br />
+        <h2>{{ clientHeaderModel.patientBasicHeaderInfo.gender || "" }}</h2>
+        <!-- <button mat-raised-button class="mr-3">
+          {{ clientHeaderModel?.patientBasicHeaderInfo?.gender || "" }}
+          <span
+            ><img src="../../../../../../assets/img/gender.svg" alt=""
+          /></span>
+        </button> -->
+        <!-- <span>{{ clientHeaderModel.patientBasicHeaderInfo.gender || "" }}</span> -->
+      </div>
+      <div class="dashboard-btn-card">
+        <label>{{'DOB'|translate}}:</label><br />
+        <h2>{{ clientHeaderModel.patientBasicHeaderInfo.dob || "" }}</h2>
+        <!-- <button mat-raised-button class="mr-3">
+          {{ clientHeaderModel?.patientBasicHeaderInfo?.dob || "" }}
+          <span><img src="../../../../../../assets/img/dob.svg" alt="" /></span>
+        </button> -->
+        <!-- <span>{{ clientHeaderModel.patientBasicHeaderInfo.dob || "" }}</span> -->
+      </div>
+      <div class="dashboard-btn-card">
+        <label>{{'National ID Number.'|translate}}</label><br />
+        <h2>{{ clientHeaderModel.patientBasicHeaderInfo.npi|| "" }}</h2>
+        <!-- <button mat-raised-button class="mr-3">
+          {{ clientHeaderModel?.patientBasicHeaderInfo?.npi|| "" }}
+          <span><img src="../../../../../../assets/img/ssn.svg" alt="" /></span>
+        </button> -->
+        <!-- <span>{{ clientHeaderModel.patientBasicHeaderInfo.ssn || "" }}</span> -->
+      </div>
+      <div class="dashboard-btn-card">
+        <label>{{'MRN'|translate}}:</label><br />
+        <h2>{{ clientHeaderModel.patientBasicHeaderInfo.mrn || "" }}</h2>
+        <!-- <button mat-raised-button class="mr-3">
+          {{ clientHeaderModel?.patientBasicHeaderInfo?.mrn || "" }}
+          <span><img src="../../../../../../assets/img/mrn.svg" alt="" /></span>
+        </button> -->
+        <!-- <span>{{ clientHeaderModel.patientBasicHeaderInfo.mrn || "" }}</span> -->
+      </div>
+    </div>
+  </div>
+</div>
+<div class="clearfix"></div>

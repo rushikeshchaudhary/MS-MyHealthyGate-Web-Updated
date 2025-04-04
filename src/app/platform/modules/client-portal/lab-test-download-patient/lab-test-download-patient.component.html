@@ -1,0 +1,233 @@
+<div class="readmin-panel pt-0 provider-dashboardchart">
+  <h3 mat-dialog-title>{{"download_files" | translate}}</h3>
+
+  <mat-tab-group>
+    <mat-tab label="{{ 'test_details' | translate }}">
+      <div mat-dialog-content>
+        <div class="col-md-12">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>SR. no.</th>
+                <th>{{"test_name" | translate}}</th>
+                <!-- <th>View</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let t of testNames; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>
+                  {{ t }}
+                  <!-- <button class="downloadbutton" (click)="downloadFile(t.LabReferralTestId,t.TestName)" [disabled]="isReadytoDownload">
+                  <i class="fa fa-download"></i>
+                </button> -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div mat-dialog-actions>
+        <button
+          mat-raised-button
+          class="cancel-btn"
+          (click)="closeDialog('close')"
+        >
+        {{"close" | translate}}
+        </button>
+      </div>
+    </mat-tab>
+    <!-- <mat-tab label="{{ 'test_results' | translate }}">
+      <div
+        class="upload_pic"
+        style="margin-top: 12px; margin-right: 25px; color: #107483"
+      >
+        <input
+          type="file"
+          multiple
+          name="uploadfile"
+          id="img"
+          #fileInput
+          (change)="handleImageChange($event, data.labReferralId)"
+          style="display: none"
+        />
+        <label for="img"
+          ><i class="fa fa-upload fa-2x" arai-hidden="true"></i>
+          &nbsp;&nbsp;Upload Result</label
+        >
+      </div>
+      <div class="row mx-0 px-0 ms-2 p-2" *ngIf="fileList.length > 0">
+        <div class="col-12 my-2 ms-2"><b>New Result Document</b></div>
+        <div
+          class="col-12 my-2 ms-2"
+          style="padding-left: 31px"
+          *ngFor="let item of fileList; let i = index"
+        >
+          <span>{{ item.fileName }}</span
+          >&nbsp;&nbsp;<i
+            class="fa fa-close"
+            title="Remove"
+            (click)="deleteLabFile(i)"
+          ></i>
+        </div>
+      </div>
+      <div
+        class="row mx-0 px-0 ms-2 p-2"
+        *ngIf="testResultDocument.length == 0"
+      >
+        <div class="col-12">Result not uploaded yet!</div>
+      </div>
+      <div class="row mx-0 ms-2 px-0 p-2" *ngIf="testResultDocument.length > 0">
+        <div class="col-12"><b>Lab Uploaded document</b></div>
+        <div
+          class="col-12 my-2 ms-2"
+          style="display: flex; justify-content: space-between"
+        >
+          <div>
+            <div
+              class="my-2 ms-2"
+              style="padding-left: 31px"
+              *ngFor="let result of testResultDocument"
+            >
+              {{ result.originalFileName }}&nbsp;&nbsp;<i
+                class="fa fa-download"
+                style="cursor: pointer"
+                title="Download"
+                (click)="downloadFile(result.id, result.originalFileName)"
+              ></i>
+              &nbsp;<i
+                class="fa fa-eye"
+                style="cursor: pointer"
+                (click)="viewDocument(result)"
+                aria-hidden="true"
+              ></i>
+            </div>
+          </div>
+
+          <div>
+            <span *ngIf="data.qrResultImagePath != ''">
+              <img style="width: 120px" [src]="data.qrResultImagePath" alt="" />
+            </span>
+            <span *ngIf="data.qrResultImagePath == ''"> ---- </span>
+          </div>
+        </div>
+      </div>
+
+      <div mat-dialog-actions>
+        <button
+          mat-raised-button
+          class="cancel-btn"
+          (click)="closeDialog('close')"
+        >
+        {{"close" | translate}}
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          class="tex-uppercase"
+          (click)="onSubmit()"
+        >
+        {{"save" | translate}}
+        </button>
+      </div>
+    </mat-tab> -->
+    <mat-tab label="view/upload results">
+      <div class="row mx-0 px-0 ms-2 p-2">
+        <div class="col-12">
+          <button
+            mat-raised-button
+            class="mr-3"
+            color="primary"
+            title="upload document (pdf,jpeg,jpg)"
+            (click)="uploadDoc_Url('doc')"
+          >
+            {{"upload_document"|translate}}
+          </button>
+       
+        </div>
+        <div class="col-12 border my-2 p-2" *ngIf="fieldName == 'doc'">
+          <div class="row mx-0 px-0">
+            <!-- <div class="col-12">Upload document (pdf, jpeg, jpg)</div> -->
+            <div class="col-12 my-2 upload_pic" style="color: #107483">
+              <input
+                type="file"
+                multiple
+                name="uploadfile"
+                id="img"
+                #fileInput
+                (change)="handleImageChange($event, data.labReferralId)"
+                style="display: none"
+              />
+              <label for="img" style="cursor: pointer !important"
+                ><i class="fa fa-upload fa-2x" arai-hidden="true"></i>
+                &nbsp;&nbsp;{{"upload_document"|translate}}</label
+              >
+            </div>
+            <div class="col-12" *ngFor="let item of fileList; let i = index">
+              <span>{{ item.fileName }}</span
+              >&nbsp;&nbsp;<i
+                class="fa fa-close"
+                title="Remove"
+                (click)="deleteLabFile(i)"
+              ></i>
+            </div>
+          </div>
+        </div>
+
+       
+
+        <div class="col-12">
+          <div class="row mx-0 px-0">
+            <div class="col-12 my-2">
+              <h4 style="text-decoration: underline">Uploaded documnets</h4>
+              <div
+                class="p-2"
+                style="color: rgb(85, 85, 85)"
+                *ngIf="testResultDocument.length == 0 || fileList.length > 0"
+              >
+                No document uploaded yet!
+              </div>
+              <div
+                class="p-2"
+                *ngFor="let result of testResultDocument; let i = index"
+              >
+                {{ i + 1 }}&nbsp;&nbsp;
+                {{ result.originalFileName }}&nbsp;&nbsp;<i
+                  class="fa fa-download"
+                  style="cursor: pointer"
+                  title="Download"
+                  (click)="downloadFile(result.id, result.originalFileName)"
+                ></i>
+                &nbsp;<i
+                  class="fa fa-eye"
+                  style="cursor: pointer"
+                  (click)="viewDocument(result.id, result.originalFileName)"
+                  aria-hidden="true"
+                ></i>
+              </div>
+            </div>
+           
+          </div>
+        </div>
+      </div>
+
+      <div mat-dialog-actions>
+        <button
+          mat-raised-button
+          class="cancel-btn"
+          (click)="closeDialog('close')"
+        >
+          {{"close"|translate}}
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          class="tex-uppercase"
+          (click)="onSubmit()"
+        >
+          {{"save"|translate}}
+        </button>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

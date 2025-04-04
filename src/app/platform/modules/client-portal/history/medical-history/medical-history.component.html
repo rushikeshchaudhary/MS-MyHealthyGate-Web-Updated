@@ -1,0 +1,291 @@
+<!-- <div class="row">
+  <div class="col-md-12">
+    <div class="pull-right justify-content-md-end d-flex">
+      <button
+        mat-raised-button
+        mat-raised-button
+        color="primary"
+        class="add-primary-btn"
+        (click)="addEditMedicalHistory(null, null)"
+      >
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        <span>Add Medical History</span>
+      </button>
+    </div>
+  </div>
+</div> -->
+
+<div class="row" *ngIf="dropDownListArray != undefined">
+  <!-- <div class="col-sm-12">
+    <h3>{{ headerText }}</h3>
+  </div> -->
+  <div class="col-sm-12">
+    <form id="medicalHistoryForm" #documentForm="ngForm" class="readmin-form custom_form"
+      [formGroup]="medicalHistoryForm">
+      <div class="row">
+        <div class="col-sm-12 my-3">
+          <h4>
+            <strong>Please answer the below question where applicable.</strong>
+          </h4>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <mat-select formControlName="maritalStatus" placeholder="Marital status" required>
+              <mat-option *ngFor="let maritalStatus of dropDownListArray.maritalStatus" [value]="maritalStatus.id">
+                {{ maritalStatus.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="formAddControls['maritalStatus'].errors?.['required']">
+              Please select marital status!
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <mat-select formControlName="childhoodIllness" placeholder="Childhood Illness" multiple>
+              <mat-option *ngFor="let illness of dropDownListArray.childhoodIllness" [value]="illness.id">
+                {{ illness.illnessType }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-sm-4 mt-3">
+          <mat-form-field class="example-full-width">
+            <mat-label>Age of onset mensuration</mat-label>
+            <input matInput type="number" formControlName="AgeOnsetMensuration" />
+          </mat-form-field>
+        </div>
+        <div class="col-sm-4 mt-3">
+          <mat-form-field class="example-full-width">
+            <mat-label>Number of pregnancies</mat-label>
+            <input matInput type="number" formControlName="noOfPregnancies" />
+          </mat-form-field>
+        </div>
+        <div class="col-sm-4 mt-3">
+          <mat-form-field class="example-full-width">
+            <mat-label>Number of live births</mat-label>
+            <input matInput type="number" formControlName="liveBirths" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row mt-4" formArrayName="medicalStatement">
+        <!-- <div class="col-sm-12">
+              <div class="pull-right justify-content-md-end d-flex">
+                <button
+                  mat-raised-button
+                  color="primary"
+                  class="add-primary-btn"
+                  (click)="addNewMedicalStatementArray()"
+                >
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                  <span>Add statement</span>
+                </button>
+              </div>
+            </div> -->
+
+        <div class="col-sm-12 p-0 " *ngFor="let mStatement of medicalStatement.controls; let i = index" [formGroupName]="i">
+          <div class="row my-3 p-2" *ngIf="!mStatement.value.isDeleted">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <!-- <mat-label>Statement</mat-label> -->
+
+                <textarea style="resize: none;" formControlName="statementName" matInput readonly></textarea>
+                <!-- <input
+                  matInput
+                  placeholder="Statement"
+                  formControlName="statementName"
+                /> -->
+               
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4 blk_form">
+              <mat-form-field>
+                <mat-label>Yes/No and Details</mat-label>
+                <textarea formControlName="details" matInput></textarea>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-2">
+              <mat-form-field>
+                <mat-label>{{"year" | translate}}</mat-label>
+                <input matInput [matDatepicker]="diagnoseDate" [max]="maxDate" formControlName="statementDate"
+                  readonly />
+                <mat-datepicker-toggle matSuffix [for]="diagnoseDate"></mat-datepicker-toggle>
+                <mat-datepicker #diagnoseDate></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-sm-12">
+          <h4>{{"other" | translate}}</h4>
+        </div>
+        <div class="col-sm-12 blk_form">
+          <mat-form-field>
+            <mat-label>List any medical problems that other doctors have
+              diagnosed</mat-label>
+            <textarea formControlName="otherProblem" matInput></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="col-sm-12 mt-3" style="display: flex; justify-content: end">
+        <button mat-raised-button color="accent" (click)="onSubmit()" class="text-uppercase" cdkFocusInitial>
+          {{"save" | translate}}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- <div *ngIf="medicatlHistoryListModel!=undefined">
+  <div class="row">
+    <div
+      class="col-sm-6 mt-20 family-history custom-card custom-card-header"
+      *ngFor="let history of medicatlHistoryListModel.patientMedicalHistoryList"
+    >
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            {{ history.firstName + " " + history.lastName }}
+          </mat-card-title>
+          <mat-card-actions>
+            <button mat-button (click)="addEditMedicalHistory(history,medicatlHistoryListModel.medicalStatementResList)">
+              <i class="fa fa-pencil"></i>
+            </button>
+            <button mat-button (click)="deleteMedicalHistoryDetails(history.id)">
+              <i class="fa fa-close"></i>
+            </button>
+          </mat-card-actions>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row">
+            <div class="col-sm-12">
+              <p>
+                Marital Status:&nbsp;&nbsp;
+                <span>
+                  <b>{{ history.maritalStatusName | uppercase }}</b></span
+                >
+              </p>
+            </div>
+            <div class="col-sm-12">
+              <p>
+                Childhood Illness:&nbsp;&nbsp;
+                <span>
+                  <b>
+                    {{
+                      history.childhoodIllnessString
+                        ? history.childhoodIllnessString
+                        : "---"
+                    }}
+                  </b></span
+                >
+              </p>
+            </div>
+            <div class="col-sm-6">
+              <p>
+                Age of onset mensuration:&nbsp;&nbsp;
+                <span>
+                  <b>
+                    {{
+                      history.ageOnsetMensuration
+                        ? history.ageOnsetMensuration
+                        : "---"
+                    }}
+                  </b></span
+                >
+              </p>
+            </div>
+            <div class="col-sm-6">
+              <p>
+                Number of pregnancies:&nbsp;&nbsp;
+                <span>
+                  <b>
+                    {{
+                      history.noOfPregnancies ? history.noOfPregnancies : "---"
+                    }}
+                  </b></span
+                >
+              </p>
+            </div>
+            <div class="col-sm-12">
+              <p>
+                Number of live births:&nbsp;&nbsp;
+                <span>
+                  <b>
+                    {{ history.liveBirths ? history.liveBirths : "---" }}
+                  </b></span
+                >
+              </p>
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <h5>Medical Statements</h5>
+          </div>
+
+          <div
+            class="col-sm-12"
+            *ngFor="
+              let statement of medicatlHistoryListModel.medicalStatementResList
+            "
+          >
+            <div
+              class="row"
+              *ngIf="statement.patientMedicalhistoryId == history.id"
+            >
+              <div class="col-sm-12">
+                <p>
+                  Statement:&nbsp;&nbsp;
+                  <span>
+                    <b> {{ statement.statement }} </b></span
+                  >
+                </p>
+              </div>
+              <div class="col-sm-12">
+                <p>
+                  Details:&nbsp;&nbsp;
+                  <span>
+                    <b>
+                      {{ statement.details ? statement.details : "---" }}
+                    </b></span
+                  >
+                </p>
+              </div>
+              <div class="col-sm-12">
+                <p>
+                  Date:
+                  <span>
+                    <b *ngIf="statement.statementDate">
+                      {{ statement.statementDate | date : 'dd/MM/yyyy' }}</b
+                    >
+
+                    <b *ngIf="!statement.statementDate">{{ "---" }} </b></span
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm 12">
+            <h5>Others:</h5>
+          </div>
+          <div class="col-sm 12 ml-3">
+            {{ history.otherProblem ? history.otherProblem : "---" }}
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div> -->
+
+<!-- <app-data-table
+[inputColumns]="medicatlHistoryColumn"
+[inputSource]="medicatlHistoryListModel"
+[inputMeta]="metaData"
+[inputButtons]="medicatlHistoryActionButtons"
+(onTableActionClick)="onMedicalHistoryTableActionClick($event)"
+(onPageOrSortChange)="onPageOrSortChange($event)"
+>
+</app-data-table> -->

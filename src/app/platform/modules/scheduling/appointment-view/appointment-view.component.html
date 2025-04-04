@@ -1,0 +1,336 @@
+<div class="custom_modal">
+  <h3 mat-dialog-title>
+    {{"appointment_details"|translate}}<button class="close" mat-button (click)="onNoClick()">
+      X
+    </button>
+  </h3>
+  <div mat-dialog-content>
+    <div [class.hidden]="!loading">
+      <div class="full_loader">
+        <div class="circle_loader page_loader">
+          <img src="/assets/loader.gif" alt="" />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <form id="appointmentForm" #documentForm="ngForm" class="readmin-form custom_form"
+          [formGroup]="appointmentForm">
+          <div class="row">
+            <div class="col-sm-5 box-part">
+              <div class="row" style="justify-content: space-between; align-items: flex-end">
+                <div class="col-sm-4">
+                  <img class="m-3 round-100 imge" height="120" width="auto" style="cursor: pointer"
+                    title="Go to profile" [src]="f['patientPhotoThumbnailPath'].value"
+                    onerror="this.src='/assets/img/user_noimage.jpg';" (click)="goToProfile()" />
+                </div>
+                <div class="col-sm-8 mb-3 d-flex">
+                  <button style="display: flex; align-items: center"
+                    class="btn btn-primary btn-outline-primary apnt-btn-prmy" *ngIf="isApproved" (click)="chat()"
+                    hidden>
+                    <span class="material-icons material-icons-outlined crsr-ptr" style="color: #fff"
+                      title="Chat">fact_check</span>
+                    Chat
+                  </button>
+                  <button style="display: flex; align-items: center"
+                    class="btn btn-outline-secondary apnt-btn-scndry ml-3" *ngIf="isApproved" (click)="videoCall()">
+                    <span class="material-icons material-icons-chat crsr-ptr" title="Go to waiting-room">chat</span>
+                    Go to waiting room
+                  </button>
+
+                  <!-- style="color: #00bec8" <button class="btn btn-primary btn-outline-primary" *ngIf="isApproved" (click)="videoCall()"><span class="material-icons material-icons-outlined mr-3 crsr-ptr float-right" title="go to waiting-room">fact_check</span> Chat</button> -->
+                  <!-- style="color: #513671" <button class="btn btn-outline-secondary ml-3" *ngIf="isApproved" (click)="chat()"><span class="material-icons material-icons-chat mr-3 crsr-ptr float-right" title="Chat">chat</span> Goto waiting room</button> -->
+                </div>
+                <div class="col-sm-12" *ngIf="!isAppoitmentCompleted">
+                  <app-count-down title="Time remaining" class="mb-2 evenCellColor-count" *ngIf="
+                      appointment && appointment.startDateTime && isShowTimer
+                    " [inputDate]="appointment.startDateTime">
+                  </app-count-down>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field (click)="goToProfile()" class="example-full-width">
+                    <input matInput title="Go to profile" placeholder="{{'patient_name'|translate}}"
+                      formControlName="patientName" class="inputNameCursor" />
+                  </mat-form-field>
+                </div>
+
+                <div class="col-sm-6">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="{{'dob'|translate}}" formControlName="dob" />
+                  </mat-form-field>
+                </div>
+
+                <div class="col-sm-6">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="{{'gender'|translate}}" formControlName="gender" />
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="{{'email'|translate}}" formControlName="email" />
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                  <mat-form-field class="example-full-width">
+                    <input appPhoneNumber matInput placeholder="{{'phone'|translate}}" maxlength="19"
+                      formControlName="phone" />
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-12">
+                  <h2 class="page_title d-block">{{"appointment_details"|translate}}</h2>
+                </div>
+                <div class="col-sm-6">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="{{'start_date_time'|translate}}" formControlName="startDateTime" />
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="{{'end_date_time'|translate}}" formControlName="endDateTime" />
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="{{'status'|translate}}" formControlName="statusName" />
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                  <mat-form-field class="example-full-width">
+                    <input matInput type="m" placeholder="{{'appointment_mode'|translate}}" formControlName="mode" />
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Your symptom or Ailment for which you contacted the Doctor"
+                      formControlName="notes" />
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="{{'appointment_type'|translate}}" formControlName="type" />
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-12">
+                  <h2 class="page_title d-block">Other Appointments</h2>
+                </div>
+
+                <div class="col-sm-12" *ngIf="isLoadingOtherAppointments">
+                  <p>Loading other appointments...</p>
+                </div>
+
+                <div class="col-sm-12" *ngIf="!isLoadingOtherAppointments">
+                  <div *ngIf="
+                      otherAppointments &&
+                      otherAppointments.length == 0 &&
+                      !isLoadingOtherAppointments
+                    "></div>
+
+                  <div class="otherappointment" *ngIf="otherAppointments && otherAppointments.length > 0">
+                    <div class="mb-2 child" *ngFor="let app of otherAppointments; let i = index">
+                      <span class="crsr-ptr otherappts-txt mt-3" [ngClass]="getBgClass(i)" (click)="
+                          onOtherAppointmentClick(app.patientAppointmentId)
+                        ">
+                        {{
+                        slotDateTime(app.startDateTime) +
+                        " - " +
+                        slotDateTime(app.endDateTime)
+                        }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-7 box-part slot-block">
+              <div class="row">
+                <div class="col-sm-12">
+                  <h2 class="page_title">Patient Document</h2>
+                </div>
+                <div *ngIf="isProviderLogin">
+                  <div class="quick rr">
+                    <ul>
+                      <li class="red">
+                        <a title="Tags" href="javascript:void(0);">
+                          <i class="fa fa-tag"></i>
+                        </a>
+                        <div class="quicksubmenu tagbox plr-10">
+                          <ul class="tags">
+                            <li *ngFor="let tag of clientHeaderModel.patientTagsHeaderInfo">
+                              <span class="tagafter" [ngStyle]="{backgroundColor: tag.colorCode}"></span>
+                              <span class="tag" [ngStyle]="{backgroundColor: tag.colorCode}">{{tag.tag}}</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+                      <li class="blue">
+                        <a title="Contact" href="javascript:void(0);">
+                          <i class="fa fa-phone"></i>
+                        </a>
+                        <ul class="quicksubmenu">
+                          <li *ngIf="clientHeaderModel.patientBasicHeaderInfo.phone">
+                            <i class="fa fa-phone"
+                              aria-hidden="true"></i>{{clientHeaderModel.patientBasicHeaderInfo.phone||''}}
+                          </li>
+                          <li class="msg" *ngIf="clientHeaderModel.patientBasicHeaderInfo.email">
+                            <i class="fa fa-envelope"
+                              aria-hidden="true"></i>{{clientHeaderModel.patientBasicHeaderInfo.email||''}}
+                          </li>
+                          <li *ngIf="clientHeaderModel.patientBasicHeaderInfo.address">
+                            <i class="fa fa-map-marker"
+                              aria-hidden="true"></i>{{clientHeaderModel.patientBasicHeaderInfo.address||''}}
+                          </li>
+                        </ul>
+                      </li>
+                      <li class="green">
+                        <a title="Bio-Psych Social Intake" href="javascript:void(0);">
+                          <i class="fa fa-user-md"></i>
+                        </a>
+                        <div class="quicksubmenu">
+                          <p>
+                            <b>{{clientHeaderModel.patientBasicHeaderInfo.primaryProvider||''}}</b>
+                            <span>-</span>
+                          </p>
+                          <p *ngFor="let allergy of clientHeaderModel.patientAllergyHeaderInfo">{{allergy.allergen||''}}
+                          </p>
+                          <p *ngIf="clientHeaderModel.patientAllergyHeaderInfo.length==0">
+                            {{"no_allergies_found"|translate}}</p>
+                        </div>
+                      </li>
+                      <li class="orange">
+                        <a title="My Appointments" href="javascript:void(0);" (click)="onNavigate()">
+                          <i class="fa fa-calendar" aria-hidden="true"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div *ngIf="isLoadingDocuments" class="col-sm-12">
+                  <p>Documents loading...</p>
+                </div>
+                <!-- <div
+                  *ngIf="!isLoadingDocuments && documentList.length == 0"
+                  class="col-sm-12"
+                >
+                  <p>No documents available</p>
+                </div> -->
+                <div class="col-sm-12">
+                  <!-- <div class="col-sm-12 mt-20 custom-card custom-card-header" *ngFor="let doc of documentList">
+                    <mat-card>
+                      <mat-card-header>
+                        <mat-card-title>
+                          {{ doc.documentTitle }}
+                        </mat-card-title>
+                        <mat-card-actions>
+                          <button mat-button (click)="getUserDocument(doc)">
+                            <i class="fa fa-download"></i>
+                          </button>
+                          <button mat-button (click)="deleteUserDocument(doc.id)">
+                            <i class="fa fa-close"></i>
+                          </button>
+                        </mat-card-actions>
+                      </mat-card-header>
+                      <mat-card-content>
+                        <div class="text-left">
+                          <p>
+                            Document Type:
+
+                            <span ngif="doc.documentTypeNameStaff!=null">{{
+                              doc.documentTypeNameStaff
+                              }}</span>
+                            <span ngif="doc.documentTypeNameStaff==null">{{
+                              doc.otherDocumentType
+                              }}</span>
+                            <span ngif="doc.documentTypeName!=null">{{
+                              doc.documentTypeName
+                              }}</span>
+                          </p>
+                          <p>
+                            Uploaded Date:
+                            <span>{{
+                              doc.createdDate | date: 'MM/dd/yyyy'
+                              }}</span>
+                          </p>
+                          <p>
+                            Expiration Date:
+                            <span>{{
+                              doc.expiration | date: 'MM/dd/yyyy'
+                              }}</span>
+                          </p>
+                        </div>
+                        <div class="text-right">
+                          <img *ngIf="doc.extenstion == '.pdf'" src="../../../../../../assets/img/pdf.png" />
+                          <img *ngIf="
+                              doc.extenstion == '.doc' ||
+                              doc.extenstion == '.docx'
+                            " src="../../../../../../assets/img/doc.png" />
+                          <img *ngIf="
+                              doc.extenstion == '.ppt' ||
+                              doc.extenstion == '.pptx'
+                            " src="../../../../../../assets/img/ppt.png" />
+                          <img *ngIf="
+                              doc.extenstion == '.xls' ||
+                              doc.extenstion == '.xlsx'
+                            " src="../../../../../../assets/img/excel.png" />
+                          <img *ngIf="
+                              doc.extenstion == '.jpg' ||
+                              doc.extenstion == '.jpeg'
+                            " src="../../../../../../assets/img/jpg.png" />
+                          <img *ngIf="doc.extenstion == '.png'" src="../../../../../../assets/img/jpg.png" />
+                          <img *ngIf="doc.extenstion == '.txt'" src="../../../../../../assets/img/txt.png" />
+                        </div>
+                      </mat-card-content>
+                    </mat-card>
+                  </div> -->
+                  
+                  <app-data-table [inputColumns]="displayColumns" [inputSource]="documentList" [inputMeta]="metaData"
+                    (onClicks)="getUserDocument($event)">
+                  </app-data-table>
+                </div>
+                <div  class="col-sm-12">
+                  <h2 class="page_title">Doctor Soap Notes</h2>
+                </div>
+                <!-- <div *ngIf="allSoapNotes.length == 0" class="col-sm-12">
+                  <p>No doctor notes available</p>
+                </div> -->
+
+                <div class="col-sm-12" *ngIf="appointment">
+
+                  <app-shared-soap-note [data]="appointmentId" [clientId]="clientId">
+
+                  </app-shared-soap-note>
+                </div>
+                <!-- <div class="col-sm-12">
+                  <h2 class="page_title">Previous Diagnosis</h2>
+                </div>
+                <div *ngIf="patientDiagnosisList.length == 0" class="col-sm-12">
+                  <p>No Previous Diagnosis available</p>
+                </div>
+                <div *ngIf="patientDiagnosisList.length > 0" class="col-sm-12">
+                  <app-data-table
+                    [inputColumns]="patientDiagnosisColumns"
+                    [inputSource]="patientDiagnosisList"
+                    [inputMeta]="metaData"
+                  >
+                  </app-data-table>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- <div mat-dialog-actions class="float-left">
+        <button *ngIf="showReport" class="cancel-btn" mat-raised-button (click)="showInfermedicaReport()">Show Report</button>
+    </div> -->
+  <div mat-dialog-actions class="float-right">
+    <button class="cancel-btn" mat-raised-button (click)="onClose()">
+      {{"close"|translate}}
+    </button>
+    <button class="cancel-btn" *ngIf="selectedAppointments && this.selectedAppointments.length > 1" mat-raised-button
+      (click)="onBack()">
+      {{"back"|translate}}
+    </button>
+  </div>
+</div>

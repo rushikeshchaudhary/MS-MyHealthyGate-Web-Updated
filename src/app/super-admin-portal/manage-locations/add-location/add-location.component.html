@@ -1,0 +1,98 @@
+<div class="readmin-page-content">
+  <div>
+    <h2 class="page_title">{{isEdit?'Update Location Details':'Add Location Details'}}</h2>
+  </div>
+  <div class="clearfix"></div>
+  <div class="readmin-panel">
+    <div class="panel-body">
+      <form class="readmin-form custom_form" (ngSubmit)="onSubmit()" id="locationForm" #looForm="ngForm"
+        [formGroup]="locationForm">
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput autofocus placeholder="Location Name" maxlength="50"
+                formControlName="locationName" [ngClass]="{'is-invalid':submitted && formControls['locationName'].errors}"
+                required />
+              <mat-error *ngIf="formControls['locationName'].errors">Please enter location name</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput autofocus placeholder="Location Description" maxlength="150"
+                formControlName="locationDescription"
+                [ngClass]="{'is-invalid':submitted && formControls['locationDescription'].errors}" required />
+              <mat-error *ngIf="formControls['locationDescription'].errors">Please enter location description</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput autofocus placeholder="Address" formControlName="address"
+                [ngClass]="{'is-invalid':submitted && formControls['address'].errors}" required />
+              <mat-error *ngIf="formControls['address'].errors">Please enter address</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput autofocus placeholder="City" maxlength="50" formControlName="city"
+                [ngClass]="{'is-invalid':submitted && formControls['city'].errors}" required />
+              <mat-error *ngIf="formControls['city'].errors">Please enter location name</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput autofocus placeholder="Zip" maxlength="7" formControlName="zip"
+                [ngClass]="{'is-invalid':submitted && formControls['zip'].errors}" required />
+              <mat-error * ngIf="formControls['zip'].errors">Please enter zip</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput appPhoneNumber autofocus placeholder="Phone" maxlength="19"
+                formControlName="phone" [ngClass]="{'is-invalid':submitted &&formControls['phone'].errors}" required />
+              <mat-error *ngIf="formControls['phone'].errors">Please enter phone number</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6 is_active">
+            <div class="form-group">
+              <mat-checkbox formControlName="isActive">Is Active</mat-checkbox>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field class="example-full-width">
+              <mat-select  (selectionChange)="updateValue($event.value, 1)" placeholder="Country" formControlName="countryId" matInput
+                [ngClass]="{'is-invalid':submitted && formControls['countryId'].errors}">
+                <mat-option *ngFor="let country of masterCountry" [value]="country.id">
+                  {{country.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field class="example-full-width">
+              <mat-select placeholder="State" formControlName="stateId" matInput
+                [ngClass]="{'is-invalid':submitted && formControls['stateId'].errors}">
+                <mat-option *ngFor="let state of masterState" [value]="state.id">
+                  {{state.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6"><button class="cancel-btn" mat-raised-button (click)="back()">Back</button></div>
+          <div class="col-sm-6 pt20 text-right">
+            <button mat-raised-button color="primary" from="locationForm" [disabled]="submitted" cdkFocusInitial>
+              {{submitted?'Saving...':'Save'}}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+.login-headtab.active {
+    margin-bottom: 2em;
+}
+.login-btn {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+.login-web-btn {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    width: 100% !important;
+}

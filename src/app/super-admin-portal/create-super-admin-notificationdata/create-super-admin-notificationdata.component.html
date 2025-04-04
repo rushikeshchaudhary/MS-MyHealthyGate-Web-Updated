@@ -1,0 +1,54 @@
+<div class="custom_modal">
+  <h3 mat-dialog-title>{{headerText}}</h3>
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-sm-12">
+        <form (ngSubmit)="onSubmit()" id="CategoryMasterForm" #documentForm="ngForm" class="readmin-form custom_form" [formGroup]="CategoryMasterForm">
+          <div class="row">
+            <div class="col-sm-12 require">
+              <strong class="fs-20">Name </strong>
+              <mat-form-field class="example-full-width">
+                  <input type="text" matInput formControlName="FullName" readonly>
+              </mat-form-field>
+          </div>
+            <div class="col-sm-12 require">
+              <strong class="fs-20">Email </strong>
+              <mat-form-field class="example-full-width">
+                  <input type="text" matInput formControlName="Email" readonly>
+              </mat-form-field>
+          </div>
+            <div class="col-sm-12 require">
+              <strong class="fs-20">Subject</strong>
+              <mat-form-field class="example-full-width">
+                  <input type="text" matInput formControlName="Subject" >
+              </mat-form-field>
+          </div>
+            <div class="col-sm-12 require">
+              <strong class="fs-20">Reason</strong>
+              <mat-form-field appearance="outline">
+                <textarea matInput
+                placeholder="Reason"
+                formControlName="Reason"
+                >
+            </textarea>
+            <!-- <mat-error *ngIf="Reason.hasError('required')">
+                Comment is required.
+            </mat-error>
+            <mat-error *ngIf="Reason.hasError('maxlength')">
+                Max length is 30.
+            </mat-error> -->
+              </mat-form-field>
+          </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div mat-dialog-actions class="nw-pd">
+      <button mat-raised-button class="cancel-btn" (click)="closeDialog()">Close</button>
+      <button mat-raised-button color="primary" form="CategoryMasterForm" [disabled]="submitted || formControls['pending']" cdkFocusInitial>
+          {{(submitted || CategoryMasterForm.pending) ? submitted ? 'Saving...' : CategoryMasterForm.pending ? 'Validating...' : 'Save' : 'Save'}}
+        </button>
+  </div>
+</div>
+</div>
+

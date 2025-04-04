@@ -1,0 +1,36 @@
+<div class="provider-container">
+
+  <h2 class="page_title">{{'manage_your_questions'|translate}}</h2>
+  <div class="clearfix"></div>
+
+  <div class="readmin-panel">
+    <div class="row">
+      <div class="col-md-4">
+        <mat-form-field class="example-full-width">
+          <mat-label>{{'select_questionnaire_type'|translate}}</mat-label>
+          <mat-select placeholder="Select Questionnaire Type" [formControl]="selectedType" matInput>
+            <mat-option *ngFor="let t of questionnaireTypes" [value]="t">
+              {{t.value}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+      <div class="col-md-8">
+        <div *ngIf="this.selectedType.value" class=" text-right">
+          <button type="button" mat-raised-button color="primary" [disabled]="!isApproved" class="float-right" (click)="createAddEditQuestionModel(null)">{{'add_question'|translate}}</button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="clearfix"></div>
+    <app-data-table [inputColumns]="displayedColumns" [inputSource]="providerQuestionnaires" [inputMeta]="metaData"
+      [inputButtons]='actionButtons' (onPageOrSortChange)="onPageOrSortChange($event)"
+      (onTableActionClick)="onTableActionClick($event)">
+    </app-data-table>
+
+  </div>
+</div>
+
+  

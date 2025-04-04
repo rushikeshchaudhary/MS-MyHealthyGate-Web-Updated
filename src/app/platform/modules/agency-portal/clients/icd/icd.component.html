@@ -1,0 +1,29 @@
+<div class="patient-container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h2 class="page_title">I{{'international_classification_of_diseases'|translate}}</h2>
+    </div>
+    <div class="col-sm-12 d-flex justify-content-start align-items-center disease_block" style="  border-radius: 10px 10px 0 0;
+    background: white;
+    padding: 15px 15px 0 15px;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);">
+      <div class="sortCss">{{'sort_by'|translate}}</div>
+      <button mat-button (click)="sortHandler('latest')">{{'latest'|translate}}</button>
+      <button mat-button (click)="sortHandler('oldest')">{{'oldest'|translate}}</button>
+      <button mat-button (click)="sortHandler('atoz')">{{'a_z'|translate}}</button>
+      <button mat-button (click)="sortHandler('ztoa')">{{'z_a'|translate}}</button>
+      <button mat-raised-button color="primary" (click)="sortHandler('clear')">
+        {{'clear_filter'|translate}}
+      </button>
+    </div>
+    <div *ngIf="patientDiagnosisList.length == 0" class="col-sm-12">
+      <p>{{'No_International_Classification_of_Diseases_available'|translate}}</p>
+    </div>
+    <div *ngIf="patientDiagnosisList.length > 0" class="col-sm-12" style="  border-radius: 0 0 10px 10px;
+      background: white; box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);">
+      <app-data-table [inputColumns]="patientDiagnosisColumns" [inputSource]="patientDiagnosisList"
+        [inputMeta]="metaData">
+      </app-data-table>
+    </div>
+  </div>
+</div>

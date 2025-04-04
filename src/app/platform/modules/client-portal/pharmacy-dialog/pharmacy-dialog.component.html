@@ -1,0 +1,27 @@
+<div class="custom_modal">
+  <h3 mat-dialog-title>{{"share_prescription"|translate}}</h3>
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-sm-12">
+        <form id="pharmacyForm" class="readmin-form custom_form" [formGroup]="pharmacyForm">
+          <div class="row">
+            <mat-form-field class="example-full-width">
+              <mat-select placeholder="Select Pharmacy" formControlName="pharmacyName" matInput
+                (selectionChange)="onChangPharmacy($event.value)"
+                [ngClass]="{'is-invalid':submitted && formControls['pharmacyName'].errors}" required>
+                <mat-option *ngFor="let option of pharmacyList" [value]="option.pharmacyId">
+                  {{option.pharmacyName}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="formControls['pharmacyName'].errors">{{"please_select_pharmacy_name"|translate}}</mat-error>
+            </mat-form-field>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button class="cancel-btn" mat-raised-button (click)="onClose()">{{"close"|translate}}</button>
+    <button mat-raised-button color="primary"  (click)="onOkClick()">{{"ok"|translate}}</button>
+  </div>
+</div>

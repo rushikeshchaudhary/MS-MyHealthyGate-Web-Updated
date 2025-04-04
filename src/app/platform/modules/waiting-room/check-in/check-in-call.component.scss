@@ -1,0 +1,63 @@
+.checkin-block{
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    width: 50%;
+    margin: 30px auto;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 7px #ccc;
+    border-left: 4px solid #01385f !important;
+}
+.checkin-txt{
+    padding: 10px 20px 20px 20px;
+}
+.checkin-txt div{
+    font-size: 25px;
+    font-weight: 600;
+    color: #2f2660;
+}
+.checkin-btns{
+    padding-bottom: 10px;
+}
+.Educationmaterial-block h3{
+    background-color: #efefef;
+    padding: 12px 10px;
+    font-size: 20px;
+    border-left: 4px solid #01385f !important;
+    margin-bottom: 20px;
+}
+.checkin-block .checkin-txt {
+  padding: 0 0 0px;
+  font-size: 16px;
+}
+.checkin-block .checkin-txt span #hours {
+  width: 60px;
+  height: 60px;
+  margin: 0 8px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  /* padding: 20px 20px; */
+  font-size: 16px !important;
+  align-content: center;
+}
+.checkin-block .checkin-txt span span {
+  display: block;
+  width: 100%;
+  margin: 0 !important;
+  font-size: 20px !important;
+}
+
+// .checkin-block .checkin-txt .timer
+@media all and (max-width:768px){
+  .checkin-block{
+    width:100%;
+  }
+  .checkin-btns{
+    button{
+      margin-bottom: 15px;
+    }
+  }
+}

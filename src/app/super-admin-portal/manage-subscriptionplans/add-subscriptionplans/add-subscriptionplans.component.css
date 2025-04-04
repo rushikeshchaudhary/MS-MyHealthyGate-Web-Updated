@@ -1,0 +1,11 @@
+.plan-type .mat-radio-button{
+    margin-right: 1rem;
+}
+.readmin-page-content {
+    padding: 1rem;
+}
+.panel-body {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 4px;
+}

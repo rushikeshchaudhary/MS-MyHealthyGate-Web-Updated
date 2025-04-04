@@ -1,0 +1,70 @@
+<h2 class="page_title mt-3">Manage Prescription</h2>
+<div class="patient-container">
+  
+  <div class="clearfix"></div>
+  <div class="readmin-panel">
+    <div class="row no-gutters">
+      <div class="col-md-4 justify-content-start pull-left">
+        <div class="row">
+          <div class="col-7 mtm-27">
+            <form class="readmin-form custom_form">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  [(ngModel)]="searchText"
+                  name="searchText"
+                  (keyup)="applyFilter()"
+                  placeholder="Search"
+                />
+              </mat-form-field>
+            </form>
+          </div>
+          <div class="col-5 filter-btn">
+            <button
+              class="clear-btn"
+              mat-raised-button
+              (click)="clearFilters()"
+            >
+              Clear All
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 d-flex">
+        <label class="type_label mt-3">State : </label>
+        <div>
+          <mat-form-field class="example-full-width">
+            <mat-label>Select Status</mat-label>
+            <mat-select (selectionChange)="statusChangeHandler($event.value)">
+              <mat-option [value]="true">Active</mat-option>
+              <mat-option [value]="false">InActive</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="col-md-4 pull-right justify-content-md-end d-flex">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="openDialog()"
+          class="add-primary-btn"
+        >
+          <i class="fa fa-plus" aria-hidden="true"></i> <span>AddPrescription-Drugs</span>
+        </button>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <app-data-table
+      [inputColumns]="displayedColumns"
+      [inputSource]="serviceData"
+      [inputMeta]="metaData"
+      [inputButtons]="actionButtons"
+      (onPageOrSortChange)="onPageOrSortChange($event)"
+      (onTableActionClick)="onTableActionClick($event)"
+    >
+    </app-data-table>
+  </div>
+</div>
+

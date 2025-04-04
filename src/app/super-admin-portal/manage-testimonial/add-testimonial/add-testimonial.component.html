@@ -1,0 +1,68 @@
+<div class="readmin-page-content">
+  <div>
+    <h2 class="page_title">{{isEdit?'Update Testimonial Details':'Add Testimonial Details'}}</h2>
+  </div>
+  <div class="clearfix"></div>
+  <div class="readmin-panel">
+    <div class="panel-body">
+      <form class="readmin-form custom_form" (ngSubmit)="onSubmit()" id="testimonialForm" #looForm="ngForm"
+        [formGroup]="testimonialForm">
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput autofocus placeholder="Name" maxlength="50"
+                formControlName="name" [ngClass]="{'is-invalid':submitted && formControls['name'].errors}"
+                required />
+              <mat-error *ngIf="formControls['name']?.errors">Please enter name</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput autofocus placeholder="Description" maxlength="150"
+                formControlName="description"
+                [ngClass]="{'is-invalid':submitted && formControls['description'].errors}" required />
+              <mat-error *ngIf="formControls['description'].errors">Please enter description</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput autofocus placeholder="Organization Name" formControlName="organizationName"
+                [ngClass]="{'is-invalid':submitted && formControls['organizationName'].errors}" required />
+              <mat-error *ngIf="formControls['organizationName'].errors">Please enter organization Name</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6 is_active">
+            <div class="form-group">
+              <mat-checkbox formControlName="isActive">Is Active</mat-checkbox>
+            </div>
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-sm-6">
+            <label class="control-label">Select Ads <i class="flaticon flaticon-picture"></i></label>
+            <div class="uplaod_pic">
+              <label class="browse">
+                <img *ngIf="imagePreview" [src]="imagePreview" alt="" style="width: 104px;"/>
+                <span *ngIf="imagePreview">Change</span>
+                <i *ngIf="!imagePreview" class="fa fa-upload fa-2x" aria-hidden="true"></i>
+                <input type="file" formControlName="imgad" (change)="handleImageChange($event)">
+              </label>
+            </div>
+            <p class="ins_photo">(Browse any jpg, jpeg, bmp, png file.)</p><br>
+            <p class="ins_photo">(Image size should be less than 2.5 MB.)</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6"><button class="cancel-btn" mat-raised-button (click)="back()">Back</button></div>
+          <div class="col-sm-6 pt20 text-right">
+            <button mat-raised-button color="primary" from="testimonialForm" [disabled]="submitted" cdkFocusInitial>
+              {{submitted?'Saving...':'Save'}}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

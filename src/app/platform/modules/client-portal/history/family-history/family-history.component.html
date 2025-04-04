@@ -1,0 +1,46 @@
+<div class="readmin-panel">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-12 pull-right justify-content-md-end d-flex">
+        <button *ngIf="addPermission" [disabled]="disableButton()" mat-raised-button color="primary"
+          class="add-primary-btn" (click)="openDialog()">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          <span [matTooltip]="disableButton() ? tooltipdMessage : ''">{{"add_history" | translate}}</span>
+
+
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 mt-20 family-history custom-card custom-card-header"
+        *ngFor="let history of patientMedicalFamilyHistoryList">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>
+              {{history.firstName+' '+history.lastName}}
+            </mat-card-title>
+            <mat-card-actions>
+              <button *ngIf="updatePermission" mat-button (click)="openDialog(history.id)"><i
+                  class="fa fa-pencil"></i></button>
+              <button *ngIf="deletePermission" mat-button (click)="delete(history.id)"><i
+                  class="fa fa-close"></i></button>
+            </mat-card-actions>
+          </mat-card-header>
+
+          <mat-card-content class="d-flex justify-content-start">
+            <div>
+              <p>{{'relationship'|translate}}: <span> <b>{{history.relationShipName}}</b></span> </p>
+              <p>{{'date_of_birth'|translate}}: <span> <b> {{history.dob | date}} </b></span> </p>
+            </div>
+            <div *ngIf="history.dateOfDeath" class="ml-4">
+              <p>{{'date_of_death'|translate}}: <span> <b> {{history.dateOfDeath | date}} </b></span> </p>
+              <p>{{'cause_of_death'|translate}}: <span> <b> {{history.causeOfDeath}} </b></span> </p>
+            </div>
+            <div>
+              <p>{{'disease'|translate}}:<span> <b>{{ getDisease(history) }}</b></span></p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>

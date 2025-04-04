@@ -1,0 +1,221 @@
+<div class="payment-blk">
+  <h2 class="page_title">{{"manage_fees_&_refund"|translate}}</h2>
+  <div class="clearfix"></div>
+  <div class="readmin-panel">
+    <div class="no-gutters">
+      <div class="col-md-9 justify-content-start pull-left">
+        <form class="readmin-form custom_form" id="paymentFormGroup" autocomplete="off" [formGroup]="paymentFormGroup">
+          <div>
+            <div class="row">
+              <div class="col-md-12">
+                <h3 class="box-heading">{{"fees"|translate}}</h3>
+              </div>
+              <div class="col-md-12">
+                <mat-checkbox (change)="checkboxchecked($event)">
+                  {{"set_urgent_care_fees"|translate}}
+                </mat-checkbox>
+              </div>
+              <br />
+              <br />
+              <div class="col-md-4">
+                <div class="col-md-9 pl-0">
+                  <mat-form-field class="example-full-width">
+                    <mat-label>{{"f2f_fees"|translate}} (INR)</mat-label>
+                    <!-- <input
+                      matInput
+                      (keyup)="onF2fFeeChange($event.target.value)"
+                      placeholder="{{'f2f_fees'|translate}}"
+                      formControlName="f2fFee"
+                      type="number"
+                    /> -->
+                    <input matInput (keyup)="onF2fFeeChange($event)" placeholder="{{'f2f_fees'|translate}}"
+                      formControlName="f2fFee" type="number" />
+                    <mat-error *ngIf="f['f2fFee'].errors">
+                      {{"Please_enter_F2F_Fees"|translate}}
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="col-md-9 pl-0">
+                  <mat-form-field class="example-full-width">
+                    <mat-label>{{"online_fees"|translate}} (INR)</mat-label>
+                    <input matInput placeholder="{{'online_fees'|translate}}" formControlName="newOnlineFee"
+                      type="number" />
+                    <mat-error *ngIf="f['newOnlineFee'].errors">
+                      {{"Please_enter_Online_Fees"|translate}}
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="col-md-9 pl-0">
+                  <mat-form-field class="example-full-width">
+                    <mat-label>{{"home_visit_fees"|translate}} (INR)</mat-label>
+                    <!-- <input mask="00.00" [dropSpecialCharacters]="false" matInput -->
+                    <input matInput placeholder="{{'home_visit_fees'|translate}}" formControlName="homevisitFee"
+                      type="number" />
+                    <mat-error *ngIf="f['homevisitFee'].errors">
+                      {{"Please_enter_Home_Visit_Fees"|translate}}
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-md-4" *ngIf="showurgentcarefees">
+                <div class="col-md-9 pl-0">
+                  <mat-form-field class="example-full-width">
+                    <mat-label>Urgent Care Fees (INR)</mat-label>
+                    <input matInput placeholder="Urgent Care Fees INR" formControlName="urgentcareFee" />
+                    <mat-error *ngIf="f['urgentcareFee'].errors">
+                      Please enter urgent care Fees
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+
+            <div formArrayName="labCancelationRuleModel">
+              <div class="col-md-12">
+                <h3 class="box-heading">{{"cancellation_policy"|translate}}</h3>
+              </div>
+              <div *ngFor="
+                  let rule of cancelationRulesFormGroup.controls;
+                  let i = index
+                ">
+                <div [formGroupName]="i">
+                  <div class="row">
+                    <div class="col-md-5">
+                      <div class="col-md-9 pl-0 d-inline-block">
+                        <mat-form-field class="example-full-width">
+                          <mat-label>{{"upto_hours"|translate}}</mat-label>
+                          <mat-select placeholder="{{'upto_hours'|translate}}" formControlName="uptoHours" matInput>
+                            <mat-option *ngFor="let hour of hoursList" [value]="hour">
+                              {{ hour + " Hours" }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-1 d-inline-block">
+                        <!-- <button (click)="addMoreHourOption()" class="btn btn-primary">+</button> -->
+                        <button type="button" class="additem" title="Add Option" (click)="addMoreHourOption()">
+                          <b class="fa fa-plus-square greenfont" aria-hidden="true"></b>
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="col-md-5">
+                      <div class="col-md-9 pl-0 d-inline-block">
+                        <mat-form-field class="example-full-width">
+                          <mat-label>{{"refund_percentage"|translate}}</mat-label>
+                          <mat-select placeholder="{{'refund_percentage'|translate}}" formControlName="refundPercentage"
+                            matInput>
+                            <mat-option *ngFor="let rp of refundPercentagesList" [value]="rp">
+                              {{ rp + "%" }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-1 d-inline-block">
+                        <button type="button" class="additem" title="Add Option"
+                          (click)="addMoreRefundPercentageOption()">
+                          <b class="fa fa-plus-square greenfont" aria-hidden="true"></b>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <button class="btn btn-danger float-right mt-4 danger-btn"
+                        (click)="removeCancelationRuleControl(i)">
+                        <i class="fa fa-minus"></i> {{"remove"|translate}}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <button
+            class="btn btn-primary float-right mr-15 primary-btn"
+            type="button"
+            (click)="addCancelationRuleControl(null)"
+          >
+            <i class="fa fa-plus">&nbsp;</i
+            >{{
+              paymentFormGroup.get("labCancelationRuleModel")["controls"]
+                .length == 0
+                ? "Add cancellation policy"
+                : "Add More"
+            }}
+          </button> -->
+            <button class="btn btn-primary float-right mr-15 primary-btn" type="button"
+              (click)="addCancelationRuleControl(null)">
+              <i class="fa fa-plus">&nbsp;</i>{{
+              cancelationRulesFormGroup.controls.length === 0
+              ? "Add cancellation policy"
+              : "Add More"
+              }}
+            </button>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <mat-error *ngIf="
+                  cancelationRulesFormGroup.controls.length === 0
+                      
+                  ">
+                  {{"No refund in-case cancellation policy is not set"|translate}}
+                </mat-error>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+              <div class="col-md-12">
+                <h3 class="box-heading">{{"follow_up_fees"|translate}}</h3>
+              </div>
+              <div class="col-md-5">
+                <div class="col-md-9 pl-0">
+                  <mat-form-field class="example-full-width">
+                    <mat-label>{{"follow_up_fees"|translate}} (INR)</mat-label>
+                    <input matInput placeholder="Follow-Up Fees (INR)" formControlName="folowupFees" type="number" />
+                    <mat-error *ngIf="f['folowupFees'].errors">
+                      {{"Please_enter_Follow-Up_Fees"|translate}}
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="col-md-9 pl-0 d-inline-block">
+                  <mat-form-field class="example-full-width">
+                    <mat-label>{{"upto_days"|translate}}</mat-label>
+                    <mat-select placeholder="{{'upto_days'|translate}}" formControlName="folowupDays" matInput>
+                      <mat-option *ngFor="let day of daysNumbersList" [value]="day">
+                        {{ day + " " }} {{ day > 1 ? "Days" : "Day" }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="f['folowupDays'].errors">
+                      {{"Please_enter_Days"|translate}}
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-1 d-inline-block">
+                  <button type="button" class="additem" title="Add Option" (click)="addMoreFollowUpDaysOption()">
+                    <b class="fa fa-plus-square greenfont" aria-hidden="true"></b>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12 d-sm-flex justify-content-sm-end pt-3 actions-btn">
+                <button name="Save" type="button" (click)="onSubmit()" mat-raised-button mat-primary color="primary"
+                  form="userForm" class="text-uppercase">
+                  {{"save"|translate}}
+                  <!-- {{ submitted ? "Saving..." : "Save" }} -->
+                  <!-- [disabled]="submitted" -->
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+.frgtpwd a {
+  color: #01385f !important;
+  cursor: pointer;
+}
+button.example-full-width.login-btn.mat-raised-button.mat-primary {
+  box-shadow: none;
+  border-radius: 10px;
+  line-height: 45px;
+}
+.algn .mat-input-element{
+  width:95% !important;
+  }

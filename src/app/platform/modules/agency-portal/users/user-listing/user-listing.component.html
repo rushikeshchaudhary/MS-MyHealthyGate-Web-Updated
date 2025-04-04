@@ -1,0 +1,51 @@
+<div>
+  <h2 class="page_title">{{'manage_user'|translate}}</h2>
+  <div class="clearfix"></div>
+  <div class="readmin-panel">
+    <div class="row no-gutters">
+      <div class="col-md-9 justify-content-start pull-left">
+        <form class="readmin-form custom_form" id="userFormGroup" #documentForm="ngForm" [formGroup]="userFormGroup">
+          <div class="row end-flex">
+            <div class="col-md-3 pos">
+              <mat-form-field class="example-full-width">
+                <input matInput (keyup)="applyFilter()" placeholder="{{'search'|translate}}" formControlName="searchText">
+              </mat-form-field>
+              <button class="search-button"></button>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field class="example-full-width">
+                <mat-select multiple placeholder="{{'tags'|translate}}" (selectionChange)="applyFilter()" formControlName="tagIds" matInput>
+                  <mat-option *ngFor="let tag of masterTagsForStaff" [value]="tag.value">
+                    {{tag.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field class="example-full-width">
+                <mat-select placeholder="{{'role'|translate}}" (selectionChange)="applyFilter()" formControlName="roleId" matInput>
+                  <mat-option *ngFor="let role of masterRoles" [value]="role.id">
+                    {{role.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-2 filter-btn">
+              <button class="clear-btn" mat-raised-button (click)='clearFilters()'>{{'clear_all'|translate}}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-3 justify-content-md-end d-flex" style="margin-top: 12px;">
+        <button *ngIf="addPermission" mat-raised-button color="primary" (click)="addUser()">
+          <i class="fa fa-plus" aria-hidden="true"></i> {{'add_user'|translate}}</button>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <app-data-table [inputColumns]="displayedColumns" [inputSource]="usersData" [inputMeta]="metaData" [inputButtons]='actionButtons'
+      (onPageOrSortChange)="onPageOrSortChange($event)" (onTableActionClick)="onTableActionClick($event)">
+    </app-data-table>
+
+    <!-- (onPageOrSortChange)="onPageOrSortChange($event)" 
+   (-->

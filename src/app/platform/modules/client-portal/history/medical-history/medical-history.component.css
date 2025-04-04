@@ -1,0 +1,10 @@
+.blk_form textarea {
+    border: 1px solid #ddd;
+    margin: 10px 0px;
+    border-radius: 10px;
+    padding: 6px;
+}
+::ng-deep .blk_form .mat-form-field-flex{
+    border: none !important;
+    padding: 0;
+}

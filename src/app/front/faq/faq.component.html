@@ -1,0 +1,272 @@
+<div class="container faq-section">
+    <div class="row">
+        <h2 class="col-12 section-heading mt-4 text-left">{{"Frequently_Asked_Questions"|translate}}</h2>
+        <div class="col-md-4">
+            <div class="faq_left_card">
+                <ul>
+                    <li (click)="flagActive(0)" [ngClass]="(this.faqActiveFlag == 0) ? 'active' : ''">
+                        {{"General_Information"|translate}}</li>
+                    <li (click)="flagActive(1)" [ngClass]="(this.faqActiveFlag == 1) ? 'active' : ''">
+                        {{"Logistics"|translate}}</li>
+                    <li (click)="flagActive(2)" [ngClass]="(this.faqActiveFlag == 2) ? 'active' : ''">
+                        {{"Payments_and_Costs"| translate}}</li>
+                    <li (click)="flagActive(3)" [ngClass]="(this.faqActiveFlag == 3) ? 'active' : ''">
+                        {{"health_services"|translate}}</li>
+                    <li (click)="flagActive(4)" [ngClass]="(this.faqActiveFlag == 4) ? 'active' : ''">
+                        {{"prescriptions"|translate}}</li>
+                    <li (click)="flagActive(5)" [ngClass]="(this.faqActiveFlag == 5) ? 'active' : ''">
+                        {{"Medical_Certificates_Records_and_Referrals" | translate}} </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <h3 *ngIf="this.faqActiveFlag == 0" class="section-heading text-left">{{"General_Information"|translate}}</h3>
+            <h3 *ngIf="this.faqActiveFlag == 1" class="section-heading text-left">{{"Logistics"|translate}}</h3>
+            <h3 *ngIf="this.faqActiveFlag == 2" class="section-heading text-left">{{"Payments_and_Costs"| translate}}
+            </h3>
+            <h3 *ngIf="this.faqActiveFlag == 3" class="section-heading text-left">{{"health_services"|translate}}</h3>
+            <h3 *ngIf="this.faqActiveFlag == 4" class="section-heading text-left">{{"prescriptions"|translate}}</h3>
+            <h3 *ngIf="this.faqActiveFlag == 5" class="section-heading text-left">
+                {{"Medical_Certificates_Records_and_Referrals" | translate}} </h3>
+            <mat-accordion>
+                <mat-expansion-panel (opened)="panelOpenState = false" (closed)="panelOpenState = true"
+                    *ngIf="this.faqActiveFlag == 0">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"Who_can_use_my_Healthy_Gate"|translate}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>{{"Anyone_over_18_years_of_age_and_is_a_member_with_my_Healthy_Gate"|translate}}</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    *ngIf="this.faqActiveFlag == 0">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"What_are_the_benefits_of_telehealth"|translate}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p> {{"Telehealth_presents_convenience_privacy_saves_time_and_avoid_exposure_etc"|translate}} </p>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    *ngIf="this.faqActiveFlag == 0">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"Can_I_use_this_service_from_overseas"|translate}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p style="white-space: pre-wrap">
+                        {{"Yes_your_gateway_to_health_can_be_accessed_to_your_home_providers_from_anywhere_with_a_secure_internet_connection"|translate}}
+                    </p>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    *ngIf="this.faqActiveFlag == 0">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"Is_my_Healthy_Gate_available_for_Arabic_Only"|translate}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>{{"No_our_clinical_providers_have_multiple_available_languages_check_your_providers_for_languages_spoken"|translate}}
+                    </p>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    *ngIf="this.faqActiveFlag == 1">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"Equipment_you_need"|translate}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>{{"A_smart_phone_a_phone_iPad_or_computer"|translate}} </p>
+                    <p>{{"A_Web_camera_and_a_speaker_if_not_using_your_iPad_or_smart_phone"|translate}} </p>
+                    <p>{{"A_good_connection_on_the_internet"|translate}}</p>
+                    <p>{{"A_Private_quiet_well-lit_area"|translate}}</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    *ngIf="this.faqActiveFlag == 1">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"How_do_I_book?"|translate}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>{{"You_need_to_be_a_member_first_sign_up_your_name_and_email"|translate}}</p>
+                    <p>{{"Find_your_chosen_provider"|translate}}</p>
+                    <p>{{"Click_on_Book_now_and_the_process_will_lead_you_to_available_slots"|translate}}</p>
+                    <p>{{"Each_provider_will_set_their_own_availability_to_their_clients"|translate}}</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    *ngIf="this.faqActiveFlag == 1">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"What_if_I_experience_technical_difficulties?"|translate}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>{{"First_try_to_ensure_you_are_connected_to_an_internet"|translate}}</p>
+                    <p>{{"For_customer_service_assistance_please_Contact_us_on_myhealthygate.com"|translate}}</p>
+                    <p> {{"If_you_are_unable_to_access_your_appointment_due_to_factors"|translate}}</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    *ngIf="this.faqActiveFlag == 2">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"How_much_will_this_cost?"|translate}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p> {{"my_Healthy_Gate_works_with_independent_health_providers_etc"|translate}} </p>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    *ngIf="this.faqActiveFlag == 2">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"How_do_I_pay_for_my_appointment?"|translate}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>{{"You_pay_through_My_Healthy_Gate"|translate}}</p>
+                    <p>{{"Payment_needs_to_be_completed_prior_to_the_appointment_and_at_booking_time."|translate}} </p>
+                    <p>{{"To_pay_for_the_provider_you_have_options_either_using_a_credit_card_PayPal_etc"|translate}}
+                    </p>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    *ngIf="this.faqActiveFlag == 2">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"What_if_the_doctor_is_running_late?"|translate}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>{{"You_only_pay_for_the_time_slot_the_doctor_spent_consulting_you."|translate}}</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    *ngIf="this.faqActiveFlag == 2">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"What_If_I_no_longer_need_the_appointment"|translate}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>{{"If_cancellation_occurs_within_48_hours_prior_to_appointment_etc"|translate}}</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    *ngIf="this.faqActiveFlag == 2">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"When_can_I_book_in_my_video_consultation?"|translate}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>{{"Each_provider_will_have_a_different_variation_of_available_appointments"|translate}} </p>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    *ngIf="this.faqActiveFlag == 3">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"What_kind_of_treatment_does_my_Healthy_Gate_offer?"|translate}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p style="white-space:pre-wrap">
+                        {{"My_Healthy_Gate_connect_you_to_multiple_health_care_providers_as_members"|translate}}
+                        <a href="#">{{"click_here"|translate}}</a> for the list of specialties.<br />
+                        {{"Providers_can_view-your_documents"|translate}}
+                    </p>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    *ngIf="this.faqActiveFlag == 3">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"Is_my_consultation_covered_by_insurance?"|translate}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>{{"We_are_working_on_adding_multiple_insurance_companies_but_best_if_you_check_with_your_own_insurance_too."|translate}}
+                    </p>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    *ngIf="this.faqActiveFlag == 3">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"Do_I_have_a_choice_of_a_female_or_male_doctor?"|translate}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>{{"Yes_however_this_is_subject_to_availability_and_you_get_to_choose_your_own_provider"|translate}}
+                    </p>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    *ngIf="this.faqActiveFlag == 3">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"How_do_I_know_I_can_my_doctor?"|translate}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>{{"All_doctors_listed_in_my_Healthy_Gate_are_certified_and_licenced_to_provide_the_treatment_etc"|translate}}
+                    </p>
+                    <p> {{"The_treatment_is_the_liability_of_the_treating_provider_etc"|translate}} </p>
+                    <p>{{"If_you_have_any_feedback_about_your_practitioner_please_contact_us_directly_or_post_a_review_to_their_profile_page."|translate}}
+                    </p>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    *ngIf="this.faqActiveFlag == 4">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"Can_I_get_prescription_medication_through_a_video_consultation?"|translate}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>{{"Yes_your_provider_will_be_able_to_prescribe_medication_and_send_it_to_your_selected_preferred_pharmacy_if_you_wish."|translate}}
+                    </p>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    *ngIf="this.faqActiveFlag == 4">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"Can_I_get_narcotic_medications_through_a_video_consultation?"|translate}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p> {{"No_these_medications_are_usually_highly_controlled_and_monitored_Your_doctor_will_be_the_best_person_to_discuss_with_accessing_those_medications."|translate}}
+                    </p>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    *ngIf="this.faqActiveFlag == 5">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"Can_I_get_a_medical_certificate_through_my_Healthy_Gate?"|translate}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>{{"Yes_your_provider_can_send_a_digital_copy_through_to_you’re_my_Healthy_Gate_email."|translate}}
+                    </p>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    *ngIf="this.faqActiveFlag == 5">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"Can_I_get_a_referral_to_a_specialist_that_isn’t_available_on_my_Healthy_Gate_?"|translate}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>{{"Yes_please_consult_your_provider."|translate}} </p>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    *ngIf="this.faqActiveFlag == 5">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"Can_I_obtain_a_referral_for_imaging_or_pathology?"|translate}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>{{"Yes_and_your_doctor_can_send_the_referral_directly_to_the_laboratory_or_Radiology_centre_through_my_Healthy_Gate"|translate}}
+                    </p>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    *ngIf="this.faqActiveFlag == 5">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"Who_can_see_my_medical_records?"|translate}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>{{"Only_you_our_administration_team_and_the_providers_you_are_consulting_with_All_medical_records_are_treated_with_the_utmost_privacy_see_privacy_policy"|translate}}
+                    </p>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    *ngIf="this.faqActiveFlag == 5">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"Are_video_consultations_recorded?"|translate}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>{{"No_The_consultations_are_just_like_when_you_see_the_doctor_in_person_they_are_not_recorded"|translate}}
+                    </p>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+</div>

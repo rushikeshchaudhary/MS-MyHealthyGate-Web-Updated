@@ -1,0 +1,142 @@
+<div class="col-sm-12">
+  <!-- <div class="readmin-panel"> -->
+  <!-- <mat-tab-group> -->
+  <!-- <mat-tab label="Medication"> -->
+  <!-- <div class="no-gutters"> -->
+  <div class="dash-table">
+    <!-- <app-data-table
+                stickyHeader="true"
+                [inputColumns]="prescriptionColumns"
+                [inputSource]="clientPrescriptionModel"
+                [inputButtons]="actionButtons"
+                [inputMeta]="metaDataPrescription"
+                (onTableActionClick)="onTableActionClick($event)"
+                (onPageOrSortChange)="onPageOrSortChange($event)"
+              >
+              </app-data-table> -->
+
+    <mat-table [dataSource]="clientPrescriptionModel" matSort (matSortChange)="onPageOrSortChange($event)"
+      class="table table-hover customtable group-table mat-table">
+      <!-- Checkbox Column -->
+      <!-- <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox (change)="masterToggle($event)" [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()">
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox (click)="$event.stopPropagation()" (change)="toggle($event, row)"
+                [checked]="selection.isSelected(row)">
+              </mat-checkbox>
+            </td>
+          </ng-container> -->
+      <ng-container matColumnDef="PrescriptionId">
+        <mat-header-cell mat-sort-header sortActionDescription="" *matHeaderCellDef>
+          {{"Prescription Id"|translate}}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" (click)="onTableActionClick(element)">
+          {{ element.sharedPrescriptionId }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="patientName">
+        <mat-header-cell mat-sort-header sortActionDescription="patientName" *matHeaderCellDef>
+          {{"PatientName"|translate}}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.patientName }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="creatorName">
+        <mat-header-cell mat-sort-header sortActionDescription="creatorName" *matHeaderCellDef>
+          {{"CreatorName"|translate}}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.creatorName }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="createdDate">
+        <mat-header-cell mat-sort-header sortActionDescription="createdDate" *matHeaderCellDef>
+          {{"CreatedDate"|translate}}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.createdDate }}</mat-cell>
+      </ng-container>
+      <!-- <ng-container matColumnDef="directions">
+            <th mat-header-cell mat-sort-header sortActionDescription="directions" *matHeaderCellDef>
+              {{"directions"|translate}}
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.directions }}</td>
+          </ng-container>
+          <ng-container matColumnDef="startDate">
+            <th mat-header-cell mat-sort-header sortActionDescription="startDate" *matHeaderCellDef>
+              {{"start_date"|translate}}
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.startDate }}</td>
+          </ng-container>
+          <ng-container matColumnDef="endDate">
+            <th mat-header-cell mat-sort-header sortActionDescription="endDate" *matHeaderCellDef>
+              {{"end_date"|translate}}
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.endDate }}</td>
+          </ng-container> -->
+      <ng-container matColumnDef="drugNames">
+        <mat-header-cell *matHeaderCellDef >{{"DrugNames" | translate }} </mat-header-cell>
+
+        <mat-cell [title]="element.drugNames" *matCellDef="let element" class="test_name_block"
+          style="display: flex; flex-direction: column">
+          <div *ngFor="let item of element.drugNames.split('|'); let i = index" style="width: 100%">
+            <div *ngIf="i < 3" style="
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  width: 100%;
+                ">
+              &#x2022;&nbsp;{{ item }}
+            </div>
+          </div>
+
+          <div *ngIf="element.drugNames.split('|').length > 3"
+            style="width: 100%; display: flex; justify-content: right">
+            .....
+          </div>
+        </mat-cell>
+
+        <!--  <td mat-cell *matCellDef="let element"> {{element.drugNames}} </td> -->
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <mat-header-cell mat-sort-header sortActionDescription="status" *matHeaderCellDef>
+          {{"Status" | translate}}
+        </mat-header-cell>
+        <!-- <td mat-cell *matCellDef="let element; let i = index" matTooltip="change status"
+              (click)="statusHandler(i,element.status)">
+              {{
+              seletectedTableIndex != i || seletectedTableIndex == undefined
+              ? element.status
+              : ""
+              }}
+
+              <select *ngIf="seletectedTableIndex == i" (change)="changeStatusHandler($event, element)"
+                [ngModel]="selectedOption">
+                <option *ngFor="let status of statusList">
+                  {{ status }}
+                </option>
+              </select>
+            </td> -->
+        <mat-cell *matCellDef="let element">{{ element.status }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Action">
+        <mat-header-cell *matHeaderCellDef>{{"Actions"|translate}}</mat-header-cell>
+        <mat-cell *matCellDef="let element" matTooltip="Download Perescription">
+          <i class="fa fa-download" (click)="downloadPrescription(element)" style="cursor: pointer"
+            aria-hidden="true"></i>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="prescriptionColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns:prescriptionColumns"></mat-row>
+    </mat-table>
+    <mat-paginator class="mb-4" [length]="metaDataPrescription.totalRecords"
+      [pageIndex]="metaDataPrescription.currentPage - 1" [pageSize]="metaDataPrescription.pageSize"
+      [pageSizeOptions]="metaDataPrescription.pageSizeOptions" (page)="onPageOrSortChange($event)"
+      showFirstLastButtons></mat-paginator>
+  </div>
+  <!-- </div> -->
+  <!-- </mat-tab> -->
+  <!-- </mat-tab-group> -->
+  <!-- </div> -->
+</div>

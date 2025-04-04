@@ -1,0 +1,85 @@
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-sm-6">
+                <div class="app-store">
+                    <a [routerLink]="['/']"><img class="img-fluid" src="../assets/img/App-Store.png"
+                            alt="app-store" /></a>
+                    <a [routerLink]="['/']"><img class="img-fluid" src="../assets/img/Google-Play.png"
+                            alt="app-store" /></a>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-6">
+                <!-- <h5>Links</h5> -->
+                <ul>
+                    <li><a [routerLink]="['/providers']" fragment="provider">{{'for_providers'|translate}}</a></li>
+                    <li *ngIf="false"><a [routerLink]="['/']"
+                            routerLinkActive="active">{{'for_providers'|translate}}</a></li>
+                    <li><a [routerLink]="['/providers']" fragment="clinic">{{'for_clinics'|translate}}</a></li>
+                </ul>
+            </div>
+            <div class="col-md-2 col-sm-6">
+                <!-- <h5>Links</h5> -->
+                <ul>
+                    <li><a [routerLink]="['/about-us']">{{'About_us'|translate}}</a></li>
+                    <li><a [routerLink]="['/faq']">{{'faqs'|translate}}</a></li>
+                    <li><a [routerLink]="['/blog']">{{'blog'|translate}}</a></li>
+                    <li><a [routerLink]="['/contact-us']"> {{'contact_us'|translate}}</a></li>
+                    <!-- <li><a href="#">Tour</a></li> -->
+                </ul>
+            </div>
+            <div class="col-md-2 col-sm-6">
+                <!-- <h5>Support</h5> -->
+                <ul>
+                    <li><a [routerLink]="['/privacy-policy']"> {{'patient_privacy'|translate}}</a></li>
+                    <li><a [routerLink]="['/terms-and-conditions']"> {{'terms_and_conditions'|translate}}</a></li>
+                    <li><a [routerLink]="['/terms-and-conditions']">{{'refund_policy'|translate}}</a></li>
+                    <!-- <li><a href="#">Report</a></li> -->
+                </ul>
+            </div>
+            <div class="col-md-2 col-sm-6">
+                <!-- <h5>Support</h5> -->
+                <ul>
+                    <li *ngFor="let page of allPages;">
+                        <a [routerLink]="['/dynamic',page.id]">
+                            {{page.pageName}}</a>
+                    </li>
+
+                    <!-- <li><a href="#">Report</a></li> -->
+                </ul>
+            </div>
+            <!-- <div class="col-md-3 col-sm-6">
+                <h5>Contact Us</h5>
+                <ul>
+                    <li><a href="tel:+19146870207"> +1 914 687 0207</a></li>
+                    <li><a [href]="mailToAddress" target="_top">
+                           {{organizationEmailAddress}}</a></li>
+                </ul>
+            </div> -->
+            <div class="col-md-2 col-sm-6 text-center">
+                <a [routerLink]="['/']"><img class="img-fluid" src="../../../assets/img/my_healthy_gate_footer.svg"
+                        alt="logo" class="site-logo" /></a>
+                <ul class="social-linking">
+                    <li><a href="https://www.facebook.com/smartdata.enterprises.inc"><i class="fa fa-google"
+                                aria-hidden="true"></i></a></li>
+                    <li><a href="https://www.facebook.com/smartdata.enterprises.inc"><i class="fa fa-facebook"
+                                aria-hidden="true"></i></a></li>
+                    <!-- <li><a href="https://twitter.com/smartdataincltd"><i class="fa fa-twitter"
+                                aria-hidden="true"></i></a></li> -->
+                    <!-- <li><a href="https://www.linkedin.com/company/smart-data-enterprises/mycompany/"><i
+                                class="fa fa-linkedin" aria-hidden="true"></i></a></li> -->
+                    <li><a href="https://www.instagram.com/smartdataincltd/"><i class="fa fa-instagram"
+                                aria-hidden="true"></i></a></li>
+                    <li><a href="https://in.linkedin.com/company/smart-data-enterprises/"><i class="fa fa-linkedin"
+                                aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="social-link justify-content-center">
+        <p>{{'copyright_myhealthygate_all_rights_reserved'|translate}}</p>
+    </div>
+</footer>

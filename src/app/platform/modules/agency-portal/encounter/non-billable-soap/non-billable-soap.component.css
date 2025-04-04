@@ -1,0 +1,164 @@
+/*Soap Page*/
+.soap_detail.detail_wd {
+    background: #D6E0F2;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    padding: 15px;
+    display: flex;
+}
+.soap_detail.detail_wd .img-sec {
+    width: 15%;
+}
+.soap_detail.detail_wd .detail-cont {
+    width: 85%;
+}
+.soap_detail.detail_wd .img-sec img {
+    width: 60%;
+    margin: 5px;
+}
+.soap_detail.detail_wd .detail_sec label {
+    font-size: 16px;
+}
+.soap_detail.detail_wd .detail_sec p {
+    font-size: 14px;
+    color: #000000;
+    opacity: 0.75;
+}
+.button_style {
+    display: flex;
+    justify-content: end;
+    gap: 12px;
+}
+.readmin-panel .row {
+    padding: 10px 0!important;
+    margin: 0!important;
+    align-items: center;
+}
+.soap_detail label {
+    color: #000000;
+    font-weight: 500;
+    font-size: 12px;
+    display: block;
+    margin-bottom: 0;
+}
+.soap_detail p {
+    color: #000;
+    font-weight: 600;
+    font-size: 16px;
+}
+.soap_content {
+    float: right;
+}
+.soapmodal_btn {
+    margin-top: 7px;
+}
+
+.readmin-panel {
+    padding: 0;
+}
+
+.sign h3{
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0px;
+    line-height: 20px;
+}
+.sign h3>span {
+    font-size: 13px;
+    font-weight: 500;
+    margin: 0px;
+    color:#7a7a7a;
+}
+.sign p, .sign p>span{
+    font-size: 12px;
+    margin: 3px 0px 0px;
+    color:#7a7a7a;
+}
+.sign {
+    border: 1px solid #eceeef;
+    padding: 10px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+.sign img{margin-bottom: 10px;}
+.readmin-panel{width: 100%;display: inline-block;}
+
+@media (max-width: 1199px) {
+    /*soap page*/
+    .soap_detail b {
+        width: 100%;
+    }
+}
+
+@media (max-width: 767px) {
+    /*Soap Page*/
+    .soap_detail p {
+        width: 50%;
+    }
+}
+
+
+@media(max-width: 480px) {
+    /*Soap Note*/
+    .detail_wd p, .soap_detail p {
+        width: 100%;
+    }
+}
+
+
+.client_detail .dashboard-btn-card:nth-child(1) button {
+    background: #4140AF !important;
+}
+
+.client_detail .dashboard-btn-card:nth-child(2) button {
+    background: #0080BC !important;
+}
+
+.client_detail .dashboard-btn-card:nth-child(3) button {
+    background: #D8666F !important;
+}
+
+.client_detail .dashboard-btn-card:nth-child(4) button {
+    background: #4E6CDB !important;
+}
+
+.client_detail .dashboard-btn-card:nth-child(5) button {
+    background: #099C77 !important;
+}
+
+.client_detail .dashboard-btn-card:nth-child(6) button {
+    background: #C39403 !important;
+}
+
+.client_detail .dashboard-btn-card:nth-child(7) button {
+    background: #009CCF !important;
+}
+
+.client_profile .clientbox .client_detail label {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.client_profile .clientbox .client_detail button {
+    background: #4140AF;
+    color: #fff;
+    width: 100%;
+}
+.client_detail div .user_pic {
+    width: 80px;
+}
+.client_profile .clientbox .client_detail button span {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.client_profile .clientbox .client_detail button span img {
+    width: 20px;
+    font-size: 16px;
+}
+
+app-data-table {
+    width: 100%;
+}

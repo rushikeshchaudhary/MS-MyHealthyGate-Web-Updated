@@ -1,0 +1,88 @@
+<h2 class="page_title">{{'add_template'|translate}}</h2>
+<div class="readmin-panel">
+
+  <div class="clearfix"></div>
+  <div class="container-fluid">
+    <form
+      class="readmin-form custom_form flex-wrap"
+      id="testFormGroup"
+      #documentForm="ngForm"
+      [formGroup]="testFormGroup"
+    >
+      <div class="row">
+        <div class="col-lg-2 col-sm-6 pos">
+          <mat-form-field class="example-full-width">
+            <input
+              matInput
+              (keyup)="getAllTemplates()"
+              placeholder="{{'search_here'|translate}}..."
+              formControlName="searchKey"
+            />
+          </mat-form-field>
+          <button class="search-button"></button>
+        </div>
+        <div class="col-lg-2 col-sm-6">
+          <mat-form-field class="example-full-width">
+            <input
+              matInput
+              readonly
+              [matDatepicker]="rangeStartDate"
+              (dateChange)="applyStartDateFilter($event)"
+              placeholder="{{'created_date_from'|translate}}"
+              formControlName="rangeStartDate"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="rangeStartDate"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #rangeStartDate></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-2 col-sm-6">
+          <mat-form-field class="example-full-width">
+            <input
+              matInput
+              readonly
+              [matDatepicker]="rangeEndDate"
+              (dateChange)="applyEndDateFilter($event)"
+              placeholder="{{'created_date_to'|translate}}"
+              formControlName="rangeEndDate"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="rangeEndDate"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #rangeEndDate></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-2 col-sm-6 filter-btn">
+          <button class="clear-btn" mat-raised-button (click)="clearFilters()">
+            {{'clear_all'|translate}}
+          </button>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="openDialog(0)"
+            style="float: right"
+          >
+            <i class="fa fa-plus" aria-hidden="true"></i>{{'add_template'|translate}}
+          </button>
+        </div>
+      </div>
+    </form>
+    <div class="row">
+      <div class="col-md-12">
+        <app-data-table
+          [inputColumns]="displayColumns"
+          [inputSource]="templateList"
+          [inputMeta]="metaData"
+          (onTableActionClick)="onTableActionClick($event)"
+          [inputButtons]="actionButtons"
+        >
+        </app-data-table>
+      </div>
+    </div>
+  </div>
+</div>

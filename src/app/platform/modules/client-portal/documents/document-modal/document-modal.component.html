@@ -1,0 +1,140 @@
+<div class="custom_modal">
+  <h3 mat-dialog-title>{{ "upload_document" | translate }}</h3>
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-sm-12">
+        <form
+          id="addDocumentForm"
+          #documentForm="ngForm"
+          class="readmin-form custom_form"
+          [formGroup]="addDocumentForm"
+        >
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  autofocus
+                  placeholder="{{ 'document_title' | translate }}"
+                  maxlength="100"
+                  formControlName="title"
+                  [ngClass]="{
+                    'is-invalid': submitted && formControls['title'].errors
+                  }"
+                  required
+                />
+                <mat-error *ngIf="formControls['title'].errors?.['required']">
+                  {{ "please_enter_notes" | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <mat-select
+                  autofocus
+                  placeholder="{{ 'category' | translate }}"
+                  formControlName="documentTypeId"
+                  matInput
+                >
+                  <ng-container
+                    *ngIf="
+                      documentCategoryList && documentCategoryList.length > 0
+                    "
+                  >
+                    <mat-option
+                      *ngFor="let category of documentCategoryList"
+                      [value]="category.id"
+                    >
+                      {{ category.type }}
+                    </mat-option>
+                  </ng-container>
+                </mat-select>
+                <mat-error *ngIf="formControls['documentType'].errors">
+                  {{ "please_select_document_title" | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  [min]="todayDate"
+                  [matDatepicker]="expirationDate"
+                  placeholder="{{ 'valid_till' | translate }}"
+                  formControlName="expirationDate"
+                  readonly
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="expirationDate"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #expirationDate></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row" *ngIf="formType == 'add'">
+            <div class="col-sm-6">
+              <div class="col-sm-12 pd-0 mt-3">
+                <div class="uplaod_pic">
+                  <label class="browse">
+                    <i class="fa fa-upload fa-2x" aria-hidden="true"></i>
+                    <input type="file" (change)="handleImageChange($event)" />
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <span>
+                <p *ngFor="let file of fileList; let i = index">
+                  {{ file.fileName }}
+                  <button
+                    type="button"
+                    title="Delete"
+                    class="tbactionbtn"
+                    (click)="removeFile(i)"
+                  >
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                  </button>
+                </p>
+              </span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions style="display: flex; justify-content: space-between">
+    <button mat-raised-button class="cancel-btn" (click)="closeDialog('close')">
+      {{ "close" | translate }}
+    </button>
+    <button
+      *ngIf="formType == 'add'"
+      name="Save"
+      mat-raised-button
+      color="primary"
+      (click)="onSubmit()"
+      form="addDocumentForm"
+      class="text-uppercase"
+      [disabled]="submitted"
+      cdkFocusInitial
+    >
+      {{ submitted ? "Uploading..." : ("save" | translate) }}
+    </button>
+    <button
+      *ngIf="formType == 'edit'"
+      name="Save"
+      mat-raised-button
+      color="primary"
+      (click)="onEditSubmit()"
+      form="addDocumentForm"
+      class="text-uppercase"
+      [disabled]="submitted"
+      cdkFocusInitial
+    >
+      {{ submitted ? "Uploading..." : ("save" | translate) }}
+    </button>
+  </div>
+</div>

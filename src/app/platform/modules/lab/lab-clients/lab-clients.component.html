@@ -1,0 +1,38 @@
+<div class="row readmin-panel m-0 border-rad one">
+  <div class="col-sm-12 mt-3">
+    <h2 class="page_title">My Clients</h2>
+  </div>
+  <div class="col-sm-12 pos">
+    <mat-form-field class="exmaple-full-width no-bottom-border" appearance="fill">
+      <input
+        matInput
+        [(ngModel)]="searchText"
+        name="searchText"
+        (ngModelChange)="searchFilter($event)"
+        placeholder="{{'search'|translate}}"
+        class="search_there"
+      />
+      <button class="search-button"></button>
+    </mat-form-field>
+  </div>
+</div>
+
+
+<div class="clearfix"></div>
+<div class="readmin-panel rad-border">
+  <div class="no-gutters">
+    <div class="dash-table">
+      <app-data-table
+        [stickyHeader]="true"
+        [inputColumns]="labClientColumns"
+        [inputSource]="labClientDetails"
+        [inputMeta]="metaDataPrescription"
+        (onPageOrSortChange)="onPageOrSortChange($event)"
+        (onTableActionClick)="onTableActionClick($event)"
+        title="Profile summary."
+        onmouseover="this.style.cursor='pointer'"
+      >
+      </app-data-table>
+    </div>
+  </div>
+</div>

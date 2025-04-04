@@ -1,0 +1,6 @@
+.ticketDoc{
+    cursor: pointer;
+}
+.ticketDoc:hover{
+    color: #087e91 !important;
+}

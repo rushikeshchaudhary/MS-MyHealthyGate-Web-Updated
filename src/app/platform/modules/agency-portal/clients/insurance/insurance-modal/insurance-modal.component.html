@@ -1,0 +1,620 @@
+<div *ngIf="!IsEditForm" class="custom_modal">
+  <h3 mat-dialog-title>{{ headerText }}</h3>
+  <div class="readmin-form custom_form insurance-blk">
+    <ul class="tabs-sm">
+      <li [ngClass]="{ active: activeInsurance == 'primary' }">
+        <a href="#" (click)="activeHandler($event, 'primary')">
+          <i class="flaticon flaticon-medical-2"></i>{{'primary_insurance'|translate}}</a>
+      </li>
+      <li [ngClass]="{ active: activeInsurance == 'secondary' }">
+        <a href="#" (click)="activeHandler($event, 'secondary')">
+          <i class="flaticon flaticon-shield-1"></i>{{'secondary_insurance'|translate}}</a>
+      </li>
+      <!-- : <li><a href=#><i className="flaticon flaticon-shield-1"></i> Secondary Insurance</a></li> -->
+      <!-- {this.state.enableTertiary ? -->
+      <li [ngClass]="{ active: activeInsurance == 'tertiary' }">
+        <a href="#" (click)="activeHandler($event, 'tertiary')">
+          <i class="flaticon flaticon-insurance-1"></i>{{'tertiary_insurance'|translate}}</a>
+      </li>
+      <!-- : <li><a href={this.resolveJavascript()}><i className="flaticon flaticon-insurance-1"></i> Tertiary Insurance</a></li>} -->
+    </ul>
+  </div>
+
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-sm-12">
+        <form id="insuranceAddForm" #documentForm="ngForm" class="readmin-form custom_form"
+          [formGroup]="insuranceAddForm">
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <mat-select placeholder="{{'insurance_company'|translate}}" (selectionChange)="updateValue($event.value)"
+                  formControlName="insuranceCompanyID" matInput [ngClass]="{
+                    'is-invalid':
+                      submitted && addFormControls['insuranceCompanyID'].errors
+                  }" required [errorStateMatcher]="matcher">
+                  <mat-option *ngFor="let option of masterInsuranceCompanies" [value]="option.id">
+                    {{ option.value }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="addFormControls['insuranceCompanyID'].errors">
+                  {{'please_select_insurance_company'|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input matInput autofocus placeholder="{{'insurance_company_address'|translate}}" maxlength="50"
+                  formControlName="insuranceCompanyAddress" readonly />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input matInput autofocus placeholder="{{'carrier_payer_id'|translate}}" maxlength="50"
+                  formControlName="carrierPayerID" />
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input matInput [matDatepicker]="cardIssueDate" [max]="maxDate" placeholder="{{'insurance_issue_date'|translate}}"
+                  formControlName="cardIssueDate" />
+                <mat-datepicker-toggle matSuffix [for]="cardIssueDate"></mat-datepicker-toggle>
+                <mat-datepicker #cardIssueDate></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input matInput autofocus placeholder="{{'insurance_group_name'|translate}}" maxlength="50"
+                  formControlName="insuranceGroupName" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input matInput autofocus placeholder="{{'insurance_plan_name'|translate}}" maxlength="50"
+                  formControlName="insurancePlanName" />
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input matInput autofocus placeholder="{{'insurance_id_number'|translate}}" maxlength="50"
+                  formControlName="insuranceIDNumber" />
+                <mat-error *ngIf="addFormControls['insuranceIDNumber'].errors?.['required']">
+                  {{'please_enter_insurance_id_number'|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input matInput autofocus placeholder="{{'primary_insurance_notes'|translate}}" maxlength="50"
+                  formControlName="notes" />
+              </mat-form-field>
+            </div>
+          </div>
+          <!-- <div class="row">
+            <div class="col-sm-12">
+              <mat-checkbox formControlName="insurancePersonSameAsPatient" (click)="formControlValueChanged()">
+                Insured Person is the same person as Client
+              </mat-checkbox>
+            </div>
+          </div>
+          <div formGroupName="insuredPerson" *ngIf="!(formControls.insurancePersonSameAsPatient.value)">
+            <div class="panel_title">
+              <i class="flaticon flaticon-shield"></i>
+              <h3>Insured person</h3>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="First Name" maxlength="40" formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && insuredPersonformControls.controls.firstName.errors }"
+                    required [errorStateMatcher]="matcher"/>
+                  <mat-error *ngIf="insuredPersonformControls.controls.firstName.errors?.required">
+                    Please enter first name
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Middle Name" maxlength="40" formControlName="middleName" />
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Last Name" maxlength="40" formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && insuredPersonformControls.controls.lastName.errors }"
+                    required [errorStateMatcher]="matcher"/>
+                  <mat-error *ngIf="insuredPersonformControls.controls.lastName.errors?.required">
+                    Please enter last name
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <mat-select placeholder="Gender" formControlName="genderID" matInput [ngClass]="{ 'is-invalid': submitted && insuredPersonformControls.controls.genderID.errors }"
+                    required [errorStateMatcher]="matcher">
+                    <mat-option *ngFor="let genderVal of masterGender" [value]="genderVal.id">
+                      {{genderVal.value}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="insuredPersonformControls.controls.genderID.errors?.required">
+                    Please select gender
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input matInput readonly [matDatepicker]="dob" [max]="maxDate" placeholder="Date of Birth"
+                    formControlName="dob" required [errorStateMatcher]="matcher">
+                  <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+                  <mat-datepicker #dob></mat-datepicker>
+                  <mat-error *ngIf="insuredPersonformControls.controls.dob.errors?.required">
+                    Please enter DOB
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input appPhoneNumber matInput placeholder="Phone Number" maxlength="19" formControlName="phone" [ngClass]="{ 'is-invalid': submitted && insuredPersonformControls.controls.phone.errors }"
+                    required [errorStateMatcher]="matcher"/>
+                  <mat-error *ngIf="insuredPersonformControls.controls.phone.errors?.required">
+                    Please enter phone number
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <mat-select placeholder="Relationship" formControlName="relationshipID" matInput [ngClass]="{ 'is-invalid': submitted && insuredPersonformControls.controls.relationshipID.errors }"
+                    required [errorStateMatcher]="matcher">
+                    <mat-option *ngFor="let relationshipVal of masterRelationship" [value]="relationshipVal.id">
+                      {{relationshipVal.value}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="insuredPersonformControls.controls.relationshipID.errors?.required">
+                    Please select relationship
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Address" maxlength="40" formControlName="address1" [ngClass]="{ 'is-invalid': submitted && insuredPersonformControls.controls.address1.errors}"
+                    required [errorStateMatcher]="matcher"/>
+                  <mat-error *ngIf="insuredPersonformControls.controls.address1.errors?.required">
+                    Please enter address
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Apt/Unit" maxlength="10" formControlName="apartmentNumber" />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4 require">
+                <mat-form-field class="example-full-width">
+                  <mat-select placeholder="Country" formControlName="countryID" matInput [errorStateMatcher]="matcher" required>
+                    <mat-option *ngFor="let country of masterCountry" [value]="country.id">
+                      {{country.value}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="insuredPersonformControls.controls.countryID.errors">
+                    Please select country
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="City" maxlength="50" formControlName="city" [errorStateMatcher]="matcher" required/>
+                  <mat-error *ngIf="insuredPersonformControls.controls.city.errors">
+                    Please enter city
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <mat-select placeholder="State" formControlName="stateID" matInput [errorStateMatcher]="matcher" required>
+                    <mat-option *ngFor="let state of masterState" [value]="state.id">
+                      {{state.value}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="insuredPersonformControls.controls.stateID.errors">
+                    Please select state
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input appZipcode matInput placeholder="Zip Code" maxlength="10" formControlName="zip" [ngClass]="{ 'is-invalid': submitted && insuredPersonformControls.controls.zip.errors}"
+                    required [errorStateMatcher]="matcher" />
+                  <mat-error *ngIf="insuredPersonformControls.controls.zip.errors?.required">
+                    Please enter zip code
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div> -->
+          <div class="row">
+            <div class="col-sm-6 mt-3">
+              <div class="uplaod_pic insurance-doc">
+                <div>
+                  <label class="browse">
+                    <img *ngIf="imagePreviewFront" [src]="imagePreviewFront"
+                      onerror="this.src='../../../../../../assets/img/noImageAvailable.png';" alt="Insurance front" />
+                    <span *ngIf="imagePreviewFront">{{'change'|translate}}</span>
+                    <i *ngIf="!imagePreviewFront" class="fa fa-upload fa-2x" aria-hidden="true"></i>
+                    <input type="file" (change)="handleImageChange($event, 'front')" />
+                  </label>
+                </div>
+                <div>
+                  <label class="browse" *ngIf="imageBase64Front" (click)="removeImage('front')">
+                    <span *ngIf="imageBase64Front"></span>
+                    <i *ngIf="imageBase64Front" class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                  </label>
+                </div>
+              </div>
+              <p class="ins_photo">
+                {{"please_upload_insurance_front_picture_jpg_jpeg_bmp_png"|translate}}
+              </p>
+            </div>
+            <div class="col-sm-6 mt-3">
+              <div class="uplaod_pic insurance-doc">
+                <div>
+                  <label class="browse">
+                    <img *ngIf="imagePreviewBack" [src]="imagePreviewBack"
+                      onerror="this.src='../../../../../../assets/img/noImageAvailable.png';" alt="Insurance back" />
+                    <span *ngIf="imagePreviewBack">{{'change'|translate}}</span>
+                    <i *ngIf="!imagePreviewBack" class="fa fa-upload fa-2x" aria-hidden="true"></i>
+                    <input type="file" (change)="handleImageChange($event, 'back')" />
+                  </label>
+                </div>
+                <div>
+                  <label class="browse" *ngIf="imageBase64Back" (click)="removeImage('back')">
+                    <span *ngIf="imageBase64Back"></span>
+                    <i *ngIf="imageBase64Back" class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                  </label>
+                </div>
+              </div>
+              <p class="ins_photo">
+                {{"please_upload_insurance_back_picture_jpg_jpeg_bmp_png"|translate}}
+              </p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="d-flex justify-content-between">
+    <button mat-raised-button class="cancel-btn" (click)="closeDialog('close')">
+      {{'close'|translate}}
+    </button>
+    <div class="d-flex">
+      <button name="Save" mat-raised-button color="primary" (click)="onSubmitForAdd($event)" form="insuranceAddForm"
+        class="text-uppercase" [disabled]="submitted" cdkFocusInitial>
+        {{ submitted ? "Saving..." : ('save' | translate) }}
+      </button>
+      <button name="SaveContinue" mat-raised-button color="accent" (click)="onSubmitForAdd($event)"
+        form="insuranceAddForm" class="text-uppercase ml-3" [disabled]="submitted">
+        {{ submitted ? "Saving..." : ('save_and_continue' | translate) }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Form -->
+<div *ngIf="IsEditForm" class="custom_modal">
+  <h3 mat-dialog-title>{{ headerText }}</h3>
+  <div class="readmin-form custom_form insurance-blk">
+    <ul class="tabs-sm">
+      <li [ngClass]="{ active: activeInsurance == 'primary' }">
+        <a href="#" (click)="activeHandler($event, 'primary')">
+          <i class="flaticon flaticon-medical-2"></i>{{'primary_insurance'|translate}}</a>
+      </li>
+      <li [ngClass]="{ active: activeInsurance == 'secondary' }">
+        <a href="#" (click)="activeHandler($event, 'secondary')">
+          <i class="flaticon flaticon-shield-1"></i>{{'secondary_insurance'|translate}}</a>
+      </li>
+      <!-- : <li><a href=#><i className="flaticon flaticon-shield-1"></i> Secondary Insurance</a></li> -->
+      <!-- {this.state.enableTertiary ? -->
+      <li [ngClass]="{ active: activeInsurance == 'tertiary' }">
+        <a href="#" (click)="activeHandler($event, 'tertiary')">
+          <i class="flaticon flaticon-insurance-1"></i>{{'tertiary_insurance'|translate}}</a>
+      </li>
+      <!-- : <li><a href={this.resolveJavascript()}><i className="flaticon flaticon-insurance-1"></i> Tertiary Insurance</a></li>} -->
+    </ul>
+  </div>
+
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-sm-12">
+        <form id="insuranceEditForm" #documentForm="ngForm" class="readmin-form custom_form"
+          [formGroup]="insuranceEditForm">
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <mat-select placeholder="{{'insurance_company'|translate}}" (selectionChange)="updateValue($event.value)"
+                  formControlName="insuranceCompanyID" matInput [ngClass]="{
+                    'is-invalid':
+                      submitted && editFormControls['insuranceCompanyID'].errors
+                  }" [disabled]="patientInsuranceId != null ? true : false" required [errorStateMatcher]="matcher">
+                  <mat-option *ngFor="let option of masterInsuranceCompanies" [value]="option.id">
+                    {{ option.value }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="editFormControls['insuranceCompanyID'].errors">
+                  {{'please_select_insurance_company'|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input matInput autofocus placeholder="{{'insurance_company_address'|translate}}" maxlength="50"
+                  formControlName="insuranceCompanyAddress" readonly />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input matInput autofocus placeholder="{{'national_id_number'|translate}}" maxlength="50"
+                  formControlName="carrierPayerID" />
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input matInput [matDatepicker]="cardIssueDate" [max]="maxDate" placeholder="{{'insurance_issue_date'|translate}}"
+                  formControlName="cardIssueDate" />
+                <mat-datepicker-toggle matSuffix [for]="cardIssueDate"></mat-datepicker-toggle>
+                <mat-datepicker #cardIssueDate></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input matInput autofocus placeholder="{{'insurance_group_name'|translate}}" maxlength="50"
+                  formControlName="insuranceGroupName" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input matInput autofocus placeholder="{{'insurance_plan_name'|translate}}" maxlength="50"
+                  formControlName="insurancePlanName" />
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input matInput autofocus placeholder="{{'insurance_id_number'|translate}}" maxlength="50"
+                  formControlName="insuranceIDNumber" />
+                <mat-error *ngIf="editFormControls['insuranceIDNumber'].errors?.['required']">
+                  {{'please_enter_insurance_id_number'|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input matInput autofocus placeholder="{{'primary_insurance_notes'|translate}}" maxlength="50"
+                  formControlName="notes" />
+              </mat-form-field>
+            </div>
+          </div>
+          <!-- <div class="row">
+            <div class="col-sm-12">
+              <mat-checkbox formControlName="insurancePersonSameAsPatient" (click)="formControlValueChanged()">
+                Insured Person is the same person as Client
+              </mat-checkbox>
+            </div>
+          </div>
+          <div formGroupName="insuredPerson" *ngIf="!(formControls.insurancePersonSameAsPatient.value)">
+            <div class="panel_title">
+              <i class="flaticon flaticon-shield"></i>
+              <h3>Insured person</h3>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="First Name" maxlength="40" formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && insuredPersonformControls.controls.firstName.errors }"
+                    required [errorStateMatcher]="matcher"/>
+                  <mat-error *ngIf="insuredPersonformControls.controls.firstName.errors?.required">
+                    Please enter first name
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Middle Name" maxlength="40" formControlName="middleName" />
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Last Name" maxlength="40" formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && insuredPersonformControls.controls.lastName.errors }"
+                    required [errorStateMatcher]="matcher"/>
+                  <mat-error *ngIf="insuredPersonformControls.controls.lastName.errors?.required">
+                    Please enter last name
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <mat-select placeholder="Gender" formControlName="genderID" matInput [ngClass]="{ 'is-invalid': submitted && insuredPersonformControls.controls.genderID.errors }"
+                    required [errorStateMatcher]="matcher">
+                    <mat-option *ngFor="let genderVal of masterGender" [value]="genderVal.id">
+                      {{genderVal.value}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="insuredPersonformControls.controls.genderID.errors?.required">
+                    Please select gender
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input matInput readonly [matDatepicker]="dob" [max]="maxDate" placeholder="Date of Birth"
+                    formControlName="dob" required [errorStateMatcher]="matcher">
+                  <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+                  <mat-datepicker #dob></mat-datepicker>
+                  <mat-error *ngIf="insuredPersonformControls.controls.dob.errors?.required">
+                    Please enter DOB
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input appPhoneNumber matInput placeholder="Phone Number" maxlength="19" formControlName="phone" [ngClass]="{ 'is-invalid': submitted && insuredPersonformControls.controls.phone.errors }"
+                    required [errorStateMatcher]="matcher"/>
+                  <mat-error *ngIf="insuredPersonformControls.controls.phone.errors?.required">
+                    Please enter phone number
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <mat-select placeholder="Relationship" formControlName="relationshipID" matInput [ngClass]="{ 'is-invalid': submitted && insuredPersonformControls.controls.relationshipID.errors }"
+                    required [errorStateMatcher]="matcher">
+                    <mat-option *ngFor="let relationshipVal of masterRelationship" [value]="relationshipVal.id">
+                      {{relationshipVal.value}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="insuredPersonformControls.controls.relationshipID.errors?.required">
+                    Please select relationship
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Address" maxlength="40" formControlName="address1" [ngClass]="{ 'is-invalid': submitted && insuredPersonformControls.controls.address1.errors}"
+                    required [errorStateMatcher]="matcher"/>
+                  <mat-error *ngIf="insuredPersonformControls.controls.address1.errors?.required">
+                    Please enter address
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Apt/Unit" maxlength="10" formControlName="apartmentNumber" />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4 require">
+                <mat-form-field class="example-full-width">
+                  <mat-select placeholder="Country" formControlName="countryID" matInput [errorStateMatcher]="matcher" required>
+                    <mat-option *ngFor="let country of masterCountry" [value]="country.id">
+                      {{country.value}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="insuredPersonformControls.controls.countryID.errors">
+                    Please select country
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="City" maxlength="50" formControlName="city" [errorStateMatcher]="matcher" required/>
+                  <mat-error *ngIf="insuredPersonformControls.controls.city.errors">
+                    Please enter city
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <mat-select placeholder="State" formControlName="stateID" matInput [errorStateMatcher]="matcher" required>
+                    <mat-option *ngFor="let state of masterState" [value]="state.id">
+                      {{state.value}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="insuredPersonformControls.controls.stateID.errors">
+                    Please select state
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <input appZipcode matInput placeholder="Zip Code" maxlength="10" formControlName="zip" [ngClass]="{ 'is-invalid': submitted && insuredPersonformControls.controls.zip.errors}"
+                    required [errorStateMatcher]="matcher" />
+                  <mat-error *ngIf="insuredPersonformControls.controls.zip.errors?.required">
+                    Please enter zip code
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div> -->
+          <div class="row">
+            <div class="col-sm-6 mt-3">
+              <div class="uplaod_pic insurance-doc">
+                <div>
+                  <label class="browse">
+                    <img *ngIf="imagePreviewFront" [src]="imagePreviewFront"
+                      onerror="this.src='../../../../../../assets/img/noImageAvailable.png';" alt="Insurance front" />
+                    <span *ngIf="imagePreviewFront">{{'change'|translate}}</span>
+                    <i *ngIf="!imagePreviewFront" class="fa fa-upload fa-2x" aria-hidden="true"></i>
+                    <input type="file" (change)="handleImageChange($event, 'front')" />
+                  </label>
+                </div>
+                <div>
+                  <label class="browse" *ngIf="imageBase64Front" (click)="removeImage('front')">
+                    <span *ngIf="imageBase64Front"></span>
+                    <i *ngIf="imageBase64Front" class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                  </label>
+                </div>
+              </div>
+              <p class="ins_photo">
+                {{'please_upload_insurance_front_picture_jpg_jpeg_bmp_png'|translate}}
+              </p>
+            </div>
+            <div class="col-sm-6 mt-3">
+              <div class="uplaod_pic insurance-doc">
+                <div>
+                  <label class="browse">
+                    <img *ngIf="imagePreviewBack" [src]="imagePreviewBack"
+                      onerror="this.src='../../../../../../assets/img/noImageAvailable.png';" alt="Insurance back" />
+                    <span *ngIf="imagePreviewBack">{{'change'|translate}}</span>
+                    <i *ngIf="!imagePreviewBack" class="fa fa-upload fa-2x" aria-hidden="true"></i>
+                    <input type="file" (change)="handleImageChange($event, 'back')" />
+                  </label>
+                </div>
+                <div>
+                  <label class="browse" *ngIf="imageBase64Back" (click)="removeImage('back')">
+                    <span *ngIf="imageBase64Back"></span>
+                    <i *ngIf="imageBase64Back" class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                  </label>
+                </div>
+              </div>
+              <p class="ins_photo">
+                {{'please_upload_insurance_back_picture_jpg_jpeg_bmp_png'|translate}}
+              </p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="d-flex justify-content-between">
+    <button mat-raised-button class="cancel-btn" (click)="closeDialog('close')">
+      {{'close'|translate}}
+    </button>
+    <div class="d-flex">
+      <button name="Save" mat-raised-button color="primary" (click)="onSubmitForEdit($event)" form="insuranceEditForm"
+        class="text-uppercase" [disabled]="submitted" cdkFocusInitial>
+        {{ submitted ? "Saving..." :('save' | translate)}}
+      </button>
+      <button name="SaveContinue" mat-raised-button color="accent" (click)="onSubmitForEdit($event)"
+        form="insuranceEditForm" class="text-uppercase ml-3" [disabled]="submitted">
+        {{ submitted ? "Saving..." : ('save_and_continue' | translate)}}
+      </button>
+    </div>
+  </div>
+</div>

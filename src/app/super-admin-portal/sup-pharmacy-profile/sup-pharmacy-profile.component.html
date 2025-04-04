@@ -1,0 +1,142 @@
+<h2 class="page_title sm-title">
+  {{
+    PharmacyInfo.length > 0
+      ? PharmacyInfo[0].firstName + " " + PharmacyInfo[0].lastName
+      : " "
+  }}
+</h2>
+<div class="top-btns"></div>
+<div class="clearfix"></div>
+<div class="row">
+  <div class="col-sm-7 mb-30">
+    <div class="readmin-panel crop pd-15">
+      <div class="profilebg d-flex justify-content-center">
+        <div class="clientpic">
+          <img
+            class="mb-3"
+            height="120"
+            width="auto"
+            [src]="
+              PharmacyInfo.length == 0
+                ? '/assets/img/noimage3.png'
+                : PharmacyInfo[0].photoPath == ''
+                ? '/assets/img/noimage3.png'
+                : PharmacyInfo[0].photoThumbnailPath == ''
+                ? '/assets/img/noimage3.png'
+                : PharmacyInfo[0].photoThumbnailPath
+            "
+          />
+        </div>
+      </div>
+      <h2 class="ppname text-center mt-3">
+        {{
+          PharmacyInfo.length > 0
+            ? PharmacyInfo[0].firstName + " " + PharmacyInfo[0].lastName
+            : " "
+        }}
+      </h2>
+      <div class="ppdetail client_detail">
+        <div class="ledtdiv">
+          <div class="row">
+            <div class="col-md-6">
+              <b
+                >Gender :
+                {{ PharmacyInfo.length > 0 ? PharmacyInfo[0].gender : " " }}</b
+              ><span></span>
+            </div>
+            <div class="col-md-6">
+              <b
+                >Date of joining :
+                {{
+                  PharmacyInfo.length > 0
+                    ? PharmacyInfo[0].registerDate
+                    : "01/01/1900"
+                }}</b
+              >
+              <span></span>
+            </div>
+            <div class="col-md-6">
+              <b
+                >Phone :
+                {{
+                  PharmacyAddress.length > 0
+                    ? PharmacyAddress[0].phone
+                    : "Phone not available"
+                }}</b
+              ><span></span>
+            </div>
+            <div class="col-md-6">
+              <b
+                >Email :
+                {{
+                  PharmacyInfo.length > 0
+                    ? PharmacyInfo[0].email
+                    : "email@rmail.com"
+                }}</b
+              ><span></span>
+            </div>
+            <div class="col-md-6">
+              <b
+                >Address :
+                {{
+                  PharmacyAddress.length > 0
+                    ? PharmacyAddress[0].aptNumber +
+                      ", " +
+                      PharmacyAddress[0].cityName +
+                      ", " +
+                      PharmacyAddress[0].stateName +
+                      ", " +
+                      PharmacyAddress[0].countryName +
+                      ", " +
+                      PharmacyAddress[0].zipNumber
+                    : "No Address Found"
+                }}</b
+              ><span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+
+  <div class="col-sm-5">
+    <div class="row">
+      <div class="col-sm-12 mb-30">
+        <div class="readmin-panel crop pd-15">
+          <div class="lineheader">
+            <p>Assigned Locations</p>
+          </div>
+          <div class="row">
+            <div [ngStyle]="{ height: '118px' }">
+              <ng-scrollbar>
+                <div class="col-sm-12 assign-loc">
+                  <p>
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <small>
+                      {{
+                        PharmacyAddress.length > 0
+                          ? PharmacyAddress[0].aptNumber +
+                            " ," +
+                            PharmacyAddress[0].cityName +
+                            ", " +
+                            PharmacyAddress[0].stateName +
+                            ", " +
+                            PharmacyAddress[0].countryName +
+                            ", " +
+                            PharmacyAddress[0].zipNumber
+                          : "No Address Found"
+                      }}</small
+                    >
+                  </p>
+                </div>
+              </ng-scrollbar>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-12"></div>
+</div>

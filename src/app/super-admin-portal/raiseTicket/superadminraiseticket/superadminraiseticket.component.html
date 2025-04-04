@@ -1,0 +1,90 @@
+<h2 class="page_title">Help Desk</h2>
+<div class="readmin-panel">
+  <div class="row">
+    <div class="col-md-12 pl-5 justify-content-start d-flex">
+      <form
+        class="readmin-form custom_form flex-wrap"
+        id="testFormGroup"
+        #documentForm="ngForm"
+        [formGroup]="testFormGroup"
+      >
+        <div class="row">
+          <div class="col-lg-3 col-sm-6">
+            <mat-form-field class="example-full-width pos">
+              <input
+                matInput
+                placeholder="Search here..."
+                formControlName="searchKey"
+              />
+              <button class="search-button"></button>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3 col-sm-6">
+            <mat-form-field class="example-full-width">
+              <input
+                matInput
+                readonly
+                [matDatepicker]="rangeStartDate"
+                (dateChange)="applyStartDateFilter($event)"
+                placeholder="From Date"
+                formControlName="rangeStartDate"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="rangeStartDate"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #rangeStartDate></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3 col-sm-6">
+            <mat-form-field class="example-full-width">
+              <input
+                matInput
+                readonly
+                [matDatepicker]="rangeEndDate"
+                (dateChange)="applyEndDateFilter($event)"
+                placeholder="To Date"
+                formControlName="rangeEndDate"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="rangeEndDate"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #rangeEndDate></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-2 col-sm-6 filter-btn">
+            <button
+              class="clear-btn"
+              mat-raised-button
+              (click)="clearFilters()"
+            >
+              Clear All
+            </button>
+          </div>
+          <!-- <div class="col-lg-4 col-sm-6">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="createReferral()"
+          style="float: right"
+        >
+          <i class="fa fa-plus" aria-hidden="true"></i>Add LabReferral
+        </button>
+      </div> -->
+        </div>
+      </form>
+    </div>
+  </div>
+  <div>
+    <app-data-table
+      [inputColumns]="displayColumns"
+      [inputSource]="filterTicketList"
+      [inputMeta]="metadata"
+      [inputButtons]="actionButtons"
+      (onTableActionClick)="onTableActionClick($event)"
+      (onPageOrSortChange)="onPageOrSortChange($event)"
+    >
+    </app-data-table>
+  </div>
+</div>

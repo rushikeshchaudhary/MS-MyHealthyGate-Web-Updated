@@ -1,0 +1,94 @@
+<div class="custom_modal">
+  <h3 mat-dialog-title>Add Ticket</h3>
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-sm-12">
+        <form id="TicketAddForm" #documentForm="ngForm" class="readmin-form custom_form" [formGroup]="ticketForm">
+          <div class="row">
+            <div class="col-sm-12">
+              <mat-form-field class="example-full-width">
+                <mat-select autofocus placeholder="{{'category'|translate}}" formControlName="category" matInput>
+                  <ng-container *ngIf="categories && categories.length > 0">
+                    <mat-option *ngFor="let category of categories" [value]="category.categoryId">
+                      {{ category.categoryName }}
+                    </mat-option>
+                  </ng-container>
+                </mat-select>
+                <mat-error *ngIf="ticketForm.get('priority')?.hasError('required')">
+                  Category is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <!-- <mat-label>Priority: </mat-label>
+                            <mat-radio-group formControlName="priority">
+                                <mat-radio-button value="low">Low</mat-radio-button>
+                                <mat-radio-button value="medium">Medium</mat-radio-button>
+                                <mat-radio-button value="high">High</mat-radio-button>
+                            </mat-radio-group> -->
+              <mat-form-field class="example-full-width">
+                <mat-select autofocus placeholder="Priority" formControlName="priority" matInput>
+                  <mat-option value="low">Low</mat-option>
+                  <mat-option value="medium">Medium</mat-option>
+                  <mat-option value="high">High</mat-option>
+                </mat-select>
+                <mat-error *ngIf="ticketForm.get('priority')?.hasError('required')">
+                  Priority is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <mat-form-field class="example-full-width border">
+                <!-- <mat-label>Description</mat-label> -->
+                <textarea matInput placeholder="{{'description'|translate}}" formControlName="description"></textarea>
+                <mat-error *ngIf="ticketForm.get('description')?.hasError('required')">
+                  Description is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="uplaod_pic">
+                    <label class="browse">
+                      <i class="fa fa-upload fa-2x" aria-hidden="true"></i>
+                      <input type="file" multiple (change)="handleImageChange($event)" />
+                    </label>
+                  </div>
+                  <!-- <p class="ins_photo">(Browse any jpg, jpeg, bmp, png file.)</p> -->
+                </div>
+                <div class="col-sm-6">
+                  <span>
+                    <p *ngFor="let file of fileList; let i = index" style="white-space: nowrap;">
+                      {{ file.fileName }}
+                      <button type="button" title="Delete" class="tbactionbtn" (click)="removeFile(i)">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                      </button>
+                    </p>
+                  </span>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button class="cancel-btn" (click)="closeDialog()">
+        {{"close"|translate}}
+      </button>
+      <button name="Save" mat-raised-button color="primary" (click)="onSubmit()" form="ticketForm"
+        class="text-uppercase" cdkFocusInitial>
+        {{ submitted ? "Uploading..." : ("submit"|translate) }}
+      </button>
+    </div>
+  </div>
+</div>

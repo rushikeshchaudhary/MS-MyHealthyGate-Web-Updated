@@ -1,0 +1,85 @@
+<div class="custom_modal">
+  <h3 mat-dialog-title>{{headerText}}</h3>
+  <div mat-dialog-content>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <form (ngSubmit)="onSubmit()" id="CompanyInsuranceForm" #documentForm="ngForm" class="readmin-form custom_form" [formGroup]="CompanyInsuranceForm">
+          <div class="row">
+            <div class="col-sm-12 require">
+              <mat-form-field class="example-full-width" hintLabel="{{formControls['companyName'].pending ? 'Validating...' : ''}}">
+                <input matInput autofocus placeholder="Company Name" maxlength="50" formControlName="companyName" [ngClass]="{ 'is-invalid': submitted && formControls['companyName'].errors }"
+                  required />
+                <mat-error *ngIf="formControls['companyName'].errors?.['required']">
+                  Please enter Company Name
+                </mat-error>
+                <mat-error *ngIf="formControls['companyName'].errors?.['uniqueName']">
+                  Company Name is already taken.
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+    <div class="row">
+      <div class="col-sm-4 require">
+        <mat-form-field class="example-full-width" hintLabel="{{formControls['companyAddress'].pending ? 'Validating...' : ''}}">
+          <input matInput autofocus placeholder="Company Address " maxlength="50" formControlName="companyAddress" [ngClass]="{ 'is-invalid': submitted && formControls['companyAddress'].errors }"
+            required />
+          <mat-error *ngIf="formControls['companyAddress'].errors?.['required']">
+            Please enter Company Name
+          </mat-error>
+          <mat-error *ngIf="formControls['companyAddress'].errors?.['uniqueName']">
+            Company Name is already taken.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+
+  </div>
+  <div class="row">
+    <div class="col-sm-4 require">
+      <mat-form-field class="example-full-width" hintLabel="{{formControls['comapnyEmail'].pending ? 'Validating...' : ''}}">
+        <input matInput autofocus placeholder="ComapnyEmail " maxlength="50" formControlName="comapnyEmail" [ngClass]="{ 'is-invalid': submitted && formControls['comapnyEmail'].errors }"
+          required />
+        <mat-error *ngIf="formControls['comapnyEmail'].errors?.['required']">
+          Please enter ComapnyEmail
+        </mat-error>
+        <mat-error *ngIf="formControls['comapnyEmail'].errors?.['uniqueName']">
+          ComapnyEmail  is already taken.
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-sm-4 require">
+      <mat-form-field class="example-full-width" hintLabel="{{formControls['phone'].pending ? 'Validating...' : ''}}">
+        <input matInput autofocus placeholder="Phone " maxlength="50" formControlName="phone" [ngClass]="{ 'is-invalid': submitted && formControls['phone'].errors }"
+          required />
+        <mat-error *ngIf="formControls['phone'].errors?.['required']">
+          Please enter Phone
+        </mat-error>
+        <mat-error *ngIf="formControls['phone'].errors?.['uniqueName']">
+          Phone  is already taken.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+
+
+</div>
+          <!-- <div class="row">
+            <div class="col-sm-6 require is_active">
+              <mat-checkbox formControlName="isActive">
+                Is Active?
+              </mat-checkbox>
+            </div>
+          </div> -->
+        </form>
+      </div>
+    </div>
+
+  <div mat-dialog-actions class="nw-pd">
+    <button mat-raised-button class="cancel-btn" (click)="closeDialog()">Close</button>
+    <button mat-raised-button color="primary" form="CompanyInsuranceForm" [disabled]="submitted || formControls['pending']" cdkFocusInitial>
+        {{(submitted || CompanyInsuranceForm.pending) ? submitted ? 'Saving...' : CompanyInsuranceForm.pending ? 'Validating...' : 'Save' : 'Save'}}
+      </button>
+  </div>
+</div>

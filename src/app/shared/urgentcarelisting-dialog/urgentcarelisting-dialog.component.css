@@ -1,0 +1,7 @@
+.cstm-cross {
+    position: absolute;
+    color: #fff;
+    top: 12px;
+    right: 10px;
+    cursor: pointer;
+}

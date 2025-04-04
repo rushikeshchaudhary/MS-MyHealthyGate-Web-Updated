@@ -1,0 +1,76 @@
+<div class="provider-container">
+  <div class="profile-widget row mx-0" *ngIf="providerVideo.statusCode == 204">
+    <!-- <div class="  ">
+      <button mat-raised-button color="primary" (click)="openModal()">
+        <i class="fa fa-plus" aria-hidden="true"></i> Upload Video
+      </button>
+    </div> -->
+    <div class="">Upload Video</div>
+    <div class="col-sm-4">
+      <div class="uplaod_pic">
+        <label class="browse">
+          <i class="fa fa-upload fa-2x" aria-hidden="true"></i>
+          <input
+            type="file"
+            accept="video/mp4,video/x-m4v,video/*"
+            (change)="onSelectVideo($event)"
+          />
+        </label>
+      </div>
+      <p class="ins_photo">(Browse any mp4 file less then 50mb)</p>
+      <div *ngIf="sizeError" class="ins_photo text-danger">
+        Video to large! Please upload video less than 50mb.
+      </div>
+    </div>
+    <div class="col-sm-2 p-0 mt-4" *ngIf="videoDetails.length != 0">
+      <span>
+        <p *ngFor="let file of videoDetails; let i = index">
+          {{ file.fileName }}
+          <button
+            type="button"
+            title="Delete"
+            class="tbactionbtn"
+            (click)="removeFile(i)"
+          >
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </button>
+        </p>
+      </span>
+    </div>
+    <div class="col-sm-3" style="margin-top: 5rem">
+      <button
+        mat-raised-button
+        color="primary"
+        class="w-100"
+        (click)="uploadHandler('upload')"
+      >
+        Upload
+      </button>
+    </div>
+  </div>
+  <div class="profile-widget row" *ngIf="providerVideo.statusCode == 200">
+    <div class="bold">Uploaded Video</div>
+    <div class="col-sm-3">
+      <div class="uplaod_pic">
+        <label class="browse">
+          <i
+            class="fa fa-play fa-2x"
+            (click)="openDialogVideo()"
+            aria-hidden="true"
+          ></i>
+        </label>
+      </div>
+      <p class="ins_photo">(you have already uploaded video)</p>
+    </div>
+    <div class="col-12 mt-2">
+      <button
+        mat-raised-button
+        color="primary"
+        class="w-100"
+        (click)="uploadHandler('remove')"
+      >
+        Remove video
+      </button>
+    </div>
+  </div>
+</div>

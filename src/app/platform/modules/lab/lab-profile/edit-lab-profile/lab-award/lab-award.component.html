@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-md-12 mt-3" >
+    <button mat-raised-button color="primary" class="float-right" (click)="createModal('add',null)">
+      <i class="fa fa-plus" aria-hidden="true"></i>
+      {{"add_award"|translate}}
+    </button>
+    <!-- {{ "add_award" | translate }} -->
+  </div>
+  <div class="col-md-12">
+    <h5>{{"awards"|translate}}</h5>
+  </div>
+  <div class="col-md-12">
+    <app-data-table
+      [inputColumns]="staffAwardColumns"
+      [inputSource]="awardList"
+      [inputMeta]="metaData"
+      [inputButtons]="actionButtons"
+      (onPageOrSortChange)="onPageOrSortChange($event)"
+      (onTableActionClick)="onTableActionClick($event)"
+    >
+    </app-data-table>
+  </div>
+</div>

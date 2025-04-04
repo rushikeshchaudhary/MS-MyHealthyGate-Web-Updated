@@ -1,0 +1,127 @@
+<div class="row no-gutters" *ngIf="isProfileLoaded">
+    <div class="col-sm-4 p-3 appt-drpanel">
+        <div class="drpanel-block">
+            <div class="doctor-img">
+                <img class="img-fluid profile-img"
+                    src="{{userInfo.photoThumbnailPath || '../../../assets/img/noimage.png'}}" alt="doctor">
+            </div>
+            <h4 class="doc-name"><a href="doctor-profile.html">Dr. {{fullname}}</a></h4>
+            <div class="d-flex flex-wrap justify-content-center">
+                <h5 class="doc-department" *ngFor="let spl of staffSpecialities">{{spl.speciality}}</h5>
+            </div>
+            <!-- <p class="doc-speciality">{{spl.speciality}}</p> -->
+            <div class="rating">
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star"></i>
+                <span class="d-inline-block average-rating"> (17)</span>
+            </div>
+        </div>
+
+        <div class="clini-infos">
+            <ul>
+                <li><i class="fa fa-phone" aria-hidden="true"></i> {{userInfo.phoneNumber}}</li>
+                <li><i class="fa fa-envelope" aria-hidden="true"></i> <a href="mailto:userInfo.email" target="_top">{{userInfo.email}}</a></li>
+                <!-- <li *ngIf="confirmation.type=='Free'"><label>Consultation Fee  </label> {{0.00 | currency:'INR':'symbol-narrow'}}</li> -->
+
+                <!-- <li><label>Consultation Fee </label> {{userInfo.urgentCarePayRate | currency:'INR':'symbol-narrow'}}
+                </li> -->
+
+
+                <li><i class="fa fa-map-marker" aria-hidden="true"></i> {{userInfo.address}}
+                    <!-- <a herf="#" class="direction">Get Directions.</a> -->
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    <div class="col-sm-8">
+
+        <div class="appointment-panel">
+            <div class="title">
+                <div *ngIf="isNotBooked">
+                    {{"urgent_care_appointments" | translate}}
+                </div>
+
+                <div class="policy-blk cstm-tp">
+                    <i class="fa fa-close" aria-hidden="true" (click)="closeDialog('close')"></i>
+                </div>
+
+            </div>
+
+
+            <mat-horizontal-stepper [linear]="isLinear" #stepper>
+
+
+                <mat-step>
+                    <form [formGroup]="thirdFormGroup">
+                        <ng-template matStepLabel>{{"book_and_pay" | translate}}</ng-template>
+
+                        <div class="pay-step hgt-scroll">
+
+
+                            <div class="receipt cstm-add">
+                                <div class="mailto">
+                                    <span class="receipt-name">
+                                        <mat-chip-list #chipList>
+                                            <div class="select-box col-md-12 pd-0">
+                                                <textarea #userInput matInput cdkTextareaAutosize
+                                                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2"
+                                                    cdkAutosizeMaxRows="5" maxlength="200" [formControl]="userControl"
+                                                    class=" search__input" [matAutocomplete]="auto"
+                                                    placeholder=" What is your chief complaint?"
+                                                    (matChipInputTokenEnd)="add($event)"></textarea>
+
+                                            </div>
+                                            <br />
+
+                                        </mat-chip-list>
+                                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                                            <mat-option *ngFor="let fts of filteredSymptoms$ | async" [value]="fts">
+                                                {{fts.label}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+
+
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between pull-right mr-2">
+                                <button mat-raised-button color="primary" form="thirdFormGroup" (click)="bookNewAppointment()"
+                                    [disabled]="!userControl.value || submitted"> {{submitted ? 'Please wait...' : 'book_now' | translate}}</button>
+                            </div>
+                        </div>
+                    </form>
+                </mat-step>
+
+            </mat-horizontal-stepper>
+        </div>
+
+        <div *ngIf="!isNotBooked">
+            <div class="app-booked urgent-care" style="text-align:center;">
+
+                <h3>{{"thank_you" | translate}}</h3>
+                <!-- <p>Your appointment has been successfully booked with us for <br /> <span *ngFor="let spl of staffSpecialities">{{spl.speciality}}</span> {{confirmation.date | date:'fullDate'}} between {{confirmation.startTime}} to {{confirmation.endTime}}</p> -->
+                <p class="mt-2">Your urgent care request has been successfully sent to concerned provider, please wait
+                    for his response</p>
+
+            </div>
+        </div>
+
+        <div *ngIf="ApptReject">
+            <div class="app-booked" style="text-align:center;">
+
+                <h3>Sorry</h3>
+                <!-- <p>Your appointment has been successfully booked with us for <br /> <span *ngFor="let spl of staffSpecialities">{{spl.speciality}}</span> {{confirmation.date | date:'fullDate'}} between {{confirmation.startTime}} to {{confirmation.endTime}}</p> -->
+                <p class="mt-3">Requested provider is not available now, your money will be refunded in a couple of
+                    business days</p>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

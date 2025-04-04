@@ -1,0 +1,80 @@
+<div class="custom_modal">
+  <h3 mat-dialog-title>Soap Note Details</h3>
+  <div mat-dialog-content>
+    <!-- <div class="row">
+      <div class="col-md-12">
+        <span>Patient Name : </span>
+        <span>{{data.patientName}}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <span>Template Data : </span>
+        <pre>{{templateDataObject}}</pre>
+      </div>
+    </div> -->
+    <!-- <div class="row">
+      <div class="col-md-12">
+        <span>Subjective : </span>
+        <span>{{data.subjective? data.subjective : ''}}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <span>Objective : </span>
+        <span>{{data.objective? data.objective : ''}}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <span>Assessment : </span>
+        <span>{{data.assessment? data.assessment : '' }}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <span>Plans : </span>
+        <span>{{data.plans? data.plans : '' }}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <span>Created Date : </span>
+        <span>{{data.createdDate}}</span>
+      </div>
+    </div> -->
+
+<!-- 
+    <div class="row">
+      <div class="col-md-12">
+        <span>Patient Name : </span>
+        <span>{{ data.patientName }}</span>
+      </div>
+    </div> -->
+    <div class="row">
+      <div class="col-sm-12 custom-btn">
+        <!-- <ng-scrollbar class="formio-form-div">
+          <formio
+          [form]="jsonFormData"
+          [submission]="initialFormValues"
+          [options]="{ readOnly: true }"
+          [viewOnly]="true"
+          [hideComponents]="['button']"
+          ></formio>
+        </ng-scrollbar> -->
+        <ng-scrollbar class="formio-form-div">
+          <formio
+          [form]="jsonFormData"
+          [submission]="initialFormValues"
+          [viewOnly]="true"
+          [hideComponents]="['button']"
+          ></formio>
+        </ng-scrollbar>
+      </div>
+    </div>
+
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button class="cancel-btn" (click)="closeDialog('close')">Close</button>
+  </div>
+</div>

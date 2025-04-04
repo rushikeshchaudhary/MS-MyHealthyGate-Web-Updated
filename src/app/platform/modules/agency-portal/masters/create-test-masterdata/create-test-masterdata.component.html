@@ -1,0 +1,99 @@
+<div class="custom_modal">
+  <h3 mat-dialog-title>{{headerText}}</h3>
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-sm-12">
+        <form (ngSubmit)="onSubmit()" id="CategoryMasterForm" #documentForm="ngForm" class="readmin-form custom_form"
+          [formGroup]="CategoryMasterForm">
+          <div class="row">
+            <div class="col-sm-12 require">
+              <mat-form-field class="example-full-width"
+                hintLabel="{{formControls['TestName'].pending ? 'Validating...' : ''}}">
+                <input matInput autofocus placeholder="Test Name" maxlength="50" formControlName="TestName"
+                  [ngClass]="{ 'is-invalid': submitted && formControls['TestName'].errors }" required />
+                <mat-error *ngIf="formControls['TestName'].errors?.['required']">
+                  Please enter Lab List Name
+                </mat-error>
+                <mat-error *ngIf="formControls['TestName'].errors?.['uniqueName']">
+                  Lab List Name is already taken.
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="example-full-width"
+                hintLabel="{{formControls['Cost'].pending ? 'Validating...' : ''}}">
+                <input matInput placeholder="Cost" maxlength="50" formControlName="Cost"
+                  [ngClass]="{ 'is-invalid': submitted && formControls['Cost'].errors }" required />
+                <mat-error *ngIf="formControls['Cost'].errors?.['required']">
+                  Please enter Cost.
+                </mat-error>
+              </mat-form-field>
+              <div class="row">
+                <div class="col-sm-6 require is_active">
+                  <mat-checkbox formControlName="isActive">
+                    Is Active?
+                  </mat-checkbox>
+                </div>
+              </div>
+
+              <div *ngIf="selectedRole === 'lab'" class="row">
+                <div class="col-sm-12 require">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="LIMS Code" formControlName="limsCode" maxlength="50" 
+                           [ngClass]="{ 'is-invalid': submitted && formControls['limsCode'].errors }"  />
+                    <mat-error *ngIf="formControls['limsCode'].errors">
+                      Please enter LIMS Code
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                
+                <div class="col-sm-12 require">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="LOINC Code" formControlName="loincCode" maxlength="50" 
+                           [ngClass]="{ 'is-invalid': submitted && formControls['loincCode'].errors }"  />
+                    <mat-error *ngIf="formControls['loincCode'].errors">
+                      Please enter LOINC Code
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-12 require">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Short Name" formControlName="shortName" maxlength="50" 
+                           [ngClass]="{ 'is-invalid': submitted && formControls['shortName'].errors }"  />
+                    <mat-error *ngIf="formControls['shortName'].errors">
+                      Please enter Short Name
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-12 require">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="CPT" formControlName="cpt" maxlength="50" 
+                           [ngClass]="{ 'is-invalid': submitted && formControls['cpt'].errors }"  />
+                    <mat-error *ngIf="formControls['cpt'].errors">
+                      Please enter CPT
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-12 require">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Jordanian Code" formControlName="jordanianCode" maxlength="50" 
+                           [ngClass]="{ 'is-invalid': submitted && formControls['jordanianCode'].errors }" />
+                    <mat-error *ngIf="formControls['jordanianCode'].errors">
+                      Please enter Jordanian Code
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div mat-dialog-actions class="nw-pd">
+      <button mat-raised-button class="cancel-btn" (click)="closeDialog()">Close</button>
+      <button mat-raised-button color="primary" form="CategoryMasterForm" [disabled]="submitted || CategoryMasterForm.pending"
+        cdkFocusInitial>
+        {{(submitted || CategoryMasterForm.pending) ? submitted ? 'Saving...' : CategoryMasterForm.pending ?
+        'Validating...' : 'Save' : 'Save'}}
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,59 @@
+<div class="appointment-panel">
+  <div class="title pb-0">
+    <div class="custom_modal">
+      <h3 mat-dialog-title style="text-align: left !important; color: white;">Patient Last FollowUp</h3>
+      <div mat-dialog-content>
+        <div class="row">
+          <div class="col-sm-12">
+            <form id="FollowupForm" #documentForm="ngForm" class="readmin-form custom_form">
+              <div class="row">
+                <div class="col-md-6">
+                  <label> {{"appointment_start_time"|translate}}</label>
+                </div>
+                <div class="col-md-6">
+                  {{lastAppointmentStartTime|date:'MM/dd/yyyy hh:mm a'}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label> Appointment End Time</label>
+                </div>
+                <div class="col-md-6">
+                  {{lastAppointmentEndTime|date:'MM/dd/yyyy hh:mm a'}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label>{{"booking_mode"|translate}}</label>
+                </div>
+                <div class="col-md-6">
+                  {{bookingMode}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label>{{"notes"|translate}}</label>
+                </div>
+                <div class="col-md-6">
+                  {{notes}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Appointed Staff</label>
+                </div>
+                <div class="col-md-6" *ngIf="lastAppointment && lastAppointment.appointmentStaffs">
+                  {{lastAppointment.appointmentStaffs[0].staffName}}
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div mat-dialog-actions>
+        <button mat-raised-button class="cancel-btn" (click)="closeDialog('close')">{{"close"|translate}}</button>
+
+      </div>
+    </div>
+  </div>
+</div>

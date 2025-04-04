@@ -1,0 +1,139 @@
+<div class="custom_modal">
+  <h3 mat-dialog-title>{{ headerText }}</h3>
+  <div mat-dialog-content>
+    <div class="row" *ngIf="this.getPrescriptions().length > 0">
+      <div class="col-sm-12">
+        <mat-form-field class="example-full-width">
+          <textarea matInput [formControl]="notesControl" name="notes" placeholder="Notes" rows="4" class="medication-box"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <form id="prescriptionForm" #documentForm="ngForm" class="readmin-form custom_form"
+          [formGroup]="prescriptionForm">
+          <div formArrayName="medication">
+            <div *ngFor="let medication of getPrescriptions().controls; let i = index" [formGroupName]="i"
+              class="medication-box">
+
+              <div class="row">
+                <div class="col-12" style="display: flex; justify-content: space-between;">
+                  <div>
+                    <h4>Med {{ i + 1 }}&nbsp;</h4>
+                  </div>
+                  <div>
+                    <i style="margin-left: 20%;" title="Remove med" class="fa fa-times" aria-hidden="true"
+                      (click)="removeMedication(i)"></i>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <mat-form-field class="example-full-width">
+                    <mat-select placeholder="Search Medication" formControlName="drugID"
+                      (selectionChange)="onprescriptSelect($event)" required>
+                      <mat-option>
+                              <!-- intentionally commented code for running the application -->
+                        <ngx-mat-select-search [formControl]="filterCtrl" [searching]="searching"
+                          placeholderLabel="Search" noEntriesFoundLabel="No records found!">
+                        </ngx-mat-select-search>
+                      </mat-option>
+                      <mat-option *ngFor="let option of filteredServerSideprescription | async" [value]="option.id">
+                        {{ option.value }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="getFormGroupControl(i, 'drugID')?.hasError('required')">
+                      Please select prescription drugs
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="{{'dose'|translate}}" maxlength="10" formControlName="dose"
+                      [ngClass]="{ 'is-invalid': submitted && getFormGroupControl(i, 'dose')?.errors }" required />
+                    <mat-error *ngIf="getFormGroupControl(i, 'dose')?.hasError('required')">
+                      Please enter dose
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <mat-form-field class="example-full-width">
+                    <mat-select placeholder="{{'frequency'|translate}}" formControlName="frequencyID" matInput
+                      [ngClass]="{ 'is-invalid': submitted && getFormGroupControl(i, 'frequencyID')?.errors }">
+                      <mat-option *ngFor="let rel of masterFrequencyType" [value]="rel.id">
+                        {{ rel.value }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="getFormGroupControl(i, 'frequencyID')?.hasError('required')">
+                      Please select frequency
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="{{'strength'|translate}} (mg)" formControlName="strength"
+                      [ngClass]="{ 'is-invalid': submitted && getFormGroupControl(i, 'strength')?.errors }" required />
+                    <mat-error *ngIf="getFormGroupControl(i, 'strength')?.hasError('required')">
+                      Please enter strength
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="{{'directions'|translate}}" formControlName="directions" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <mat-form-field class="example-full-width">
+                    <input matInput readonly [matDatepicker]="startDate" [min]="maxDate"
+                      placeholder="{{'start_date'|translate}}" formControlName="startDate" required />
+                    <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+                    <mat-datepicker #startDate></mat-datepicker>
+                    <mat-error *ngIf="getFormGroupControl(i, 'startDate')?.hasError('required')">
+                      Please enter start date
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                  <mat-form-field class="example-full-width">
+                    <input matInput readonly [matDatepicker]="endDate" [min]="maxDate"
+                      placeholder="{{'end_date'|translate}}" formControlName="endDate" required />
+                    <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                    <mat-datepicker #endDate></mat-datepicker>
+                    <mat-error *ngIf="getFormGroupControl(i, 'endDate')?.hasError('required')">
+                      Please enter end date
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <!-- <div class="row" *ngIf="!isEdit">
+                <div class="col-sm-12">
+                  <i class="fa fa-times" aria-hidden="true" (click)="removeMedication(i)"></i>
+                
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="wrapping" style="display: flex; justify-content: space-between; align-items: center;">
+    <button mat-raised-button class="cancel-btn" (click)="closeDialog('close')">
+      {{"close"|translate}}
+    </button>
+    <div style="display: flex; justify-content: space-between;">
+      <button mat-raised-button color="accent" (click)="addMedication()" class="text-uppercase">
+        Add Med
+      </button>
+      <button name="Save" mat-raised-button color="accent" (click)="onSubmit($event)" form="prescriptionForm"
+        class="text-uppercase ml-3" [disabled]="submitted" cdkFocusInitial>
+        {{ submitted ? "Saving..." : ("save"|translate) }}
+      </button>
+    </div>
+  </div>
+</div>

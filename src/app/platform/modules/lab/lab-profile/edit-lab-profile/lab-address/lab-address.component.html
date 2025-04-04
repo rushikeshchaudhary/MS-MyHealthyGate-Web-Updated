@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="col-sm-12 d-flex justify-content-between">
+    <h3 class="nw-hdng">{{"lab_address"|translate}}</h3>
+    <div>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="addEditAddressHandler()"
+      >
+        Add Address
+      </button>
+    </div>
+  </div>
+  <div *ngIf="labAddress.length == 0" class="col-sm-12 ms-5 mt-3">
+    No Address Found
+  </div>
+  <div class="col-sm-12 ms-5 mt-2" *ngIf="labAddress.length != 0">
+    <div class="row">
+      <div *ngFor="let item of labAddress" class="col-sm-4">
+        <mat-card class="">
+          <mat-card-header>
+            <mat-card-title
+              ><h4>
+                {{
+                  labInfo.radiologyName
+                    ? labInfo.radiologyName
+                    : labInfo.middleName
+                }}
+              </h4>
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            {{ item.aptNumber ? item.aptNumber : "" }},
+            {{ item.addressLine1 ? item.addressLine1 : "" }},
+            {{ item.addressLine2 ? item.addressLine2 : "" }},
+            {{ item.others ? item.others : "" }},
+            {{ item.cityName ? item.cityName : "" }},
+            {{ item.stateName ? item.stateName : "" }},
+            {{ item.countryName ? item.countryName : "" }}
+            <div *ngIf="item.zipNumber">
+              {{"zip"|translate}}:- {{ item.zipNumber ? item.zipNumber : "" }}
+            </div>
+            <div *ngIf="item.phone">
+              {{"phone"|translate}}:- {{ item.phone ? item.phone : "" }},
+            </div>
+            <!-- <div *ngIf="item.latitude">
+              Latitude:- {{ item.latitude ? item.latitude : "" }}
+            </div>
+            <div *ngIf="item.longitude">
+              Longitude:- {{ item.longitude ? item.longitude : "" }},
+            </div> -->
+          </mat-card-content>
+
+          <mat-card-actions class="d-flex justify-content-between">
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="editAddress(item)"
+            >
+              <i class="fa fa-pencil" aria-hidden="true"></i>
+            </button>
+            <button
+              mat-raised-button
+              color="warn"
+              (click)="deleteAddress(item)"
+            >
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

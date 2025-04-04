@@ -1,0 +1,976 @@
+.provider-dashbord {
+  /* padding: 20px 10px; */
+}
+
+/* .provider-container p {
+  margin-bottom: 7px;
+}
+
+
+.blue-box {
+background: linear-gradient(#01385ffc, #17a2b8);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 25px;
+  min-height: 236px;
+}
+
+.white-box {
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border-radius: 15px;
+  opacity: 1;
+  box-shadow: 0px 0px 5px rgb(2 106 136 / 24%);
+  padding: 20px;
+  margin-bottom: 20px;
+  position: relative;
+  min-height: 236px;
+}
+
+.white-box h3 {
+  text-align: left;
+  font-weight: 600;
+  font-size: 16px;
+  color: #313131;
+  margin-bottom: 30px
+}
+
+.care-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.care-btn button {
+  font-size: 14px !important;
+}
+
+.blue-box-inner {
+  display: block;
+}
+
+.blue-box-detail .col-md-6 {
+  display: block;
+  transition: ease-in .2s;
+}
+
+.blue-box h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 30px
+}
+
+.blue-box-detail {
+  margin-bottom: 20px;
+}
+
+.blue-box-detail .lght-txt {
+  font-size: 14px;
+  font-weight: 600;
+  color: #FFFFFF;
+  opacity: 0.75;
+  text-transform: capitalize ;
+}
+.blue-box-detail .lght-txt:hover {
+opacity: 1;
+}
+
+.blue-box-detail .white-txt {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  transition: ease-in .2s;
+}
+
+#main #faq .card {
+  border: 2px solid #01385f !important;
+  border-radius: 20px !important;
+  padding: 0 5px;
+  margin-bottom: 10px;
+}
+
+#main #faq .card .btn-header-link {
+  display: block;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  color: #01385f;
+  padding: 10px 15px;
+}
+
+#main #faq .card .btn-header-link i {
+  font-size: 16px;
+  padding-right: 5px;
+}
+
+#main #faq .card .btn-header-link:focus {
+  box-shadow: none;
+}
+
+#main #faq .card .btn-header-link:after {
+  content: "\f077";
+  font-family: 'FontAwesome';
+  font-weight: 900;
+  float: right;
+}
+
+#main #faq .card .btn-header-link.collapsed:after {
+  content: "\f078";
+  font-family: 'FontAwesome';
+}
+
+#main #faq .card .collapsing {
+  line-height: 30px;
+}
+
+#main #faq .card .collapse {
+  border: 0;
+}
+
+#main #faq .card .card-body {
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+#main #faq .card .card-body .mat-raised-button {
+  background-color: #17a2b8 !important;
+  border-radius: 5px !important;
+  font-size: 13px !important;
+  padding: 0 7px !important;
+}
+
+.service-blk ul {
+  padding-left: 0;
+  min-height: 152px;
+  overflow: auto;
+  max-height: 280px;
+}
+
+.service-blk ul li {
+  list-style: none;
+}
+
+.service-blk ul li {
+  font-size: 15px;
+  font-weight: 500;
+  color: #707070;
+  border-bottom: 1px solid #efefef;
+  padding: 15px 0;
+  display: flex;
+  align-items: center;
+}
+
+.service-blk ul li i {
+  color: #01385f;
+  font-size: 20px;
+  padding-right: 10px;
+}
+
+.group-table thead tr th,
+tr.mat-header-row {
+  height: 48px;
+}
+
+.col-md-6 {
+  cursor: pointer;
+} */
+
+/* .iconbox-single {
+background: #fff;
+padding: 11px 18px;
+margin-bottom: 30px;
+border-radius: 10px;
+-webkit-border-radius: 10px;
+-ms-flex-pack: justify;
+justify-content: space-between;
+flex-wrap: wrap;
+position: relative;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.iconbox-single .box-title,
+.iconbox-single .circle-icon {
+position: relative;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.iconbox-single .circle-icon {
+width: 40px;
+height: 40px;
+margin-right: 15px;
+border-radius: 50%;
+-webkit-border-radius: 50%;
+}
+.iconbox-single .circle-icon .material-icons,
+.iconbox-single .circle-icon svg,
+.iconbox-single .circle-icon img {
+color: #2f2660;
+font-size: 36px;
+width: 55px;
+height: 55px;
+}
+.iconbox-single .circle-icon.white-icon .material-icons,
+.iconbox-single .circle-icon.white-icon svg,
+.iconbox-single .circle-icon.white-icon img {
+color: #fff;
+
+}
+.iconbox-single p {
+margin: 0;
+font-weight: 600;
+font-size: 22px;
+color: #2f2660;
+}
+.iconbox-single p.white-txt{ color:#ffffff;}
+.iconbox-single h5 {
+margin: 0;
+font-size: 35px;
+font-weight: 500;
+color:#2f2660;
+width: 100%;
+text-align: center;
+padding:15px 15px 5px 15px;
+}
+.iconbox-single.white-txt h5 {
+color:#ffffff;
+}
+.dashboard-panel > div {
+height: 30px;
+}
+.dashboard-panel button {
+width: 30px !important;
+height: 30px !important;
+padding: 0px !important;
+line-height: normal;
+}
+.dashboard_body table th {
+height: auto !important;
+color: #000 !important;
+font-weight: 500 !important;
+font-size: 11px !important;
+text-transform: uppercase;
+}
+.dashboard_body .DivPager {
+padding: 0px 25px;
+}
+.remain-unit-circle {
+color: #fff;
+border: 1px solid transparent;
+width: 80px;
+text-align: center;
+display: block;
+border-radius: 30px;
+font-size: 13px;
+}
+.mb-minus-15 {
+margin-bottom: -15px;
+}
+.update-pwd {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 15px;
+}
+.update-pwd i {
+cursor: pointer;
+}
+.dashboard-box .chart svg {
+width: 100%;
+}
+.show-hand{
+cursor: pointer;
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+.iconbox-single {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.iconbox-single p {
+  font-size: 20px;
+}
+.iconbox-single .circle-icon {
+  width: 36px;
+  height: 36px;
+  margin-right: 5px;
+}
+.dashboard-box .chart > div {
+  width: 50px !important;
+}
+}
+@media (max-width: 480px) {
+.dashboard-box .chart > div {
+  width: 60px !important;
+}
+.iconbox-single .circle-icon {
+  margin-right: 10px;
+}
+}
+
+.sticky-table .table-hover tbody tr:hover {
+background-color: transparent;
+}
+
+.no-fixed {
+width: 100%;
+height: 100%;
+}
+.no-fixed .table {
+table-layout: inherit;
+width: 100%;
+
+margin: 0px;
+}
+.no-fixed .table tr.mat-header-row th {
+position: static !important;
+width: auto;
+}
+
+.bar-dash > div {
+min-height: 320px;
+}
+
+
+*/
+/* 
+.book-appt-check .mat-radio-button {
+  display: inline-block;
+} */
+
+/* Instant comment */
+
+/* .blue-box {
+    box-shadow: 0px 0px 5px rgb(2 106 136 / 62%);   
+}
+h3 {
+    text-transform: capitalize;
+}
+
+@media screen and (min-width: 991px) and (max-width: 1040px) {
+  #main #faq .card .btn-header-link {
+    padding: 10px 0px;
+  }
+} */
+.back_img {
+  position: relative;
+}
+
+.profile_data {
+  position: absolute;
+  top: 40px;
+  left: 30px;
+}
+
+h3.text_welcome {
+  font-size: 28px;
+  color: #ffffff;
+  font-weight: bold;
+  margin: 0 0 15px 0;
+}
+
+p.para {
+  font-size: 14px;
+  font-weight: 300;
+  color: #ffffff;
+}
+
+.filter_blko {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.consultation_filter {
+  border: 1px solid #f0f0f0;
+  border-radius: 16px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+::ng-deep .mat-expansion-panel {
+  border-radius: 10px;
+  border: 1px solid #def5f6;
+  box-shadow: none;
+}
+
+::ng-deep .mat-expansion-panel-header {
+  border-radius: 10px 10px 0 0;
+}
+
+::ng-deep .mat-expansion-panel-body {
+  padding: 10px 13px;
+}
+
+/* .icon_plus {
+  font-size: 20px;
+  margin-right: 6px;
+  color: #014971 !important;
+  display: flex;
+    align-items: center;
+
+} */
+::ng-deep .mat-expansion-panel-header-title {
+  display: flex;
+  align-items: center;
+}
+
+.new {
+  font-size: 18px;
+  font-weight: 400;
+  color: #014971;
+  margin: 0;
+}
+
+button {
+  background: linear-gradient(to right, #014971 0%, #03beca 100%);
+  font-size: 16px;
+  font-weight: 300 !important;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+
+.buttons {
+  gap: 15px;
+  /* justify-content: center; */
+  flex-wrap: wrap;
+}
+
+.flex-column {
+  gap: 20px;
+}
+
+.appointment-details {
+  background-color: #f8fdfd;
+  border-radius: 16px;
+  padding: 30px 32px;
+  margin: 30px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.head_appointment {
+  margin: 30px 0 20px 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.card_buttons {
+  gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.circle_block {
+  position: absolute;
+  width: 87px;
+  height: 87px;
+
+  background: #afdfe1;
+  transform: rotate(90deg);
+}
+
+.today {
+  font-size: 13px;
+  font-weight: 500;
+  color: #01385f;
+  line-height: 17px;
+}
+
+.over-text {
+  position: absolute;
+  top: 16px;
+  left: 13px;
+  margin: auto 0;
+}
+
+.card-button {
+  position: relative;
+}
+
+.total_num {
+  font-size: 20px;
+  line-height: 22px;
+  color: #01385f;
+}
+
+.over-two {
+  position: absolute;
+  top: 12px;
+  right: 17px;
+}
+
+.appointment_img img {
+  max-width: 170px;
+}
+
+::ng-deep .mat-card:not([class*="mat-elevation-z"]) {
+  box-shadow: none !important;
+}
+
+.appointment_calender {
+  display: flex;
+  /* Use flexbox */
+  flex-direction: column;
+  /* Arrange children vertically */
+  height: 100%;
+  /* Extend to full height of parent */
+}
+
+.calendar-block {
+  border: 1px solid #f0f0f0;
+  border-radius: 16px;
+  padding: 35px 45px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.fa-phone,
+.fa-plus {
+  background: #01385f;
+  color: white !important;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  margin-right: 10px;
+}
+
+h2.title_calender {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+p.title_desc {
+  font-size: 14px;
+  font-weight: 400;
+  color: #01385f;
+}
+
+/* ::ng-deep
+  td.mat-calendar-body-cell.mat-calendar-body-active
+  .mat-calendar-body-cell-content.mat-calendar-body-today {
+  border: none !important;
+  background: linear-gradient(to right, #014971 0%, #03beca 100%);
+  color: white;
+  border-radius: 100%;
+} */
+
+::ng-deep
+  td.mat-calendar-body-cell.mat-calendar-body-active
+  .mat-calendar-body-cell-content.mat-calendar-body-selected {
+  border: none !important;
+  background: linear-gradient(to right, #014971 0%, #03beca 100%) !important;
+  color: white !important;
+  border-radius: 100%;
+}
+
+::ng-deep .mat-calendar-controls {
+  display: inherit !important;
+  position: relative;
+}
+
+::ng-deep.mat-calendar-body-selected {
+  border: none !important;
+  background: linear-gradient(to right, #014971 0%, #03beca 100%) !important;
+  color: white !important;
+  border-radius: 100%;
+}
+
+::ng-deep button.mat-calendar-previous-button.mat-icon-button {
+  position: absolute;
+  top: -2px;
+  left: 10px;
+  color: #014971;
+}
+
+::ng-deep button.mat-calendar-next-button.mat-icon-button {
+  position: absolute;
+  top: -2px;
+  right: 10px;
+  color: #014971;
+}
+
+::ng-deep .mat-calendar-arrow {
+  display: none !important;
+}
+
+::ng-deep span.mat-button-wrapper {
+  font-size: 16px;
+  /* color: #014971; */
+  font-weight: 500;
+}
+
+::ng-deep td.mat-calendar-body-label {
+  opacity: 0;
+}
+
+::ng-deep .mat-calendar-table-header th {
+  font-size: 13px !important;
+  font-weight: 500;
+  color: #014971;
+}
+
+::ng-deep .mat-calendar-body-cell-content {
+  font-size: 16px !important;
+  color: #014971;
+}
+
+.schedule_appointment {
+  padding: 10px 10px 10px 19px;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  border-left: 9px solid #c4dda0;
+  text-align: left;
+}
+
+.sche_time {
+  margin-bottom: 8px;
+  color: #014971;
+  font-size: 14px;
+}
+
+h2.doctor_name {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+p.para_desc {
+  font-size: 12px;
+  margin: 0;
+  color: #014971;
+}
+
+.schedule_appointment.two {
+  border-left: 9px solid #ffd18b;
+}
+
+.schedule_appointment.three {
+  border-left: 9px solid #6fb4d6;
+}
+
+.detailed_appointment {
+  padding: 30px;
+  border: 1px solid #f0f0f0;
+  border-radius: 16px;
+}
+
+::ng-deep .mat-tab-labels {
+  display: flex;
+  justify-content: space-between !important;
+}
+
+img.user {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+/* .profile_patient {
+  display: flex;
+    gap: 22px;
+    align-items: center;
+    height: 100%;
+    vertical-align: top;
+} */
+h3.tile_approve {
+  margin: 30px 0 20px 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+h3.appointment_title {
+  margin-bottom: 48px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+::ng-deep .mat-tab-header {
+  background: white !important;
+}
+
+::ng-deep .mat-tab-label-content {
+  font-size: 20px !important;
+  font-weight: 400;
+}
+
+.profile_patient p,
+td p {
+  color: #9a9ea5;
+  font-size: 12px;
+}
+
+.name_patient {
+  font-size: 20px;
+}
+
+.button_text {
+  color: #014971 !important;
+}
+
+::ng-deep .mat-tab-body-wrapper {
+  background: #f8fdfd !important;
+  padding: 0 27px;
+  border-radius: 20px;
+}
+
+tr:hover td {
+  background-color: #17a2b8 !important;
+}
+
+tr:hover td h4,
+tr:hover td p,
+tr:hover td p.button_text {
+  color: white !important;
+}
+
+tr:nth-child(even) {
+  background-color: #eafcff;
+  border-bottom: 1px solid #f5f1f1 !important;
+}
+
+.tr {
+  background: white;
+  padding: 0 0 0 10px;
+  border-bottom: 1px solid #f5f1f1 !important;
+}
+
+/* .appointment_img{
+  background-image: url(../../../../../assets/img/today.svg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+} */
+.card.one {
+  background: linear-gradient(319.11deg, #afdfe1 2.11%, #ffffff 60.94%);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 16px;
+}
+
+.circle_block {
+  background-image: url;
+}
+
+.post {
+  position: relative;
+}
+
+/* .appoint-btns{
+  min-width: 170px;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.6);
+}
+.appoint-btns:hover{
+  box-shadow: none;
+}
+.appoint-btns:focus{
+  display: none;
+} */
+
+
+
+@media screen and (min-width:1700px) {
+  .card-button {
+    width: 23%;
+  }
+
+  .appointment_img img {
+    max-width: inherit;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .calendar-block {
+    padding: 20px 15px;
+    height: 699px;
+    max-height: 100%;
+  }
+
+  h2.title_calender {
+    font-size: 18px;
+  }
+
+  p.title_desc {
+    font-size: 10px;
+    margin: 0;
+  }
+
+  ::ng-deep button.mat-calendar-previous-button.mat-icon-button {
+    left: 30px;
+  }
+
+  ::ng-deep button.mat-calendar-next-button.mat-icon-button {
+    right: 30px;
+  }
+
+  ::ng-deep span.mat-button-wrapper {
+    font-size: 13px;
+  }
+
+  ::ng-deep .mat-calendar-body-cell-content {
+    font-size: 13px !important;
+  }
+
+  .sche_time {
+    font-size: 12px;
+  }
+
+  h2.doctor_name {
+    font-size: 14px;
+  }
+
+  p.para_desc {
+    font-size: 9px;
+  }
+
+  .filter_blko {
+    font-size: 18px;
+  }
+
+  .new {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 1399px) {
+  .appointment_img img {
+    max-width: 150px;
+  }
+
+  .calendar-block {
+    height: 670px;
+  }
+}
+
+@media screen and (max-width: 1251px) {
+  .calendar-block {
+    height: 870px;
+  }
+
+  ::ng-deep button.mat-calendar-previous-button.mat-icon-button {
+    left: 10px;
+  }
+
+  ::ng-deep button.mat-calendar-next-button.mat-icon-button {
+    right: 10px;
+  }
+
+  ::ng-deep .mat-expansion-panel-header {
+    height: 40px !important;
+  }
+
+  .new {
+    font-size: 11px;
+  }
+
+  button {
+    font-size: 13px;
+    padding: 5px 6px;
+  }
+
+  .name_patient {
+    font-size: 16px;
+  }
+
+  h3.tile_approve {
+    margin: 30px 0 20px 0;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  h3.text_welcome {
+    font-size: 20px;
+    margin: 0 0 11px 0;
+  }
+
+  p.para {
+    font-size: 11px;
+    font-weight: 300;
+  }
+
+  .profile_data {
+    top: 18px;
+    left: 20px;
+  }
+
+  ::ng-deep .mat-tab-label-content {
+    font-size: 17px !important;
+    font-weight: 400;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .filter_blko {
+    font-size: 12px;
+  }
+
+  ::ng-deep .mat-expansion-panel-header {
+    height: 22px !important;
+    padding: 0 12px;
+  }
+
+  .fa-phone,
+  .fa-plus {
+    width: 13px;
+    height: 13px;
+    font-size: 8px;
+  }
+
+  .calendar-block {
+    height: 790px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  p.para {
+    font-size: 8px;
+    margin: 0;
+  }
+  .name_patient {
+    font-size: 12px;
+  }
+  button {
+    font-size: 10px;
+  }
+  .dashord_pannel {
+    gap: 20px;
+  }
+}
+@media screen and (max-width: 529px) {
+  .card_buttons {
+    justify-content: center !important;
+  }
+  .appointment_img img {
+    max-width: inherit !important;
+  }
+  h2.head_appointment {
+    text-align: center;
+  }
+  .calendar-block {
+    margin-top: 30px;
+  }
+  .appointment-details {
+    margin: inherit !important;
+  }
+}
+@media screen and (max-width: 498px) {
+  .head_appointment {
+    font-size: 18px;
+  }
+  h3.tile_approve {
+    font-size: 13px;
+  }
+}

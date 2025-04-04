@@ -1,0 +1,79 @@
+<div class="p-3">
+  <h2 class="page-title">Manage Master</h2>
+  <div class="readmin-panel one">
+  <mat-tab-group [(selectedIndex)]="selectedTabIndex" (click)="onTabChange(selectedTabIndex)">
+    <div *ngFor="let tab of moduleTabs; let index = index">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span>{{ tab.displayName }}</span>
+        </ng-template>
+      </mat-tab>
+    </div>
+  </mat-tab-group>
+  </div>
+  <div class="">
+    <ng-container *ngIf="selectedTabDisplayName == 'Manage Tags'">
+      <app-tags></app-tags>
+    </ng-container>
+    <ng-container *ngIf="selectedTabDisplayName == 'Custom Fields'">
+      <app-custom-fields></app-custom-fields>
+    </ng-container>
+    <ng-container *ngIf="selectedTabDisplayName == 'Insurance Types'">
+      <app-insurance-type></app-insurance-type>
+    </ng-container>
+    <ng-container *ngIf="selectedTabDisplayName == 'Agency Details'">
+      <app-agency-detail></app-agency-detail>
+    </ng-container>
+    <ng-container *ngIf="selectedTabDisplayName == 'Master Template'">
+      <!-- <app-template-listing></app-template-listing> -->
+    </ng-container>
+    <ng-container *ngIf="selectedTabDisplayName == 'Services'">
+      <app-service></app-service>
+    </ng-container>
+    <ng-container *ngIf="selectedTabDisplayName == 'Speciality'">
+      <app-speciality></app-speciality>
+    </ng-container>
+    <ng-container *ngIf="selectedTabDisplayName == 'Insurance CompanyDetails'">
+      <app-insurance-company-details></app-insurance-company-details>
+    </ng-container>
+    <ng-container *ngIf="selectedTabDisplayName == 'Catogery-Master'">
+      <app-catogery-master></app-catogery-master>
+    </ng-container>
+    <ng-container *ngIf="selectedTabDisplayName == 'Test-List-Master'">
+      <app-test-master></app-test-master>
+    </ng-container>
+    <ng-container *ngIf="selectedTabDisplayName == 'Icd-Diagnosis Codes'">
+      <app-icd-codes></app-icd-codes>
+    </ng-container>
+    <ng-container *ngIf="selectedTabDisplayName == 'Immunization'">
+      <app-immunization-details></app-immunization-details>
+    </ng-container>
+    <ng-container *ngIf="selectedTabDisplayName == 'Prescription-Drug'">
+      <app-prescription-drug-details></app-prescription-drug-details>
+    </ng-container>
+    <ng-container *ngIf="selectedTabDisplayName == 'Allergies'">
+      <app-master-allergies-details></app-master-allergies-details>
+    </ng-container>
+    <ng-container *ngIf="selectedTabDisplayName == 'Security-Questions'">
+      <app-master-securityquestions></app-master-securityquestions>
+    </ng-container>
+  </div>
+
+  <!-- <div *ngIf="moduleTabs && moduleTabs.length > 0" class="mod-tabs">
+          <div class="readmin-panel pt-0">
+            <mat-tab-group
+              [(selectedIndex)]="selectedTabIndex"
+              (click)="onTabChange(selectedTabIndex)"
+            >
+              <div *ngFor="let tab of moduleTabs; let index = index">
+                <mat-tab *ngIf="tab.displayName != 'View Client List'">
+                  <ng-template mat-tab-label>
+                    <span>{{ tab.displayName }}</span>
+                  </ng-template>
+                </mat-tab>
+              </div>
+            </mat-tab-group>
+          </div>
+        </div> -->
+  <!--<router-outlet *ngIf="headerInfo && headerInfo.user"></router-outlet>-->
+</div>

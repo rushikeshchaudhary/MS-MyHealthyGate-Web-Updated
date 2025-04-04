@@ -1,0 +1,41 @@
+.buttons
+{
+text-align: center;
+}
+.accept
+{
+    margin-right: 10px;
+    min-width: 120px;
+    border-radius: 30px;
+    color: #fff;
+}
+button.cancel-btn {
+    color: #FFF;
+    background: #8c8c8c;
+    border-radius: 30px;
+    min-width: 120px;
+    min-height: auto;
+    font-weight: 500;
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
+    border: 0;
+}
+.modal-design-sec-inner {
+    margin: 24px 0 10px 0 !important;
+}
+
+.payment-btn-sec {
+    margin-bottom: 30px;
+}
+
+.payment-btn-sec button {
+    display: inline-block;
+    vertical-align: middle;
+}
+.strip{
+    width: 100% !important;
+}
+.custom-modal-design{
+max-width: 100%!important;
+}
+

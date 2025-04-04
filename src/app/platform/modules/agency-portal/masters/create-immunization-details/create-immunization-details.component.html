@@ -1,0 +1,87 @@
+<div class="custom_modal">
+  <h3 mat-dialog-title>{{headerText}}</h3>
+  <div mat-dialog-content>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <form (ngSubmit)="onSubmit()" id="CompanyInsuranceForm" #documentForm="ngForm" class="readmin-form custom_form" [formGroup]="CompanyInsuranceForm">
+          <div class="row">
+            <div class="col-sm-12 require">
+              <mat-form-field class="example-full-width" hintLabel="{{formControls['VaccineName'].pending ? 'Validating...' : ''}}">
+                <input matInput autofocus placeholder="Vaccine Name" maxlength="50" formControlName="VaccineName" [ngClass]="{ 'is-invalid': submitted && formControls['VaccineName'].errors }"
+                  required />
+                <mat-error *ngIf="formControls['VaccineName'].errors?.['required']">
+                  Please enter Vaccine Name
+                </mat-error>
+                <mat-error *ngIf="formControls['VaccineName'].errors?.['uniqueName']">
+                  Vaccine Name is already taken.
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+    <div class="row">
+      <div class="col-sm-4 require">
+        <mat-form-field class="example-full-width" hintLabel="{{formControls['ShortDesc'].pending ? 'Validating...' : ''}}">
+          <input matInput autofocus placeholder="ShortDesc " maxlength="50" formControlName="ShortDesc" [ngClass]="{ 'is-invalid': submitted && formControls['ShortDesc'].errors }"
+            required />
+          <mat-error *ngIf="formControls['ShortDesc'].errors?.['required']">
+            Please enter ShortDesc
+          </mat-error>
+          <mat-error *ngIf="formControls['ShortDesc'].errors?.['uniqueName']">
+            ShortDesc is already taken.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+
+  </div>
+  <div class="row">
+    <div class="col-lg-3 col-md-4 col-sm-4 col-12">
+      <!-- <label class="type_label">Appointment Status : </label> -->
+      <div>
+        <mat-form-field class="example-full-width">
+          <mat-label>Select Status</mat-label>
+          <mat-select formControlName="VaccineStatus" (selectionChange)="statusChangeHandler($event.value)">
+            <mat-option *ngFor="let status of vaccineStatus" [value]="status">
+              {{status}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- <div class="col-sm-4 require">
+      <mat-form-field class="example-full-width" hintLabel="{{formControls.VaccineStatus.pending ? 'Validating...' : ''}}">
+        <input matInput autofocus placeholder="VaccineStatus " maxlength="50" formControlName="VaccineStatus" [ngClass]="{ 'is-invalid': submitted && formControls.VaccineStatus.errors }"
+          required />
+        <mat-error *ngIf="formControls.VaccineStatus.errors?.required">
+          Please enter VaccineStatus
+        </mat-error>
+        <mat-error *ngIf="formControls.VaccineStatus.errors?.uniqueName">
+          VaccineStatus  is already taken.
+        </mat-error>
+      </mat-form-field>
+    </div> -->
+
+
+
+</div>
+          <!-- <div class="row">
+            <div class="col-sm-6 require is_active">
+              <mat-checkbox formControlName="isActive">
+                Is Active?
+              </mat-checkbox>
+            </div>
+          </div> -->
+        </form>
+      </div>
+    </div>
+
+  <div mat-dialog-actions class="nw-pd">
+    <button mat-raised-button class="cancel-btn" (click)="closeDialog()">Close</button>
+    <button mat-raised-button color="primary" form="CompanyInsuranceForm" [disabled]="submitted || formControls['pending']" cdkFocusInitial>
+        {{(submitted || CompanyInsuranceForm.pending) ? submitted ? 'Saving...' : CompanyInsuranceForm.pending ? 'Validating...' : 'Save' : 'Save'}}
+      </button>
+  </div>
+</div>
+

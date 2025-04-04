@@ -1,0 +1,299 @@
+<div class="readmin-panel pt-0 provider-dashboardchart">
+  <mat-tab-group (selectedTabChange)="onTabChanged($event)">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        {{"accepted_approved_appointments"|translate}}
+        <!-- <i title="Appointments" routerLink="/web/scheduling" class="fa fa-link pl-2" aria-hidden="true"></i> -->
+      </ng-template>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="dash-table">
+            <ng-scrollbar [trackX]="true" [autoHide]="true">
+              <app-data-table
+                [showTooltip]="showTooltip"
+                (onTableActionClick)="onTableRowClick($event)"
+                class="d-inline-block sticky-table fixed-table no-table"
+                [ngClass]="{
+                  'no-fixed':
+                    allAppointmentsList && allAppointmentsList.length == 0,
+                  '': allAppointmentsList && allAppointmentsList.length > 0
+                }"
+                [stickyHeader]="true"
+                [inputColumns]="allAppointmentsDisplayedColumns"
+                [inputSource]="allAppointmentsList"
+                [inputMeta]="allAppointmentsMeta"
+                (onPageOrSortChange)="onUpcomingAptPageOrSortChange($event)"
+                [inputButtons]="allAppointmentsActionButtons"
+              >
+                <!-- [inputButtons]='allAppointmentsActionButtons'> -->
+              </app-data-table>
+            </ng-scrollbar>
+          </div>
+        </div>
+      </div>
+      <!-- <context-menu #basicMenu>
+       
+        <ng-template contextMenuItem let-item (execute)="addEvent($event, '2')">
+          {{"view_appointment"|translate}}
+        </ng-template>
+        <ng-template
+          [visible]="CheckIstimeExpired"
+          contextMenuItem
+          (execute)="addEvent($event.item, '3')"
+        >
+          <span class="disabled"> {{"reschedule"|translate}}</span>
+        </ng-template>
+        <ng-template
+          [visible]="CheckIstimeExpired"
+          contextMenuItem
+          (execute)="addEvent($event.item, '4')"
+          >{{"reschedule"|translate}}
+        </ng-template>
+        <ng-template contextMenuItem (execute)="addEvent($event.item, '7')">
+          {{"send_invitation"|translate}}
+        </ng-template>
+        <ng-template contextMenuItem (execute)="addEvent($event, '8')">
+          View Patient Profile
+        </ng-template>
+      </context-menu> -->
+      <span style="visibility: hidden; position: fixed"
+      [style.left]="menuPosition.x"
+      [style.top]="menuPosition.y" mat-button [matMenuTriggerFor]="basicMenu"></span>
+      <mat-menu #basicMenu="matMenu">
+        <!-- <button mat-menu-item (click)="addEvent($event, '1')">New appointment</button> -->
+        <button mat-menu-item (click)="addEvent($event, '2')">{{"view_appointment"|translate}}</button>
+        <button mat-menu-item [disabled]="!CheckIstimeExpired" (click)="addEvent($event, '3')">
+          <span class="disabled">{{"reschedule"|translate}}</span>
+        </button>
+        <button mat-menu-item [disabled]="!CheckIstimeExpired" (click)="addEvent($event, '4')">{{"reschedule"|translate}}</button>
+        <!-- <button mat-menu-item (click)="addEvent($event, '5')">Set Reminder</button> -->
+        <!-- <button mat-menu-item (click)="addEvent($event, '6')">Set Availability</button> -->
+        <button mat-menu-item (click)="addEvent($event, '7')">{{"send_invitation"|translate}}</button>
+        <button mat-menu-item (click)="addEvent($event, '8')">View Patient Profile</button>
+      </mat-menu>
+    </mat-tab>  
+    <mat-tab>
+      <ng-template mat-tab-label>
+        {{"appointment_graph"|translate}}
+        <i
+          title="Appointments"
+          routerLink="/web/scheduling"
+          class="fa fa-link pl-2"
+          aria-hidden="true"
+        ></i>
+      </ng-template>
+      <div class="col-md-12 mb-3">
+        <div class="row">
+          <div class="col-sm-4 mt-3 refresh">
+            <mat-form-field class="example-full-width">
+              <mat-select
+                multiple
+                placeholder="{{'select_practitioner'|translate}}"
+                [(ngModel)]="
+                 
+                  filterParamsForAppointent.CareManagerIds
+                "
+                (selectionChange)="onApptGraphCMSelect($event)"
+                matInput
+              >
+                <mat-option *ngFor="let obj of masterStaffs" [value]="obj.id">
+                  {{ obj.value }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <i
+              (click)="onResetApptCMDropdown()"
+              class="fa fa-refresh field-clear"
+              aria-hidden="true"
+              title="Clear All"
+            ></i>
+          </div>
+          <div class="col-sm-4 mt-3">
+            <mat-form-field class="example-full-width">
+              <mat-select
+                multiple
+                placeholder="{{'select_status'|translate}}"
+                [(ngModel)]="
+                
+                  filterParamsForAppointent.statusIds
+                "
+                (selectionChange)="onStatusSelect($event)"
+                matInput
+              >
+                <mat-option
+                  *ngFor="let obj of filteredAppointmentStatus"
+                  [value]="obj.id"
+                >
+                  {{ obj.value }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4 mt-3">
+            <mat-form-field class="example-full-width">
+              <mat-select
+                placeholder="{{'select_time_interval'|translate}}"
+                [(ngModel)]="
+                 
+                  filterParamsForAppointent.appointmentTimeIntervalId
+                "
+                (selectionChange)="onAppointmenttimeInterval($event)"
+                matInput
+              >
+                <mat-option
+                  *ngFor="let obj of masterAppointmenttimeIntervalData"
+                  [value]="obj.id"
+                >
+                  {{ obj.value }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div *ngIf="showGraphAppointment">
+          <!-- <app-line-chart [lineChartData]="lineChartData_appointments" [lineChartLabels]="lineChartLabels_appointments"
+              [lineChartOptions]="lineChartOptions_appointments"></app-line-chart> -->
+
+          <app-bar-chart
+            class="bar-dash"
+            [barChartData]="lineChartData_appointments"
+            [barChartLabels]="lineChartLabels_appointments"
+            [barChartOptions]="lineChartOptions_appointments"
+            [barChartColors]="barChartColors_appointments"
+          >
+          </app-bar-chart>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="{{'cancelled_appointments'|translate}}">
+      <div class="dash-table">
+        <ng-scrollbar [trackX]="true" [autoHide]="true">
+          <app-data-table
+            class="d-inline-block sticky-table fixed-table no-table"
+            [ngClass]="{
+              'no-fixed':
+                cancelledPatientAppointment &&
+                cancelledPatientAppointment.length == 0,
+              '':
+                cancelledPatientAppointment &&
+                cancelledPatientAppointment.length > 0
+            }"
+            [stickyHeader]="true"
+            [inputColumns]="cancelledDisplayedColumns"
+            [inputSource]="cancelledPatientAppointment"
+            [inputMeta]="cancelledAppointmentMeta"
+            [inputButtons]="cancelledActionButtons"
+            (onPageOrSortChange)="onCancelledPageOrSortChange($event)"
+            (onTableActionClick)="onTableActionClick($event)"
+          >
+          </app-data-table>
+        </ng-scrollbar>
+      </div>
+    </mat-tab>
+    <mat-tab label="{{'pending_invitation_appointments'|translate}}">
+      <div class="dash-table mt-3">
+        <ng-scrollbar [trackX]="true" [autoHide]="true">
+          <app-data-table
+            class="d-inline-block sticky-table fixed-table no-table"
+            [ngClass]="{
+              'no-fixed':
+                pendingPatientAppointment &&
+                pendingPatientAppointment.length == 0,
+              '':
+                pendingPatientAppointment &&
+                pendingPatientAppointment.length > 0
+            }"
+            [stickyHeader]="true"
+            [inputColumns]="pendingDisplayedColumns"
+            [inputSource]="pendingPatientAppointment"
+            [inputMeta]="pendingAppointmentMeta"
+            [inputButtons]="pendingActionButtons"
+            [inputButtons]="cancelledActionButtons"
+            (onPageOrSortChange)="onPendingPageOrSortChange($event)"
+            (onTableActionClick)="onTableActionClick($event)"
+          >
+          </app-data-table>
+        </ng-scrollbar>
+      </div>
+    </mat-tab>
+    <!-- <mat-tab label="Invitations">
+      <div class="dash-table">
+        <ng-scrollbar [trackX]="true" [autoHide]="true">
+          <app-data-table
+            class="d-inline-block sticky-table fixed-table no-table"
+            [ngClass]="{
+              'no-fixed':
+                invitedPatientAppointment &&
+                invitedPatientAppointment.length == 0,
+              '':
+                invitedPatientAppointment &&
+                invitedPatientAppointment.length > 0
+            }"
+            stickyHeader="true"
+            [inputColumns]="invitedDisplayedColumns"
+            [inputSource]="invitedPatientAppointment"
+            [inputMeta]="invitedAppointmentMeta"
+            [inputButtons]="invitedActionButtons"
+            (onPageOrSortChange)="onPendingInvitationPageOrSortChange($event)"
+            (onTableActionClick)="onPendingInvitationTableActionClick($event)"
+          >
+          </app-data-table>
+        </ng-scrollbar>
+      </div>
+    </mat-tab> -->
+    <!-- <mat-tab label="Pending Invitation Appointments">
+      <div class="dash-table">
+        <ng-scrollbar [trackX]="true" [autoHide]="true">
+          <app-data-table
+            class="d-inline-block sticky-table fixed-table no-table"
+            [ngClass]="{
+              'no-fixed':
+                invitedPatientAppointment &&
+                invitedPatientAppointment.length == 0,
+              '':
+                invitedPatientAppointment &&
+                invitedPatientAppointment.length > 0
+            }"
+            stickyHeader="true"
+            [inputColumns]="invitedDisplayedColumns"
+            [inputSource]="invitedPatientAppointment"
+            [inputMeta]="invitedAppointmentMeta"
+            [inputButtons]="invitedActionButtons"
+            (onPageOrSortChange)="onPendingInvitationPageOrSortChange($event)"
+            (onTableActionClick)="onPendingInvitationTableActionClick($event)"
+          >
+          </app-data-table>
+        </ng-scrollbar>
+      </div>
+    </mat-tab> -->
+    <!-- <mat-tab label="Accepted Invitation Appointments">
+            <div class="dash-table">
+                <ng-scrollbar [trackX]="true" [autoHide]="true">
+                    <app-data-table class="d-inline-block sticky-table fixed-table no-table" [ngClass]="{'no-fixed':invitedAcceptedPatientAppointment && invitedAcceptedPatientAppointment.length == 0,'':invitedAcceptedPatientAppointment && invitedAcceptedPatientAppointment.length > 0}"
+                        stickyHeader="true" [inputColumns]="invitedAcceptedDisplayedColumns" [inputSource]="invitedAcceptedPatientAppointment" [inputMeta]="invitedAcceptedAppointmentMeta" [inputButtons]='invitedAcceptedActionButtons' (onPageOrSortChange)="onAcceptedInvitationPageOrSortChange($event)">
+                    </app-data-table>
+                </ng-scrollbar>
+            </div>
+        </mat-tab>
+        <mat-tab label="Rejected Invitation Appointments">
+            <div class="dash-table">
+                <ng-scrollbar [trackX]="true" [autoHide]="true">
+                    <app-data-table class="d-inline-block sticky-table fixed-table no-table" [ngClass]="{'no-fixed':invitedRejectedPatientAppointment && invitedRejectedPatientAppointment.length == 0,'':invitedRejectedPatientAppointment && invitedRejectedPatientAppointment.length > 0}"
+                        stickyHeader="true" [inputColumns]="invitedRejectedDisplayedColumns" [inputSource]="invitedRejectedPatientAppointment" [inputMeta]="invitedRejectedAppointmentMeta" [inputButtons]='invitedRejectedActionButtons' (onPageOrSortChange)="onRejectedInvitationPageOrSortChange($event)">
+                    </app-data-table>
+                </ng-scrollbar>
+            </div>
+        </mat-tab> -->
+    <!-- <mat-tab label="TENTATIVE APPOINTMENTS" style="display:none;">
+          <div class="dash-table">
+            <ng-scrollbar [trackX]="true" [autoHide]="true">
+              <app-data-table class="d-inline-block sticky-table fixed-table no-table" [ngClass]="{'no-fixed':tentativePatientAppointment && tentativePatientAppointment.length == 0,'':tentativePatientAppointment && tentativePatientAppointment.length > 0}"
+                stickyHeader="true" [inputColumns]="tentativeDisplayedColumns" [inputSource]="tentativePatientAppointment"
+                [inputMeta]="tentativeAppointmentMeta" [inputButtons]='tentativeActionButtons' (onPageOrSortChange)="onTentativeAptPageOrSortChange($event)">
+
+              </app-data-table>
+            </ng-scrollbar>
+          </div>s
+        </mat-tab> -->
+  </mat-tab-group>
+</div>

@@ -1,0 +1,517 @@
+<div class="patient-container  12345">
+  <div class="row">
+    <!-- <div class="col-sm-12 col-md-12 pull-right">
+        <div *ngIf="showurgentcarebtn" class="col-md-3 pull-right justify-content-md-end d-flex mt-15">
+                    <button mat-raised-button color="primary" (click)="Redirect()">
+                 Join Urgent Care Call</button>
+                </div>
+        <div
+          *ngIf="showurgentcarebtn"
+          class="justify-content-md-end d-flex mb-15"
+        >
+          <button mat-raised-button color="primary" (click)="Redirect()">
+            Join Urgent Care Call
+          </button>
+        </div>
+      </div> -->
+
+    <div class="col-lg-3 col-sm-12">
+      <div class="white-box">
+        <!-- <h3>{{ "profile" | translate }}</h3> -->
+        <div class="profile-detail">
+          <div class="profile-pic">
+            <img src="{{
+                  clientProfileModel &&
+                  clientProfileModel.patientInfo[0] != undefined
+                    ? clientProfileModel.patientInfo[0].photoThumbnailPath ||
+                      '../assets/img/noimage3.png'
+                    : '../assets/img/noimage3.png'
+                }}" alt="" />
+          </div>
+          <h2>
+            {{
+            clientProfileModel &&
+            clientProfileModel.patientInfo[0] != undefined
+            ? clientProfileModel.patientInfo[0].name
+            : ""
+            }}
+          </h2>
+          <p class="age-txt">
+            {{
+            (clientProfileModel &&
+            clientProfileModel.patientInfo[0].age + " yrs") ||
+            ""
+            }}
+          </p>
+          <button class="btn blue-btn appoint-btns" (click)="editProfile($event)">
+            <i class="fa fa-pencil"></i> &nbsp;
+            {{ "edit_profile" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-9 col-sm-12">
+      <div class="white-box health-block">
+        <!-- <h3>{{ "appointment_details" | translate }}</h3> -->
+        <div class="clearfix"></div>
+        <div class="dashboardchart cstm-mat-grid nw-dashboardchart">
+          <div class="readmin-panel-two pt-0">
+            <mat-tab-group (selectedTabChange)="onTabChanged($event)">
+              <mat-tab label="{{ 'todays_appointment' | translate }}">
+                <div class="dash-table mt-2">
+                  <ng-scrollbar [trackX]="true" [autoHide]="true">
+                    <app-data-table class="d-inline-block sticky-table fixed-table no-table" [ngClass]="{
+                            'no-fixed':
+                              allTodayAppointmentsList &&
+                              allTodayAppointmentsList.length == 0,
+                            '':
+                              allTodayAppointmentsList &&
+                              allTodayAppointmentsList.length > 0
+                          }" [stickyHeader]="true" [inputColumns]="todayDisplayedColumns"
+                      [inputSource]="allTodayAppointmentsList" [inputMeta]="todayAppointmentMeta"
+                      (onPageOrSortChange)="onTodayPageOrSortChange($event)" [inputButtons]="todayActionButtons"
+                      onmouseover="this.style.cursor='pointer'" (onTableActionClick)="onTableActionClick($event)">
+                    </app-data-table>
+                  </ng-scrollbar>
+                </div>
+                <!-- <context-menu #basicMenu>
+                  <ng-template contextMenuItem let-item (execute)="addEvent($event, '0')">
+                    {{"view_appointment" | translate}}
+                  </ng-template>
+                  <ng-template contextMenuItem (execute)="addEvent($event, '1')">
+                    View Doctor Profile
+                  </ng-template>
+                </context-menu> -->
+                <span style="visibility: hidden; position: fixed"
+                [style.left]="menuPosition.x"
+                [style.top]="menuPosition.y" mat-icon-button [matMenuTriggerFor]="basicMenu">
+                  
+              </span>
+                
+                <!-- Define the mat-menu -->
+                <mat-menu #basicMenu="matMenu">
+                  <button mat-menu-item (click)="addEvent($event, '0')">
+                    {{'view_appointment' | translate}}
+                  </button>
+                  <button mat-menu-item (click)="addEvent($event, '1')">
+                    View Doctor Profile
+                  </button>
+                </mat-menu>
+              </mat-tab>
+              <mat-tab label="{{ 'upcoming_appointment' | translate }}" *ngIf="appointment">
+                <div class="dash-table mt-2">
+                  <ng-scrollbar [trackX]="true" [autoHide]="true">
+                    <app-data-table class="d-inline-block sticky-table fixed-table no-table" [ngClass]="{
+                            'no-fixed':
+                              allAppointmentsList &&
+                              allAppointmentsList.length == 0,
+                            '':
+                              allAppointmentsList &&
+                              allAppointmentsList.length > 0
+                          }" [stickyHeader]="true" [inputColumns]="allAppointmentsDisplayedColumns"
+                      [inputSource]="allAppointmentsList" [inputMeta]="allAppointmentsMeta"
+                      (onPageOrSortChange)="onUpcomingAptPageOrSortChange($event)"
+                      [inputButtons]="upcomingAppointmentsActionButtons" onmouseover="this.style.cursor='pointer'"
+                      (onTableActionClick)="
+                            onUpcomingTableActionClick($event)
+                          ">
+                    </app-data-table>
+                  </ng-scrollbar>
+                </div>
+
+                <!-- <context-menu #basicMenu>
+                  <ng-template contextMenuItem let-item (execute)="addEvent($event, '0')">
+                    {{"view_appointment" | translate}}
+                  </ng-template>
+                  <ng-template contextMenuItem (execute)="addEvent($event, '1')">
+                    View Doctor Profile
+                  </ng-template>
+                </context-menu> -->
+                <button mat-icon-button [matMenuTriggerFor]="basicMenu">
+                
+                </button>
+                
+               
+                <mat-menu #basicMenu="matMenu">
+                  <button mat-menu-item (click)="addEvent($event, '0')">
+                    {{'view_appointment' | translate}}
+                  </button>
+                  <button mat-menu-item (click)="addEvent($event, '1')">
+                    View Doctor Profile
+                  </button>
+                </mat-menu>
+              </mat-tab>
+              <mat-tab label="{{ 'past_appointement' | translate }}">
+                <div class="dash-table mt-2">
+                  <ng-scrollbar [trackX]="true" [autoHide]="true">
+                    <app-data-table class="d-inline-block sticky-table fixed-table no-table" [ngClass]="{
+                            'no-fixed':
+                              pastAppointmentsList &&
+                              pastAppointmentsList.length == 0,
+                            '':
+                              pastAppointmentsList &&
+                              pastAppointmentsList.length > 0
+                          }" [stickyHeader]="true" [inputColumns]="pastAppointmentsDisplayedColumns"
+                      [inputSource]="pastAppointmentsList" [inputButtons]="pastAppointmentsActionButtons"
+                      [inputMeta]="pastAppointmentMeta" (onPageOrSortChange)="onPastPageOrSortChange($event)"
+                      onmouseover="this.style.cursor='pointer'" (onTableActionClick)="onPastTableActionClick($event)">
+                    </app-data-table>
+                  </ng-scrollbar>
+                </div>
+              </mat-tab>
+
+              <mat-tab label="{{ 'cancelled_appointments' | translate }}">
+                <div class="dash-table mt-2">
+                  <ng-scrollbar [trackX]="true" [autoHide]="true">
+                    <app-data-table class="d-inline-block sticky-table fixed-table no-table" [ngClass]="{
+                            'no-fixed':
+                              CancelledPatientAppointment &&
+                              CancelledPatientAppointment.length == 0,
+                            '':
+                              CancelledPatientAppointment &&
+                              CancelledPatientAppointment.length > 0
+                          }" [stickyHeader]="true" [inputColumns]="cancelledDisplayedColumns"
+                      [inputSource]="CancelledPatientAppointment" [inputMeta]="CancelledAppointmentMeta"
+                      (onPageOrSortChange)="onCancelledPageOrSortChange($event)" onmouseover="this.style.cursor='pointer'"
+                      (onTableActionClick)="onTableActionClick($event)">
+                    </app-data-table>
+                    <context-menu #basicMenu>
+                      <!-- <ng-template contextMenuItem (execute)="addEvent($event.item,'1')">New appointment
+                            </ng-template> -->
+                      <ng-template contextMenuItem let-item (execute)="addEvent($event, '2')">
+                        {{"view_appointment" | translate}}
+                      </ng-template>
+                      <ng-template [visible]="CheckIstimeExpired" contextMenuItem
+                        (execute)="addEvent($event.item, '3')">
+                        <span class="disabled"> {{"reschedule" | translate}}</span>
+                      </ng-template>
+                      <ng-template [visible]="CheckIstimeExpired" contextMenuItem
+                        (execute)="addEvent($event.item, '4')">{{"cancel_appointment" | translate}}
+                      </ng-template>
+                      <!-- <ng-template contextMenuItem (execute)="addEvent($event.item, '5')">Set Reminder
+                          </ng-template> -->
+                      <!-- <ng-template contextMenuItem (execute)="addEvent($event.item, '6')">
+                          Set Availability
+                          </ng-template> -->
+                      <ng-template contextMenuItem (execute)="addEvent($event.item, '7')">
+                        {{"send_invitation" | translate}}
+                      </ng-template>
+                      <ng-template contextMenuItem (execute)="addEvent($event, '8')">
+                        View Patient Profile
+                      </ng-template>
+                    </context-menu>
+                    <button mat-icon-button [matMenuTriggerFor]="basicMenu">
+                     
+                    </button>
+                    
+                   
+                    <mat-menu #basicMenu="matMenu">
+                      <button mat-menu-item (click)="addEvent($event, '2')">
+                        {{'view_appointment' | translate}}
+                      </button>
+                      <button mat-menu-item [disabled]="!CheckIstimeExpired" (click)="addEvent($event, '3')">
+                        <span *ngIf="!CheckIstimeExpired" class="disabled">{{'reschedule' | translate}}</span>
+                        <span *ngIf="CheckIstimeExpired">{{'reschedule' | translate}}</span>
+                      </button>
+                      <button mat-menu-item [disabled]="!CheckIstimeExpired" (click)="addEvent($event, '4')">
+                        {{'cancel_appointment' | translate}}
+                      </button>
+                      <button mat-menu-item (click)="addEvent($event, '7')">
+                        {{'send_invitation' | translate}}
+                      </button>
+                      <button mat-menu-item (click)="addEvent($event, '8')">
+                        {{'view_patient_profile' | translate}}
+                      </button>
+                    </mat-menu>
+                  </ng-scrollbar>
+                </div>
+              </mat-tab>
+              <!-- <mat-tab label="Reports">
+                                        <div class="dash-table mt-2 report-table">
+                                            <ng-scrollbar [trackX]="true" [autoHide]="true">
+                                                <app-data-table (onTableActionClick)="onTableRowClick($event);" class="d-inline-block sticky-table fixed-table no-table" stickyHeader="true" [inputColumns]="patientReportColumns" [inputSource]="PatientReport" [inputMeta]="PatientReportMeta" (onPageOrSortChange)="onReportPageOrSortChange($event)">
+                                                </app-data-table>
+                                            </ng-scrollbar>
+                                        </div>
+                                    </mat-tab> -->
+            </mat-tab-group>
+          </div>
+        </div>
+
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-3 col-sm-12">
+      <div class="white-box appnt-blk bordered-calendar">
+        <div class="calendar-block">
+          <h2 class="title_calender patient-calendar">{{ "my_appointments" | translate }}</h2>
+          <!-- <p class="calendar-sub-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p> -->
+          <mat-card class="custom-calendar-block consultation-calendar-block p-0 mb-4">
+            <mat-calendar id="calenderdateid" [selected]="selectedDate"
+              (selectedChange)="onDateSelected($event)"></mat-calendar>
+          </mat-card>
+          <div *ngIf="
+                  onDateSelectedApptList && onDateSelectedApptList.length > 0;
+                    else noAppointments">
+            <div *ngFor="let appointment of onDateSelectedApptList" class="schedule_appointment mb-1"
+              (click)="gotowaitingRoom(appointment.patientAppointmentId)">
+              <p class="sche_time">
+                {{ appointment.startDateTime | date : "shortTime" }} -
+                {{ appointment.endDateTime | date : "shortTime" }}
+              </p>
+              <h2 class="doctor_name">Dr. {{ appointment.staffName }}</h2>
+              <p class="para_desc">
+                {{ appointment.appointmentTypeName}} &
+                {{ appointment.bookingMode}}
+              </p>
+            </div>
+          </div>
+          <ng-template #noAppointments>
+            <p class="no-appointments-text">No Appointments</p>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-9 col-sm-12">
+      <div class="cards_graph">
+        <div class="d-flex justify-content-between flex-wrap card_buttons">
+          <button class="appoint-btns blue-btn" (click)="gotoBookAppt()">{{"book_appointement"|translate}}</button>
+          <button class="appoint-btns blue-btn" (click)="gotoCareLibrary()">My Care Library</button>
+          <button class="appoint-btns blue-btn" (click)="gotoFavourite()">{{"favorites"|translate}}</button>
+          <button class="appoint-btns blue-btn" (click)="gotoHelpDesk()">Help Desk</button>
+        </div>
+        <div class="patient-health-tabs">
+          <div class="row">
+            <div class="col-md-4" (click)="vitalsTile('bp')">
+              <div class="grid" style="background: linear-gradient(319.11deg, #e8f5e9 2.11%, #FFFFFF 60.94%);">
+                <img src="../assets/img/bp-icon.png" alt="ic1" />
+                <h3>{{ "blood_pressure" | translate }}</h3>
+                <p class="lgt-blue-txt">
+                  {{
+                  (clientProfileModel &&
+                  clientProfileModel.patientVitals[0] != undefined &&
+                  retValue(
+                  clientProfileModel.patientVitals[0].bpSystolic,
+                  "/",
+                  clientProfileModel.patientVitals[0].bpDiastolic
+                  )) ||
+                  ""
+                  }}
+                </p>
+                <p class="small-txt" *ngIf="clientProfileModel && clientProfileModel.patientVitals">
+                  {{ getChangePercentage("bp") }}
+                </p>
+              </div>
+            </div>
+            <div class="col-md-4" (click)="vitalsTile('heartrate')">
+              <div class="grid" style="background: linear-gradient(319.11deg, #fff3e0 2.11%, #FFFFFF 60.94%);">
+                <img src="../assets/img/heart-icon.png" alt="ic2" />
+                <h3>{{ "heart_rate" | translate }}</h3>
+                <p class="lgt-blue-txt">
+                  {{
+                  (clientProfileModel &&
+                  clientProfileModel.patientVitals[0] != undefined &&
+                  retValue(
+                  clientProfileModel.patientVitals[0].heartRate,
+                  " bmp",
+                  ""
+                  )) ||
+                  ""
+                  }}
+                </p>
+                <p class="small-txt" *ngIf="clientProfileModel && clientProfileModel.patientVitals">
+                  {{ getChangePercentage("heartrate") }}
+                </p>
+              </div>
+            </div>
+            <div class="col-md-4" (click)="vitalsTile('temperature')">
+              <div class="grid" style="background: linear-gradient(319.11deg, #f3e5f5 2.11%, #FFFFFF 60.94%);">
+                <img src="../assets/img/temp-icon.png" alt="ic3" />
+                <h3>{{ "body_temp" | translate }}</h3>
+                <p class="lgt-blue-txt">
+                  {{
+                  (clientProfileModel &&
+                  clientProfileModel.patientVitals[0] != undefined &&
+                  retValue(
+                  clientProfileModel.patientVitals[0].temperature,
+                  "°C",
+                  ""
+                  )) ||
+                  ""
+                  }}
+                </p>
+                <p class="small-txt" *ngIf="clientProfileModel && clientProfileModel.patientVitals">
+                  {{ getChangePercentage("temperature") }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4" (click)="clientProfileModel && vitalsTile('height')">
+              <div class="grid" style="background: linear-gradient(319.11deg, #e3f2fd 2.11%, #FFFFFF 60.94%);">
+                <img src="../assets/img/height-icon.png" alt="ic6" />
+                <h3>{{ "height" | translate }}</h3>
+                <p class="lgt-blue-txt">
+                  {{
+                  (clientProfileModel &&
+                  clientProfileModel.patientVitals[0] != undefined &&
+                  retValue(
+                  clientProfileModel.patientVitals[0].heightIn,
+                  "IN",
+                  ""
+                  )) ||
+                  ""
+                  }}
+                </p>
+                <p class="small-txt" *ngIf="clientProfileModel && clientProfileModel.patientVitals">
+                  {{ getChangePercentage("height") }}
+                </p>
+              </div>
+            </div>
+            <div class="col-md-4" (click)="vitalsTile('weight')">
+              <div class="grid" style="background: linear-gradient(319.11deg, #fbe9e7 2.11%, #FFFFFF 60.94%);">
+                <img src="../assets/img/weight-icon.png" alt="ic6" />
+                <h3>{{ "weight" | translate }}</h3>
+                <p class="lgt-blue-txt">
+                  {{
+                  (clientProfileModel &&
+                  clientProfileModel.patientVitals[0] != undefined &&
+                  retValue(
+                  clientProfileModel.patientVitals[0].weightLbs,
+                  " lbs",
+                  ""
+                  )) ||
+                  ""
+                  }}
+                </p>
+                <p class="small-txt" *ngIf="clientProfileModel && clientProfileModel.patientVitals">
+                  {{ getChangePercentage("weight") }}
+                </p>
+              </div>
+            </div>
+            <div class="col-md-4" (click)="vitalsTile('respiration')">
+              <div class="grid" style="background: linear-gradient(319.11deg, #e0f2f1 2.11%, #FFFFFF 60.94%);">
+                <img src="../assets/img/resp-icon.png" alt="ic6" />
+                <h3>{{ "respiration" | translate }}</h3>
+                <p class="lgt-blue-txt">
+                  {{
+                  (clientProfileModel &&
+                  clientProfileModel.patientVitals[0] != undefined &&
+                  retValue(
+                  clientProfileModel.patientVitals[0].respiration,
+                  "",
+                  ""
+                  )) ||
+                  ""
+                  }}
+                </p>
+                <p class="small-txt" *ngIf="clientProfileModel && clientProfileModel.patientVitals">
+                  {{ getChangePercentage("respiration") }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="readmin-panel">
+            <div class="panel-body">
+              <div *ngIf="!isGrid" class="mt-15">
+                <app-line-chart [lineChartData]="lineChartData" [lineChartLabels]="lineChartLabels"
+                  (clearAllChange)="clearVitalsData()"></app-line-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <h3>{{ "appointment" | translate }}</h3> -->
+<!-- <div class="ap-detail">
+            <p class="med-txt">{{ "upcoming_appointment" | translate }}</p>
+            <div
+              (click)="
+                appointment &&
+                  viewAppointment(appointment.upcomingAppointmentId)
+              "
+            >
+              <div class="blue-txt" *ngIf="appointment">
+                {{ appointment.appointedUpcomingStaff }},
+                <span *ngIf="appointment">{{
+                  appointment.upcomingAppointmentStartDate | date : 'dd/MM/yyyy'
+                }}</span>
+              </div>
+              <div class="light-txt" *ngIf="appointment">
+                {{
+                  appointment.upcomingAppointmentStartDate | date : "shortTime"
+                }}
+                -
+                {{
+                  appointment.upcomingAppointmentEndDate | date : "shortTime"
+                }}
+              </div>
+            </div>
+          </div> -->
+<!-- <div class="ap-detail">
+            <p class="med-txt">{{"last" | translate}}</p>
+            <div
+              (click)="
+                appointment && viewAppointment(appointment.pastAppointmentId)
+              "
+            >
+              <div class="blue-txt" *ngIf="appointment">
+                {{ appointment.appointedPastStaff }},
+                <span *ngIf="appointment">{{
+                  appointment.pastAppointmentStartDate | date : 'dd/MM/yyyy'
+                }}</span>
+              </div>
+              <div class="light-txt" *ngIf="appointment">
+                {{ appointment.pastAppointmentStartDate | date : "shortTime" }}
+                -
+                {{ appointment.pastAppointmentEndDate | date : "shortTime" }}
+              </div>
+            </div>
+          </div> -->
+
+
+
+
+<!-- <div class="white-box appnt-blk">
+          <h3>{{ "payments" | translate }}</h3>
+          <div class="ap-detail">
+            <p class="med-txt">{{ "this_month" | translate }}</p>
+            <div class="blue-txt" (click)="goToPayment('mon')" *ngIf="payment">
+              {{ payment.monthlyAmount | currency : "JOD " : "symbol-narrow" }}
+            </div>
+          </div>
+          <div class="ap-detail">
+            <p class="med-txt">{{ "total" | translate }}</p>
+            <div class="blue-txt" (click)="goToPayment('tot')" *ngIf="payment">
+              {{ payment.netAmount | currency : "JOD " : "symbol-narrow" }}
+            </div>
+          </div>
+        </div> -->
+
+<!-- <div class="readmin-panel">
+    <div class="panel-body"> -->
+<!-- <div class="row">
+        <div class="col-md-12 justify-content-between d-flex align-items-center">
+          <div class="gridlist">
+            <i class="fa fa-list" (click)="toggleView('grid')"></i>
+            <i class="fa fa-area-chart ml-3" (click)="toggleView('chart')"></i>
+          </div>
+        </div>
+      </div> -->
+
+<!-- <div *ngIf="!isGrid" class="mt-15">
+        <app-line-chart [lineChartData]="lineChartData" [lineChartLabels]="lineChartLabels"></app-line-chart>
+      </div> -->
+<!-- <div *ngIf="isGrid">
+        <app-data-table [inputColumns]="displayedColumns" [inputSource]="vitalListingData" [inputMeta]="metaData" [inputButtons]='actionButtons'
+          (onPageOrSortChange)="onPageOrSortChange($event)" (onTableActionClick)="onTableActionClick($event)">
+        </app-data-table>
+      </div> -->
+<!-- </div>
+  </div> -->

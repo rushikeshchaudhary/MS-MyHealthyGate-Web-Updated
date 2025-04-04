@@ -1,0 +1,197 @@
+<div class="custom_modal">
+  <h3 mat-dialog-title>Manage Providers</h3>
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="doctor-widget profile-view">
+          <i class=""></i>
+          <table class="table table-hover table-dropdown">
+            <thead>
+              <tr>
+                <th>Order No</th>
+                <th>Provider Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>
+
+                  <mat-select placeholder="Select Provider" (selectionChange)="onChange($event)" [(value)]="staff1"
+                    required #singleSelect>
+                    <mat-option>
+                            <!-- intentionally commented code for running the application -->
+                      <ngx-mat-select-search placeholder="Search" [formControl]="websiteFilterCtrl">
+                      </ngx-mat-select-search>
+                    </mat-option>
+
+                    <mat-option *ngFor="let provider of filteredWebsites | async" [value]="provider.staffID">
+                      {{provider.firstName}}
+                    </mat-option>
+                  </mat-select>
+
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>
+                  <mat-select placeholder="Select Provider" [(value)]="staff2" required>
+                    <mat-option>
+                            <!-- intentionally commented code for running the application -->
+                      <ngx-mat-select-search placeholder="Search" [formControl]="websiteFilterCtrl2">
+                      </ngx-mat-select-search>
+                    </mat-option>
+
+                    <mat-option *ngFor="let provider of filteredWebsites2 | async" [value]="provider.staffID">
+                      {{provider.firstName}}
+                    </mat-option>
+                  </mat-select>
+
+                </td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>
+                  <mat-select placeholder="Select Provider" [(value)]="staff3" required>
+                    <mat-option>
+                            <!-- intentionally commented code for running the application -->
+                      <ngx-mat-select-search placeholder="Search" [formControl]="websiteFilterCtrl3">
+                      </ngx-mat-select-search>
+                    </mat-option>
+
+                    <mat-option *ngFor="let provider of filteredWebsites3 | async" [value]="provider.staffID">
+                      {{provider.firstName}}
+                    </mat-option>
+                  </mat-select>
+                </td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>
+                  <mat-select placeholder="Select Provider" [(value)]="staff4" required>
+                    <mat-option>
+                            <!-- intentionally commented code for running the application -->
+                      <ngx-mat-select-search placeholder="Search" [formControl]="websiteFilterCtrl4">
+                      </ngx-mat-select-search>
+                    </mat-option>
+
+                    <mat-option *ngFor="let provider of filteredWebsites4 | async" [value]="provider.staffID">
+                      {{provider.firstName}}
+                    </mat-option>
+                  </mat-select>
+                </td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>
+                  <mat-select placeholder="Select Provider" [(value)]="staff5" required>
+                    <mat-option>
+                            <!-- intentionally commented code for running the application -->
+                      
+                      <ngx-mat-select-search placeholder="Search" [formControl]="websiteFilterCtrl5">
+                      </ngx-mat-select-search>
+                    </mat-option>
+
+                    <mat-option *ngFor="let provider of filteredWebsites5 | async" [value]="provider.staffID">
+                      {{provider.firstName}}
+                    </mat-option>
+                  </mat-select>
+                </td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>
+                  <mat-select placeholder="Select Provider" [(value)]="staff6" required>
+                    <mat-option>
+                            <!-- intentionally commented code for running the application -->
+                      <ngx-mat-select-search placeholder="Search" [formControl]="websiteFilterCtrl6">
+                      </ngx-mat-select-search>
+                    </mat-option>
+
+                    <mat-option *ngFor="let provider of filteredWebsites6 | async" [value]="provider.staffID">
+                      {{provider.firstName}}
+                    </mat-option>
+                  </mat-select>
+                </td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>
+                  <mat-select placeholder="Select Provider" [(value)]="staff7" required>
+                    <mat-option>
+                            <!-- intentionally commented code for running the application -->
+                      <ngx-mat-select-search placeholder="Search" [formControl]="websiteFilterCtrl7">
+                      </ngx-mat-select-search>
+                    </mat-option>
+
+                    <mat-option *ngFor="let provider of filteredWebsites7 | async" [value]="provider.staffID">
+                      {{provider.firstName}}
+                    </mat-option>
+                  </mat-select>
+                </td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>
+                  <mat-select placeholder="Select Provider" [(value)]="staff8" required>
+                    <mat-option>
+      <!-- intentionally commented code for running the application -->
+                      <ngx-mat-select-search placeholder="Search" [formControl]="websiteFilterCtrl8">
+                      </ngx-mat-select-search>
+                    </mat-option>
+
+                    <mat-option *ngFor="let provider of filteredWebsites8 | async" [value]="provider.staffID">
+                      {{provider.firstName}}
+                    </mat-option>
+                  </mat-select>
+                </td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td>
+                  <mat-select placeholder="Select Provider" [(value)]="staff9" required>
+                    <mat-option>
+                            <!-- intentionally commented code for running the application -->
+                      <ngx-mat-select-search placeholder="Search" [formControl]="websiteFilterCtrl9">
+                      </ngx-mat-select-search>
+                    </mat-option>
+
+                    <mat-option *ngFor="let provider of filteredWebsites9 | async" [value]="provider.staffID">
+                      {{provider.firstName}}
+                    </mat-option>
+                  </mat-select>
+                </td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td>
+                  <mat-select placeholder="Select Provider" [(value)]="staff10" required>
+                    <mat-option>
+                            <!-- intentionally commented code for running the application -->
+                      <ngx-mat-select-search placeholder="Search" [formControl]="websiteFilterCtrl10">
+                      </ngx-mat-select-search>
+                    </mat-option>
+
+                    <mat-option *ngFor="let provider of filteredWebsites10 | async" [value]="provider.staffID">
+                      {{provider.firstName}}
+                    </mat-option>
+                  </mat-select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="error" *ngIf="isInvalid">
+            {{errorMessage}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button class="cancel-btn" (click)="closeDialog('close')">Close</button>
+    <div>
+      <button name="Save" mat-raised-button color="accent" [disabled]="isInvalid" (click)="onSubmit()"
+        form="prescriptionForm" class="text-uppercase" cdkFocusInitial>Save</button>
+    </div>
+  </div>
+</div>

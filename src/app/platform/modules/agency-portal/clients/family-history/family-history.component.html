@@ -1,0 +1,113 @@
+<div class="patient-container">
+  <app-client-header
+    [clientId]="clientId"
+    [headerText]="header"
+  ></app-client-header>
+  <!-- <div class="readmin-panel"> -->
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-12 pull-right justify-content-md-end d-flex">
+          <button
+            [disabled]="disableButton()"
+            mat-raised-button
+            *ngIf="addPermission && appointmentId == 0"
+            mat-raised-button
+            color="primary"
+            class="add-primary-btn"
+            (click)="openDialog()"
+          >
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            <span [matTooltip]="disableButton() ? tooltipdMessage : ''"
+              >{{"add_history"|translate}}</span
+            >
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div
+          class="col-sm-6 mt-20 family-history custom-card custom-card-header"
+          *ngFor="let history of patientMedicalFamilyHistoryList"
+        >
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>
+                {{ history.firstName + " " + history.lastName }}
+              </mat-card-title>
+              <mat-card-actions>
+                <button
+                  *ngIf="updatePermission"
+                  mat-button
+                  (click)="openDialog(history.id)"
+                >
+                  <i class="fa fa-pencil"></i>
+                </button>
+                <button
+                  *ngIf="deletePermission && appointmentId == 0"
+                  mat-button
+                  (click)="delete(history.id)"
+                >
+                  <i class="fa fa-close"></i>
+                </button>
+              </mat-card-actions>
+            </mat-card-header>
+            <!-- <div mat-card-avatar class="example-header-image"></div> -->
+            <mat-card-content class="d-flex justify-content-start">
+              <div>
+                <p>
+                  {{"relationship"|translate}}:
+                  <span>
+                    <b>{{ history.relationShipName }}</b></span
+                  >
+                </p>
+                <p>
+                  {{"dob"|translate}}:
+                  <span>
+                    <b> {{ history.dob | date:'dd/MM/yyyy' }} </b></span
+                  >
+                </p>
+              </div>
+              <div *ngIf="history.dateOfDeath" class="ml-4">
+                <p>
+                  {{"date_of_death"|translate}}:
+                  <span>
+                    <b> {{ history.dateOfDeath | date:'dd/MM/yyyy' }} </b></span
+                  >
+                </p>
+                <p>
+                  {{"cause_of_death"|translate}}:
+                  <span>
+                    <b> {{ history.causeOfDeath }} </b></span
+                  >
+                </p>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+      <div class="row">
+        <div
+          *ngIf="appointmentId == 0"
+          class="col-md-12 pull-right justify-content-md-end d-flex"
+        >
+          <button
+            mat-raised-button
+            mat-raised-button
+            color="primary"
+            class="add-primary-btn"
+            (click)="continue()"
+          >
+            <span [matTooltip]="disableButton() ? tooltipdMessage : ''"
+              >{{"continue"|translate}}
+            </span>
+            <i class="fa fa-forward" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!--<div *ngIf="!isHistoryShareable" class="m-3">
+            <h3> <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i> Patient don't want to share
+                his history </h3>
+        </div>-->
+  <!-- </div> -->
+</div>

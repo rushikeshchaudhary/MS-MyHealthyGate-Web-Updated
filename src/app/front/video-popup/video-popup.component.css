@@ -1,0 +1,24 @@
+.video_popup {
+    padding: 1rem;
+}
+.video_popup iframe {
+    width: 100%;
+    height: 400px;
+}
+.video_header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    align-items: center;
+}
+.video_header h4 {
+    font-size: 26px;
+    font-weight: 500;
+    color: #01385f;
+    margin: 0;
+}
+.video_header i {
+    color: #01385f;
+    font-size: 20px;
+    cursor: pointer;
+}

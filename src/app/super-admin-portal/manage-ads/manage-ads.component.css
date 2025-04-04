@@ -1,0 +1,11 @@
+.uplaod_pic img {
+    width: 100%;
+}
+.uplaod_pic span {
+    background-color: #fff !important;
+    color: #000;
+}
+.control-label {
+    font-size: 14px;
+    font-weight: 600;
+}

@@ -1,0 +1,42 @@
+<div class="row readmin-panel m-0 border-rad">
+  <div class="col-sm-12">
+    <h2 class="page_title">{{"my_client"|translate}}</h2>
+  </div>
+  <div class="col-lg-3 col-sm-12 d-flex pos">
+    <input
+      [(ngModel)]="searchText"
+      name="searchKey"
+      type="text"
+      class="pateintsearch"
+      style="background-color: transparent; border-bottom: 1px solid rgba(0, 0, 0, 0.2); border-left: none; border-right: none; border-top: none;"
+      placeholder="{{'search_here'|translate}}"
+      (ngModelChange)="searchFilter($event)"
+    />
+    <button class="search-button"></button>
+    <!-- <mat-form-field class="exmaple-full-width" appearance="fill">
+      <input
+        matInput
+        [(ngModel)]="searchText"
+        name="searchText"
+        (ngModelChange)="searchFilter($event)"
+        placeholder="Search"
+      />
+    </mat-form-field> -->
+  </div>
+</div>
+
+<div class="readmin-panel rad-border">
+  <div class="no-gutters">
+    <div class="dash-table">
+      <app-data-table
+        [stickyHeader]="true"
+        [inputColumns]="prescriptionColumns"
+        [inputSource]="clientPrescriptionModel"
+        [inputMeta]="metaDataPrescription"
+        (onPageOrSortChange)="onPageOrSortChange($event)"
+        (onTableActionClick)="onTableActionClick($event)"
+      >
+      </app-data-table>
+    </div>
+  </div>
+</div>

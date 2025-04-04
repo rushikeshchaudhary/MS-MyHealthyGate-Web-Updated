@@ -1,0 +1,145 @@
+<div class="provider-container">
+  <div class="dash-section">
+    <div class="row">
+      <div class="col-sm-12 col-md-4">
+        <div class="blue-box">
+          <h3>Shared Prescription</h3>
+
+          <div class="blue-box-inner">
+            <div class="row blue-box-detail">
+              <div class="col-md-6">
+                <div class="lght-txt">Total Shared Prescription</div>
+                <div class="white-txt">{{clientPrescriptionModel.length!=0?clientPrescriptionModel[0].totalRecords:""}}</div>
+              </div>
+              <div class="col-md-6">
+                <div class="lght-txt">Total Clients</div>
+                <div class="white-txt">{{allClientPrescriptionModel.length!=0?allClientPrescriptionModel[0].totalRecords:""}}</div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-4">
+        <div class="blue-box">
+          <h3>{{"payment"| translate}}</h3>
+          <div class="blue-box-inner">
+            <div class="row blue-box-detail">
+              <div class="col-md-6">
+                <div class="lght-txt">{{"today"| translate}}</div>
+                <div class="white-txt"></div>
+              </div>
+              <div class="col-md-6">
+                <div class="lght-txt">{{"this_month" | translate}}</div>
+                <div class="white-txt"></div>
+              </div>
+            </div>
+            <div class="row blue-box-detail">
+              <div class="col-md-6">
+                <div class="lght-txt">{{"last_month" | translate}}</div>
+                <div class="white-txt"></div>
+              </div>
+              <div class="col-md-6">
+                <div class="lght-txt">{{"total" | translate}}</div>
+                <div class="white-txt"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-4">
+        <!-- <div class="white-box" id="main">
+          <h3>Consultation</h3>
+            <div
+            *ngIf="showurgentcarebtn"
+            class="pull-right justify-content-md-end d-flex care-btn"
+          >
+            <button mat-raised-button color="primary">
+              Join Urgent Care Call
+            </button>
+          </div>
+          <div class="accordion" id="faq">
+            <div class="card">
+              <div id="faqhead1">
+                <a
+                  href="#"
+                  class="btn btn-header-link collapsed"
+                  data-toggle="collapse"
+                  data-target="#faq1"
+                  aria-expanded="true"
+                  aria-controls="faq1"
+                >
+                  <i class="fa fa-plus-circle" aria-hidden="true"></i> New
+                </a>
+              </div>
+
+              <div
+                id="faq1"
+                class="collapse"
+                aria-labelledby="faqhead1"
+                data-parent="#faq"
+              >
+                <div class="card-body">
+                  <button mat-raised-button color="primary">
+                    Teleconsultation
+                  </button>
+                  <button mat-raised-button color="primary">
+                    Face To Face
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div id="faqhead2">
+                <a
+                  href="#"
+                  class="btn btn-header-link collapsed"
+                  data-toggle="collapse"
+                  data-target="#faq2"
+                  aria-expanded="true"
+                  aria-controls="faq2"
+                >
+                  <i class="fa fa-phone-square" aria-hidden="true"></i>
+                  Follow-Up</a
+                >
+              </div>
+
+              <div
+                id="faq2"
+                class="collapse"
+                aria-labelledby="faqhead2"
+                data-parent="#faq"
+              >
+                <div class="card-body">
+                  <button mat-raised-button color="primary">
+                    Teleconsultation
+                  </button>
+                  <button mat-raised-button color="primary">
+                    Face To Face
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+      <div class="col-sm-12 col-md-3">
+        <div class="white-box service-blk">
+            <h3>Top Medicine shared</h3>
+            <ul>
+                <li> SULFACETAMIDE  75 mg</li>
+                <li> ALOGLIPTIN 40 mg</li>
+                <li> DOXEPIN 60 mg</li>
+                <li> NESINA 80 mg</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-9">
+      <div class="white-box nw-appt-details">
+          <h3> Other Details</h3>
+          <app-pharmacy-appointment-graph></app-pharmacy-appointment-graph>
+      </div>
+  </div>
+    </div>
+  </div>
+</div>

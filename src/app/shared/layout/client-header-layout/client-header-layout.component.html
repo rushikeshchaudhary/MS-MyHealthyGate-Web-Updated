@@ -1,0 +1,159 @@
+<div class="d-flex align-items-center">
+  <div class="">
+    <button
+      title="Favourites"
+      class="bell-icon"
+      mat-icon-button
+      (click)="btnClick()"
+    >
+      <i class="fa fa-star faa-ring animated-hover" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <div class="">
+    <button
+      title="Notifications"
+      class="bell-icon"
+      mat-icon-button
+      [matMenuTriggerFor]="message"
+    >
+      <i class="fa fa-bell faa-ring animated-hover" aria-hidden="true"></i>
+      <span
+        *ngIf="documentNotifications.length > 0"
+        class="no_noti"
+        style="color: white !important; background-color: red !important"
+        >{{ documentNotifications.length }}</span
+      >
+    </button>
+    <mat-menu #message="matMenu" class="natification_box">
+      <div class="main-head">
+        <h3>{{ "notifications" | translate }}</h3>
+        <button type="button">
+          <i class="zmdi zmdi-format-clear-all"></i>
+        </button>
+      </div>
+      <div [ngStyle]="{ height: '300px' }">
+        <ng-scrollbar>
+          <div
+            mat-menu-item
+            class="read-noti"
+            *ngFor="let doc of documentNotifications"
+          >
+            <!-- <div>{{ doc.notificationAction }}</div> -->
+            <!-- <div (mouseover)="markRead(doc?.notificationId)">
+              {{ doc.message }}
+              <span class="block"
+                ><i class="fa fa-clock-o"
+                  >&nbsp;{{ doc.timeStamp | date : "MMM d, y, h:mm a" }}</i
+                ></span
+              >
+            </div> -->
+            <div (mouseover)="markRead(doc?.notificationId)">
+              {{ doc.message }}
+              <span class="block">
+                <i class="fa fa-clock-o">
+                  &nbsp;{{ formatDate(doc.timeStamp) }}
+                </i>
+              </span>
+            </div>
+            
+            <!-- <i class="zmdi zmdi-close"></i> -->
+          </div>
+        </ng-scrollbar>
+      </div>
+      <!-- <div class="main-head show-all"><button type="button">Show all notifications</button></div> -->
+      <div *ngIf="documentNotifications.length == 0" class="main-head show-all">
+        <button type="button">{{ "no_notifications" | translate }}</button>
+      </div>
+    </mat-menu>
+  </div>
+
+  <div>
+    <a
+      title="Book New Appointment"
+      [matMenuTriggerFor]="bookList"
+      class="book-new-app"
+      style="cursor: pointer"
+    >
+      <span class="bookmark-icon">
+        <mat-icon> bookmark </mat-icon> </span
+      >&nbsp;{{ "book_appointement" | translate }}
+    </a>
+    <mat-menu #bookList="matMenu">
+      <div class="setting_menu">
+        <button mat-menu-item (click)="onSelectBooking('doctor')">
+          Book Doctor
+        </button>
+        <button mat-menu-item (click)="onSelectBooking('lab')">
+          Book Other Services
+        </button>
+      </div>
+    </mat-menu>
+  </div>
+  <span
+    class="welcomeName"
+    *ngIf="patientData"
+    style="text-decoration: underline; text-underline-position: under"
+  >
+    <!-- {{patientData.firstName+' '+patientData.lastName}}</span> -->
+  </span>
+
+  <div class="user-dropdown">
+    <button [matMenuTriggerFor]="profile">
+      <img
+        src="{{ userInfo.photoThumbnailPath || '../assets/img/noimage3.png' }}"
+        alt="user"
+        class="profile-pic"
+      />
+      <i class="fa fa-chevron-down"></i>
+    </button>
+    <mat-menu #profile="matMenu">
+      <div class="setting_menu">
+        <button
+          mat-menu-item
+          *ngFor="let item of userNavigations"
+          (click)="onSelectUserMenu(item)"
+        >
+          <span [innerHtml]="item.iconName"></span>
+          {{ item.displayName }}
+        </button>
+      </div>
+    </mat-menu>
+  </div>
+  <button
+    class="lang-btn radius-btn"
+    [matMenuTriggerFor]="menu"
+    style="margin-left: 5px"
+    title="change language"
+  >
+    <span class="l-title"
+      ><img class="lang-img" src="../assets/img/lang-icon-MHG.png"
+    /></span>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button id="langDrop" mat-menu-item (click)="useLanguage('en')">
+      <span class="l-title">ENG</span>
+    </button>
+    <button id="langDrop" mat-menu-item (click)="useLanguage('ar')">
+      <span class="l-title">AR</span>
+    </button>
+  </mat-menu>
+  <!--Language Button-->
+  <!-- <div >
+    <div
+    class="lang-btn radius-btn"
+    [matMenuTriggerFor]="menu"
+    style="margin-right: -125px; margin-left: 5px" title="change language"
+  >
+     <span class="l-title"><img class="lang-img" src="../assets/img/lang-icon-MHG.png"/></span>
+  </div>
+  <mat-menu #menu="matMenu">
+    <button id="langDrop" mat-menu-item (click)="useLanguage('en')">
+      <span class="l-title">ENG</span>
+    </button>
+    <button id="langDrop" mat-menu-item (click)="useLanguage('ar')">
+      <span class="l-title">AR</span>
+    </button>
+  </mat-menu>
+  </div> -->
+</div>

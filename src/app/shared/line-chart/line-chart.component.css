@@ -1,0 +1,14 @@
+.chart-container {
+    position: relative;
+}
+
+.overlay-button {
+    position: absolute;
+    top: -25px;
+    right: -9px;
+    z-index: 10;
+    background-color: white;
+    color: #0bc1ca;
+    border: none;
+    padding: 5px 10px
+}

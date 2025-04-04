@@ -1,0 +1,99 @@
+<div class="row">
+  <div class="col-sm-12 mt-3">
+  </div>
+  <div class="col-sm-12">
+    <h2 class="page_title sm-title">
+      {{
+      RadiologyInfo?.firstName +
+      " " +
+      RadiologyInfo?.lastName +
+      " " +
+      (RadiologyInfo?.degreeName || "")
+      }}
+    </h2>
+  </div>
+</div>
+
+<div class="clearfix"></div>
+<div class="row">
+  <div class="col-sm-7 mb-30">
+    <div class="readmin-panel crop pd-15">
+      <div class="profilebg d-flex justify-content-center">
+        <div class="clientpic">
+          <img *ngIf="RadiologyInfo" 
+            [src]="(RadiologyInfo.photopath || RadiologyInfo.photoThumbnailPath) ? (RadiologyInfo.photopath ? RadiologyInfo.photopath : RadiologyInfo.photoThumbnailPath) : '../assets/img/noimage3.png'" />
+        </div>
+      </div>
+      <h2 class="ppname text-center mt-3">
+        {{
+        RadiologyInfo?.firstName +
+        " " +
+        RadiologyInfo?.lastName +
+        " " +
+        (RadiologyInfo?.degreeName || "")
+        }}
+      </h2>
+      <div class="ppdetail client_detail">
+        <div class="ledtdiv">
+          <div class="row">
+            <div class="col-md-6">
+              <b>{{"date_of_joining" | translate}}:</b>
+              <span>{{ RadiologyInfo?.doj | date }}</span>
+            </div>
+            <div class="col-md-6">
+              <b>{{"npi_number" | translate}}:</b> <span>{{ RadiologyInfo?.npiNumber }}</span>
+            </div>
+            <div class="col-md-6">
+              <b>{{"phone" | translate}} :</b><span>{{ RadiologyInfo?.phoneNumber }}</span>
+            </div>
+            <div class="col-md-6">
+              <b>{{"email" | translate}} :</b><span>{{ RadiologyInfo?.email }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+
+  <div class="col-sm-5">
+    <div class="row">
+      <!-- location -->
+      <div class="col-sm-12 mb-30">
+        <div class="readmin-panel crop pd-15">
+          <div class="lineheader">
+            <p> {{"assigned_locations" | translate}}</p>
+          </div>
+          <div class="row">
+            <div [ngStyle]="{ height: '118px' }">
+              <ng-scrollbar>
+                <div class="col-sm-12 assign-loc">
+                  <p>
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <small>
+                      {{
+                      RadiologyInfo?.radiologyAddressData?.length > 0
+                      ? RadiologyInfo?.radiologyAddressData[0]?.aptNumber +
+                      " ," +
+                      RadiologyInfo?.radiologyAddressData[0]?.cityName +
+                      ", " +
+                      RadiologyInfo?.radiologyAddressData[0]?.stateName +
+                      ", " +
+                      RadiologyInfo?.radiologyAddressData[0]?.countryName +
+                      ", " +
+                      RadiologyInfo?.radiologyAddressData[0]?.zipNumber
+                      : "No Address Found"
+                      }}
+                    </small>
+                  </p>
+                </div>
+              </ng-scrollbar>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-12"></div>
+</div>

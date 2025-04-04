@@ -1,0 +1,75 @@
+<!-- <h2 class="page_title">{{"client_details"|translate}}</h2> -->
+<div class="readmin-panel two">
+  <div class="provider-container">
+    <div class="client-details-cover">
+      <mat-nav-list>
+        <div class="d-flex" style="gap: 10px; margin-left: 20px;">
+        <div class="searchwdbtn">
+          <form class="pos">
+            <input [(ngModel)]="searchKey" name="searchKey" type="text" class="pateintsearch"
+              placeholder="{{'search_here'|translate}}" (ngModelChange)="searchChanged($event)" />
+              <button class="search-button"></button>
+            <!-- <button
+            class="serchclose-btn"
+            type="reset"
+            (click)="searchKey = ''; getStaffClients()"
+          >
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </button> -->
+          </form>
+
+          <!-- <button
+          mat-raised-button
+          class="s_filter"
+          (click)="toggleAdvancedFilter()"
+        >
+          <i class="fa fa-filter" aria-hidden="true"></i>
+        </button> -->
+          <!-- <button mat-raised-button color="primary" (click)="onClick()" class="addpateint"><i class="fa fa-plus"
+            aria-hidden="true"></i></button> -->
+        </div>
+        <div class="filter-btn">
+          <button class="clear-btn" mat-raised-button type="reset" (click)="searchKey = ''; getStaffClients()">
+            Clear All
+          </button>
+        </div>
+      </div>
+        <!-- <div *ngIf="toggle" class="filterbox" id="advancedFilter">
+        <div class="row">
+          <div class="col-12 filterhead">
+            Advance Search Filter
+            <i
+              class="fa fa-times"
+              aria-hidden="true"
+              (click)="toggleAdvancedFilter(false)"
+            ></i>
+          </div>
+          <div class="col-sm-12 d-flex align-items-center">
+            <mat-checkbox
+              id="chkActive"
+              (change)="getActiveClients($event)"
+              name="active"
+            >
+              Include active clients only
+            </mat-checkbox>
+          </div>
+          <div class="col-sm-12 d-flex align-items-center">
+            <mat-checkbox
+              id="chkIsActive"
+              (change)="getInactiveClients($event)"
+              name="inActive"
+            >
+              Include inactive clients only
+            </mat-checkbox>
+          </div>
+        </div>
+      </div> -->
+        <div class="clearfix"></div>
+        <app-data-table [inputColumns]="displayColumns" [inputSource]="clientList" [inputMeta]="metaData"
+          (onPageOrSortChange)="onPageOrSortChange($event)" (onTableActionClick)="onTableActionClick($event)"
+          title="Profile summary." onmouseover="this.style.cursor='pointer'">
+        </app-data-table>
+      </mat-nav-list>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<div>
+  <div class="clearfix"></div>
+  <div class="readmin-panel user-block">
+    <mat-tab-group
+      (selectedTabChange)="loadComponent($event)"
+      [disableRipple]="'true'"
+      [selectedIndex]="selectedIndex"
+    >
+      <mat-tab
+        *ngFor="let tab of paymentTabs; let i = index"
+        [class]="tab.class"
+        class="mat-tab-label-active"
+        label="{{ tab.TabName }}"
+      >
+      </mat-tab>
+    </mat-tab-group>
+    <div #tabContent></div>
+  </div>
+</div>

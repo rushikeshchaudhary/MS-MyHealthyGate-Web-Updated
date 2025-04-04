@@ -1,0 +1,39 @@
+/* Issue 53  Fix Start*/
+.spnCenter{  text-align: center;}
+/* Issue 53  Fix Start*/
+
+.custom-field .mat-form-field-wrapper {
+    padding-bottom: 2px; /* Adjust the padding as needed */
+}
+
+.custom-field .mat-form-field-underline {
+    background-color: rgba(0,0,0,.42); /* Default underline color */
+}
+
+.custom-field .mat-form-field-ripple {
+    background-color: #3f51b5; /* Underline color when focused */
+}
+
+.is-invalid .mat-form-field-wrapper {
+    border: 1px solid red;
+}
+
+.custom-field .mat-input-element {
+    border: 1px solid #ccc; /* Add border to input fields */
+    padding: 8px; /* Adjust padding for better spacing */
+    border-radius: 4px; /* Optional: Add border-radius for rounded corners */
+}
+
+.custom-field .mat-input-element:focus {
+    border-color: #3f51b5; /* Border color when focused */
+    box-shadow: 0 0 5px rgba(63,81,181,0.5); /* Optional: Add shadow for focus effect */
+}
+textarea{
+    border: 1px solid rgb(204, 204, 204);
+    padding: 8px;
+    border-radius: 4px;
+    height: 54px;
+}
+::ng-deep .not-border .mat-form-field-flex{
+    border: none;
+}

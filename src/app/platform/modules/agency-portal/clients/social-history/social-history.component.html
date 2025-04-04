@@ -1,0 +1,93 @@
+<app-client-header [clientId]="clientId" [headerText]="header"></app-client-header>
+<div class="readmin-panel">
+  <form id="socialForm" #documentForm="ngForm" class="custom_form" id="socialForm" [formGroup]="socialForm">
+    <div class="row">
+      <div class="col-sm-4 require">
+        <mat-form-field class="example-full-width">
+          <mat-select autofocus placeholder="{{'alcohol'|translate}}" formControlName="alcohalID" required [ngClass]="{
+              'is-invalid': submitted && formControls['alcohalID'].errors
+            }">
+            <mat-option *ngFor="let alcohol of masterSocialHistory" [value]="alcohol.id">
+              <!-- {{alcohol.value}} -->
+              {{ alcohol.value == 'Former'? alcohol.value + ' drinker' : alcohol.value }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="formControls['alcohalID'].errors">
+            {{"please_select_alcohol_usage_status"|translate}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-4 require">
+        <mat-form-field class="example-full-width">
+          <mat-select placeholder="{{'tobacco'|translate}}" formControlName="tobaccoID" [ngClass]="{
+              'is-invalid': submitted && formControls['tobaccoID'].errors
+            }" required>
+            <mat-option *ngFor="let tobacco of masterSocialHistory" [value]="tobacco.id">
+              <!-- {{ tobacco.value }} -->
+              {{ tobacco.value == 'Former'? tobacco.value + ' smoker' : tobacco.value }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="formControls['tobaccoID'].errors">
+           {{"please_select_tobacco_usage_status"|translate}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-4 require">
+        <mat-form-field class="example-full-width">
+          <mat-select placeholder="{{'drugs'|translate}}" formControlName="drugID" [ngClass]="{
+              'is-invalid': submitted && formControls['drugID'].errors
+            }" required>
+            <mat-option *ngFor="let drugs of masterSocialHistory" [value]="drugs.id">
+              <!-- {{ drugs.value }} -->
+              {{ drugs.value == 'Former'? drugs.value + ' smoker' : drugs.value }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="formControls['drugID'].errors">
+            {{"please_select_drugs_usage_status"|translate}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4 require border-line">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="{{'occupation'|translate}}" maxlength="100" formControlName="occupation" required [ngClass]="{
+              'is-invalid': submitted && formControls['occupation'].errors
+            }" />
+          <mat-error *ngIf="formControls['occupation'].errors?.['required']">
+            {{"please_enter_occupation"|translate}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-4 require">
+        <mat-form-field class="example-full-width">
+          <mat-select placeholder="{{'travel'|translate}}" formControlName="travelID" [ngClass]="{
+              'is-invalid': submitted && formControls['travelID'].errors
+            }" required>
+            <mat-option *ngFor="let travel of masterTravel" [value]="travel.id">
+              {{ travel.value }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="formControls['travelID'].errors">
+            {{"please_enter_travel_status"|translate}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 d-sm-flex justify-content-sm-end pt-3 actions-btn">
+        <button name="Save" mat-raised-button color="primary" (click)="onSubmit($event)" form="socialForm"
+          class="text-uppercase" [disabled]="submitted" cdkFocusInitial>
+          {{ submitted ? "Saving..." : ("save"|translate) }}
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <!-- <div *ngIf="!isHistoryShareable" class="m-3">
+    <h3>
+      <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
+      Patient don't want to share his history
+    </h3>
+  </div>-->
+</div>

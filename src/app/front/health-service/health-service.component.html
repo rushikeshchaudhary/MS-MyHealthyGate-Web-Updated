@@ -1,0 +1,370 @@
+<div class="container-fluid mb-7">
+  <div class="row">
+    <div class="col-12 count-list">
+      <!-- <h3>{{ totalRecords }} Matches Found - {{ searchedLocation }}</h3> -->
+      <div class="d-flex">
+        <div class="sortBy align-items-center">
+          <span class="sort_width">{{'sort_by'|translate}}</span>
+          <ng-select
+            class="custom-ng-select"
+            [placeholder]="'select' | translate"
+            [items]="sortby"
+            (change)="onSortChange($event)"
+          >
+          </ng-select>
+          <div class="list-grid-btn d-flex">
+            <i
+              [class.active]="doctorWidgetClass === 'col-sm-12 list-profile'"
+              class="fa fa-bars pr-2"
+              aria-hidden="true"
+              (click)="doctorWidgetClass = 'col-sm-12 list-profile'"
+            ></i>
+            <i
+              [class.active]="doctorWidgetClass === 'col-sm-6 grid-profile'"
+              class="fa fa-th-large"
+              aria-hidden="true"
+              (click)="doctorWidgetClass = 'col-sm-6 grid-profile'"
+            ></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-4 search-filter">
+      <mat-accordion [multi]="true">
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <i class="fa fa-filter" aria-hidden="true"></i> {{'search'|translate}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="filter-widget">
+            <mat-form-field>
+              <input
+                #prosearchtext
+                [(ngModel)]="searchModel"
+                (ngModelChange)="searchFiltter($event)"
+                matInput
+                [placeholder]="'search'|translate"
+              />
+            </mat-form-field>
+
+            <ng-select
+            placeholder="'search_by_location' | translate"
+              [(ngModel)]="selectedLocation"
+              [items]="location"
+              (change)="locationChange()"
+              bindLabel="locationName"
+              bindValue="id"
+            ></ng-select>
+          </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <i class="fa fa-users" aria-hidden="true"></i> {{'select_health_services'|translate}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="filter-widget">
+            <div class="d-flex flex-column rating">
+              <mat-checkbox
+                *ngFor="let item of healthServiceCheck"
+                [checked]="item.isChecked"
+                (change)="serviceCheckbox(item, $event)"
+              >
+                {{ item.service }}
+              </mat-checkbox>
+            </div>
+          </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <i class="fa fa-star-half-o" aria-hidden="true"></i> {{'client_review'|translate}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="filter-widget">
+            <div class="d-flex flex-column rating">
+              <mat-checkbox
+                id="5"
+                (change)="onReviewRatingChange($event)"
+                #temprating
+              >
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <span> (5)</span>
+              </mat-checkbox>
+              <mat-checkbox
+                id="4"
+                (change)="onReviewRatingChange($event)"
+                #temprating
+              >
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <span> (4)</span>
+              </mat-checkbox>
+              <mat-checkbox
+                id="3"
+                (change)="onReviewRatingChange($event)"
+                #temprating
+              >
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <span> (3)</span>
+              </mat-checkbox>
+              <mat-checkbox
+                id="2"
+                (change)="onReviewRatingChange($event)"
+                #temprating
+              >
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <span> (2)</span>
+              </mat-checkbox>
+              <mat-checkbox
+                id="1"
+                (change)="onReviewRatingChange($event)"
+                #temprating
+              >
+                <i class="fa fa-star filled" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <span> (1)</span>
+              </mat-checkbox>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <mat-card class="mb-3">
+        <mat-card-content>
+          <div class="filter-btn">
+            <button
+              mat-raised-button
+              (click)="clearFilter()"
+              [disabled]="clearing"
+            >
+              {{ !clearing ? ("clear_filter"|translate) : "Clearing..." }}
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="col-lg-9 col-md-8">
+      <div class="row" *ngIf="healthService.length != 0">
+        <div
+          class="{{ doctorWidgetClass }}"
+          *ngFor="let provider of healthService"
+        >
+          <div class="doctor-widget">
+            <mat-card>
+              <mat-card-content>
+                <div class="doc-info">
+                  <div class="doc-info-left">
+                    <div class="doctor-img">
+                      <img
+                        class="img-fluid profile-img"
+                        src="{{
+                          provider.photoThumbnailPath ||
+                            '../../../assets/img/noimage.png'
+                        }}"
+                        alt="doctor"
+                      />
+                    </div>
+                    <div class="doc-info-cont">
+                      <h4 class="doc-name">
+                        <i
+                          *ngIf="provider.roleID == 329"
+                          class="fa fa-thermometer-full"
+                          aria-hidden="true"
+                        ></i>
+                        <i
+                          *ngIf="provider.labId"
+                          class="fa fa-flask"
+                          aria-hidden="true"
+                        ></i>
+                        <a
+                          (click)="redirectToProfilePage(provider)"
+                          *ngIf="provider.labId"
+                        >
+                          {{
+                            provider.labName == null || provider.labName == ""
+                              ? provider.clinicName
+                              : provider.labName
+                          }}
+                        </a>
+                        <a
+                          (click)="redirectToProfilePage(provider)"
+                          *ngIf="provider.roleID == 329"
+                        >
+                          {{ provider.firstName + " " + provider.lastName }}
+                        </a>
+                      </h4>
+                      <h5 class="doc-department">
+                        <ng-container
+                          *ngFor="
+                            let spl of provider.specialities;
+                            let i = index
+                          "
+                        >
+                          <span *ngIf="i == 0">{{ spl.speciality }}</span>
+                          <span *ngIf="i > 0 && i <= 2"
+                            >, {{ spl.speciality }}</span
+                          >
+                          <a
+                            class="hand"
+                            (click)="redirectToProfilePage(provider)"
+                            *ngIf="i > 2"
+                            >+{{ provider.specialities?.length - 3 }}</a
+                          >
+                        </ng-container>
+                      </h5>
+                      <div class="row">
+                        <star-rating
+                          [value]="provider.average"
+                          [totalstars]="5"
+                          checkedcolor="#f4c150"
+                          uncheckedcolor="#e5e5e5"
+                          size="18px"
+                          [readonly]="true"
+                        ></star-rating>
+                        <span
+                          *ngIf="provider.totalReviews > 0"
+                          class="d-inline-block average-rating"
+                          >({{ provider.totalReviews }})</span
+                        >
+                      </div>
+                      <!-- <div class="cfee">
+                        Fee :
+                        {{ provider.payRate | currency: "INR":"symbol-narrow" }}
+                      </div> -->
+
+                      <!-- <div class="mb-2">
+                        <a
+                          herf="javascript:void(0);"
+                          class="cancl-pol-txt"
+                          (click)="
+                            openCancellationRulesPopup(
+                              provider.cancelationRules
+                            )
+                          "
+                          >Cancellation Policy</a
+                        >
+                      </div> -->
+
+                      <div class="clinic-services">
+                        <span *ngFor="let taxonomy of provider.taxonomies">{{
+                          taxonomy.taxonomy
+                        }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="doc-info-right">
+                    <div class="clini-infos">
+                      <ul>
+                        <li>
+                          <i class="fa fa-users" aria-hidden="true"></i>
+                          {{
+                            provider.roleId === 329 ? "Radiology" : "Laboratory"
+                          }}
+                        </li>
+
+                        <li>
+                          <i class="fa fa-phone" aria-hidden="true"></i>
+                          {{ provider.phoneNumber }}
+                        </li>
+
+                        <li>
+                          <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                          <a
+                            href="mailto:sofiabrient_maxhospital@gmail.com?Subject=Hello%20again"
+                            target="_top"
+                            >{{ provider.email }}</a
+                          >
+                        </li>
+
+                        <li class="addres" *ngIf="provider.addres">
+                          <i class="fa fa-map-marker" aria-hidden="true"></i>
+                          {{ provider.addres }}
+                        </li>
+                        <li class="addres" *ngIf="provider.roleID == 329">
+                          <i class="fa fa-map-marker" aria-hidden="true"></i>
+                          {{ provider.address }}, {{ provider.city }},
+                          {{ provider.zip }}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="clinic-booking">
+                    <div class="chk-availability">
+                      <a
+                        href="javascript:void(0)"
+                        class="link-btn gray-outline-btn"
+                        (click)="redirectToProfilePage(provider)"
+                        >{{'view_profile'|translate}}</a
+                      >
+                      <!-- class="link-btn green-outline-btn" -->
+                      <!-- when profile is ready replace this class in a tag -->
+                    </div>
+                    <div class="clinic-btn dr-list-btn">
+                      <!-- <div class="fee-sec">
+                        <h3 (click)="openSeeFees(provider)">See fees</h3>
+                      </div> -->
+                      <button
+                        mat-raised-button
+                        color="primary"
+                        (click)="bookAppointment(provider)"
+                      >
+                      {{'book_now'|translate}}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <nav aria-label="Page navigation example" class="pagination-nav">
+            <ul class="pagination">
+              <li class="page-item">
+                <a class="page-link" href="#">{{'previous'|translate}}</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#"> {{'next'|translate}}</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <div
+        *ngIf="healthService.length == 0 && !showLoader"
+        class="alert alert-danger"
+      >
+        Your search did not matched any results. Please try a different search.
+      </div>
+      <div class="text-center" *ngIf="showLoader" style="display: none">
+        <span class="more-load"></span>
+      </div>
+    </div>
+  </div>
+</div>

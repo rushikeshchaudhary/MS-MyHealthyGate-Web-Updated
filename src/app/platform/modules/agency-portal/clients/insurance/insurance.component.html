@@ -1,0 +1,311 @@
+<div class="patient-container">
+  <div class="readmin-form custom_form insurance-blk">
+    <ul class="tabs-sm">
+      <li [ngClass]="{active : activeInsurance=='primary'}">
+        <a href="#" (click)="activeHandler($event, 'primary')">
+          <i class="flaticon flaticon-medical-2"></i>{{'primary_insurance'|translate}}</a>
+      </li>
+      <li [ngClass]="{active : activeInsurance=='secondary'}">
+        <a href="#" (click)="activeHandler($event, 'secondary')">
+          <i class="flaticon flaticon-shield-1"></i>{{'secondary_insurance'|translate}}</a>
+      </li>
+      <!-- : <li><a href=#><i className="flaticon flaticon-shield-1"></i> Secondary Insurance</a></li> -->
+      <!-- {this.state.enableTertiary ? -->
+      <li [ngClass]="{active : activeInsurance=='tertiary'}">
+        <a href="#" (click)="activeHandler($event, 'tertiary')">
+          <i class="flaticon flaticon-insurance-1"></i>{{'tertiary_insurance'|translate}}</a>
+      </li>
+      <!-- : <li><a href={this.resolveJavascript()}><i className="flaticon flaticon-insurance-1"></i> Tertiary Insurance</a></li>} -->
+    </ul>
+  </div>
+  <div class="row readmin-form">
+    <div class="col-sm-12">
+      <form id="insuranceForm" #documentForm="ngForm" [formGroup]="insuranceForm">
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field class="example-full-width">
+              <mat-select placeholder="{{'insurance_company'|translate}}" (selectionChange)="updateValue($event.value)" formControlName="insuranceCompanyID"
+                matInput [ngClass]="{ 'is-invalid': submitted && formControls['insuranceCompanyID'].errors }" [disabled]="(patientInsuranceId!=null)?true:false"
+                required [errorStateMatcher]="matcher">
+                <mat-option *ngFor="let option of masterInsuranceCompanies" [value]="option.id">
+                  {{option.value}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="formControls['insuranceCompanyID'].errors">
+                {{'please_select_insurance_company'|translate}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field class="example-full-width">
+              <input matInput autofocus placeholder="{{'insurance_company_address'|translate}}" maxlength="50" formControlName="insuranceCompanyAddress"
+                readonly />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <mat-form-field class="example-full-width">
+              <input matInput autofocus placeholder="{{'national_id_number'|translate}}" maxlength="50" formControlName="carrierPayerID"
+                readonly />
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4">
+            <mat-form-field class="example-full-width">
+              <input matInput readonly [matDatepicker]="cardIssueDate" [max]="maxDate" placeholder="{{'insurance_issue_date'|translate}}"
+                formControlName="cardIssueDate">
+              <mat-datepicker-toggle matSuffix [for]="cardIssueDate"></mat-datepicker-toggle>
+              <mat-datepicker #cardIssueDate></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4">
+            <mat-form-field class="example-full-width">
+              <input matInput autofocus placeholder="{{'insurance_group_name'|translate}}" maxlength="50" formControlName="insuranceGroupName" />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <mat-form-field class="example-full-width">
+              <input matInput autofocus placeholder="{{'insurance_plan_name'|translate}}" maxlength="50" formControlName="insurancePlanName" />
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4">
+            <mat-form-field class="example-full-width">
+              <input matInput autofocus placeholder="{{'insurance_id_number'|translate}}" maxlength="50" formControlName="insuranceIDNumber"
+                [ngClass]="{ 'is-invalid': submitted && formControls['insuranceIDNumber'].errors }" required [errorStateMatcher]="matcher"/>
+              <mat-error *ngIf="formControls['insuranceIDNumber'].errors?.['required']">
+                {{'please_enter_insurance_id_number'|translate}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4">
+            <mat-form-field class="example-full-width">
+              <input matInput autofocus placeholder="{{'primary_insurance_notes'|translate}}" maxlength="50" formControlName="notes" />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row" *ngIf="showCheckBox">
+          <div class="col-sm-12">
+            <mat-checkbox formControlName="insurancePersonSameAsPatient" (click)="formControlValueChanged()">
+              {{'insured_person_is_the_same_person_as_client'|translate}}
+            </mat-checkbox>
+          </div>
+        </div>
+        <div formGroupName="insuredPerson" *ngIf="!(formControls['insurancePersonSameAsPatient'].value)">
+          <div class="panel_title">
+            <i class="flaticon flaticon-shield"></i>
+            <h3>{{'insured_person'|translate}}</h3>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="{{'first_name'|translate}}" maxlength="40" formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && insuredPersonformControls.controls['firstName'].errors }"
+                  required [errorStateMatcher]="matcher"/>
+                <mat-error *ngIf="insuredPersonformControls.controls['firstName'].errors?.['required']">
+                  {{'please_enter_first_name'|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="{{'middle_name'|translate}}" maxlength="40" formControlName="middleName" />
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="{{'last_name'|translate}}" maxlength="40" formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && insuredPersonformControls.controls['lastName'].errors }"
+                  required [errorStateMatcher]="matcher"/>
+                <mat-error *ngIf="insuredPersonformControls.controls['lastName'].errors?.['required']">
+                  {{'please_enter_last_name'|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <mat-select placeholder="{{'gender'|translate}}" formControlName="genderID" matInput [ngClass]="{ 'is-invalid': submitted && insuredPersonformControls.controls['genderID'].errors }"
+                  required [errorStateMatcher]="matcher">
+                  <mat-option *ngFor="let genderVal of masterGender" [value]="genderVal.id">
+                    {{genderVal.value}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="insuredPersonformControls.controls['genderID'].errors?.['required']">
+                  {{'please_select_gender'|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input matInput readonly [matDatepicker]="dob" [max]="maxDate" placeholder="{{'date_of_birth'|translate}}"
+                  formControlName="dob" required [errorStateMatcher]="matcher">
+                <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+                <mat-datepicker #dob></mat-datepicker>
+                <mat-error *ngIf="insuredPersonformControls.controls['dob'].errors?.['required']">
+                  {{'please_enter_dob'|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input appPhoneNumber matInput placeholder="{{'phone_number'|translate}}" maxlength="19" formControlName="phone" [ngClass]="{ 'is-invalid': submitted && insuredPersonformControls.controls['phone'].errors }"
+                  required [errorStateMatcher]="matcher"/>
+                <mat-error *ngIf="insuredPersonformControls.controls['phone'].errors?.['required']">
+                  {{'please_enter_Phone_number'|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <mat-select placeholder="{{'relationship'|translate}}" formControlName="relationshipID" matInput [ngClass]="{ 'is-invalid': submitted && insuredPersonformControls.controls['relationshipID'].errors }"
+                  required [errorStateMatcher]="matcher">
+                  <mat-option *ngFor="let relationshipVal of masterRelationship" [value]="relationshipVal.id">
+                    {{relationshipVal.value}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="insuredPersonformControls.controls['relationshipID'].errors?.['required']">
+                  {{'please_select_relationship'|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="{{'address'|translate}}" maxlength="40" formControlName="address1" [ngClass]="{ 'is-invalid': submitted && insuredPersonformControls.controls['address1'].errors}"
+                  required [errorStateMatcher]="matcher"/>
+                <mat-error *ngIf="insuredPersonformControls.controls['address1'].errors?.['required']">
+                  {{'please_enter_address'|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="{{'apt_unit'|translate}}" maxlength="10" formControlName="apartmentNumber" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4 require">
+              <mat-form-field class="example-full-width">
+                <mat-select placeholder="{{'country'|translate}}" formControlName="countryID" matInput [errorStateMatcher]="matcher" required>
+                  <mat-option *ngFor="let country of masterCountry" [value]="country.id">
+                    {{country.value}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="insuredPersonformControls.controls['countryID'].errors">
+                  {{'please_select_country'|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <!-- <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="{{'city'|translate}}" maxlength="50" formControlName="city" [errorStateMatcher]="matcher" required/>
+                <mat-error *ngIf="insuredPersonformControls.controls.city.errors">
+                  {{'please_enter_city'|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div> -->
+            
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <mat-select placeholder="{{'state'|translate}}" formControlName="stateID" matInput [errorStateMatcher]="matcher" required>
+                  <mat-option *ngFor="let state of masterState" [value]="state.id">
+                    {{state.value}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="insuredPersonformControls.controls['stateID'].errors">
+                  {{"please_select_state"|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          <!-- <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="City" maxlength="50" formControlName="city" [errorStateMatcher]="matcher" required/>
+                <mat-error *ngIf="insuredPersonformControls.controls.city.errors">
+                  Please enter city
+                </mat-error>
+              </mat-form-field>
+            </div> -->
+             <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="{{'city'|translate}}" maxlength="50" formControlName="city" [errorStateMatcher]="matcher" required/>
+                <mat-error *ngIf="insuredPersonformControls.controls['city'].errors">
+                  {{'please_enter_city'|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input appZipcode matInput placeholder="{{'zip_code'|translate}}" maxlength="10" formControlName="zip" [ngClass]="{ 'is-invalid': submitted && insuredPersonformControls.controls['zip'].errors}"
+                  required [errorStateMatcher]="matcher" />
+                <mat-error *ngIf="insuredPersonformControls.controls['zip'].errors?.['required']">
+                  {{"please_enter_zip"|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 mt-3">
+            <div class="uplaod_pic insurance-doc">
+              <div>
+                <label class="browse">
+                  <img *ngIf="imagePreviewFront" [src]="imagePreviewFront"
+                    onerror="this.src='../../../../../../assets/img/noImageAvailable.png';" alt="Insurance front" />
+                  <span *ngIf="imagePreviewFront">{{'change'|translate}}</span>
+                  <i *ngIf="!imagePreviewFront" class="fa fa-upload fa-2x" aria-hidden="true"></i>
+                  <input type="file" (change)="handleImageChange($event,'front')">
+                </label>
+              </div>
+              <div>
+                <label class="browse" *ngIf="imageBase64Front" (click)="removeImage('front')">
+                  <span *ngIf="imageBase64Front"></span>
+                  <i *ngIf="imageBase64Front" class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                </label>
+              </div>
+            </div>
+            <p class="ins_photo">{{"please_upload_insurance_front_picture_jpg_jpeg_bmp_png"|translate}}</p>
+          </div>
+          <div class="col-sm-6 mt-3">
+            <div class="uplaod_pic insurance-doc">
+              <div>
+                <label class="browse">
+                  <img *ngIf="imagePreviewBack" [src]="imagePreviewBack"
+                    onerror="this.src='../../../../../../assets/img/noImageAvailable.png';" alt="Insurance back" />
+                  <span *ngIf="imagePreviewBack">{{'change'|translate}}</span>
+                  <i *ngIf="!imagePreviewBack" class="fa fa-upload fa-2x" aria-hidden="true"></i>
+                  <input type="file" (change)="handleImageChange($event,'back')">
+                </label>
+              </div>
+              <div>
+                <label class="browse" *ngIf="imageBase64Back" (click)="removeImage('back')">
+                  <span *ngIf="imageBase64Back"></span>
+                  <i *ngIf="imageBase64Back" class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                </label>
+              </div>
+            </div>
+            <p class="ins_photo">{{"please_upload_insurance_back_picture_jpg_jpeg_bmp_png"|translate}}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 d-sm-flex justify-content-between pt-3 actions-btn">
+            <button name="previous" mat-raised-button color="primary" (click)="onPrevious()" form="insuranceForm" class="text-uppercase ml-3"
+              [disabled]="submitted" >{{"previous"|translate}}</button>
+              <div class="d-flex">
+            <button name="next" mat-raised-button color="primary" (click)="onNext()" form="insuranceForm" class="text-uppercase ml-3"
+              [disabled]="submitted" >{{"next"|translate}}</button>
+
+            <button name="SaveContinue" mat-raised-button color="accent" (click)="onSubmit($event)" form="insuranceForm"
+              class="text-uppercase ml-3" [disabled]="submitted">{{submitted ? 'Saving...' : ('save_and_continue' | translate)}}</button>
+          </div>
+        </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

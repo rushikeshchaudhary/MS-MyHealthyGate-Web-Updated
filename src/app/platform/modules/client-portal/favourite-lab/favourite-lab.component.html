@@ -1,0 +1,38 @@
+<div class="p-t-2">
+  <h2 class="page-title">{{"add_favourite_lab" | translate}}</h2>
+  <div class="top-btns"></div>
+  <div class="clearfix"></div>
+  <div class="container-fluid">
+    <div class="form-style">
+      <form [formGroup]="favouriteLabForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-md-12 row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <mat-select formControlName="lab" placeholder="{{ 'select_lab' | translate }}">
+                  <mat-option *ngFor="let opt of labList" [value]="opt.labId">
+                    {{opt.labName }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="f['lab']?.errors && submitted">{{"please_select_pharmacy_name"|translate}}</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-3" *ngIf="false">
+              <mat-checkbox formControlName="isActive"> {{"is_active" | translate}}</mat-checkbox>
+            </div>
+            <div class="col-md-3">
+              <button mat-raised-button color="primary" [disabled]="loading">{{"submit" | translate}}</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <app-data-table [inputColumns]="displayColumns" [inputSource]="favouriteList" [inputMeta]="metaData"
+          [inputButtons]="actionButtons" (onTableActionClick)="onTableActionClick($event)" (onPageOrSortChange)="setPagePaginator($event)">
+        </app-data-table>
+      </div>
+    </div>
+  </div>
+</div>

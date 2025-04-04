@@ -1,0 +1,131 @@
+<div class="custom_modal">
+  <h3 mat-dialog-title>{{ "upload_document" | translate }}</h3>
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-sm-12">
+        <form
+          id="addAwardForm"
+          #documentForm="ngForm"
+          class="readmin-form custom_form"
+          [formGroup]="addAwardForm"
+        >
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  placeholder="{{'award_type'|translate}}"
+                  formControlName="awardType"
+                  [ngClass]="{
+                    'is-invalid': submitted && addFormControls['awardType'].errors
+                  }"
+                  required
+                />
+                <!-- {{ 'award_type' | translate }} -->
+                <mat-error *ngIf="addFormControls['awardType'].errors">
+                  <!-- {{ "please_enter_awardType" | translate }} -->
+                  {{"please_enter_award_type"|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  placeholder="{{'description'|translate}}"
+                  formControlName="description"
+                  [ngClass]="{
+                    'is-invalid':
+                      submitted && addFormControls['description'].errors
+                  }"
+                  required
+                />
+                <!-- {{ 'description' | translate }} -->
+                <mat-error *ngIf="addFormControls['description'].errors">
+                  <!-- {{ "please_enter_description" | translate }} -->
+                  {{"please_enter_description"|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  [matDatepicker]="awardDate"
+                  placeholder="{{'award_date'|translate}}"
+                  formControlName="awardDate"
+                  [ngClass]="{
+                    'is-invalid': submitted && addFormControls['awardDate'].errors
+                  }"
+                  required
+                  readonly
+                />
+                <!-- {{ 'award_date' | translate }} -->
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="awardDate"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #awardDate></mat-datepicker>
+                <mat-error *ngIf="addFormControls['awardDate'].errors">
+                  <!-- {{ "please_enter_award_date" | translate }} -->
+                  {{"please_enter_award_date"|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="col-sm-12 pd-0 mt-3">
+                <div class="uplaod_pic">
+                  <label class="browse">
+                    <i class="fa fa-upload fa-2x" aria-hidden="true"></i>
+                    <input
+                      type="file"
+
+                      (change)="handleImageChange($event)"
+                    />
+                  </label>
+                </div>
+                <!-- <mat-error *ngIf="imageError == true">
+                  please upload image here
+                </mat-error> -->
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <span>
+                <p *ngFor="let file of fileList; let i = index">
+                  {{ file.fileName }}
+                  <button
+                    type="button"
+                    title="Delete"
+                    class="tbactionbtn"
+                    (click)="removeFile(i)"
+                  >
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                  </button>
+                </p>
+              </span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button class="cancel-btn" (click)="closeDialog('close')">
+      {{ "close" | translate }}
+    </button>
+    <button
+      name="Save"
+      mat-raised-button
+      color="primary"
+      (click)="onSubmit()"
+      form="addAwardForm"
+      class="text-uppercase"
+      [disabled]="submitted"
+      cdkFocusInitial
+    >
+      {{ submitted ? "Uploading..." : ("save" | translate) }}
+    </button>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+.mat-radio-group {
+    display: flex;
+    align-items: center;
+}
+
+.mat-radio-button {
+    margin-right: 10px;
+}
+
+.mat-radio-group mat-label {
+    margin-right: 10px;
+}
+.custom_form .border .mat-form-field-flex {
+    height: 45px;
+    border: none;
+}
+
+/* mat-error {
+    margin-bottom: 2px;
+} */

@@ -1,0 +1,51 @@
+<div class="patient-container">
+  <app-client-header [clientId]="clientId" [headerText]="header"></app-client-header>
+  <div class="readmin-panel">
+    <div class="panel-body">
+      <!-- <div class="row">
+        <div class="col-md-12">
+          <div class="pull-right justify-content-md-end d-flex">
+            <button
+              [disabled]="disableButton()"
+              mat-raised-button
+              *ngIf="addPermission"
+              mat-raised-button
+              color="primary"
+              class="add-primary-btn"
+              (click)="openDialog()"
+            >
+              <i class="fa fa-plus" aria-hidden="true"></i>
+              <span [matTooltip]="disableButton() ? tooltipdMessage : ''"
+                >Add Allergy</span
+              >
+            </button>
+          </div>
+        </div>
+      </div> -->
+      <div class="row">
+        <div class="col-lg-7 col-sm-12 d-flex justify-content-start flex-wrap">
+          <!-- <div class="sortCss">Sort By</div>
+          <button mat-button (click)="sortHandler('latest')">Latest</button>
+          <button mat-button (click)="sortHandler('oldest')">Oldest</button>
+          <button mat-button (click)="sortHandler('atoz')">A to Z</button>
+          <button mat-button (click)="sortHandler('ztoa')">Z to A</button>
+          <button mat-raised-button color="primary" (click)="sortHandler('clear')">
+            Clear filter
+          </button> -->
+        </div>
+        <div class="col-lg-5 col-sm-12 pull-right justify-content-md-end d-flex flex-wrap" *ngIf="isAuth">
+          <button mat-raised-button mat-raised-button color="primary" class="add-primary-btn"
+            (click)="openAuthorizationDialog(0)">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            <span>{{'add_health_plan_coverage'|translate}}</span>
+          </button>
+        </div>
+      </div>
+      <app-data-table [inputColumns]="authorizationColumns" [inputSource]="clientAthorizationListModel"
+                  [inputMeta]="metaData" [inputButtons]="immunizationActionButtons"
+                  (onTableActionClick)="onHealthPlanCoverageTableActionClick($event)"
+                  (onPageOrSortChange)="onPageOrSortChange($event)">
+                </app-data-table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+.example-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+  align-items: flex-start;
+}
+
+.example-radio-button {
+  margin: 5px;
+}
+
+.timing-slot li {
+  display: inline;
+}
+.timing-slot button {
+  border: 1px solid #17a2b8;
+  border-radius: 7px;
+  display: inline-block;
+  font-size: 14px !important;
+  padding: 5px 10px;
+  height: 48px !important;
+  margin: 6px 8px 6px 0px;
+  line-height: normal;
+  color: #17a2b8;
+  cursor: pointer;
+}
+
+.timing-slot .selected-slot button {
+  background-color: #63d891;
+  color: #fff;
+  cursor: not-allowed;
+}
+
+.custom_modal .custom_form .mat-button-toggle-group {
+  box-shadow: none;
+}
+
+.custom_modal .custom_form .mat-button-toggle-group .mat-button-toggle-checked {
+  background-color: #01385f;
+  color: #fff;
+}
+
+// :host /deep/ .timepicker {
+//   .timepicker__header {
+//     background-color: #01385f !important;
+//   }
+:host ::ng-deep .timepicker {
+  .timepicker__header {
+    background-color: #01385f !important;
+  }
+
+  .clock-face__clock-hand {
+    background-color: #01385f !important;
+
+    &::after {
+      background-color: #01385f !important;
+    }
+
+    &::before {
+      border-color: #01385f !important;
+    }
+  }
+
+  .clock-face__number {
+    > span.active {
+      background-color: #01385f !important;
+    }
+  }
+
+  button:not(.timepicker-dial__item) {
+    color: #01385f !important;
+  }
+}

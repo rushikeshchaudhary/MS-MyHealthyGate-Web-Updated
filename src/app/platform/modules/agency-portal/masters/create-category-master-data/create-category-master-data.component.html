@@ -1,0 +1,33 @@
+<div class="custom_modal">
+  <h3 mat-dialog-title>{{headerText}}</h3>
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-sm-12">
+        <form (ngSubmit)="onSubmit()" id="CategoryMasterForm" #documentForm="ngForm" class="readmin-form custom_form" [formGroup]="CategoryMasterForm">
+          <div class="row">
+            <div class="col-sm-12 require">
+              <mat-form-field class="example-full-width" hintLabel="{{formControls['CareCategoryName'].pending ? 'Validating...' : ''}}">
+                <input matInput autofocus placeholder="CareCategory Name" maxlength="50" formControlName="CareCategoryName" [ngClass]="{ 'is-invalid': submitted && formControls['CareCategoryName'].errors }"
+                  required />
+                <mat-error *ngIf="formControls['CareCategoryName'].errors?.['required']">
+                  Please enter CareCategory Name
+                </mat-error>
+                <mat-error *ngIf="formControls['CareCategoryName'].errors?.['uniqueName']">
+                  CareCategory Name is already taken.
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div mat-dialog-actions class="nw-pd">
+      <button mat-raised-button class="cancel-btn" (click)="closeDialog()">Close</button>
+      <button mat-raised-button color="primary" form="CategoryMasterForm" [disabled]="submitted || formControls['pending']" cdkFocusInitial>
+          {{(submitted || CategoryMasterForm.pending) ? submitted ? 'Saving...' : CategoryMasterForm.pending ? 'Validating...' : 'Save' : 'Save'}}
+        </button>
+  </div>
+</div>
+
+
+  </div>

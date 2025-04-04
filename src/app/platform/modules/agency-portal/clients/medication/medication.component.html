@@ -1,0 +1,67 @@
+<div class="patient-container">
+  <app-client-header [clientId]="clientId" [headerText]="header"></app-client-header>
+  <div class="readmin-panel">
+    <div class="row">
+      <div class="col-md-12 pull-right justify-content-md-end d-flex">
+        <button [disabled]="disableButton()" mat-raised-button *ngIf="addPermission" mat-raised-button color="primary"
+          class="add-primary-btn" (click)="openDialog()">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          <span [matTooltip]="disableButton() ? tooltipdMessage : ''">{{"add_medication"|translate}}</span>
+        </button>
+      </div>
+    </div>
+    <!-- <div class="row"> -->
+      <form class="readmin-form custom_form flex-wrap" id="MedicationFilterFormGroup" #documentForm="ngForm"
+      [formGroup]="MedicationFilterFormGroup">
+      <div class="row">
+        <div class="col-lg-3 col-sm-6">
+          <mat-form-field class="example-full-width pos">
+            <input matInput placeholder="Search here..." formControlName="searchKey" autocomplete="off" />
+
+          </mat-form-field>
+        </div>
+        <div class="col-lg-2 col-sm-6 filter-btn">
+          <button class="clear-btn" mat-raised-button (click)="clearFilterMedication()">
+            Clear All
+          </button>
+        </div>
+
+      </div>
+    </form>
+    <!-- </div> -->
+    <div class="row">
+      <div class="col-sm-6 mt-20 immunize custom-card custom-card-header" *ngFor="let medication of medicationList">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>
+              {{'medicine'|translate}} : {{medication.medicine}}
+            </mat-card-title>
+            <mat-card-actions>
+              <button *ngIf="updatePermission" mat-button (click)="openDialog(medication.id)"><i
+                  class="fa fa-pencil"></i></button>
+              <button *ngIf="deletePermission && appointmentId == 0" mat-button
+                (click)="delete(medication.id,medication.patientId)"><i class="fa fa-close"></i></button>
+            </mat-card-actions>
+          </mat-card-header>
+          <mat-card-content class="d-flex justify-content-start">
+            <div>
+              <p>{{'dose'|translate}} : <span>{{medication.dose}}</span></p>
+              <p>{{'start_date'|translate}} : <span>{{medication.startDate =="Invalid Date" ?'':medication.startDate}}</span></p>
+            </div>
+            <div class="ml-4">
+              <p>{{'strength'|translate}} : <span>{{medication.strength}}</span></p>
+              <p>{{'end_date'|translate}} : <span>{{medication.endDate =="Invalid Date" ?'':medication.endDate}}</span></p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+    <!--<div *ngIf="!isHistoryShareable" class="m-3">
+      <h3>  <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i> Patient don't want to share his medication history test </h3>
+  </div>-->
+    <div class="clearfix"></div>
+    <div #tabContent>
+      <!-- <div class="text-center" *ngIf="!(staffId)">No Staff Selected</div> -->
+    </div>
+  </div>
+</div>

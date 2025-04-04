@@ -1,0 +1,98 @@
+<div class="d-flex align-items-center">
+    <!-- <mat-form-field class="example-full-width">
+    <mat-select [value]="currentLocationId" (selectionChange)="onDropdownSelectionChange($event.value)">
+      <mat-option *ngFor="let option of userLocations" [value]="option.id">
+        {{option.locationName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field> -->
+    <!-- agencyremove -->
+    <div>
+
+        <button class="bell-icon" mat-icon-button [matMenuTriggerFor]="message">
+            <i class="fa fa-bell faa-ring animated-hover" aria-hidden="true"></i>
+            <span *ngIf="documentNotifications.length>0" class="no_noti">{{documentNotifications.length}}</span>
+        </button>
+        <mat-menu #message="matMenu" class="natification_box">
+            <div class="main-head">
+                <h3>{{"notifications"|translate}}</h3>
+                <button type="button"><i class="zmdi zmdi-format-clear-all"></i></button>
+            </div>
+            <div [ngStyle]="{ 'height': '300px' }">
+                <ng-scrollbar>
+                    <div mat-menu-item class="read-noti" *ngFor="let doc of documentNotifications">
+
+                        <!-- <div>{{doc.notificationAction}}</div> -->
+                        <div (mouseover)='markRead(doc?.notificationId)'>
+                            {{doc.message}}
+                            <!-- <span class="block"><i class="fa fa-clock-o">&nbsp;{{doc.timeStamp | date:'MMM d, y, h:mm a'}}</i></span> -->
+                            <span class="block">
+                                <i class="fa fa-clock-o">&nbsp;{{ doc.timeStamp ? (doc.timeStamp | date:'MMM d, y, h:mm a') : 'No date available' }}</i>
+                              </span>
+                              
+                        </div>
+                        <!-- <i class="zmdi zmdi-close"></i> -->
+                    </div>
+                </ng-scrollbar>
+            </div>
+            <!-- <div class="main-head show-all"><button type="button">Show all notifications</button></div> -->
+            <div *ngIf="documentNotifications.length==0" class="main-head show-all"><button type="button">{{"no_notifications"|translate}}</button></div>
+        </mat-menu>
+    </div>
+
+   <!-- <div class="brdr-lght">
+        <button class="bell-icon" mat-icon-button [matMenuTriggerFor]="document">
+            <i class="fa fa-envelope faa-horizontal animated-hover" aria-hidden="true"></i>
+            <span *ngIf="messageNotifications.length>0" class="no_noti">{{messageNotifications.length}}</span>
+        </button>
+        <mat-menu #document="matMenu" class="message_box natification_box">
+            <div class="main-head">
+                <h3>Message</h3>
+                <button type="button"><i class="zmdi zmdi-format-clear-all"></i></button>
+            </div>
+
+            <div [ngStyle]="{ 'height': '300px' }">
+                <ng-scrollbar>
+                    <div mat-menu-item class="read-noti" *ngFor="let msg of messageNotifications">
+                        <div (click)="openMailbox(msg.messageId,msg.parentMessageId)">
+                            <div class="mailimg">
+                                <img class="img-fluid" alt="" src="{{msg.thumbNail}}" />
+                            </div>
+                            {{msg.fromName}}
+                            <span class="block">{{msg.subject}}</span>
+                        </div>
+                        <i class="zmdi zmdi-close" (click)="changeNotificationStatus(msg.messageId,msg.parentMessageId)"></i>
+                    </div>
+                </ng-scrollbar>
+            </div>
+            <div *ngIf="messageNotifications.length>0" class="main-head show-all"><button type="button" (click)="openMailbox()">Show all messages</button></div>
+            <div *ngIf="messageNotifications.length==0" class="main-head show-all"><button type="button">No messages</button></div>
+        </mat-menu>
+    </div>-->
+    <span class="welcomeName" (click)="openUser(userInfo)">{{userInfo.firstName+' '+(userInfo.middleName||'')+' '+userInfo.lastName}}</span>
+    <div class="user-dropdown">
+        <button [matMenuTriggerFor]="profile">
+            <img src="{{userInfo.photoThumbnailPath || '../assets/img/noimage3.png'}}" onerror="this.src='../../../../../../assets/img/noimage.png';" alt="user" class="profile-pic"/>
+        </button>
+        <mat-menu #profile="matMenu" class="profile-menu">
+            <div class="setting_menu">
+                <button mat-menu-item *ngFor='let item of userNavigations' (click)="onSelectUserMenu(item)">
+                    <span [innerHtml]="item.iconName"></span>
+                    {{item.displayName}}
+                </button>
+            </div>
+        </mat-menu>
+    </div>
+    <button class="lang-btn radius-btn" [matMenuTriggerFor]="menu" style="margin-left: 5px"
+        title="change language">
+        <span class="l-title"><img class="lang-img" src="../assets/img/lang-icon-MHG.png" /></span>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button id="langDrop" mat-menu-item (click)="useLanguage('en')">
+          <span class="l-title">ENG</span>
+        </button>
+        <button id="langDrop" mat-menu-item (click)="useLanguage('ar')">
+          <span class="l-title">AR</span>
+        </button>
+      </mat-menu>
+</div>

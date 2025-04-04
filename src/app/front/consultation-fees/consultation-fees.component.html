@@ -1,0 +1,39 @@
+<div class="profile-widget" *ngIf="isProfileLoaded">
+  <i
+    (click)="closeDialog('close')"
+    class="fa fa-close"
+    aria-hidden="true"
+  ></i>
+  <h4>{{"consultation_fee"|translate}} <span>({{"consultation_fee_all_types"|translate}})</span></h4>
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered">
+      <thead>
+        <tr>
+          <th></th>
+          <th>{{"online"|translate}}</th>
+          <th>{{"face_to_face"|translate}}</th>
+          <th>{{"home_visit"|translate}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>{{"new"|translate}}</th>
+          <td>JOD {{this.userInfo == undefined ? '0': this.userInfo.payRate}}</td>
+          <td>JOD {{this.userInfo == undefined ? '0': this.userInfo.ftFpayRate}}</td>
+          <td>JOD {{this.userInfo == undefined ? '0': this.userInfo.homeVisitPayRate}}</td>
+        </tr>
+        <tr>
+          <th>{{"follow_up"|translate}}</th>
+          <td>JOD {{this.userInfo == undefined ? '0': this.userInfo.followUpPayRate}}</td>
+          <td>JOD {{this.userInfo == undefined ? '0': this.userInfo.ftfFollowUpPayRate}}</td>
+          <td>JOD {{this.userInfo == undefined ? '0': this.userInfo.homeVisitFollowUpPayRate}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="lds-facebook" *ngIf="!isProfileLoaded">
+  <div></div>
+  <div></div>
+  <div></div>
+</div>

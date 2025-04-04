@@ -1,0 +1,46 @@
+<!-- <div>
+  <a [routerLink]="[{ outlets: { userOutlet: ['manage-providers'] } }]"
+    >Manage Home Care List</a
+  >
+</div>
+<div>
+  <a [routerLink]="[{ outlets: { userOutlet: ['manage-patients'] } }]"
+    >Manage Patients List</a
+  >
+</div>
+<div>
+  <a [routerLink]="[{ outlets: { userOutlet: ['manage-labs'] } }]">
+    Manage Labs</a
+  >
+</div>
+<div>
+  <a [routerLink]="[{ outlets: { userOutlet: ['manage-pharmacy'] } }]">
+    Manage Pharmacy</a
+  >
+</div>
+<div>
+  <a [routerLink]="[{ outlets: { userOutlet: ['manage-radiology'] } }]">
+    Manage Radiology</a
+  >
+</div>
+<div>
+  <a [routerLink]="[{ outlets: { userOutlet: ['manage-top-providers'] } }]"
+    >Manage Top Providers</a
+  >
+</div>
+<router-outlet name="userOutlet"></router-outlet> -->
+
+<div class="readmin-panel">
+  <mat-tab-group
+    (selectedTabChange)="loadComponent($event)"
+    [selectedIndex]="selectedIndex"
+  >
+    <mat-tab
+      *ngFor="let tab of clientTabs; let i = index"
+      class="mat-tab-label-active"
+      label="{{ tab | translate }}"
+    >
+    </mat-tab>
+  </mat-tab-group>
+  <div #tabContent></div>
+</div>

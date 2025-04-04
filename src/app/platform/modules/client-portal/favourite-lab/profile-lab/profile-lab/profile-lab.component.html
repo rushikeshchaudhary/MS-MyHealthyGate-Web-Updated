@@ -1,0 +1,103 @@
+<div class="row">
+  <div class="col-sm-12 mt-3">
+  </div>
+  <div class="col-sm-12">
+    <h2 class="page_title sm-title">
+      {{
+        labInfo[0]?.firstName +
+        " " +
+        labInfo[0]?.lastName +
+        " " +
+        (labInfo[0]?.degreeName || "")
+      }}
+    </h2>
+  </div>
+</div>
+
+<div class="clearfix"></div>
+<div class="row">
+  <div class="col-sm-7 mb-30">
+    <div class="readmin-panel crop pd-15">
+      <div class="profilebg d-flex justify-content-center">
+        <div class="clientpic">
+          <img
+            *ngIf="labInfo"
+       
+            [src]="(labInfo[0]?.photoPath || labInfo[0]?.photoThumbnailPath) ? (labInfo[0]?.photoPath ? labInfo[0]?.photoPath : labInfo[0]?.photoThumbnailPath) : '../../../assets/img/chatuser.png'"
+        alt="profile pic" />
+          
+        </div> 
+      </div>
+      <h2 class="ppname text-center mt-3">
+        {{
+          labInfo[0]?.firstName +
+          " " +
+          labInfo[0]?.lastName +
+          " " +
+          (labInfo[0]?.degreeName || "")
+        }}
+      </h2>
+      <div class="ppdetail client_detail">
+        <div class="ledtdiv">
+          <div class="row">
+            <div class="col-md-6">
+              <b>{{"date_of_joining" | translate}}:</b>
+              <span>{{ labInfo[0]?.doj | date: 'dd/MM/yyyy' }}</span>
+            </div>
+            <div class="col-md-6">
+              <b>{{"npi_number" | translate}}:</b> <span>{{ labInfo[0]?.npiNumber }}</span>
+            </div>
+            <div class="col-md-6">
+              <b>{{"phone" | translate}}  :</b><span>{{ labInfo[0]?.phoneNumber }}</span>
+            </div>
+            <div class="col-md-6">
+              <b>{{"email" | translate}} :</b><span>{{ labInfo[0]?.email }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+
+  <div class="col-sm-5">
+    <div class="row">
+      <div class="col-sm-12 mb-30">
+        <div class="readmin-panel crop pd-15">
+          <div class="lineheader">
+            <p> {{"assigned_locations" | translate}}</p>
+          </div>
+          <div class="row">
+            <div [ngStyle]="{ height: '118px' }">
+              <ng-scrollbar>
+                <div *ngIf="labAddressesModel.length==0">
+                  No address found
+                </div>
+                <div *ngFor="let address of labAddressesModel" class="col-sm-12 assign-loc">
+                  <p>
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <small>
+                      {{
+                        address.aptNumber +
+                        " ," +
+                        address.cityName +
+                        ", " +
+                        address.stateName +
+                        ", " +
+                        address.countryName +
+                        ", " +
+                        address.zipNumber
+                      }}
+                    </small>
+                  </p>
+                </div>
+              </ng-scrollbar>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-12"></div>
+</div>

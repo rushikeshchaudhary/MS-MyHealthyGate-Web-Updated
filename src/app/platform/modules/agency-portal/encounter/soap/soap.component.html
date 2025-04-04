@@ -1,0 +1,462 @@
+<div class="patient-container">
+  <!-- && !isStarted -->
+  <div *ngIf="
+      patientAppointmentDetails &&
+      patientAppointmentDetails.startDateTime &&
+      isShowTimer
+    ">
+    <div class="checkin-block">
+      <div class="checkin-txt"  *ngIf="!isAppointmentCompleted">
+        <span><b>Note:</b> Your appointment will be starts in</span>
+        <app-count-down (triggerEvent)="enableAllButtons($event)"
+          [inputDate]="patientAppointmentDetails.startDateTime"></app-count-down>
+      </div>
+      <!-- <span><b>Appointment Details</b></span> -->
+      <div class="row">
+        <div class="col-sm-6">
+          <!-- <p class="d-flex">
+            <b>Appointment: </b>
+            <span>
+              {{
+              patientAppointmentDetails.mode +
+              " (" +
+              patientAppointmentDetails.type +
+              ")"
+              }}
+            </span>
+          </p> -->
+        </div>
+        <div class="col-sm-6">
+          <!-- <p class="d-flex">
+            <b>Appointment DateTime: </b>
+            <span>
+              {{
+              patientAppointmentDetails.startDateTime
+              | date : "dd/MM/yyyy hh:mm:ss a"
+              }}</span>
+          </p> -->
+        </div>
+      </div>
+      <!-- <div *ngIf="appointmentMode != 'Face to Face'" class="checkin-btns">
+        <button mat-raised-button color="primary" (click)="onAudioVideoTest()">
+          Test Audio-Video
+        </button>
+      </div> -->
+    </div>
+  </div>
+  <!-- <div *ngIf="isShowCheckinBtns || isStarted"> -->
+  <div *ngIf="true">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-xs-12">
+        <h2 class="page_title">Visit Details</h2>
+      </div>
+      <div class="col-lg-6 col-md-6 col-xs-12">
+        <div class="checkin-btns pull-right">
+          <button *ngIf="appointmentMode != 'Face to Face'" class="mr-3" mat-raised-button color="primary"
+            (click)="onAudioVideoTest()">
+            Test Audio-Video
+          </button>
+          <button *ngIf="appointmentMode != 'Home Visit' || !isAppointmentCompleted" mat-raised-button class="mr-3" color="primary"
+            (click)="call()">
+            <!-- [disabled]="!isStarted" -->
+            Call
+          </button>
+          <button mat-raised-button color="primary" (click)="EndSession()">
+            End Session
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="readmin-panel soap-note-blk">
+      <div class="row" style="margin-bottom: 35px">
+        <div class="col-lg-4">
+          <div class="readmin-left-panel">
+            <div class="row">
+              <!-- *ngIf="isStarted" -->
+              <div class="col-12">
+                <div class="panel-group" id="accordion">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#SoapNotes">Doctor Soap Notes <em
+                            class="fa fa-angle-down"></em></a>
+                      </h4>
+                    </div>
+                    <div id="SoapNotes" class="panel-collapse" style="height: 550px">
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col-sm-12 p-0">
+                            <div class="panel_title">
+                              <h3 class="mt-0" style="margin-left: 0 !important; font-size:14px; font-weight: 400; ">
+                                Doctor Soap Notes
+                              </h3>
+                              <i class="flaticon flaticon-bathroom"></i>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-12">
+                            <div class="form-group">
+                              <mat-form-field class="example-full-width pb-0">
+                                <mat-select placeholder="Select Template" [(ngModel)]="templateFormId"
+                                  (selectionChange)="getTemplateForm($event)">
+                                  <mat-option *ngFor="let temp of masterTemplates" [value]="temp.id">
+                                    {{ temp.templateName }}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                        </div>
+                        <form id="soapForm" #documentForm="ngForm" class="readmin-form custom_form"
+                          [formGroup]="soapForm">
+                          <div class="row">
+                            <div class="col-sm-12 custom-btn p-0">
+                              <ng-scrollbar class="formio-form-div soap-note-form">
+                                <formio [form]="jsonFormData" [submission]="initialFormValues" [options]="formioOptions"
+                                  (submit)="onSubmitTemplate($event)" [viewOnly]="true" [hideComponents]="['button']">
+                                </formio>
+                              </ng-scrollbar>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="panel panel-default" *ngFor="let template of MasterTemplateListByProvider">
+                    <div class="panel-heading" (click)="
+                        getTemplateFormForProvider(template.id, template.id)
+                      ">
+                      <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#template-{{ template.id }}">{{
+                          template.templateName
+                          }}<em class="fa fa-angle-down"></em></a>
+                      </h4>
+                    </div>
+                    <div id="template-{{ template.id }}" class="panel-collapse collapse">
+                      <div class="panel-body">
+                        <form class="example-form">
+                          <div class="row">
+                            <div class="col-md-12 p-0">
+                              <form id="soapFormAdmin" #documentForm="ngForm" class="readmin-form custom_form"
+                                [formGroup]="soapForm">
+                                <div class="row">
+                                  <div class="col-sm-12 p-0 custom-btn">
+                                    <ng-scrollbar class="formio-form-div soap-note-form">
+                                            <!-- intentionally commented code for running the application -->
+                                      <formio [form]="
+                                      jsonFormDataProvider[template.id]
+                                        " [submission]="
+                                          initialFormValuesProvider[template.id]
+                                        " [options]="formioOptionsProvider" (submit)="onSubmitTemplate($event)"
+                                        [viewOnly]="true" [hideComponents]="['button']">
+                                      </formio>
+                                    </ng-scrollbar>
+                                  </div>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#ICD">ICD <em
+                            class="fa fa-angle-down"></em></a>
+                      </h4>
+                    </div>
+                    <div id="ICD" class="panel-collapse collapse">
+                      <div class="panel-body">
+                        <form class="example-form" [formGroup]="icdForm">
+                          <div class="row">
+                            <div class="col-md-12 p-0">
+                              <mat-form-field class="example-full-width" appearance="outline">
+                                <mat-label>Search ICD</mat-label>
+                                <input matInput placeholder="Type ICD" (input)="getICDONChange()"
+                                  [matAutocomplete]="auto" [(ngModel)]="ICDName" name="ICDName"
+                                  [ngModelOptions]="{ standalone: true }" />
+
+                                <mat-autocomplete #auto="matAutocomplete">
+                                  <mat-option *ngFor="let Icd of masterICD" value="{{ Icd.description }}"
+                                    (onSelectionChange)="icdChangeHandler(Icd)">{{ Icd.description }}
+                                  </mat-option>
+                                </mat-autocomplete>
+                              </mat-form-field>
+
+                              <mat-form-field class="example-full-width" *ngIf="IcdComment" appearance="outline">
+                                <mat-label>Comment</mat-label>
+                                <textarea matInput placeholder="Dignostic Comment."
+                                  formControlName="icdComment"></textarea>
+                              </mat-form-field>
+                              <!--*ngIf="encounterId == 0"-->
+                              <div class="mt-4">
+                                <button name="add_patientenICD" mat-raised-button [disabled]="isSubmit" color="primary"
+                                  (click)="OnSubmitICD()">
+                                  {{ isSubmit ? "Saving..." : "Save ICD" }}
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#PatientPlan">Patient Plan <em
+                            class="fa fa-angle-down"></em></a>
+                      </h4>
+                    </div>
+                    <div id="PatientPlan" class="panel-collapse collapse">
+                      <div class="panel-body">
+                        <div class="">
+                          <!--<button name="add_patientencounternotes" mat-raised-button color="primary"
+                              (click)="openPatientEncounterNotesDialog()" class="text-uppercase">
+                              Add Patient Notes
+                            </button>-->
+                          <form id="patientencounternotesForm" #documentForm="ngForm" class="readmin-form custom_form">
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <angular-editor [config]="config" [(ngModel)]="patientNotesForm.encounternotes"
+                                  [ngModelOptions]="{ standalone: true }">
+                                </angular-editor>
+                                <!-- <mat-form-field
+                                  class="example-full-width custom_textarea"
+                                >
+                                
+                                  <textarea
+                                    matInput
+                                    cols="35"
+                                    rows="8"
+                                    placeholder="Patient Plan"
+                                    [(ngModel)]="
+                                      patientNotesForm.encounternotes
+                                    "
+                                    [ngModelOptions]="{ standalone: true }"
+                                  ></textarea>
+                                </mat-form-field> -->
+                              </div>
+                            </div>
+                          </form>
+                          <div>
+                            <button name="Save" [disabled]="
+                                patientNotesForm &&
+                                patientNotesForm.encounternotes &&
+                                patientNotesForm.encounternotes.length == 0
+                              " mat-raised-button color="accent" (click)="onSubmitPatientNotes($event)"
+                              class="text-uppercase">
+                              {{ "Save Patient Plan" }}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="readmin-right-panel">
+            <div class="row">
+              <div class="col-12">
+                <mat-tab-group (selectedTabChange)="loadComponent($event)" [disableRipple]="'true'"
+                  [selectedIndex]="selectedIndex">
+                  <ng-container *ngFor="let tab of PatientTab; let i = index">
+                    <mat-tab [class]="tab.class" class="mat-tab-label-active" label="{{ tab.TabName }}">
+                    </mat-tab>
+                  </ng-container>
+                </mat-tab-group>
+
+                <div #tabContent></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="display: none">
+          <div class="col-md-12 d-flex justify-content-between align-items-center">
+            <div class="panel_title m-0">
+              <h3 class="m-0">Service Codes</h3>
+              <i class="flaticon flaticon-interface-2"></i>
+            </div>
+            <div></div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <table class="table table-hover customtable group-table">
+                <thead>
+                  <tr>
+                    <th width="35%">
+                      <span>SERVICE CODE</span>
+                    </th>
+                    <th width="35%">
+                      <span>DESCRIPTION</span>
+                    </th>
+                    <th width="30%">
+                      <span>ACTION</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="!patientEncounterServiceCodes.length">
+                    <td colspan="3" class="text-center">No record found.</td>
+                  </tr>
+                  <tr *ngFor="
+                      let code of patientEncounterServiceCodes;
+                      let x = index
+                    ">
+                    <td>
+                      <span>{{ code.serviceCode }}</span>
+                    </td>
+                    <td>
+                      <span>{{ code.description }}</span>
+                    </td>
+                    <td>
+                      <button type="button" title="Delete" class="tbactionbtn" (click)="deleteCPTCode(x)">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="row" *ngIf="encounterId > 0">
+          <div class="col-md-12 mb-3 d-flex justify-content-between align-items-center">
+            <div class="panel_title m-0">
+              <h3 class="m-0">Signature</h3>
+              <i class="flaticon flaticon-medical-1"></i>
+            </div>
+            <div>
+              <!-- <button class="cancel-btn float-left" mat-raised-button (click)="onBackClick()">Cancel</button> -->
+
+              <button *ngIf="encounterId > 0" [disabled]="submittedSign || submitted" mat-raised-button color="primary"
+                class="text-uppercase" (click)="openSignDialog()">
+                {{ submittedSign ? "Saving sign" : "Add Sign" }}
+              </button>
+              <button mat-raised-button color="accent" class="text-uppercase ml-3" (click)="PrintSOAP()" *ngIf="isSoap">
+                Print
+              </button>
+              <!-- <button *ngIf="encounterId > 0" mat-raised-button color="primary" (click)="onSubmit()"
+                    [disabled]="submitted || (encounterId > 0 && !isAllSigned)" class="text-uppercase ml-3">
+                    {{submitted ? 'Completing...' : 'Complete'}}</button> -->
+              <!-- <button *ngIf="encounterId > 0" mat-raised-button color="primary" (click)="onSubmit()"
+            [disabled]="submitted || (encounterId > 0 && !isAllSigned)" class="text-uppercase ml-3">
+            {{ submitted ? "Completing..." : "Complete" }}
+          </button> -->
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-4" *ngIf="employeeSign.bytes">
+            <div id="showCanvasImageEmployee">
+              <div class="row">
+                <div class="col-12">
+                  <div class="sign">
+                    <img class="img-fluid" src="data:image/png;base64,{{ employeeSign.bytes }}" alt="" />
+                    <h3>
+                      {{ employeeSign.name }}
+                      <span>(Physician)</span>
+                    </h3>
+                    <p><span>Date :</span>{{ employeeSign.date }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-4" *ngIf="patientSign.bytes">
+            <div id="showCanvasImageEmployee">
+              <div class="row">
+                <div class="col-12">
+                  <div class="sign">
+                    <img class="img-fluid" src="data:image/png;base64,{{ patientSign.bytes }}" alt="" />
+                    <h3>
+                      {{ patientSign.name }}
+                      <span>(Client)</span>
+                    </h3>
+                    <p><span>Date :</span>{{ patientSign.date }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-4" *ngIf="guardianSign.bytes">
+            <div id="showCanvasImageEmployee">
+              <div class="row">
+                <div class="col-12">
+                  <div class="sign">
+                    <img class="img-fluid" src="data:image/png;base64,{{ guardianSign.bytes }}" alt="" />
+                    <h3>
+                      {{ guardianSign.name }}
+                      <span>(Guardian)</span>
+                    </h3>
+                    <p><span>Date :</span>{{ guardianSign.date }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--main row-->
+        <div class="col-12" *ngIf="false">
+          <div class="form-group">
+            <mat-form-field class="example-full-width">
+              <mat-select placeholder="Select Patient's Options" (selectionChange)="selectChangeHandler($event)">
+                <mat-option *ngFor="let tab of moduleTabs" [value]="tab.id">
+                  {{ tab.displayName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <ng-container *ngIf="selectPatientOption == 7">
+            <app-client-soap-note [encryptedPatientId]="encrytPatientId"></app-client-soap-note>
+          </ng-container>
+          <ng-container *ngIf="selectPatientOption == 8">
+            <app-medication [encryptedPatientId]="encrytPatientId"></app-medication>
+          </ng-container>
+          <ng-container *ngIf="selectPatientOption == 9">
+            <app-prescription [encryptedPatientId]="encrytPatientId"></app-prescription>
+          </ng-container>
+          <ng-container *ngIf="selectPatientOption == 10">
+            <app-icd [encryptedPatientId]="encrytPatientId"></app-icd>
+          </ng-container>
+          <!-- <ng-container *ngIf="selectPatientOption == 11">
+          <app-history [encryptedPatientId]="encrytPatientId"></app-history>
+        </ng-container> -->
+          <ng-container *ngIf="selectPatientOption == 12">
+            <app-client-insurance [encryptedPatientId]="encrytPatientId"></app-client-insurance>
+          </ng-container>
+
+          <ng-container *ngIf="selectPatientOption == 13">
+            <app-immunization [encryptedPatientId]="encrytPatientId"></app-immunization>
+          </ng-container>
+          <ng-container *ngIf="selectPatientOption == 6">
+            <app-vitals [encryptedPatientId]="encrytPatientId"></app-vitals>
+          </ng-container>
+          <ng-container *ngIf="selectPatientOption == 14">
+            <app-allergies [encryptedPatientId]="encrytPatientId"></app-allergies>
+          </ng-container>
+          <ng-container *ngIf="selectPatientOption == 5">
+            <app-documents [encryptedPatientId]="encrytPatientId"
+              [encryptedPatientUserId]="encrytPatientUserId"></app-documents>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,125 @@
+<div class="container mb-7 mrg-tp">
+  <div class="row">   
+  <div class="col-lg-12 col-md-12">
+      <!-- For Lab list -->
+      <div class="sec-head"><h2>{{'lab_list'|translate}}</h2></div>
+      <div class="row" *ngIf="labs.length">
+      <div class="{{ labWidgetClass }}" *ngFor="let lab of labs">
+        <div class="doctor-widget">
+          <mat-card>
+            <i class="fa fa-star-o"></i>
+            <mat-card-content>
+              <div class="doc-info">
+                <div class="doc-info-left">
+                  <div class="doctor-img">
+                    <img
+                      class="img-fluid profile-img"
+                      src="{{
+                        lab.PhotoThumbnailPath ||
+                          '../../../assets/img/noimage.png'
+                      }}"
+                      alt="lab"
+                    />
+                  </div>
+                  <div class="doc-info-cont">
+                    <h4 class="doc-name">
+                      <!-- <a (click)="redirectToProfilePage(lab.labId)"
+                        > {{ lab.fullName }}</a
+                      > -->
+                       {{ lab.labName }}
+                    </h4>
+                    <h5>{{lab.fullName}}</h5>
+                  </div>
+                </div>
+                <div class="doc-info-right">
+                  <div class="clini-infos">
+                    <ul>
+                      <li>
+                        <i class="fa fa-phone" aria-hidden="true"></i>
+                        {{ lab.phone }}
+                      </li>
+                      <li>
+                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                        <a href="mailto:sofiabrient_maxhospital@gmail.com?Subject=Hello%20again" target="_top">{{ lab.email }}</a>
+                      </li>
+                      <li class="addres">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        {{ lab.addres }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <nav aria-label="Page navigation example" class="pagination-nav">
+          <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">{{'previous'|translate}}</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">{{'next'|translate}}</a></li>
+          </ul>
+        </nav>
+      </div>
+      </div>
+     <!-- For Pharmacies list -->
+     <div class="sec-head"><h2>{{'pharmacy_list'|translate}}</h2></div>
+     <div class="row" *ngIf="pharmacies.length">
+      <div class="{{ pharmacyWidgetClass }}" *ngFor="let phar of pharmacies">
+        <div class="doctor-widget">
+          <mat-card>
+            <i class="fa fa-star-o"></i>
+            <mat-card-content>
+              <div class="doc-info">
+                <div class="doc-info-left">
+                  <div class="doctor-img">
+                    <img
+                      class="img-fluid profile-img"
+                      src="{{
+                        phar.PhotoThumbnailPath ||
+                          '../../../assets/img/noimage.png'
+                      }}"
+                      alt="pharmacy"
+                    />
+                  </div>
+                  <div class="doc-info-cont">
+                    <h4 class="doc-name">
+                      <!-- <a (click)="redirectToProfilePage(lab.labId)"
+                        > {{ lab.fullName }}</a
+                      > -->
+                       {{ phar.pharmacyName }}
+                    </h4>
+                    <h5>{{phar.fullName}}</h5>
+                  </div>
+                </div>
+                <div class="doc-info-right">
+                  <div class="clini-infos">
+                    <ul>
+                      <li>
+                        <i class="fa fa-phone" aria-hidden="true"></i>
+                        {{ phar.phone }}
+                      </li>
+                      <li>
+                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                        <a href="mailto:sofiabrient_maxhospital@gmail.com?Subject=Hello%20again" target="_top">{{ phar.email }}</a>
+                      </li>
+                      <li class="addres">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        {{ phar.addres }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+      </div>
+  </div>
+   </div>  
+</div>

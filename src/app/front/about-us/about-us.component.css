@@ -1,0 +1,402 @@
+.cont-banner {
+  background-image: url("/assets/img/about-us.png");
+  background-repeat: no-repeat;
+  width: 100%;
+  position: relative;
+  background-size: cover;
+  height: 600px;
+  margin-bottom: 0;
+}
+.contactus-content {
+  background: linear-gradient(90.04deg, #000000 0.03%, rgba(196, 196, 196, 0) 99.97%);
+  color: #fff;
+  text-align: left;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  padding-top: 10rem;
+}
+.contactus-content h2 {
+  font-size: 4rem;
+  padding-top: 0;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1.5rem;
+}
+.contactus-content h3 {
+  font-size: 2rem;
+  padding-top: 0;
+  color: #fff;
+  margin-bottom: 1.5rem;
+}
+.contactus-content p {
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+.btn-white {
+  background-color: #fff;
+  border-radius: 7px;
+  color: #01385f;
+  font-weight: 600;
+  padding: 15px 20px;
+}
+.btn-white a {
+  color: #01385f;
+}
+.mission_headline {
+  margin-bottom: 3rem;
+}
+.mission_headline h4 {
+  font-family: 'Raleway', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 42px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #17a2b8;
+  margin-bottom: 1rem;
+}
+.mission_headline h5 {
+  font-family: 'Raleway', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 42px;
+  text-align: center;
+  color: #01385f;
+}
+section.location-contact {
+  margin-bottom: 60px;
+}
+.mission-sec {
+  margin: 6rem 0;
+}
+.mission-sec .mission_img {
+  position: relative;
+}
+.mission-sec .mission_img img {
+  border-radius: 20px;
+  width: 100%;
+}
+.mission-sec .mission_img img.mission_dot {
+  width: auto;
+  position: absolute;
+  left: -5rem;
+  top: -3rem;
+  border-radius: 0;
+}
+.mission-sec .mission_content {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+.mission-sec .mission_content .mission_content1 h2 {
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 42px;
+  color: #01385f;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+.mission-sec .mission_content .mission_content1 h2 span {
+  color: #17a2b8;
+}
+.mission-sec .mission_content .mission_content1 p {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 32px;
+  color: #000000;
+  letter-spacing: -0.4px;
+}
+.vision-sec {
+  margin: 6rem 0;
+}
+.vision-sec .vision_img {
+  position: relative;
+  text-align: right;
+}
+.vision-sec .vision_img img {
+  border-radius: 20px;
+  width: 100%;
+}
+.vision-sec .vision_img img.vision_dot {
+  width: auto;
+  position: absolute;
+  right: -5rem;
+  bottom: -3rem;
+  border-radius: 0;
+}
+.vision-sec .vision_content {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+.vision-sec .vision_content .vision_content1 h2 {
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 42px;
+  color: #01385f;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+.vision-sec .vision_content .vision_content1 h2 span {
+  color: #17a2b8;
+}
+.vision-sec .vision_content .vision_content1 p {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 34px;
+  color: #000000;
+  letter-spacing: -0.4px;
+}
+
+/* Our Services Section Start */
+
+.our-services {
+  position: relative;
+  padding: 60px 0px;
+}
+
+.our-services::after {
+  content: "";
+  background-image: url("../../../assets/img/element-1.svg");
+  position: absolute;
+  left: 0;
+  top: -4vh;
+  width: 150px;
+  height: 100%;
+  background-repeat: no-repeat;
+}
+
+.our-services::before {
+  content: "";
+  background-image: url("../../../assets/img/element-2.png");
+  position: absolute;
+  right: 0;
+  top: -16vh;
+  width: 150px;
+  height: 100%;
+  background-repeat: no-repeat;
+}
+
+.our-services .sec-head {
+  text-align: center;
+}
+
+.our-services .sec-head h2 {
+  font-size: 37px;
+  color: #17a2b8;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.our-services .sec-head h3 {
+  font-size: 38px;
+  font-weight: 700;
+  color: #01385f;
+  margin-bottom: 35px;
+}
+
+.tab-btn-sec {
+  text-align: center;
+}
+
+.tab-btn-sec .nav {
+  display: block;
+}
+
+.tab-btn-sec ul li {
+  display: inline-block;
+  margin: 25px;
+}
+
+.tab-btn-sec ul li a.nav-link {
+  padding: 15px 35px;
+  border: 3px solid #3ac3d6;
+  color: #3ac3d6;
+  border-radius: 3px !important;
+  font-weight: 500;
+  letter-spacing: 1px;
+  font-size: 22px;
+  cursor: pointer;
+}
+.tab-btn-sec ul li a.nav-link:hover {
+  background: #01385f;
+  color: #fff;
+  border-color: #01385f;
+}
+
+.tab-btn-sec ul li a.nav-link i {
+  font-size: 32px;
+  margin-right: 10px;
+}
+
+.tab-btn-sec ul li a.nav-link.active {
+  background: #01385f;
+  border: 2px solid #01385f;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.serv-card {
+  background: #3ac3d60a;
+  padding: 40px 30px;
+  text-align: center;
+  border-radius: 30px;
+  min-height: 310px;
+}
+
+.serv-card img {
+  width: 130px !important;
+  margin: auto;
+  height: 130px;
+}
+
+.serv-card h3 {
+  font-size: 18px;
+  margin: -15px 0 15px 0px;
+  color: #01385f;
+  font-weight: 700;
+  /* min-height: 45px; */
+}
+
+.serv-card p {
+  font-size: 16px;
+  margin: 0px;
+  line-height: 30px;
+  color: #01385f;
+  min-height: 105px;
+}
+.provide_img img {
+  width: 100%;
+}
+.provide_content h2 {
+  font-family: 'Raleway', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 42px;
+  color: #01385f;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+.provide_content h2 span {
+  color: #17a2b8;
+}
+.provide_content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.provide_content ul li {
+  margin-bottom: 2rem;
+  display: inline-flex;
+  align-items: flex-start;
+}
+.provide_content ul li img {
+  width: 24px;
+  margin-right: 10px;
+}
+/* Our Services Section End */
+.convenince_sec {
+  background-image: url("../../../assets/img/doctor-convenience.png");
+  height: 500px;
+  border-radius: 40px;
+  overflow: hidden;
+  margin: 4rem 0;
+}
+.convenince_sec_1 {
+  background: linear-gradient(90deg, #01385f 18.7%, rgba(52, 110, 142, 0.798206) 43.23%, rgba(255, 255, 255, 0) 89.64%);
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  padding-left: 3rem;
+}
+.convenince_sec_1 h2 {
+  color: #fff;
+  font-family: 'Raleway', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 38px;
+}
+.convenince_sec_1 p {
+  color: #fff;
+  font-size: 24px;
+}
+
+@media (max-width: 767px) {
+  .whatwedo-content h2,
+  .contactus-content h2 {
+    font-size: 2rem;
+  }
+  .cont-banner {
+    height: 550px;
+    margin-bottom: 30px;
+  }
+  .blue-icon {
+    height: 110px;
+    width: 110px;
+  }
+  .enqueiries p,
+  .enqueiries span {
+    font-weight: 500;
+    font-size: 1.3rem;
+  }
+  .enqueiries h2 {
+    font-size: 1.7rem;
+  }
+  section.location-contact {
+    margin-bottom: 0;
+  }
+  .vision-sec,
+  .mission-sec {
+    margin: 2rem 0;
+  }
+  .vision-sec .vision_img,
+  .mission-sec .mission_img {
+    margin-bottom: 2rem;
+  }
+  .order-m-1 {
+    order: 1;
+  }
+  .order-m-2 {
+    order: 2;
+  }
+  .vision-sec .vision_content .vision_content1 h2,
+  .mission-sec .mission_content .mission_content1 h2 {
+    font-size: 24px;
+  }
+  .mission_headline h4 {
+    font-size: 24px;
+  }
+  .mission_headline h5 {
+    font-size: 24px;
+  }
+  .contactus-content {
+    padding-top: 6rem;
+  }
+  .provide_img {
+    margin-bottom: 2rem;
+  }
+  .convenince_sec_1 {
+    padding-left: 1rem;
+  }
+  .provide_content h2 {
+    font-size: 24px;
+  }
+  .our-services .sec-head h3 {
+    font-size: 24px;
+  }
+}

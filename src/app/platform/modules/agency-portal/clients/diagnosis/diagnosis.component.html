@@ -1,0 +1,35 @@
+<app-client-header [clientId]="clientId" [headerText]="header" ></app-client-header>
+
+<div class="readmin-panel">
+    <div class="panel-body">
+<div class="row">
+  <div class="col-md-12 pull-right justify-content-md-end d-flex">
+      <button [disabled]="disableButton()" mat-raised-button *ngIf="addPermission" mat-raised-button color="primary" class="add-primary-btn" (click)="openDialog()">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          <span [matTooltip]="disableButton() ? tooltipdMessage : ''">Add Diagnosis</span>
+      </button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6 mt-20 custom-card custom-card-header" *ngFor="let diagnosis of diagnosisList">
+      <mat-card>
+          <mat-card-header>      
+                <mat-card-title>
+                        <p>Diagnosis Date: <span> {{diagnosis.diagnosisDate | date:'dd/MM/yyyy'}}</span> </p>
+                    </mat-card-title>        
+              <mat-card-actions>
+                      <button *ngIf="updatePermission" mat-button (click)="openDialog(diagnosis.id)"><i class="fa fa-pencil"></i></button>
+                      <button *ngIf="deletePermission" mat-button (click)="delete(diagnosis.id)"><i class="fa fa-close"></i></button>
+                  </mat-card-actions>
+          </mat-card-header>
+              <!-- <div mat-card-avatar class="example-header-image"></div> -->
+              <mat-card-content>                  
+                  <p>Status : <span [ngClass]="{'greenfont': diagnosis.isActive, 'yellowfont': !diagnosis.isActive}"> {{diagnosis.isActive? 'Active':'In Active'}} </span> </p>
+                  <p><span>Diagnosis</span></p>
+                  <p><i matTooltip="diagnosis.diagnosis" matTooltipClass="example-tooltip" class="fa fa-info-circle infoIcon" aria-hidden="true"></i> <span>  {{diagnosis.diagnosis}} </span></p>                  
+                </mat-card-content>
+      </mat-card>
+  </div>
+</div>
+</div>
+</div>

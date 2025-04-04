@@ -1,0 +1,74 @@
+<div class="custom_modal">
+  <h3 mat-dialog-title>{{headerText}}</h3>
+  <div mat-dialog-content>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <form (ngSubmit)="onSubmit()" id="CompanyInsuranceForm" #documentForm="ngForm" class="readmin-form custom_form" [formGroup]="CompanyInsuranceForm">
+          <div class="row">
+            <div class="col-sm-12 require">
+              <mat-form-field class="example-full-width" hintLabel="{{formControls['drugName'].pending ? 'Validating...' : ''}}">
+                <input matInput autofocus placeholder="Drug Name" maxlength="50" formControlName="drugName" [ngClass]="{ 'is-invalid': submitted && formControls['drugName'].errors }"
+                  required />
+                <mat-error *ngIf="formControls['[drugName]'].errors?.['required']">
+                  Please enter Drug Name
+                </mat-error>
+                <mat-error *ngIf="formControls['drugName'].errors?.['uniqueName']">
+                  DrugName is already taken.
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+    <div class="row">
+      <div class="col-sm-4 require">
+        <mat-form-field class="example-full-width" hintLabel="{{formControls['Dose'].pending ? 'Validating...' : ''}}">
+          <input matInput autofocus placeholder="Dose " maxlength="50" formControlName="Dose" [ngClass]="{ 'is-invalid': submitted && formControls['Dose'].errors }"
+            required />
+          <mat-error *ngIf="formControls['Dose'].errors?.['required']">
+            Please enter Dose
+          </mat-error>
+          <mat-error *ngIf="formControls['Dose'].errors?.['uniqueName']">
+            Dose is already taken.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+
+  </div>
+  <div class="row">
+    <div class="col-sm-4 require">
+      <mat-form-field class="example-full-width" hintLabel="{{formControls['Strength'].pending ? 'Validating...' : ''}}">
+        <input matInput autofocus placeholder="Strength " maxlength="50" formControlName="Strength" [ngClass]="{ 'is-invalid': submitted && formControls['Strength'].errors }"
+          required />
+        <mat-error *ngIf="formControls['Strength'].errors?.['required']">
+          Please enter Strength
+        </mat-error>
+        <mat-error *ngIf="formControls['Strength'].errors?.['uniqueName']">
+          Strength is already taken.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+
+</div>
+          <!-- <div class="row">
+            <div class="col-sm-6 require is_active">
+              <mat-checkbox formControlName="isActive">
+                Is Active?
+              </mat-checkbox>
+            </div>
+          </div> -->
+        </form>
+      </div>
+    </div>
+
+  <div mat-dialog-actions class="nw-pd">
+    <button mat-raised-button class="cancel-btn" (click)="closeDialog()">Close</button>
+    <button mat-raised-button color="primary" form="CompanyInsuranceForm" [disabled]="submitted || formControls['pending']" cdkFocusInitial>
+        {{(submitted || CompanyInsuranceForm.pending) ? submitted ? 'Saving...' : CompanyInsuranceForm.pending ? 'Validating...' : 'Save' : 'Save'}}
+      </button>
+  </div>
+</div>
+
+

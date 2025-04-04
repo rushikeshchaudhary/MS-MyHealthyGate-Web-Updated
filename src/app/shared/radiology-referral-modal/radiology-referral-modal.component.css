@@ -1,0 +1,22 @@
+.diacomImages{
+    cursor: pointer;
+    color: #01385f;
+}
+.diacomImages:hover{
+    color: #17a2b8;
+    text-decoration: underline;
+    font-weight: bold
+}
+.panel_two {
+    box-shadow: none !important;
+    background-color: white !important;
+}
+::ng-deep .mat-tab-body-wrapper {
+    background: white !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+
+::ng-deep .mat-tab-label-container{
+    flex-grow: inherit !important;
+}

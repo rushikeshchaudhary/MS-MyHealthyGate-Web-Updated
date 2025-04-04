@@ -1,0 +1,164 @@
+<div class="custom_modal">
+  <h3 mat-dialog-title>{{ "upload_document" | translate }}</h3>
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-sm-12">
+        <form
+          id="addExperienceForm"
+          #documentForm="ngForm"
+          class="readmin-form custom_form"
+          [formGroup]="addExperienceForm"
+        >
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  placeholder="{{ 'organization_name' | translate }}"
+                  formControlName="organisationName"
+                  [ngClass]="{
+                    'is-invalid':
+                      submitted && addFormControls['organisationName'].errors
+                  }"
+                  required
+                />
+                <!-- {{ 'organisation_name' | translate }} -->
+                <mat-error
+                  *ngIf="
+                    (addFormControls['organisationName'].touched || submitted) &&
+                    addFormControls['organisationName'].errors?.['required']
+                  "
+                >
+                  <!-- {{ "please_enter_organisation_name" | translate }} -->
+                  {{ "please_enter_organization_name" | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <textarea
+                  matInput
+                  placeholder="{{ 'role_and_experience' | translate }}"
+                  formControlName="role"
+                  [ngClass]="{
+                    'is-invalid': submitted && addFormControls['role'].errors
+                  }"
+                  required
+                ></textarea>
+                <!-- {{ 'organisation_name' | translate }} -->
+                <mat-error
+                  *ngIf="
+                    (addFormControls['role'].touched || submitted) &&
+                    addFormControls['role'].errors?.['required']
+                  "
+                >
+                  please enter Role and experience details name
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  [matDatepicker]="startDate"
+                  placeholder="{{ 'start_date' | translate }}"
+                  [min]="minDate"
+                  formControlName="startDate"
+                  [ngClass]="{
+                    'is-invalid': submitted && addFormControls['startDate'].errors
+                  }"
+                  required
+                  readonly
+                />
+                <!-- {{ 'Start_date' | translate }} -->
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="startDate"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #startDate></mat-datepicker>
+                <mat-error
+                  *ngIf="
+                    (addFormControls['startDate'].touched || submitted) &&
+                    addFormControls['startDate'].errors?.['required']
+                  "
+                >
+                  <!-- {{ "please_enter_start_date" | translate }} -->
+                  {{ "please_enter_start_date" | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  [matDatepicker]="endDate"
+                  placeholder="{{ 'end_date' | translate }}"
+                  [min]="minDate"
+                  formControlName="endDate"
+                />
+                <!-- {{ 'End_date' | translate }} -->
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="endDate"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #endDate></mat-datepicker>
+                <!--<mat-error *ngIf="addFormControls.endDate.errors">
+                   {{ "please_enter_end_date" | translate }}
+                  please enter end date
+                </mat-error>-->
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="col-sm-12 pd-0 mt-3">
+                <div class="uplaod_pic">
+                  <label class="browse">
+                    <i class="fa fa-upload fa-2x" aria-hidden="true"></i>
+                    <input type="file" (change)="handleImageChange($event)" />
+                  </label>
+                </div>
+                <!-- <mat-error *ngIf="imageError == true">
+                  please upload image here
+                </mat-error> -->
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <span>
+                <p *ngFor="let file of fileList; let i = index">
+                  {{ file.fileName }}
+                  <button
+                    type="button"
+                    title="Delete"
+                    class="tbactionbtn"
+                    (click)="removeFile(i)"
+                  >
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                  </button>
+                </p>
+              </span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button class="cancel-btn" (click)="closeDialog('close')">
+      {{ "close" | translate }}
+    </button>
+    <button
+      name="Save"
+      mat-raised-button
+      color="primary"
+      (click)="onSubmit()"
+      form="addExperienceForm"
+      class="text-uppercase"
+      [disabled]="submitted"
+      cdkFocusInitial
+    >
+      {{ submitted ? "Uploading..." : ("save" | translate) }}
+    </button>
+  </div>
+</div>

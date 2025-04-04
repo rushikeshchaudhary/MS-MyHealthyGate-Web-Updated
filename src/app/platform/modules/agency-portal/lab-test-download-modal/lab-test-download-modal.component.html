@@ -1,0 +1,101 @@
+<div class="readmin-panel pt-0 provider-dashboardchart panel_two">
+  <h3 mat-dialog-title>Download Files</h3>
+  <mat-tab-group>
+    <mat-tab label="Test Details">
+      <div mat-dialog-content>
+        <div class="col-md-12">
+          <table class="table table-bordered mt-3">
+            <thead>
+              <tr>
+                <th>SR. no.</th>
+                <th>{{"test_name"|translate}}</th>
+                <!-- <th>View</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let t of testList; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>
+                  {{ t.TestName }}
+                  <!-- <button class="downloadbutton" (click)="downloadFile(t.LabReferralTestId,t.TestName)" [disabled]="isReadytoDownload">
+                  <i class="fa fa-download"></i>
+                </button> -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div mat-dialog-actions>
+        <button mat-raised-button class="cancel-btn" (click)="closeDialog('close')">
+          {{"close"|translate}}
+        </button>
+      </div>
+    </mat-tab>
+    <mat-tab label="Test Results">
+      <!-- <div
+        class="row mx-0 px-0 ms-2 p-2"
+        *ngIf="testResultDocument.length == 0"
+      >
+        <div class="col-12">Result not uploaded yet!</div>
+      </div>
+      <div class="row mx-0 ms-2 px-0 p-2" *ngIf="testResultDocument.length > 0">
+        <div class="col-12"><b>Test results.</b></div>
+        <div
+          class="col-12 my-2 ms-2"
+          style="padding-left: 31px"
+          *ngFor="let result of testResultDocument"
+        >
+          {{ result.originalFileName }}&nbsp;&nbsp;<i
+            class="fa fa-download"
+            style="cursor: pointer"
+            title="Download"
+            (click)="downloadFile(result.id, result.originalFileName)"
+          ></i>
+          &nbsp;<i
+            class="fa fa-eye"
+            style="cursor: pointer"
+            (click)="viewDocument(result)"
+            aria-hidden="true"
+          ></i>
+        </div>
+      </div> -->
+      <div class="col-12">
+        <div class="row mx-0 px-0">
+          <div class="col-12 my-2">
+            <!-- <h4 style="text-decoration: underline">Uploaded documnets</h4> -->
+            <h4 class="mb-4">Uploaded documnets</h4>
+            <div class="p-2" style="color: rgb(85, 85, 85)" *ngIf="testResultDocument.length == 0">
+              No document uploaded yet!
+            </div>
+            <div class="p-2 blk_data" *ngFor="let result of testResultDocument; let i = index">
+              <div class="d-flex align-items-center">
+                {{ i + 1 }}&nbsp;&nbsp;
+                <h6 class="m-0">{{ result.originalFileName }}&nbsp;&nbsp;</h6>
+              </div>
+              <div>
+                <i class="fa fa-download" style="cursor: pointer" title="Download"
+                (click)="downloadFile(result.id, result.originalFileName)"></i>
+              &nbsp;<i class="fa fa-eye" style="cursor: pointer"
+                (click)="viewDocument(result.id, result.originalFileName)" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-12 ml-3">
+        <span *ngIf="data.qrResultImagePath != ''">
+          <img style="width: 120px" [src]="data.qrResultImagePath" alt="" />
+        </span>
+        <span *ngIf="data.qrResultImagePath == ''"> ---- </span>
+      </div>
+      <div mat-dialog-actions>
+        <button mat-raised-button class="cancel-btn" (click)="closeDialog('close')">
+          {{"close"|translate}}
+        </button>
+      </div>
+    </mat-tab>
+
+  </mat-tab-group>
+</div>

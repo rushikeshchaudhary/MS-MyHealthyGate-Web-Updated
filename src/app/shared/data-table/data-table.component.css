@@ -1,0 +1,219 @@
+/*Table Css*/
+table {
+  width: 100%;
+}
+.fa-custom{
+  font-size: 1em;
+  color: #fff;
+}
+.table {
+  border-collapse: collapse;
+  background-color: transparent;
+}
+
+.customtable {
+  white-space: normal;
+}
+td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+  padding: inherit !important;
+}
+
+table th.mat-header-cell > div > button {
+  color: #000;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+td.mat-cell,
+td.mat-footer-cell,
+th.mat-header-cell {
+  padding-left: 0.75rem !important;
+  padding-right: 0.75rem !important;
+}
+/*Pagination*/
+.mat-paginator .mat-paginator-container {
+  justify-content: space-between;
+}
+
+.bgcolor-circle {
+  border: 1px solid #efefef;
+  width: 30px;
+  height: 30px;
+  display: block;
+  padding: 2px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+}
+
+/* @media (max-width: 1199px){
+  .customtable {
+      white-space: nowrap;
+  }
+} */
+@media (max-width: 520px) {
+  .mat-paginator .mat-paginator-container {
+    justify-content: center;
+    flex-direction: column;
+  }
+  .mat-paginator-range-label {
+    margin: 0px !important;
+  }
+  .mat-paginator-range-actions {
+    display: inline-block !important;
+    text-align: center;
+  }
+}
+.table-responsive .alert.alert-danger {
+  border-radius: 0px;
+  line-height: 39px;
+  border: none;
+  background: #fff3f3;
+  width: 97%;
+  margin-left: 7px;
+  color: #d00;
+}
+.star {
+  margin-right: -9px;
+  font-size: 19px !important;
+}
+
+.average-rating {
+  font-size: 12px !important;
+  line-height: 30px;
+}
+/* .table-responsive {
+  overflow-x:inherit;
+} */
+
+
+
+.table-responsive.mt-15{
+  padding: 0 15px;
+  /* overflow-x: scroll; */
+}
+/* .no-gutters{
+  display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+} */
+.custom_form .mat-form-field-flex {
+  height: 45px;
+  border-color: #dfd5d5;
+}
+.pull-right {
+  padding-right: 15px !important;
+}
+.content_page{
+  padding: 30px !important;
+}
+.readmin-panel {
+  border-radius: 10px;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+}
+.dropdown-menu.show {
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+  border: navajowhite;
+}
+button.btn.viewww {
+  background: transparent;
+  font-size: 14px;
+  /* opacity: 0.5; */
+  font-weight: 500 !important;
+}
+.dropdown-toggle::after {
+  content:inherit;
+}
+button#dropdownMenuButton {
+  background: transparent;
+}
+.mat-paginator-container {
+  padding: 0 15px;
+}
+.table thead th {
+  vertical-align: inherit;
+  border-bottom: 2px solid #f7f5f5;
+}
+button.mat-sort-header-button {
+  color: #01385f !important;
+}
+td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+  border-color: #f7f5f5;
+}
+.mat-paginator {
+  background-color: transparent;
+}
+::ng-deep .paginator-upward .mat-select-panel {
+  top: auto !important;
+  bottom: 100% !important;
+}
+::ng-deep .cdk-overlay-container .cdk-overlay-pane .mat-select-panel {
+  transform-origin: bottom;
+}
+
+.mat-row:nth-child(even) {
+  /* background-color: #e4fbff; */
+  background-color: #eafcff;
+  border-bottom: 1px solid #f5f1f1 !important;
+  /* margin: 10px 0;
+  border-radius: 10px; */
+}
+.mat-row .mat-cell {
+  font-weight: 400;
+}
+.mat-header-row {
+  background: white;
+  padding: 0 0 0 10px;
+  border-bottom: 1px solid #f5f1f1 !important;
+}
+.mat-row {
+  background: white;
+  /* border-radius: 10px; */
+  padding: 0 0 0 10px;
+  border-bottom: 1px solid #f5f1f1 !important;
+}
+
+
+button#dropdownMenuButton {
+  /* background: #17a2b8; */
+  color: white;
+  padding: 0px 10px;
+  background: linear-gradient(90.06deg, #014971 0.32%, #03BECA 100.49%) !important;
+  border: none;
+}
+.table-responsive img{
+  max-width: 47px;
+}
+td.mat-cell {
+  color: #01385f;
+}
+.show a {
+  /* color: #afadadcd; */
+  /* padding: 0 !important; */
+  font-weight: 500 !important;
+  text-align: left;
+  color: black;
+}
+
+tr:first-child .mat-sort-header-container {
+  padding-left: 20px;
+}
+tbody td.mat-cell {
+  padding-left: 20px !important;
+}
+
+.mat-cell .dropdown {
+  padding-left: 20px;
+}
+tr.mat-row:hover td {
+  background-color: #17a2b8;
+  color: white;
+}
+
+tr.mat-row:hover td.mat-cell span.greenfont {
+  background-color: #17a2b8;
+  color: white;
+}
+.empty .abc {
+  box-shadow: none !important;
+}

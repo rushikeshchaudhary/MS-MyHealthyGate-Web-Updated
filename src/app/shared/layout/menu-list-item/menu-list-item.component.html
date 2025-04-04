@@ -1,0 +1,35 @@
+<a
+  mat-list-item
+  [ngStyle]="{ 'padding-left': (depth != null ? depth * 30 : 0) + 'px' }"
+  (click)="onItemSelected(item)"
+  [ngClass]="{ active: isActiveRoute(item) }"
+  [title]="item.displayName"
+>
+  <!-- <mat-icon class="routeIcon">{{item.iconName}}</mat-icon> -->
+  <div class="sidebar-menu-list" [innerHtml]="item.iconName"></div>
+  {{ item.displayName }}
+  <!-- <span *ngIf="item.extraInfo" class="extra-info">{{
+    "  " + item.extraInfo
+  }}</span> -->
+  <span *ngIf="item.displayName=='My Appointments' && pendingAppointment" class="extra-info">{{
+    pendingAppointment !== 0 ? '  ' + pendingAppointment : '  ' + pendingAppointmentLocalStorage
+  }}</span>
+  <span *ngIf="item.displayName=='Mailbox' && inboxCount" class="extra-info">{{
+    inboxCount !== 0 ? '  ' + inboxCount : '  ' + inboxCountLocalStorage
+  }}</span>
+
+  <span fxFlex *ngIf="item.displayName === 'Logs'" class="d-flex ml-auto">
+    <span fxFlex></span>
+    <mat-icon *ngIf="tabOpened == false"> expand_more </mat-icon>
+    <mat-icon *ngIf="tabOpened == true"> expand_less </mat-icon>
+  </span>
+</a>
+
+<div *ngIf="tabOpened && item.displayName === 'Logs'">
+  <app-menu-list-item
+    *ngFor="let child of item.children"
+    [item]="child"
+    [depth]="depth!=null?(depth + 1) : 0"
+  >
+  </app-menu-list-item>
+</div>

@@ -1,0 +1,233 @@
+<div *ngIf="PharmacyInfo != null" class="row">
+  <div class="col-sm-12">
+    <!-- <h3 class="nw-hdng">Edit Pharmacy Info</h3> -->
+    <form
+      class="readmin-form custom_form"
+      id="labForm"
+      #documentForm="ngForm"
+      [formGroup]="pharmacyProfileForm"
+    >
+      <div class="row">
+        <div class="col-sm-4 require">
+          <mat-form-field class="example-full-width">
+            <input
+              matInput
+              placeholder="{{'pharmacy_name'|translate}}"
+              maxlength="40"
+              pattern="[a-zA-Z ]*"
+              formControlName="pharmacyName"
+              [ngClass]="{
+                'is-invalid': submitted && formControls['pharmacyName'].errors
+              }"
+              required
+            />
+            <mat-error *ngIf="formControls['pharmacyName'].errors?.['required']">
+              {{"please_enter_pharmacy_name" | translate}}
+            </mat-error>
+            <mat-error *ngIf="formControls['pharmacyName'].errors?.['pattern']">
+              {{"first_name" | translate}} '{{ formControls['pharmacyName'].value }}' not valid, allowed
+              only alphanumeric characters.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-4 require">
+          <mat-form-field class="example-full-width">
+            <input
+              matInput
+              placeholder="{{'first_name'|translate}}"
+              maxlength="40"
+              pattern="[a-zA-Z ]*"
+              formControlName="firstName"
+              [ngClass]="{
+                'is-invalid': submitted && formControls['firstName'].errors
+              }"
+              required
+            />
+            <mat-error *ngIf="formControls['firstName'].errors?.['required']">
+              {{"please_enter_first_name" | translate}}
+            </mat-error>
+            <mat-error *ngIf="formControls['firstName'].errors?.['pattern']">
+              {{"first_name" | translate}} '{{ formControls['firstName'].value }}' not valid, allowed
+              only alphanumeric characters.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-4 require">
+          <mat-form-field class="example-full-width">
+            <input
+              matInput
+              formControlName="middleName"
+              placeholder="{{'middle_name'|translate}}"
+              maxlength="40"
+              pattern="[a-zA-Z ]*"
+            />
+            <mat-error *ngIf="formControls['middleName'].errors?.['pattern']">
+              {{"middle_name" | translate}} '{{ formControls['middleName.value }}' not valid,
+              allowed only alphanumeric characters.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-4 require">
+          <mat-form-field class="example-full-width">
+            <input
+              matInput
+              placeholder="{{'last_name'|translate}}"
+              maxlength="40"
+              pattern="[a-zA-Z ]*"
+              required
+              [ngClass]="{
+                'is-invalid': submitted && formControls['lastName'].errors
+              }"
+              formControlName="lastName"
+            />
+            <mat-error *ngIf="formControls['lastName'].errors?.['required']">
+              {{"please_enter_last_name" | translate}}
+            </mat-error>
+            <mat-error *ngIf="formControls['middleName'].errors?.['pattern']">
+              {{"last_name" | translate}} '{{ formControls['lastName'].value }}' not valid, allowed
+              only alphanumeric characters.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-4 require">
+          <mat-form-field class="example-full-width">
+            <input
+              matInput
+              placeholder="{{'email'|translate}}"
+              [readonly]="true"
+              maxlength="60"
+              required
+              formControlName="email"
+              [ngClass]="{
+                'is-invalid': submitted && formControls['email'].errors
+              }"
+            />
+            <mat-error *ngIf="formControls['email'].errors?.['required']">
+              {{"please_enter_email" | translate}}
+            </mat-error>
+            <mat-error *ngIf="formControls['email'].errors?.['email']">
+              {{"Please_enter_a_valid_email_address" | translate}}
+            </mat-error>
+            <mat-error *ngIf="formControls['email'].errors?.['uniqueName']">
+              {{"email" | translate}} '{{ formControls['email'].value }}' {{"already_exist" | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- <div class="col-sm-4 require">
+          <mat-form-field class="example-full-width">
+            <input
+              matInput
+              readonly
+              [matDatepicker]="dob"
+              [max]="maxDate"
+              placeholder="{{'dob'|translate}}"
+              formControlName="dob"
+              required
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="dob"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #dob></mat-datepicker>
+            <mat-error *ngIf="formControls.dob.errors?.['required']">
+              Please select DOB
+            </mat-error>
+            <mat-error *ngIf="formControls.dob.errors?.age">
+              Age should be greater than 18 years
+            </mat-error>
+          </mat-form-field>
+        </div> -->
+        
+        <!-- <div class="col-sm-4">
+          <mat-form-field class="example-full-width">
+            <mat-select
+              placeholder="{{'gender'|translate}}"
+              formControlName="gender"
+              [ngClass]="{
+                'is-invalid': submitted && formControls.gender.errors
+              }"
+              matInput
+            >
+              <mat-option
+                *ngFor="let genderVal of masterGender"
+                [value]="genderVal.id"
+              >
+                {{ genderVal.value }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div> -->
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="panel_title">
+            <h3>Pharmacy Image</h3>
+            <i class="flaticon flaticon-commerce"></i>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="uplaod_pic">
+            <div>
+              <label class="browse">
+                <img
+                  *ngIf="imagePreview"
+                  [src]="imagePreview"
+                  onerror="this.src='../../../../../../assets/img/noimage.png';"
+                  alt="Preview"
+                />
+                <span *ngIf="imagePreview">{{"change" | translate}}</span>
+                <i
+                  *ngIf="!imagePreview"
+                  class="fa fa-upload fa-2x"
+                  aria-hidden="true"
+                ></i>
+                <input
+                  type="file"
+                  formControlName="userImg"
+                  (change)="handleImageChange($event)"
+                />
+              </label>
+            </div>
+            <div>
+              <label
+                class="browse bg-red"
+                *ngIf="dataURL"
+                (click)="removeImage()"
+              >
+                <span *ngIf="imagePreview"></span>
+                <i
+                  *ngIf="imagePreview"
+                  class="fa fa-trash fa-2x"
+                  aria-hidden="true"
+                ></i>
+              </label>
+            </div>
+          </div>
+          <p class="ins_photo">({{"browse_any_jpg_jpeg_bmp_png_file" | translate}})</p>
+        </div>
+      </div>
+      <div class="row">
+        <div
+          class="col-sm-12 d-sm-flex justify-content-sm-end pt-3 actions-btn"
+        >
+          <button
+            name="Save"
+            mat-raised-button
+            color="accent"
+            title="Submit Form"
+            form="userForm"
+            (click)="onSubmit($event)"
+            class="text-uppercase mr-2"
+            [disabled]="submitted"
+          >
+            {{ submitted ? "Saving..." : "save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

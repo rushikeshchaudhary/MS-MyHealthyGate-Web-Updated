@@ -1,0 +1,620 @@
+<div *ngIf="!IsEditForm" class="custom_modal">
+  <h3 mat-dialog-title>{{ headerText }}</h3>
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-sm-12">
+        <form id="immunizationAddForm" #documentForm="ngForm" class="readmin-form custom_form"
+          [formGroup]="immunizationAddForm">
+          <div class="row">
+            <div class="col-sm-12">
+              <mat-form-field class="example-full-width">
+                <mat-select autofocus placeholder="{{'order_by'|translate}}" formControlName="orderBy" matInput>
+                  <mat-option *ngFor="let rel of masterStaff" [value]="rel.id">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <!-- <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  placeholder="VFC eligibility"
+                  formControlName="vfcid"
+                  [matAutocomplete]="auto1"
+                  [(ngModel)]="filtervfceligibility"
+                  [ngClass]="{
+                    'is-invalid': submitted && addFormControls.vfcid.errors
+                  }"
+                  required
+                  (ngModelChange)="vfcEligibilityTypeHandler($event)"
+                />
+
+                <mat-autocomplete #auto1="matAutocomplete">
+                  <mat-option
+                    *ngFor="let rel of filterMasterVfcEligibilityTypes"
+                    [value]="rel.value"
+                    matTooltip="{{ rel.value }}"
+                    matToolTipPosition="above"
+                    (onSelectionChange)="onSelectChange(rel, 'vfceligibility')"
+                  >
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div> -->
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input matInput readonly [max]="maxDate" [matDatepicker]="administeredDate"
+                  placeholder="{{'administered_date'|translate}}" [ngClass]="{'is-invalid':
+                      submitted && addFormControls['administeredDate'].errors}" required formControlName="administeredDate" />
+                <mat-datepicker-toggle matSuffix [for]="administeredDate"></mat-datepicker-toggle>
+                <mat-datepicker #administeredDate></mat-datepicker>
+                <mat-error *ngIf="addFormControls['administeredDate'].errors?.['required']">
+                  Please select administation date
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="{{'immunization'|translate}}" formControlName="immunization"
+                  [matAutocomplete]="auto" [(ngModel)]="filterString" [ngClass]="{
+                    'is-invalid':
+                      submitted && addFormControls['immunization'].errors
+                  }" required (ngModelChange)="immunizationTypeHandler($event)" />
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let rel of filtermasterImmunizationTypes" [value]="rel.value"
+                    matTooltip="{{ rel.value }}" matToolTipPosition="above"
+                    (onSelectionChange)="onSelectChange(rel, 'immunization')">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <!--<div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <mat-select
+                  placeholder="Immunization"
+                  formControlName="immunization"
+                  matInput
+                  [ngClass]="{
+                    'is-invalid':
+                      submitted && addFormControls.immunization.errors
+                  }"
+                  required
+                >
+                  <mat-option
+                    *ngFor="let rel of masterImmunization"
+                    [value]="rel.id"
+                    matTooltip="{{ rel.value }}"
+                    matToolTipPosition="above"
+                  >
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="addFormControls.immunization.errors?.required"
+                >
+                  Please select an immunization
+                </mat-error>
+              </mat-form-field>
+            </div>-->
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input matInput appNumbersOnly placeholder="{{'amount_administered_ml'|translate}}" maxlength="5"
+                  formControlName="amountAdministered" />
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Manufacture" formControlName="manufacturerName" [matAutocomplete]="auto2"
+                  [(ngModel)]="filterManufacture" (ngModelChange)="manufactureTypeHandler($event)" />
+                <mat-autocomplete #auto2="matAutocomplete">
+                  <mat-option *ngFor="let rel of filterMasterManufactures" [value]="rel.value"
+                    matTooltip="{{ rel.value }}" matToolTipPosition="above"
+                    (onSelectionChange)="onSelectChange(rel, 'manufacture')">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-autocomplete>
+
+                <!--<mat-select placeholder="Manufacturer" formControlName="manufactureID" matInput>
+                  <mat-option *ngFor="let rel of masterManufacture" [value]="rel.id" matTooltip="{{ rel.value }}"
+                    matToolTipPosition="above">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-select>-->
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input matInput [matDatepicker]="expireDate" [matDatepickerFilter]="dateFilter"
+                  placeholder="{{'expiration_date'|translate}}" [min]="addFormControls['administeredDate'].value"
+                  formControlName="expireDate"  readonly />
+                <mat-datepicker-toggle matSuffix [for]="expireDate"></mat-datepicker-toggle>
+                <mat-datepicker #expireDate></mat-datepicker>
+                <mat-error *ngIf="addFormControls['expireDate'].errors?.['required']">
+                  Please select expiry date
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="{{'vaccine_lot_number'|translate}}" maxlength="5"
+                  formControlName="vaccineLotNumber" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Administration Site" formControlName="administrationSite"
+                  [(ngModel)]="filterAdministrationSiteVal" (ngModelChange)="administrationSiteTypeHandler($event)"
+                  [matAutocomplete]="auto5" />
+                <mat-autocomplete #auto5="matAutocomplete">
+                  <mat-option *ngFor="let rel of filterAdminSiteTypes" [value]="rel.value"
+                    (onSelectionChange)="onSelectChange(rel, 'adminSite')">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-autocomplete>
+                <!--<mat-select placeholder="Administration Site" formControlName="administrationSiteID" matInput>
+                  <mat-option *ngFor="let rel of masterAdministrationSite" [value]="rel.id">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-select>-->
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="{{'route_of_administration'|translate}}"
+                  formControlName="routeOfAdministration" [(ngModel)]="filterRouteOfAdminisValue"
+                  (ngModelChange)="routeOfAdminTypeHandler($event)" [matAutocomplete]="auto3" />
+                <mat-autocomplete #auto3="matAutocomplete">
+                  <mat-option *ngFor="let rel of filterRouteOfAdministrationTypes" [value]="rel.value"
+                    matTooltip="{{ rel.value }}" matToolTipPosition="above" (onSelectionChange)="
+                      onSelectChange(rel, 'routeofAdministration')
+                    ">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-autocomplete>
+                <!--<mat-select placeholder="Route of Administration" formControlName="routeOfAdministrationID" matInput
+                  [ngClass]="{
+                    'is-invalid':
+                      submitted &&
+                      addFormControls.routeOfAdministrationID.errors
+                  }" required>
+                  <mat-option *ngFor="let rel of masterRouteOfAdministration" [value]="rel.id"
+                    matTooltip="{{ rel.value }}" matToolTipPosition="above">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-select>-->
+                <mat-error *ngIf="
+                    addFormControls['routeOfAdministrationID'].errors?.['required']
+                  ">
+                  Please select route of administration
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <mat-select placeholder="{{'administered_by'|translate}}" formControlName="administeredBy" matInput>
+                  <mat-option *ngFor="let rel of masterStaff" [value]="rel.id" matTooltip="{{ rel.value }}"
+                    matToolTipPosition="above">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="{{'immunity_status'|translate}}" formControlName="immunityStatus"
+                  [ngClass]="{
+                    'is-invalid':
+                      submitted && addFormControls['immunityStatus'].errors
+                  }" required [(ngModel)]="filterImmunityStatusValue"
+                  (ngModelChange)="immunityStatusTypeHandler($event)" [matAutocomplete]="auto4" />
+                <mat-autocomplete #auto4="matAutocomplete">
+                  <mat-option *ngFor="let rel of filterImmunityStatus" [value]="rel.value" matTooltip="{{ rel.value }}"
+                    matToolTipPosition="above" (onSelectionChange)="onSelectChange(rel, 'immunityStatus')">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-autocomplete>
+
+                <!--<mat-select placeholder="Immunity Status" formControlName="immunityStatusID" matInput [ngClass]="{
+                    'is-invalid':
+                      submitted && addFormControls.immunityStatusID.errors
+                  }" required>
+                  <mat-option *ngFor="let rel of masterImmunityStatus" [value]="rel.id" matTooltip="{{ rel.value }}"
+                    matToolTipPosition="above">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-select>-->
+
+                <mat-error *ngIf="addFormControls['immunityStatus'].errors?.['required']">
+                  Please add immunity status
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-checkbox formControlName="rejectedImmunization">
+                {{'rejected_immunization'|translate}}
+              </mat-checkbox>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="R{{'rejection_reason'|translate}}" formControlName="rejectionReason"
+                  [(ngModel)]="filterRejectionReason" (ngModelChange)="rejectionReasonHandler($event)"
+                  [matAutocomplete]="auto6" />
+                <mat-autocomplete #auto6="matAutocomplete">
+                  <mat-option *ngFor="let rel of filterRejectionReasons" [value]="rel.value"
+                    matTooltip="{{ rel.value }}" matToolTipPosition="above"
+                    (onSelectionChange)="onSelectChange(rel, 'reason')">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-autocomplete>
+                <!--<mat-select [disabled]="!addFormControls.rejectedImmunization.value"
+                  [value]="addFormControls.rejectedImmunization.value" placeholder="Rejection Reason"
+                  formControlName="rejectionReasonID" matInput [ngClass]="{
+                    'is-invalid':
+                      submitted && addFormControls.rejectedImmunization.errors
+                  }" [required]="addFormControls.rejectedImmunization.value">
+                  <mat-option *ngFor="let rel of masterRejectionReason" [value]="rel.id" matTooltip="{{ rel.value }}"
+                    matToolTipPosition="above">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-select>-->
+                <mat-error *ngIf="addFormControls['rejectionReason'].errors?.['required']">
+                  Please add a reason
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row immun_modal">
+            <div class="col-sm-12 text_block">
+              <mat-form-field class="example-full-width">
+                <textarea matInput placeholder="{{'note'|translate}}" maxlength="2000"
+                  formControlName="rejectionReasonNote"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="d-flex justify-content-between">
+    <button mat-raised-button class="cancel-btn" (click)="closeDialog('close')">
+      {{'close'|translate}}
+    </button>
+    <div class="d-flex">
+      <button name="Save" mat-raised-button color="accent" (click)="onAddSubmit($event)" form="immunizationAddForm"
+        class="text-uppercase" [disabled]="submitted" cdkFocusInitial>
+        {{ submitted ? "Saving..." : ('save'|translate)}}
+      </button>
+      <button name="SaveAddMore" mat-raised-button color="primary" (click)="onAddSubmit($event)"
+        form="immunizationAddForm" class="text-uppercase ml-3" [disabled]="submitted" cdkFocusInitial>
+        {{ submitted ? "Saving..." : ('save_and_add_more'|translate) }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Form -->
+<div *ngIf="IsEditForm" class="custom_modal immun_modal">
+  <h3 mat-dialog-title>{{ headerText }}</h3>
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-sm-12">
+        <form id="immunizationEditForm" #documentForm="ngForm" class="readmin-form custom_form"
+          [formGroup]="immunizationEditForm">
+          <div class="row">
+            <div class="col-sm-12">
+              <mat-form-field class="example-full-width">
+                <mat-select autofocus placeholder="Order By" formControlName="orderBy" matInput>
+                  <mat-option *ngFor="let rel of masterStaff" [value]="rel.id">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <!-- <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  placeholder="VFC eligibility"
+                  formControlName="vfcid"
+                  [matAutocomplete]="auto1"
+                  [(ngModel)]="filtervfceligibility"
+                  [ngClass]="{
+                    'is-invalid': submitted && editFormControls.vfcid.errors
+                  }"
+                  required
+                  (ngModelChange)="vfcEligibilityTypeHandler($event)"
+                />
+
+                <mat-autocomplete #auto1="matAutocomplete">
+                  <mat-option
+                    *ngFor="let rel of filterMasterVfcEligibilityTypes"
+                    [value]="rel.value"
+                    matTooltip="{{ rel.value }}"
+                    matToolTipPosition="above"
+                    (onSelectionChange)="onSelectChange(rel, 'vfceligibility')"
+                  >
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div> -->
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input matInput readonly [max]="maxDate" [matDatepicker]="administeredDate"
+                  placeholder="Administration Date" [ngClass]="{
+                    'is-invalid':
+                      submitted && editFormControls['administeredDate'].errors
+                  }" required formControlName="administeredDate" />
+                <mat-datepicker-toggle matSuffix [for]="administeredDate"></mat-datepicker-toggle>
+                <mat-datepicker #administeredDate></mat-datepicker>
+                <mat-error *ngIf="editFormControls['administeredDate'].errors?.['required']">
+                  Please select administration date
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Immunization" formControlName="immunization" [(ngModel)]="filterstring"
+                  [ngClass]="{
+                    'is-invalid':
+                      submitted && editFormControls['immunization'].errors
+                  }" [matAutocomplete]="auto" required (ngModelChange)="immunizationTypeHandler($event)" />
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let doc of filtermasterImmunizationTypes" [value]="doc.value"
+                    (onSelectionChange)="onSelectChange(doc, 'immunization')">
+                    {{ doc.value }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+
+            <!--<div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <mat-select placeholder="Immunization" formControlName="immunization" matInput [ngClass]="{
+                    'is-invalid':
+                      submitted && editFormControls.immunization.errors
+                  }" required>
+                  <mat-option *ngFor="let rel of masterImmunization" [value]="rel.id" matTooltip="{{ rel.value }}"
+                    matToolTipPosition="above">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="editFormControls.immunization.errors?.required">
+                  Please select an immunization
+                </mat-error>
+              </mat-form-field>
+            </div>-->
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input matInput appNumbersOnly placeholder="Amount Administered" maxlength="5"
+                  formControlName="amountAdministered" />
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Manufacture" formControlName="manufacturerName" [matAutocomplete]="auto2"
+                  [(ngModel)]="filterManufacture" [ngClass]="{
+                    'is-invalid':
+                      submitted && editFormControls['manufacturerName'].errors
+                  }" required (ngModelChange)="manufactureTypeHandler($event)" />
+                <mat-autocomplete #auto2="matAutocomplete">
+                  <mat-option *ngFor="let rel of filterMasterManufactures" [value]="rel.value"
+                    matTooltip="{{ rel.value }}" matToolTipPosition="above"
+                    (onSelectionChange)="onSelectChange(rel, 'manufacture')">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-autocomplete>
+
+                <!--
+<mat-select placeholder="Manufacturer" formControlName="manufactureID" matInput>
+                  <mat-option *ngFor="let rel of masterManufacture" [value]="rel.id" matTooltip="{{ rel.value }}"
+                    matToolTipPosition="above">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-select>
+
+               -->
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input matInput [matDatepicker]="expireDate" [matDatepickerFilter]="dateEditFilter"
+                  placeholder="Expiration Date" [min]="editFormControls['administeredDate'].value"
+                  formControlName="expireDate" [ngClass]="{
+                    'is-invalid':
+                      submitted && editFormControls['expireDate'].errors
+                  }" required readonly />
+                <mat-datepicker-toggle matSuffix [for]="expireDate"></mat-datepicker-toggle>
+                <mat-datepicker #expireDate></mat-datepicker>
+                <mat-error *ngIf="editFormControls['expireDate'].errors?.['required']">
+                  Please select expiry date
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Vaccine Lot Number" maxlength="5" formControlName="vaccineLotNumber" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Administration Site" formControlName="administrationSite"
+                  [(ngModel)]="filterAdministrationSiteVal" (ngModelChange)="administrationSiteTypeHandler($event)"
+                  [matAutocomplete]="auto5" />
+                <mat-autocomplete #auto5="matAutocomplete">
+                  <mat-option *ngFor="let rel of filterAdminSiteTypes" [value]="rel.value"
+                    (onSelectionChange)="onSelectChange(rel, 'adminSite')">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-autocomplete>
+                <!--<mat-select placeholder="Administration Site" formControlName="administrationSiteID" matInput>
+                  <mat-option *ngFor="let rel of masterAdministrationSite" [value]="rel.id">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-select>-->
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Route of Administration" formControlName="routeOfAdministration" [ngClass]="{
+                    'is-invalid':
+                      submitted && editFormControls['routeOfAdministration'].errors
+                  }" required [(ngModel)]="filterRouteOfAdminisValue" (ngModelChange)="routeOfAdminTypeHandler($event)"
+                  [matAutocomplete]="auto3" />
+                <mat-autocomplete #auto3="matAutocomplete">
+                  <mat-option *ngFor="let rel of filterRouteOfAdministrationTypes" [value]="rel.value"
+                    matTooltip="{{ rel.value }}" matToolTipPosition="above" (onSelectionChange)="
+                      onSelectChange(rel, 'routeofAdministration')
+                    ">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-autocomplete>
+                <!--<mat-select placeholder="Route of Administration" formControlName="routeOfAdministration" matInput
+                  [ngClass]="{
+                    'is-invalid':
+                      submitted &&
+                      editFormControls.routeOfAdministrationID.errors
+                  }" required>
+                  <mat-option *ngFor="let rel of masterRouteOfAdministration" [value]="rel.id"
+                    matTooltip="{{ rel.value }}" matToolTipPosition="above">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-select>-->
+                <mat-error *ngIf="
+                    editFormControls['routeOfAdministration'].errors?.['required']
+                  ">
+                  Please select route of administration
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <mat-select placeholder="Administered By" formControlName="administeredBy" matInput>
+                  <mat-option *ngFor="let rel of masterStaff" [value]="rel.id" matTooltip="{{ rel.value }}"
+                    matToolTipPosition="above">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Immunity Status" formControlName="immunityStatus" [ngClass]="{
+                    'is-invalid':
+                      submitted && editFormControls['immunityStatus'].errors
+                  }" required [(ngModel)]="filterImmunityStatusValue"
+                  (ngModelChange)="immunityStatusTypeHandler($event)" [matAutocomplete]="auto4" />
+                <mat-autocomplete #auto4="matAutocomplete">
+                  <mat-option *ngFor="let rel of filterImmunityStatus" [value]="rel.value" matTooltip="{{ rel.value }}"
+                    matToolTipPosition="above" (onSelectionChange)="onSelectChange(rel, 'immunityStatus')">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-autocomplete>
+
+                <!--<mat-select placeholder="Immunity Status" formControlName="immunityStatusID" matInput [ngClass]="{
+                    'is-invalid':
+                      submitted && editFormControls.immunityStatusID.errors
+                  }" required>
+                  <mat-option *ngFor="let rel of masterImmunityStatus" [value]="rel.id" matTooltip="{{ rel.value }}"
+                    matToolTipPosition="above">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-select>-->
+
+                <mat-error *ngIf="editFormControls['immunityStatus'].errors?.['required']">
+                  Please add immunity status
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-checkbox formControlName="rejectedImmunization">
+                Rejected Immunizaiton
+              </mat-checkbox>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Rejection Reason" formControlName="rejectionReason" [ngClass]="{
+                    'is-invalid':
+                      submitted && editFormControls['rejectionReason'].errors
+                  }" required [(ngModel)]="filterRejectionReason" (ngModelChange)="rejectionReasonHandler($event)"
+                  [matAutocomplete]="auto6" />
+                <mat-autocomplete #auto6="matAutocomplete">
+                  <mat-option *ngFor="let rel of filterRejectionReasons" [value]="rel.value"
+                    matTooltip="{{ rel.value }}" matToolTipPosition="above"
+                    (onSelectionChange)="onSelectChange(rel, 'reason')">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-autocomplete>
+
+                <!--<mat-select [disabled]="!editFormControls.rejectedImmunization.value"
+                  [value]="editFormControls.rejectedImmunization.value" placeholder="Rejection Reason"
+                  formControlName="rejectionReasonID" matInput [ngClass]="{
+                    'is-invalid':
+                      submitted && editFormControls.rejectedImmunization.errors
+                  }" [required]="editFormControls.rejectedImmunization.value">
+                  <mat-option *ngFor="let rel of masterRejectionReason" [value]="rel.id" matTooltip="{{ rel.value }}"
+                    matToolTipPosition="above">
+                    {{ rel.value }}
+                  </mat-option>
+                </mat-select>-->
+                <mat-error *ngIf="editFormControls['rejectionReason'].errors?.['required']">
+                  Please add a reason
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 text_block">
+              <mat-form-field class="example-full-width">
+                <textarea matInput placeholder="Note" maxlength="2000" formControlName="rejectionReasonNote"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="gap-5">
+    <button mat-raised-button class="cancel-btn" (click)="closeDialog('close')">
+      Close
+    </button>
+    <div>
+      <button name="Save" mat-raised-button color="accent" (click)="onEditSubmit($event)" form="immunizationEditForm"
+        class="text-uppercase" [disabled]="submitted" cdkFocusInitial>
+        {{ submitted ? "Saving..." : "Save" }}
+      </button>
+      <button *ngIf="immunizationModel.id == null || immunizationModel.id == 0" name="SaveAddMore" mat-raised-button
+        color="primary" (click)="onEditSubmit($event)" form="immunizationEditForm" class="text-uppercase ml-3"
+        [disabled]="submitted" cdkFocusInitial>
+        {{ submitted ? "Saving..." : "Save & Add More" }}
+      </button>
+    </div>
+  </div>
+</div>

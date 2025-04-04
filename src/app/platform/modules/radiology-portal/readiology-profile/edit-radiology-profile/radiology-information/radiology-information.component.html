@@ -1,0 +1,185 @@
+<div *ngIf="labInfo != null" class="row">
+  <div class="col-sm-12">
+    <h3 class="nw-hdng">Edit Radiology Info</h3>
+    <form
+      class="readmin-form custom_form"
+      id="labForm"
+      #documentForm="ngForm"
+      [formGroup]="labForm"
+    >
+      <div class="row">
+        <div class="col-sm-6 require">
+          <mat-form-field class="example-full-width">
+            <input
+              matInput
+              placeholder="First Name"
+              maxlength="40"
+              pattern="[a-zA-Z ]*"
+              formControlName="firstName"
+              [ngClass]="{
+                'is-invalid': submitted && formControls['firstName'].errors
+              }"
+              required
+            />
+            <mat-error *ngIf="formControls['firstName'].errors?.['required']">
+              Please enter first name
+            </mat-error>
+            <mat-error *ngIf="formControls['firstName'].errors?.['pattern']">
+              First Name '{{ formControls['firstName'].value }}' not valid, allowed
+              only alphanumeric characters.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <!-- <div class="col-sm-4 require">
+          <mat-form-field class="example-full-width">
+            <input
+              matInput
+              formControlName="middleName"
+              placeholder="Middle Name"
+              maxlength="40"
+              pattern="[a-zA-Z ]*"
+            />
+            <mat-error *ngIf="formControls.middleName.errors?.pattern">
+              Middle Name '{{ formControls.middleName.value }}' not valid,
+              allowed only alphanumeric characters.
+            </mat-error>
+          </mat-form-field>
+        </div> -->
+        <div class="col-sm-6 require">
+          <mat-form-field class="example-full-width">
+            <input
+              matInput
+              placeholder="Last Name"
+              maxlength="40"
+              pattern="[a-zA-Z ]*"
+              required
+              [ngClass]="{
+                'is-invalid': submitted && formControls['lastName'].errors
+              }"
+              formControlName="lastName"
+            />
+            <mat-error *ngIf="formControls['lastName'].errors?.['required']">
+              Please enter last name
+            </mat-error>
+            <mat-error *ngIf="formControls['lastName'].errors?.['pattern']">
+              Last Name '{{ formControls['lastName'].value }}' not valid, allowed
+              only alphanumeric characters.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6 require">
+          <mat-form-field class="example-full-width">
+            <input
+              matInput
+              placeholder="Radiology Name"
+              maxlength="40"
+              pattern="[a-zA-Z ]*"
+              required
+              [ngClass]="{
+                'is-invalid': submitted && formControls['radiologyName'].errors
+              }"
+              formControlName="radiologyName"
+            />
+            <mat-error *ngIf="formControls['radiologyName'].errors?.['required']">
+              Please enter Radiology Name
+            </mat-error>
+            <mat-error *ngIf="formControls['radiologyName'].errors?.['pattern']">
+              Radiology Name '{{ formControls['radiologyName'].value }}' not valid, allowed
+              only alphanumeric characters.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6 require">
+          <mat-form-field class="example-full-width">
+            <input
+              matInput
+              placeholder="Email"
+              [readonly]="true"
+              maxlength="60"
+              required
+              [disabled]=false
+              formControlName="email"
+              [ngClass]="{
+                'is-invalid': submitted && formControls['email'].errors
+              }"
+            />
+            <mat-error *ngIf="formControls['email'].errors?.['required']">
+              Please enter email
+            </mat-error>
+            <mat-error *ngIf="formControls['email'].errors?.['email']">
+              Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="formControls['email'].errors?.['uniqueName']">
+              Email '{{ formControls['email'].value }}' already exists
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+
+      <br />
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="panel_title">
+            <h3>Radiology Profile Photo</h3>
+            <i class="flaticon flaticon-commerce"></i>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="uplaod_pic">
+            <div>
+              <label class="browse">
+                <img
+                  *ngIf="imagePreview"
+                  [src]="imagePreview"
+                  onerror="this.src='../../../../../../assets/img/noimage.png';"
+                  alt="Preview"
+                />
+                <span *ngIf="imagePreview">Change</span>
+                <i
+                  *ngIf="!imagePreview"
+                  class="fa fa-upload fa-2x"
+                  aria-hidden="true"
+                ></i>
+                <input type="file" (change)="handleImageChange($event)" />
+              </label>
+            </div>
+            <div>
+              <label
+                class="browse bg-red"
+                *ngIf="dataURL"
+                (click)="removeImage()"
+              >
+                <span *ngIf="imagePreview"></span>
+                <i
+                  *ngIf="imagePreview"
+                  class="fa fa-trash fa-2x"
+                  aria-hidden="true"
+                ></i>
+              </label>
+            </div>
+          </div>
+          <p class="ins_photo">(Browse any jpg, jpeg, bmp, png file.)</p>
+        </div>
+      </div>
+      <div class="row">
+        <div
+          class="col-sm-12 d-sm-flex justify-content-sm-end pt-3 actions-btn"
+        >
+          <button
+            name="Save"
+            mat-raised-button
+            color="accent"
+            title="Submit Form"
+            form="userForm"
+            (click)="onSubmit($event)"
+            class="text-uppercase mr-2"
+            [disabled]="submitted"
+          >
+            {{ submitted ? "Saving..." : "Save" }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

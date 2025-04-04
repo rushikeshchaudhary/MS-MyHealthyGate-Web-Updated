@@ -1,0 +1,26 @@
+<div>
+  <mat-form-field>
+    <mat-select
+      (openedChange)="selectedDataValue($event)"
+      [(value)]="setCountryCode"
+      placeholder=" Select Country Code"
+      (selectionChange)="onSelect(setCountryCode)"
+    >
+      <input
+        #someRef
+        class="p-2"
+        autocomplete="off"
+        [ngModel]="inputSearch"
+        placeholder=" Search Country"
+        matInput
+        (ngModelChange)="onKey($event)"
+      />
+      <mat-select-trigger>
+        {{ setCountryCode }}
+      </mat-select-trigger>
+      <mat-option *ngFor="let country of filterCountry" [value]="country.value">
+        {{ country.text }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+</div>

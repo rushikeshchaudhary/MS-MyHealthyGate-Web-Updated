@@ -1,0 +1,81 @@
+<div class="custom_modal">
+  <h3 mat-dialog-title>{{headerText}}</h3>
+  <div mat-dialog-content>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <form (ngSubmit)="onSubmit()" id="staffLeaveForm" #documentForm="ngForm" class="readmin-form custom_form"
+          [formGroup]="staffLeaveForm">
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <mat-select placeholder="{{'leave_type'|translate}}" formControlName="leaveTypeId" matInput [ngClass]="{ 'is-invalid': submitted && formControls['leaveTypeId'].errors }"
+                  required>
+                  <mat-option *ngFor="let option of masterLeaveType" [value]="option.id">
+                    {{option.value}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formControls['leaveTypeId'].errors">
+                  {{"please_select_leave_type"|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <mat-select placeholder="{{'leave_reason'|translate}}" formControlName="leaveReasonId" matInput [ngClass]="{ 'is-invalid': submitted && formControls['leaveReasonId'].errors }"
+                  required>
+                  <mat-option *ngFor="let option of masterLeaveReason" [value]="option.id">
+                    {{option.value}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formControls['leaveReasonId'].errors">
+                  {{"please_select_leave_reason"|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input matInput readonly [min]="todayDate" [matDatepicker]="fromDate" placeholder="{{'from_date'|translate}}" formControlName="fromDate" [ngClass]="{ 'is-invalid': submitted && formControls['fromDate'].errors }"
+                  required>
+                <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
+                <mat-datepicker #fromDate></mat-datepicker>
+                <mat-error *ngIf="formControls['fromDate'].errors">
+                  {{"please_enter_from_date"|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input matInput readonly [matDatepicker]="toDate" placeholder="{{'to_date'|translate}}" formControlName="toDate" [ngClass]="{ 'is-invalid': submitted && formControls['toDate'].errors }"
+                [min]="formControls['fromDate'].value" required>
+                <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
+                <mat-datepicker #toDate></mat-datepicker>
+                <mat-error *ngIf="formControls['toDate'].errors">
+                  {{"please_enter_to_date"|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 require">
+              <!-- <mat-form-field class="example-full-width" hintLabel="{{formControls['description'].value ? 1000 - formControls['value']?.length : 1000}} Characters Remaining">-->
+                <mat-form-field class="example-full-width" hintLabel="{{formControls['description'].value ? 1000 - formControls['description'].value.length : 1000}} Characters Remaining"> 
+                <textarea matInput placeholder="{{'description'|translate}}" maxlength="1000" formControlName="description" [ngClass]="{ 'is-invalid': submitted && formControls['description'].errors }"
+                  required></textarea>
+                <mat-error *ngIf="formControls['description'].errors">
+                 {{"please_enter_description"|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button class="cancel-btn" (click)="closeDialog('close')">{{"close"|translate}}</button>
+    <button mat-raised-button color="primary" form="staffLeaveForm" [disabled]="submitted" cdkFocusInitial> {{submitted ? 'Saving' : 'save'|translate}}</button>
+  </div>
+</div>

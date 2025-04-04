@@ -1,0 +1,186 @@
+<div class="patient-container">
+  <app-client-header [clientId]="clientId" [headerText]="header"></app-client-header>
+  <div class="readmin-panel">
+    <!-- <div class="col-md-3 pull-right justify-content-md-end d-flex mt-15">
+    <button *ngIf="uploadPermission" mat-raised-button color="primary" (click)="createModal()">
+      <i class="fa fa-plus" aria-hidden="true"></i> Upload Document</button>
+  </div> -->
+   
+      <div style="text-align: right;">
+        <button mat-raised-button color="primary" (click)="createModal('add', null)">
+          <i class="fa fa-plus" aria-hidden="true"></i> {{'upload_document'|translate}}
+        </button>
+      </div>
+      <div class="row">
+      <div class="col-sm-12 mt-3 d-flex justify-content-between align-items-start flex-wrap -----">
+        <!-- <div *ngIf="searchBox" class="d-flex justify-content-between" style="
+            width: 42vw;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            margin-right: 10px;
+          "> -->
+          <div *ngIf="searchBox" class="d-flex justify-content-between" style="
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 15px;
+          ">
+          <div class="doc_search">
+            <mat-form-field appearance="outline">
+              <input type="text" matInput placeholder="{{'search_documents'|translate}}" [matAutocomplete]="auto"
+                [(ngModel)]="filterString" (ngModelChange)="searchDocument($event)" />
+              <!-- <mat-icon class="iconPointer" matSuffix>search</mat-icon> -->
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let doc of filtermasterDocumentTypes" [value]="doc.documentTitle"
+                  (onSelectionChange)="onSelFunc(doc)">
+                  {{ doc.documentTitle }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="doc_search">
+            <mat-form-field class="example-full-width">
+              <mat-select autofocus placeholder="Category" [(ngModel)]="selectedCategory"
+                (selectionChange)="onCategorySelectionChange($event)" matInput>
+
+                <ng-container *ngIf="documentCategoryList && documentCategoryList.length > 0">
+                  <mat-option *ngFor="let category of documentCategoryList" [value]="category.id">
+                    {{category.type}}
+                  </mat-option>
+                </ng-container>
+              </mat-select>
+
+            </mat-form-field>
+          </div>
+          <div class="mt-1">
+            <button mat-raised-button (click)="changeSearchHandler('toDate')" color="primary">
+              <mat-icon>search</mat-icon>
+              {{'search_by_date'|translate}}
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="!searchBox" class="d-flex datesearch flex-wrap">
+          <label>{{'from'|translate}}</label>
+          <div class="custom-date-field">
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>dd/MM/yyyy</mat-label>
+              <input matInput [matDatepicker]="picker" [max]="maxDate" (dateChange)="addDateEvent('from', $event)" />
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <label>{{'to'|translate}}</label>
+          <div class="custom-date-field">
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>dd/MM/yyyy</mat-label>
+              <input matInput [matDatepicker]="picker1" [max]="maxDate" (dateChange)="addDateEvent('to', $event)" />
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div>
+            <button mat-raised-button color="primary" (click)="searcOnDatehHandler()">
+              {{'search'|translate}}
+            </button>
+          </div>
+          <div>
+            <button mat-raised-button color="primary" (click)="changeSearchHandler('toSearch')">
+              {{'cancel'|translate}}
+            </button>
+          </div>
+        </div>
+        <div class="filter-btn">
+          <!-- <div class="col-lg-2 col-sm-3 filter-btn"> -->
+          <button class="clear-btn" mat-raised-button (click)="clearFilters()">
+            Clear All
+          </button>
+        </div>
+    
+      </div>
+      <!-- <div class="col-sm-12 d-flex justify-content-start">
+        <div class="sortCss">Sort By</div>
+        <button mat-button (click)="sortHandler('latest')">Latest</button>
+        <button mat-button (click)="sortHandler('oldest')">Oldest</button>
+        <button mat-button (click)="sortHandler('atoz')">A to Z</button>
+        <button mat-button (click)="sortHandler('ztoa')">Z to A</button>
+        <button mat-raised-button color="primary" (click)="sortHandler('clear')">
+          Clear filter
+        </button>
+      </div> -->
+    </div>
+    <div class="clearfix"></div>
+    <!-- <div *ngIf="
+      documentList != null && documentList.length > 0 && isHistoryShareable
+    " class="row">
+      <div class="col-lg-4 col-sm-6 mt-20 custom-card custom-card-header" *ngFor="let doc of documentList">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>
+              {{ doc.documentTitle }}
+            </mat-card-title>
+            <mat-card-actions>
+              <button *ngIf="downloadPermission" mat-button (click)="downloadUserDocument(doc)">
+                <i class="fa fa-download"></i>
+              </button>
+              <button *ngIf="deletePermission && appointmentId==0" mat-button (click)="deleteUserDocument(doc.id)">
+                <i class="fa fa-close"></i>
+              </button>
+            </mat-card-actions>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="text-left">
+              <p>
+                Document Title:
+                <span ngif="doc.documentTypeNameStaff!=null">{{
+                  doc.documentTypeNameStaff
+                  }}</span>
+                <span ngif="doc.documentTypeNameStaff!=null">{{
+                  doc.otherDocumentType
+                  }}</span>
+                <span ngif="doc.documentTypeName!=null">{{
+                  doc.documentTypeName
+                  }}</span>
+              </p>
+              <p>
+                Uploaded Date:
+                <span>{{ doc.createdDate | date: 'dd/MM/yyyy' }}</span>
+              </p>
+              <p>
+                Expiration Date:
+                <span>{{ doc.expiration | date: 'dd/MM/yyyy' }}</span>
+              </p>
+            </div>
+            <div class="text-right">
+              <img *ngIf="doc.extenstion == '.pdf'" src="../../../../../../assets/img/pdf.png" />
+              <img *ngIf="doc.extenstion == '.doc' || doc.extenstion == '.docx'"
+                src="../../../../../../assets/img/doc.png" />
+              <img *ngIf="doc.extenstion == '.ppt' || doc.extenstion == '.pptx'"
+                src="../../../../../../assets/img/ppt.png" />
+              <img *ngIf="doc.extenstion == '.xls' || doc.extenstion == '.xlsx'"
+                src="../../../../../../assets/img/excel.png" />
+              <img *ngIf="doc.extenstion == '.jpg' || doc.extenstion == '.jpeg'"
+                src="../../../../../../assets/img/jpg.png" />
+              <img *ngIf="doc.extenstion == '.png'" src="../../../../../../assets/img/jpg.png" />
+              <img *ngIf="doc.extenstion == '.txt'" src="../../../../../../assets/img/txt.png" />
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div> -->
+
+    <div class="clearfix"></div>
+    <div *ngIf="isHistoryShareable">
+      <app-data-table [inputColumns]="displayColumns" [inputSource]="filterDocumentList" [inputMeta]="metaData"
+        [inputButtons]="actionButtons" (onTableActionClick)="onTableActionClick($event)"
+        (onPageOrSortChange)="onPageOrSortChange($event)">
+      </app-data-table>
+    </div>
+    <div *ngIf="!isHistoryShareable" class="m-3">
+      <h3>
+        <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
+        <!-- Patient don't want to share his document -->
+        Patient did not provide permission to share personal documents.
+      </h3>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div>
+  <h4 *ngIf="ticketAttachmentFiles && ticketAttachmentFiles.length > 0">
+    Click on file name to view
+  </h4>
+  <h4 *ngIf="!ticketAttachmentFiles || ticketAttachmentFiles.length === 0">
+    No attachments are found
+  </h4>
+
+  <div *ngFor="let file of ticketAttachmentFiles; let i=index">
+    &nbsp;&nbsp;{{i+1}}.&nbsp;&nbsp;<a (click)="viewFile(file.base64, file.fileName)" class="ticketDoc" title="download" >{{
+      file.fileName
+    }}</a>
+    <!-- <a >{{ file.fileName }}</a>  -->
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-raised-button class="cancel-btn" (click)="closeDialog()">
+      Close
+    </button>
+  </div>
+</div>

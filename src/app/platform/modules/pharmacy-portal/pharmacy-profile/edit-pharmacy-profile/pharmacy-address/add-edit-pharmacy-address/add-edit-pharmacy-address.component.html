@@ -1,0 +1,372 @@
+<div *ngIf="isAdd == true" class="col-sm-12">
+  <form
+    id="userForm"
+    #documentForm="ngForm"
+    class="readmin-form custom_form"
+    [formGroup]="pharmacyAddressForm"
+    class="readmin-form custom_form"
+  >
+    <div class="row">
+      <div class="col-sm-6 require">
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            autofocus
+            maxlength="14"
+            placeholder="Appartment Number"
+            formControlName="appartmentNumber"
+          />
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 require">
+        <mat-form-field class="example-full-width">
+          <textarea
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="5"
+            matInput
+            autofocus
+            placeholder="Address Line 1"
+            formControlName="addressLine1"
+          >
+          </textarea>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-12 require">
+        <app-google-address-input
+          [control]="updateFormControls['addressLine2']"
+          (onAddressChange)="handleAddressChange($event)"
+        >
+        </app-google-address-input>
+        <!-- <mat-form-field class="example-full-width">
+          <textarea
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="5"
+            matInput
+            autofocus
+            placeholder="Address Line 2"
+            formControlName="addressLine2"
+          >
+          </textarea>
+        </mat-form-field> -->
+      </div>
+      <div class="col-sm-6 require">
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            autofocus
+            placeholder="Landmark"
+            formControlName="landmark"
+          />
+        </mat-form-field>
+      </div>
+      <!-- <div class="col-sm-4 require">
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            autofocus
+            placeholder="Longitude"
+            formControlName="longitude"
+          />
+        </mat-form-field>
+      </div>
+      <div class="col-sm-4 require">
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            autofocus
+            placeholder="Latitude"
+            formControlName="latitude"
+          />
+        </mat-form-field>
+      </div> -->
+      <div class="col-sm-6 require">
+        <mat-form-field class="example-full-width">
+          <mat-select
+            (selectionChange)="updateCountryValue($event.value)"
+            placeholder="{{ 'country' | translate }}"
+            formControlName="countryID"
+            matInput
+            required
+          >
+            <mat-option
+              *ngFor="let country of masterCountry"
+              [value]="country.id"
+            >
+              {{ country.value }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="addFormControls['countryID'].errors">
+            {{ "please_select_country" | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 require">
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            autofocus
+            placeholder="{{ 'city' | translate }}"
+            maxlength="50"
+            formControlName="city"
+          />
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 require">
+        <mat-form-field class="example-full-width">
+          <mat-select
+            placeholder="{{ 'state' | translate }}"
+            formControlName="stateID"
+            matInput
+            required
+          >
+            <mat-option *ngFor="let state of masterState" [value]="state.id">
+              {{ state.value }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="addFormControls['stateID'].errors">
+            {{ "please_select_state" | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-4 require">
+        <app-phone-number
+          [countryId]="0"
+          [selectedCountryPhoneCode]="selectedPhoneCode"
+          (phoneCodeChangeEvent)="phoneCodeChange($event)"
+        ></app-phone-number>
+      </div>
+      <div class="col-sm-8">
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            autofocus
+            maxlength="15"
+            placeholder="{{ 'phone_number' | translate }}"
+            formControlName="phoneNumber"
+            required
+          />
+          <mat-error *ngIf="addFormControls['phoneNumber'].errors?.['required']">
+            {{ "please_enter_Phone_number" | translate }}
+          </mat-error>
+          <mat-error *ngIf="addFormControls['phoneNumber'].errors?.['minlength']">
+            {{ "please_enter_valid_Phone" | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row my-2">
+      <div
+        class="col-sm-12 d-sm-flex justify-content-sm-between pt-3 actions-btn"
+      >
+        <button
+          name="close"
+          mat-raised-button
+          color="accent"
+          (click)="onClose()"
+          class="text-uppercase mr-2"
+        >
+          {{ "close" | translate }}
+        </button>
+        <button
+          name="Save"
+          mat-raised-button
+          color="accent"
+          form="userForm"
+          (click)="onSubmit($event)"
+          class="text-uppercase mr-2"
+          [disabled]="pharmacyAddressForm.invalid"
+        >
+          {{ submitted ? "Saving..." : ("save" | translate) }}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+<div *ngIf="isAdd == false" class="col-sm-12">
+  <form
+    id="userForm"
+    #documentForm="ngForm"
+    class="readmin-form custom_form"
+    [formGroup]="pharmacyAddressUpdateForm"
+    class="readmin-form custom_form"
+  >
+    <div class="row">
+      <div class="col-sm-6 require">
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            autofocus
+            maxlength="14"
+            placeholder="Appartment Number"
+            formControlName="appartmentNumber"
+          />
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 require">
+        <mat-form-field class="example-full-width">
+          <textarea
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="5"
+            matInput
+            autofocus
+            placeholder="Address Line 1"
+            formControlName="addressLine1"
+          >
+          </textarea>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 require">
+        <mat-form-field class="example-full-width">
+          <textarea
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="5"
+            matInput
+            autofocus
+            placeholder="Address Line 2"
+            formControlName="addressLine2"
+          >
+          </textarea>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 require">
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            autofocus
+            placeholder="Landmark"
+            formControlName="landmark"
+          />
+        </mat-form-field>
+      </div>
+      <!-- <div class="col-sm-6 require">
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            autofocus
+            placeholder="Longitude"
+            formControlName="longitude"
+          />
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 require">
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            autofocus
+            placeholder="Latitude"
+            formControlName="latitude"
+          />
+        </mat-form-field>
+      </div> -->
+      <div class="col-sm-6 require">
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            autofocus
+            placeholder="{{ 'country' | translate }}"
+            formControlName="country"
+            readonly
+          />
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 require">
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            autofocus
+            placeholder="{{ 'city' | translate }}"
+            maxlength="50"
+            formControlName="city"
+          />
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 require">
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            autofocus
+            placeholder="{{ 'state' | translate }}"
+            formControlName="state"
+            readonly
+          />
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 require">
+        <mat-form-field class="example-full-width">
+          <input
+            appZipcode
+            matInput
+            autofocus
+            placeholder="{{ 'zip' | translate }}"
+            maxlength="10"
+            formControlName="zip"
+            required
+          />
+          <mat-error *ngIf="updateFormControls['zip'].errors?.['required']">
+            {{ "please_enter_zip" | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 require">
+        <app-phone-number
+          [countryId]="0"
+          [selectedCountryPhoneCode]="selectedPhoneCode"
+          (phoneCodeChangeEvent)="phoneCodeChangeForUpdate($event)"
+        ></app-phone-number>
+
+        <mat-form-field>
+          <input
+            matInput
+            autofocus
+            maxlength="19"
+            placeholder="{{ 'phone_number' | translate }}"
+            formControlName="phoneNumber"
+            required
+          />
+          <mat-error *ngIf="updateFormControls['phoneNumber'].errors?.['required']">
+            {{ "please_enter_Phone_number" | translate }}
+          </mat-error>
+          <mat-error *ngIf="updateFormControls['phoneNumber'].errors?.['minlength']">
+            {{ "please_enter_valid_Phone" | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row my-2">
+      <div
+        class="col-sm-12 d-sm-flex justify-content-sm-between pt-3 actions-btn"
+      >
+        <button
+          name="close"
+          mat-raised-button
+          color="accent"
+          (click)="onClose()"
+          class="text-uppercase mr-2"
+        >
+          {{ "close" | translate }}
+        </button>
+        <button
+          name="Save"
+          mat-raised-button
+          color="accent"
+          form="userForm"
+          (click)="onUpdateSubmit()"
+          class="text-uppercase mr-2"
+          [disabled]="pharmacyAddressUpdateForm.invalid"
+        >
+          {{ submitted ? "Saving..." : ("save" | translate) }}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

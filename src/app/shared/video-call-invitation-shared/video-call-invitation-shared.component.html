@@ -1,0 +1,14 @@
+<div class="dash-table">
+   <ng-scrollbar [trackX]="true" [autoHide]="true"> 
+    <app-data-table
+      class="sticky-table fixed-table no-table"
+      [stickyHeader]=true
+      [inputColumns]="invitedDisplayedColumns"
+      [inputSource]="invitedPatientAppointment"
+      [inputMeta]="invitedAppointmentMeta"
+      (onPageOrSortChange)="onPendingInvitationPageOrSortChange($event)"
+      (onTableActionClick)="onPendingInvitationTableActionClick($event)"
+    >
+    </app-data-table>
+  </ng-scrollbar> 
+</div>

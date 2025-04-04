@@ -1,0 +1,178 @@
+<div class="provider-container">
+  <h2 class="page_title sm-title">{{"my_profile"|translate}}</h2>
+  <div class="top-btns mb-3">
+    <button name="Save" mat-raised-button color="primary" (click)="goToEditProfile()" class="text-uppercase ml-3"
+      cdkFocusInitial>
+      <i class="fa fa fa-pencil" aria-hidden="true"></i> {{"profile"|translate}}
+    </button>
+  </div>
+  <div class="clearfix"></div>
+  <div *ngIf="labInfo.length != 0" class="row">
+    <div class="col-sm-7 mb-30">
+      <div class="readmin-panel crop pd-15">
+        <div class="profilebg d-flex justify-content-center">
+          <div class="clientpic">
+            <img class="mb-3" height="120" width="auto" [src]="
+                labInfo[0].photoPath == ''
+                  ? '/assets/img/noimage3.png'
+                  : labInfo[0].photoThumbnailPath == ''
+                  ? '/assets/img/noimage3.png'
+                  : labInfo[0].photoThumbnailPath
+              " />
+          </div>
+        </div>
+        <h2 class="ppname text-center mt-3">
+          {{
+          labInfo[0].labName
+          ? labInfo[0].labName
+          : labInfo[0].firstName + " " + labInfo[0].lastName
+          }}
+        </h2>
+        <div class="ppdetail client_detail">
+          <div class="ledtdiv">
+            <div class="row">
+              <!-- <div class="col-md-6">
+                <b>Gender : {{ labInfo[0].gender ? labInfo[0].gender : " " }}</b
+                ><span></span>
+              </div> -->
+              <div class="col-md-6">
+                <b>Registration Date:
+                  {{ labInfo[0].doj ? labInfo[0].doj : "01/01/1900" }}</b>
+                <span></span>
+              </div>
+              <!-- <div *ngIf="labAddress[0].phone" class="col-md-6">
+                <b>Phone : {{ labAddress[0].phone }}</b
+                ><span></span>
+              </div> -->
+              <div class="col-md-6">
+                <b>{{"email"|translate}} :
+                  {{ labInfo.length > 0 ? labInfo[0].email : "Not Available" }}</b><span></span>
+              </div>
+              <div class="col-md-6 text-capitalize">
+                <b>Our Branches : </b><span *ngFor="let item of labAddress">
+                  {{ item.cityName ? item.cityName : "" }},
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+
+    <div class="col-sm-5">
+      <div class="row">
+        <!-- Tags Start -->
+
+        <!-- location -->
+        <div class="col-sm-12 mb-30">
+          <div class="readmin-panel crop pd-15">
+            <div class="lineheader">
+              <p>{{"assigned_locations"|translate}}</p>
+            </div>
+            <div *ngIf="labAddress.length==0">
+              Address not found.
+            </div>
+            <div class="row">
+              <div [ngStyle]="{ height: '118px' }">
+                <ng-scrollbar>
+                  <div *ngFor="let item of labAddress" class="col-sm-12 assign-loc">
+                    <p>
+                      <i class="fa fa-map-marker" aria-hidden="true"></i>
+                      <small>
+                        {{ item.aptNumber ? item.aptNumber : "" }},
+                        {{ item.addressLine1 ? item.addressLine1 : "" }},
+                        {{ item.addressLine2 ? item.addressLine2 : "" }},
+                        {{ item.others ? item.others : "" }},
+                        {{ item.cityName ? item.cityName : "" }},
+                        {{ item.stateName ? item.stateName : "" }},
+                        {{ item.countryName ? item.countryName : "" }}
+                        <div *ngIf="item.zipNumber">
+                          {{"zip"|translate}}:- {{ item.zipNumber ? item.zipNumber : "" }}
+                        </div>
+                        <div *ngIf="item.phone">
+                          {{"phone"|translate}}:- {{ item.phone ? item.phone : "" }}
+                        </div>
+                        <div *ngIf="item.latitude">
+                          Latitude:- {{ item.latitude ? item.latitude : "" }}
+                        </div>
+                        <div *ngIf="item.longitude">
+                          Longitude:- {{ item.longitude ? item.longitude : "" }}
+                        </div>
+                      </small>
+                    </p>
+                  </div>
+                </ng-scrollbar>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="col-sm-5 mb-30">
+      <div class="readmin-panel crop pd-15">
+        <div class="lineheader">
+          <p>Speciality</p>
+        </div>
+        <div class="quicksubmenu tagbox mhgt80">
+          <ul _ngcontent-c15="" class="tags">
+            <li _ngcontent-c15="" class="ng-star-inserted" >
+              <span class="tagafter"></span>
+              <span class="tag" [ngStyle]="{backgroundColor: '#377b82'}"></span>
+            </li>
+            <li  class="tag">No speciality found.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div> -->
+    <!-- <div class="col-sm-12 mb-30">
+      <div class="readmin-panel crop pd-15">
+        <div class="lineheader">
+          <p>Services</p>
+        </div>
+        <div class="quicksubmenu tagbox mhgt80">
+          <ul _ngcontent-c15="" class="tags">
+            <li _ngcontent-c15="" class="ng-star-inserted" >
+              <span class="tagafter"></span>
+              <span class="tag" [ngStyle]="{backgroundColor: '#377b82'}"></span>
+            </li>
+            <li >No service found.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div> -->
+    <div class="col-sm-12">
+      <div class="readmin-panel">
+        <mat-tab-group (selectedTabChange)="loadComponent($event)" [selectedIndex]="selectedIndex">
+          <mat-tab *ngFor="let tab of profileTabsSuperadmin; let i = index" class="mat-tab-label-active"
+            label="{{ tab }}">
+          </mat-tab>
+        </mat-tab-group>
+        <div *ngIf="selectedIndex == 0">
+          <app-data-table [inputColumns]="staffQualificationColumns" [inputSource]="qualificationList"
+            [inputMeta]="metaData" [inputButtons]="quaActionButtons" (onPageOrSortChange)="onPageOrSortChange($event)"
+            (onTableActionClick)="onTableActionClick($event)">
+          </app-data-table>
+        </div>
+
+        <div *ngIf="selectedIndex == 1">
+          <app-data-table [inputColumns]="staffExpColumns" [inputSource]="experienceList" [inputMeta]="metaData"
+            [inputButtons]="expActionButtons" (onPageOrSortChange)="onTableActionClickExp($event)"
+            (onTableActionClick)="onTableActionClickExp($event)">
+          </app-data-table>
+        </div>
+
+        <div *ngIf="selectedIndex == 2">
+          <app-data-table [inputColumns]="staffAwardColumns" [inputSource]="awardList" [inputMeta]="metaData"
+            [inputButtons]="awardActionButtons" (onPageOrSortChange)="onPageOrSortChangeAward($event)"
+            (onTableActionClick)="onTableActionClickAward($event)">
+          </app-data-table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

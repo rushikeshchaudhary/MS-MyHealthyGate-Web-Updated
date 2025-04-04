@@ -1,0 +1,29 @@
+<div class="row p-4 mt-3 d-flex justify-content-center">
+  <div class="col-sm-12">
+    <h4>
+      This User account is <b>{{ userStatus }}</b> , Please choose action below!
+    </h4>
+  </div>
+  <div class="col-sm-4 mt-4" *ngIf="data.isActive == false">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onActionClick('activate')"
+    >
+      Activate
+    </button>
+  </div>
+  <div class="col-sm-4 mt-4" *ngIf="data.isDeleted == false">
+    <button mat-raised-button color="warn" (click)="onActionClick('delete')">
+      Delete
+    </button>
+  </div>
+  <div class="col-sm-4 mt-4" *ngIf="data.isBlock == false">
+    <button mat-stroked-button (click)="onActionClick('block')">Block</button>
+  </div>
+  <div class="col-12 mt-5">
+    <button mat-raised-button class="cancel-btn" (click)="closeDialog('close')">
+      {{ "close" | translate }}
+    </button>
+  </div>
+</div>

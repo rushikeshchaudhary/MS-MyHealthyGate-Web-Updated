@@ -1,0 +1,130 @@
+<!-- <div [ngClass]="{'publishing': publishing}" #publisherDiv>
+    <button mat-raised-button >Switch Camera</button>
+    <button mat-raised-button (click)="toggleScreen()" >{{ isScreenShare ? 'Stop Sharing' : 'Share Screen' }}</button>
+</div> -->
+<!-- <div>
+  <span class="material-icons video video-record-off" style="color: #d00;">
+    fiber_manual_record </span
+  >&nbsp;Call Recording Started
+</div> -->
+<div [ngClass]="{ publishing: publishing }" #publisherDiv class="mb-3">
+  <!-- {{ isVideo ? 'Video Off' : 'Video On' }} -->
+</div>
+<div class="video-button">
+  <div class="">
+    <mat-form-field class="mat-focused-1">
+      <mat-select
+        placeholder="Screen Size"
+        name="screenId"
+        [(ngModel)]="screenId"
+        (selectionChange)="setScreenSize($event)"
+        [disableOptionCentering]="true"
+      >
+        <mat-option *ngFor="let s of screenSize" [value]="s">
+          {{ s.size }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <button mat-raised-button (click)="endCall()" class="text-uppercase ml-2">
+    <span
+      class="material-icons"
+      style="color: red !important"
+      title="Click to end video call"
+    >
+      call_end
+    </span>
+  </button>
+  <button
+    *ngIf="isProvider || isPatient"
+    mat-raised-button
+    (click)="startChat()"
+    class="text-uppercase ml-2"
+  >
+    <span
+      class="material-icons"
+      style="color: rgb(255, 255, 255) !important"
+      title="Click to start text chat"
+    >
+      chat
+    </span>
+  </button>
+
+  <button
+    mat-raised-button
+    *ngIf="isProvider || isPatient"
+    (click)="startStopCallRecording()"
+    class="text-uppercase ml-2"
+  >
+    <span
+      class="material-icons"
+      *ngIf="!isVideoRecord"
+      title="Click to start recording"
+      style="color: rgb(255, 255, 255) !important"
+    >
+      voicemail
+    </span>
+    <span
+      class="material-icons"
+      *ngIf="isVideoRecord"
+      title="Click to stop recording"
+      style="color: rgb(255, 255, 255) !important"
+    >
+      fiber_manual_record
+    </span>
+  </button>
+
+  <button
+    mat-raised-button
+    *ngIf="isProvider"
+    (click)="addNewCaller()"
+    class="text-uppercase ml-2"
+  >
+    <span
+      class="material-icons"
+      style="color: rgb(255, 255, 255) !important"
+      title="Copy Invitation"
+    >
+      add_call
+    </span>
+  </button>
+  <button
+    mat-raised-button
+    (click)="toggleVideo(isVideo)"
+    class="text-uppercase ml-2"
+  >
+    <span
+      class="material-icons"
+      style="color: rgb(255, 255, 255) !important"
+      *ngIf="isVideo"
+      title=""
+    >
+      videocam
+    </span>
+    <span
+      class="material-icons"
+      style="color: red !important"
+      *ngIf="!isVideo"
+      title=""
+    >
+      videocam_off
+    </span>
+  </button>
+  <!-- <button
+    mat-raised-button
+    color="accent"
+    (click)="addNewCaller()"
+    *ngIf="isProvider"
+    [disabled]="isVideoBtn"
+    class="text-uppercase mat-raised-button ml-2"
+  >
+    <span
+      class="material-icons"
+      style="color: #51da51"
+      title="Click to add new user"
+    >
+      person_add
+    </span>
+  </button> -->
+</div>

@@ -1,0 +1,37 @@
+<div class="custom_modal">
+  <h3 mat-dialog-title>Are you sure want to delete this Availability Slot ?</h3>
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="row">
+          <div class="col-sm-12">
+            <button class="btn btn-primary mb-2 width-100per" (click)="onSubmit(5)">Delete only this slot</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <button class="btn btn-primary mb-2 width-100per" (click)="onSubmit(1)">Delete only for this
+              {{dayName}}</button>
+          </div>
+          <div class="col-sm-6">
+            <button class="btn btn-primary mb-2 width-100per" (click)="onSubmit(2)">Delete for every
+              {{dayName}}</button>
+          </div>
+          <div class="col-sm-6">
+            <button class="btn btn-primary mb-2 width-100per" (click)="onSubmit(3)">Delete All Slot for this Week
+              Days</button>
+          </div>
+          <div class="col-sm-6">
+            <button class="btn btn-primary mb-2 width-100per" (click)="onSubmit(4)">Delete All Slot for this
+              Weekends?</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions class="justify-content-center">
+      <button mat-raised-button class="cancel-btn" (click)="closeDialog('close')">
+        Close
+      </button>
+    </div>
+  </div>
+</div>

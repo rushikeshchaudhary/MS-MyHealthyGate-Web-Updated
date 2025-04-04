@@ -1,0 +1,98 @@
+<div class="readmin-page-content">
+  <div>
+    <h2 class="page_title">{{isEdit?'Update Subscription Plan':'Add Subscription Plan'}}</h2>
+  </div>
+  <div class="clearfix"></div>
+  <div class="readmin-panel">
+    <div class="panel-body">
+      <form class="readmin-form custom_form" (ngSubmit)="onSubmit()" id="subscriptionplanForm" #looForm="ngForm"
+        [formGroup]="subscriptionplanForm">
+        <div class="row">
+          <div class="col-sm-12 plan-type">
+            <label class="type_label">Plan Type : </label>
+              <div>
+                <mat-radio-group formControlName="planType">
+                  <mat-radio-button  (change)="onModeChange(mode)" 
+                    class="example-radio-button" *ngFor="let mode of typeOfPlan"
+                    [value]="mode">
+                    {{mode}}
+                  </mat-radio-button>
+                </mat-radio-group>
+              </div>
+          </div>
+          <div class="col-sm-4">
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput autofocus placeholder="Subscriber Name" maxlength="50"
+                formControlName="subscriberName" [ngClass]="{'is-invalid':submitted && formControls['subscriberName'].errors}"
+                required />
+              <mat-error *ngIf="formControls['subscriberName'].errors">Please enter subscriber name</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4">
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput autofocus placeholder="Title" maxlength="150"
+                formControlName="title"
+                [ngClass]="{'is-invalid':submitted && formControls['title'].errors}" required />
+              <mat-error *ngIf="formControls['title'].errors">Please enter title</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4">
+            <mat-form-field class="example-full-width">
+              <input type="number" matInput autofocus placeholder="Price" maxlength="150"
+                formControlName="amountPerClient"
+                [ngClass]="{'is-invalid':submitted && formControls['amountPerClient'].errors}" required />
+              <mat-error *ngIf="formControls['amountPerClient'].errors">Please enter price</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+          <!-- <div class="col-sm-12">
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput autofocus placeholder="Description" maxlength="150"
+                formControlName="descriptions"
+                [ngClass]="{'is-invalid':submitted && formControls.descriptions.errors}" required />
+              <mat-error *ngIf="formControls.descriptions.errors">Please enter description</mat-error>
+            </mat-form-field>
+          </div> -->
+
+          <div class="row">
+            <div class="col-sm-12">
+              <angular-editor formControlName="descriptions"  [config]="config" [ngClass]="{'is-invalid':submitted && formControls['description'].errors}"></angular-editor>
+              <div *ngIf="formControls['descriptions'].errors">
+                <p style="color: red;">  Please enter descriptions</p>
+              </div> 
+            </div>
+
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input type="tel" matInput appPhoneNumber autofocus placeholder="Phone" maxlength="19"
+                  formControlName="phone" [ngClass]="{'is-invalid':submitted &&formControls['phone'].errors}" required />
+                <mat-error *ngIf="formControls['phone'].errors">Please enter phone number</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+              <mat-form-field require class="example-full-width">
+                  <input matInput readonly [matDatepicker]="expiryDate"  placeholder="Expiry Date" formControlName="expiryDate" required>
+                  <mat-datepicker-toggle matSuffix [for]="expiryDate"></mat-datepicker-toggle>
+                  <mat-datepicker #expiryDate></mat-datepicker>
+                  <mat-error *ngIf="formControls['expiryDate'].errors?.['required']">
+                      Please enter expiry date
+                  </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4 is_active">
+              <mat-checkbox formControlName="isActive">Is Active</mat-checkbox>
+            </div>
+          </div>
+        
+        <div class="row">
+          <div class="col-sm-6"><button class="cancel-btn" mat-raised-button (click)="back()">Back</button></div>
+          <div class="col-sm-6 pt20 text-right">
+            <button mat-raised-button color="primary" from="subscriptionplanForm" [disabled]="submitted" cdkFocusInitial>
+              {{submitted?'Saving...':'Save'}}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

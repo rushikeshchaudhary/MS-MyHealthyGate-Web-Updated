@@ -1,0 +1,38 @@
+<div class="pt-0 provider-dashboardchart">
+  <mat-tab-group (selectedTabChange)="onTabChanged($event)">
+    <mat-tab>
+      <ng-template mat-tab-label> Shared Prescription </ng-template>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="dash-table">
+            <ng-scrollbar> </ng-scrollbar>
+            <app-data-table
+              [stickyHeader]="true"
+              [inputColumns]="sharedPrescriptionColumns"
+              [inputSource]="dataSource"
+              [inputMeta]="metaDataPrescription"
+              (onPageOrSortChange)="onPageOrSortChange($event)"
+              (onTableActionClick)="onTableActionClick($event)"
+            >
+            </app-data-table>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="My Clients">
+      <div class="dash-table">
+        <ng-scrollbar> </ng-scrollbar>
+        <app-data-table
+        [stickyHeader]="true"
+        [inputColumns]="myClientColumns"
+        [inputSource]="myClientModel"
+        [inputMeta]="metaDataPrescription"
+        (onPageOrSortChange)="onPageOrSortChangeMyClient($event)"
+        (onTableActionClick)="onMyClientTableActionClick($event)"
+      >
+      </app-data-table>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

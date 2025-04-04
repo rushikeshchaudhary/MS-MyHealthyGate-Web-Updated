@@ -1,0 +1,10 @@
+<h3 mat-dialog-title class="dialog-title">{{title}}</h3>
+<i class="fa fa-close" aria-hidden="true" (click)="closeModal()"></i>
+<div class="col-md-12 mt-3">
+  <mat-dialog-content>
+    <app-registration [formType]="data.mrValue" [showFooter]="data.showFooter" *ngIf="isPatientOrProvider">
+    </app-registration>
+    <app-registration-lab-pharmacy [formType]="data.mrValue" [showFooter]="data.showFooter" *ngIf="isLabOrPharmacy">
+    </app-registration-lab-pharmacy>
+  </mat-dialog-content>
+</div>

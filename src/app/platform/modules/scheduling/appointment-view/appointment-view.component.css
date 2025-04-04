@@ -1,0 +1,137 @@
+.mat-input-element:disabled {
+    color: black;
+}
+
+/* .scroll-box{
+    overflow-y: auto;
+    max-height: 400px;
+} */
+.inputNameCursor:hover {
+    cursor: pointer;
+    color: #17a2b8;
+}
+
+.imgboxhover {
+    box-shadow:0 4px 24px  rgba(1, 47, 50, 0.592);
+}
+
+.crsr-ptr {
+    cursor: pointer;
+}
+
+.close.mat-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px;
+    line-height: 35px;
+    width: 48px;
+    color: #fff;
+    opacity: 1;
+    min-width: auto;
+}
+
+/* .otheraptslots{
+    background-color: rgb(147, 238, 147);
+    padding: 10px;
+    border-radius: 40%;
+    line-height: 25px;
+    white-space: nowrap;
+   
+}
+.slot-block .otheraptslots{
+    border-radius: 10px;
+    font-size: 16px;
+    padding: 6px 12px;
+} */
+
+.otherappts-txt {
+
+    display: inline-block;
+    min-width: 10px;
+    line-height: 1;
+    color: white;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    border-radius: 6px;
+    font-size: 11px !important;
+    border: 0px !important;
+    /* color: #000000 !important; */
+    font-weight: 500 !important;
+    margin-top: 5px !important;
+    margin-left: 5px !important;
+    padding: 15px !important;
+
+
+}
+
+.oddCellColor {
+    background-color: #00a2b6 !important;
+}
+
+.evenCellColor {
+    background-color: #00375d !important;
+}
+
+.readmin-form h2 {
+    font-size: 16px;
+}
+.chat-btn:hover{
+    background-color: #00bec7;
+    border-color: #00bec7;
+}
+.wtn-btn:hover{
+    background-color: #01385f;
+    border-color: #01385f;
+}
+.apnt-btn-prmy{
+    font-size: 12px !important;
+    /* padding: 0.175rem 0.75rem; */
+    border-radius: 0.35rem;
+}
+.apnt-btn-prmy .material-icons{
+    color:#fff !important;
+    font-size: 20px !important;
+    margin-right: 5px;
+}
+.apnt-btn-scndry{
+    font-size: 12px !important;
+    /* padding: 0.175rem 0.75rem; */
+    border-radius: 0.35rem;
+    color: #00375d;
+    border-color: #00375d;
+}
+.apnt-btn-scndry .material-icons{
+    color:#00375d !important;
+    font-size: 20px !important;
+    margin-right: 5px;
+}
+.apnt-btn-scndry:hover{
+    background-color: rgba(3, 189, 202, 0.1);
+    border-color: rgba(3, 189, 202, 0.1);
+
+}
+.apnt-btn-prmy:hover{
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+.evenCellColor-count{
+    text-align: center;
+    background-color: #17a2b8 !important;
+    margin:1px;
+    padding: 6px 10px;
+    color: #fff;
+    border-radius: 4px;
+    display: block;
+}
+#appointmentForm .imge{
+    box-shadow: 0 24px 24px rgb(2 156 182 / 40%);
+}
+#appointmentForm .imge:hover{
+    box-shadow: none;
+}
+.otherappointment .child{
+    display: inline-block;
+    vertical-align: middle;
+}

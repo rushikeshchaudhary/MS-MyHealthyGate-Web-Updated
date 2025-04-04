@@ -1,0 +1,17 @@
+@media (max-width: 767px) {
+    .readmin-panel .readmin-left-panel {
+        margin-bottom: 15px;
+    }
+}
+
+.readmin-left-panel .panel-title {
+    width: 100%;
+    border-bottom: 1px solid #D4D7DF;
+    margin: 0;
+}
+.readmin-left-panel .panel-title a {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0px !important;
+    display: flex !important;
+}

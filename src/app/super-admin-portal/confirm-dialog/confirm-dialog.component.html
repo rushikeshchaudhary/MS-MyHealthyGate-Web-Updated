@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+  {{data.message}}
+</div>
+<div mat-dialog-content>
+  Percentage of profile completion {{percentage}}%.
+</div>
+<div style="float:right;margin:20px;">
+  <button mat-raised-button color="primary" (click)="onConfirm()">Approve</button>
+  <button mat-raised-button color="danger" (click)="onDismiss()">Cancel</button>  
+</div>

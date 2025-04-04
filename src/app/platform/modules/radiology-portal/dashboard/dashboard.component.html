@@ -1,0 +1,104 @@
+<div class="provider-container">
+  <div class="dash-section">
+    <div class="row">
+      <div class="col-sm-12 col-md-4">
+        <div class="blue-box">
+          <h3>{{"radiology_refferal" | translate}}</h3>
+
+          <div class="blue-box-inner">
+            <div class="row blue-box-detail">
+              <div class="col-md-6">
+                <div class="lght-txt">{{"today" | translate}}</div>
+                <div class="white-txt">{{dashboardDetails && dashboardDetails.labReferral && dashboardDetails.labReferral.todays}}</div>
+              </div>
+              <div class="col-md-6">
+                <div class="lght-txt">{{"this_month"|translate}}</div>
+                <div class="white-txt">{{dashboardDetails && dashboardDetails.labReferral && dashboardDetails.labReferral.thisMonth}}</div>
+              </div>
+            </div>
+            <div class="row blue-box-detail">
+              <div class="col-md-6">
+                <div class="lght-txt">{{"last_month"|translate}}</div>
+                <div class="white-txt">{{dashboardDetails && dashboardDetails.labReferral && dashboardDetails.labReferral.lastMonth}}</div>
+              </div>
+              <div class="col-md-6">
+                <div class="lght-txt">{{"total"|translate}}</div>
+                <div class="white-txt">{{dashboardDetails && dashboardDetails.labReferral && dashboardDetails.labReferral.total}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-4">
+        <div class="blue-box">
+          <h3>{{"appointment" | translate}}</h3>
+          <div class="blue-box-inner">
+            <div class="row blue-box-detail">
+              <div class="col-md-6">
+                <div class="lght-txt">{{"today" | translate}}</div>
+                <div class="white-txt">{{dashboardDetails && dashboardDetails.labAppointment && dashboardDetails.labAppointment.todays}}</div>
+              </div>
+              <div class="col-md-6">
+                <div class="lght-txt">{{"this_month"|translate}}</div>
+                <div class="white-txt">{{dashboardDetails && dashboardDetails.labAppointment && dashboardDetails.labAppointment.thisMonth}}</div>
+              </div>
+            </div>
+            <div class="row blue-box-detail">
+              <div class="col-md-6">
+                <div class="lght-txt">{{"last_month"|translate}}</div>
+                <div class="white-txt">{{dashboardDetails && dashboardDetails.labAppointment && dashboardDetails.labAppointment.lastMonth}}</div>
+              </div>
+              <div class="col-md-6">
+                <div class="lght-txt">{{"total"|translate}}</div>
+                <div class="white-txt">{{dashboardDetails && dashboardDetails.labAppointment && dashboardDetails.labAppointment.total}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- services block hidden by client suggesstion -->
+      <div class="col-sm-12 col-md-3" hidden>
+        <div class="white-box service-blk">
+          <h3>{{"top_services"|translate}}</h3>
+          <ul>
+            <!-- <li *ngFor="let serv of staffProfile.staffServices"><i class="fa fa-medkit" aria-hidden="true"></i>{{serv.serviceName}}</li> -->
+            <li>
+              <i class="fa fa-plus-circle" aria-hidden="true"></i> Diabetes
+            </li>
+            <li>
+              <i class="fa fa-plus-circle" aria-hidden="true"></i> Substance
+              abuse counseling
+            </li>
+            <li>
+              <i class="fa fa-plus-circle" aria-hidden="true"></i> Biopsie
+            </li>
+            <li>
+              <i class="fa fa-plus-circle" aria-hidden="true"></i> Cryotherapy
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-12">
+        <div class="white-box nw-appt-details">
+          <div class="readmin-panel pt-0 provider-dashboardchart">
+            <mat-tab-group (selectedTabChange)="onTabChanged($event)">
+              <mat-tab label="Lab Refferals">
+                <ng-container *ngIf="tabSelection == 0">
+                  <app-radiology-referral></app-radiology-referral>
+                </ng-container>
+              </mat-tab>
+
+              <mat-tab>
+                <ng-template mat-tab-label>{{"appointment" | translate}} </ng-template>
+                <ng-container *ngIf="tabSelection == 1"
+                  ><app-radiology-appointment></app-radiology-appointment>
+                </ng-container>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

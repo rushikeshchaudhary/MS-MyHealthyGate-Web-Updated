@@ -1,0 +1,371 @@
+<!-- <div
+  *ngIf="referalData != undefined"
+  class="row p-3 d-none"
+  style="border: 2px solid #009f9b; margin: 6%"
+>
+  <div class="col-12 w-100" style="display: flex; justify-content: end">
+    <h2>{{ referalData.title }}</h2>
+  </div>
+  <div class="col-12 w-100" style="display: flex; justify-content: center">
+    <img
+      src="../../../../assets/img/my_healthy_gate_logo.svg"
+      alt=""
+    />
+  </div>
+
+  <div class="col-12">
+    <div class="row" style="display: flex; justify-content: center">
+      <div class="col-8">
+        <div class="row">
+          <div class="col-8 w-100 mt-4">
+            <div class="row">
+              <div class="col-12">
+                <h4>Doctor Info</h4>
+              </div>
+              <div class="col-12">
+                <span> Name: </span>
+                <span>
+                  {{ referalData.providerFirstName }}&nbsp;{{
+                    referalData.providerMiddleName
+                  }}&nbsp;{{ referalData.providerLastName }}
+                </span>
+              </div>
+              <div class="col-12">
+                <span> Prescriber ID: </span>
+                <span>
+                  {{ referalData.npiNumber ? referalData.npiNumber : "---" }}
+                </span>
+              </div>
+              <div class="col-12">
+                <span> Country Code: </span>
+                <span> {{ referalData.providerCountryCode }} </span>
+              </div>
+              <div class="col-12">
+                <span> Contact No: </span>
+                <span> {{ referalData.providerPhonenumber }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-4 w-100 mt-4">
+            <div class="row mx-0 px-0">
+              <div class="col-12">
+                <h4>Patient Info</h4>
+              </div>
+              <div class="col-12">
+                <span> Name: </span>
+                <span>
+                  {{ referalData.patientFirstName }}&nbsp;{{
+                    referalData.patientMiddleName
+                  }}&nbsp;{{ referalData.patientLastName }}</span
+                >
+              </div>
+              <div class="col-12">
+                <span> DOB: </span>
+                <span>
+                  {{ referalData.patientDOB | date : 'dd/MM/yyyy' }}
+                </span>
+              </div>
+              <div class="col-12">
+                <span> Gender: </span>
+                <span>{{ referalData.patientGender }} </span>
+              </div>
+
+              <div class="col-12">
+                <span> Email: </span>
+                <span class="data_block"  style="word-break: break-all;"> {{ referalData.patientEmail }}</span>
+              </div>
+              <div class="col-12">
+                <span> Contact No: </span>
+                <span> {{ referalData.patientPhoneNumber }} </span>
+              </div>
+              <div class="col-12">
+                <span> Country Code: </span>
+                <span> {{ referalData.patientCountryCode }} </span>
+              </div>
+              <div class="col-12">
+                <span> Nationality: </span>
+                <span>
+                  {{
+                    referalData.patientNationality
+                      ? referalData.patientNationality
+                      : "---"
+                  }}
+                </span>
+              </div>
+              <div class="col-12">
+                <span> NationalId No.: </span>
+                <span>
+                  {{
+                    referalData.patientNationalId
+                      ? referalData.patientNationalId
+                      : "---"
+                  }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 mt-4"><h4>Notes</h4></div>
+          <div class="col-12 p-2" style="border-bottom: 1px solid gray">
+            {{ referalData.notes }}
+          </div>
+
+          <div class="col-12 mt-4"><h4>Test Information</h4></div>
+          <div
+            class="col-12 p-2"
+            style="border-bottom: 1px solid gray"
+            *ngFor="let test of testList; let i = index"
+          >
+            {{ i + 1 }}&nbsp;:&nbsp;&nbsp;&nbsp; {{ test }}
+          </div>
+
+          <div class="col-9 mt-4">
+            <div class="row">
+              <div class="col-12">
+                <h4>Lab Info</h4>
+              </div>
+              <div class="col-12">
+                <span> Name: </span>
+                <span
+                  >{{ referalData.labRadiologyFirstName }}&nbsp;{{
+                    referalData.labRadiologyLastName
+                  }}
+                </span>
+              </div>
+
+              <div class="col-12">
+                <span> Email: </span>
+                <span style="word-break: break-all;"> {{ referalData.labRadiologyEmail }} </span>
+              </div>
+              <div class="col-12">
+                <span> Contact No: </span>
+                <span> {{ referalData.labRadiologyPhoneNumber }} </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-3 mt-4">
+            <div><h4>LOGO</h4></div>
+            <img
+              [src]="
+                referalData.logoImagePath == ''
+                  ? '../../../../assets/img/my_healthy_gate_logo.svg'
+                  : referalData.logoImagePath
+              "
+              alt=""
+            />
+          </div>
+          <div class="col-9 mt-4">
+            <div><h4>Stamp</h4></div>
+            <img
+              [src]="
+                referalData.stampImagePath == ''
+                  ? '../../../../assets/img/my_healthy_gate_logo.svg'
+                  : referalData.stampImagePath
+              "
+              alt=""
+            />
+          </div>
+
+          <div class="col-3 mt-4">
+            <div><h4>Signature</h4></div>
+            <img
+              [src]="
+                referalData.signature == ''
+                  ? '../../../../assets/img/my_healthy_gate_logo.svg'
+                  : 'data:image/png;base64,' + referalData.signature
+              "
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+<div
+  *ngIf="referalData != undefined"
+  class="row p-3"
+  style="border: 2px solid #009f9b; margin: 6%"
+>
+<div class="col-12 d-flex justify-content-around flex-row-reverse flex-wrap align-items-center">
+    <h2>{{ referalData.title }}</h2>
+    <img
+      class="img-fluid img_block"
+      src="../../../../assets/img/my_healthy_gate_logo.svg"
+      alt=""
+    />
+</div>
+
+  <div class="col-12">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-10 col-lg-8">
+        <div class="row">
+          <div class="col-12 col-md-8 mt-4">
+            <div class="row">
+              <div class="col-12">
+                <h4>Doctor Info</h4>
+              </div>
+              <div class="col-12">
+                <span>{{"name"|translate}}: </span>
+                <span>
+                  {{ referalData.providerFirstName }}&nbsp;{{
+                    referalData.providerMiddleName
+                  }}&nbsp;{{ referalData.providerLastName }}
+                </span>
+              </div>
+              <div class="col-12">
+                <span>Prescriber ID: </span>
+                <span>
+                  {{ referalData.npiNumber ? referalData.npiNumber : "---" }}
+                </span>
+              </div>
+              <div class="col-12">
+                <span>Country Code: </span>
+                <span>{{ referalData.providerCountryCode }}</span>
+              </div>
+              <div class="col-12">
+                <span>Contact No: </span>
+                <span>{{ referalData.providerPhonenumber }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 mt-4">
+            <div class="row">
+              <div class="col-12">
+                <h4>Patient Info</h4>
+              </div>
+              <div class="col-12">
+                <span>{{"name"|translate}}: </span>
+                <span>
+                  {{ referalData.patientFirstName }}&nbsp;{{
+                    referalData.patientMiddleName
+                  }}&nbsp;{{ referalData.patientLastName }}</span
+                >
+              </div>
+              <div class="col-12">
+                <span> {{"dob"|translate}}: </span>
+                <span>
+                  {{ referalData.patientDOB | date : 'dd/MM/yyyy' }}
+                </span>
+              </div>
+              <div class="col-12">
+                <span>{{"gender"|translate}}: </span>
+                <span>{{ referalData.patientGender }} </span>
+              </div>
+              <div class="col-12">
+                <span>{{"email"|translate}}: </span>
+                <span  style="word-break: break-all;">{{ referalData.patientEmail }}</span>
+              </div>
+              <div class="col-12">
+                <span>Contact No: </span>
+                <span>{{ referalData.patientPhoneNumber }}</span>
+              </div>
+              <div class="col-12">
+                <span>Country Code: </span>
+                <span>{{ referalData.patientCountryCode }}</span>
+              </div>
+              <div class="col-12">
+                <span>Nationality: </span>
+                <span>
+                  {{
+                    referalData.patientNationality
+                      ? referalData.patientNationality
+                      : "---"
+                  }}
+                </span>
+              </div>
+              <div class="col-12">
+                <span>NationalId No.: </span>
+                <span>
+                  {{
+                    referalData.patientNationalId
+                      ? referalData.patientNationalId
+                      : "---"
+                  }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 mt-4"><h4>{{"notes"|translate}}</h4></div>
+          <div class="col-12 p-2" style="border-bottom: 1px solid gray">
+            {{ referalData.notes }}
+          </div>
+
+          <div class="col-12 mt-4"><h4>Test Information</h4></div>
+          <div
+            class="col-12 p-2"
+            style="border-bottom: 1px solid gray"
+            *ngFor="let test of testList; let i = index"
+          >
+            {{ i + 1 }}&nbsp;:&nbsp;&nbsp;&nbsp; {{ test }}
+          </div>
+
+          <div class="col-12 col-md-9 mt-4">
+            <div class="row">
+              <div class="col-12">
+                <h4>Lab Info</h4>
+              </div>
+              <div class="col-12">
+                <span>{{"name"|translate}}: </span>
+                <span
+                  >{{ referalData.labRadiologyFirstName }}&nbsp;{{
+                    referalData.labRadiologyLastName
+                  }}</span
+                >
+              </div>
+              <div class="col-12">
+                <span>{{"email"|translate}}: </span>
+                <span  style="word-break: break-all;">{{ referalData.labRadiologyEmail }}</span>
+              </div>
+              <div class="col-12">
+                <span>Contact No: </span>
+                <span>{{ referalData.labRadiologyPhoneNumber }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-3 mt-4">
+            <div><h4>LOGO</h4></div>
+            <img
+              class="img-fluid img_block"
+              [src]="
+                referalData.logoImagePath == ''
+                  ? '../../../../assets/img/my_healthy_gate_logo.svg'
+                  : referalData.logoImagePath
+              "
+              alt=""
+            />
+          </div>
+          <div class="col-12 col-md-9 mt-4">
+            <div><h4>Stamp</h4></div>
+            <img
+              class="img-fluid" style="width: 100px;"
+              [src]="
+                referalData.stampImagePath == ''
+                  ? '../../../../assets/img/my_healthy_gate_logo.svg'
+                  : referalData.stampImagePath
+              "
+              alt=""
+            />
+          </div>
+          <div class="col-12 col-md-3 mt-4">
+            <div><h4>{{"signature"|translate}}</h4></div>
+            <img
+              class="img-fluid img_block"
+              [src]="
+                referalData.signature == ''
+                  ? '../../../../assets/img/my_healthy_gate_logo.svg'
+                  : 'data:image/png;base64,' + referalData.signature
+              "
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

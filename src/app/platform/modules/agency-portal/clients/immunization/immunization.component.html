@@ -1,0 +1,103 @@
+<div class="patient-container">
+  <app-client-header [clientId]="clientId" [headerText]="header"></app-client-header>
+  <div class="readmin-panel">
+    <form class="readmin-form custom_form flex-wrap" id="testFormGroup" #documentForm="ngForm" [formGroup]="testFormGroup">
+      <div class="row">
+        <div class="col-lg-2 col-sm-6">
+          <mat-form-field class="example-full-width">
+            <input matInput (keyup)="getImmunizationList()" placeholder="{{'search_here'|translate}}" formControlName="searchKey" />
+          </mat-form-field>
+        </div>
+        <div class="col-lg-2 col-sm-6">
+          <mat-form-field class="example-full-width">
+            <input matInput readonly [matDatepicker]="rangeStartDate" (dateChange)="applyStartDateFilter($event)"
+              placeholder="{{'created_date_from'|translate}}" formControlName="rangeStartDate" />
+            <mat-datepicker-toggle matSuffix [for]="rangeStartDate"></mat-datepicker-toggle>
+            <mat-datepicker #rangeStartDate></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-2 col-sm-6">
+          <mat-form-field class="example-full-width">
+            <input matInput readonly [matDatepicker]="rangeEndDate" (dateChange)="applyEndDateFilter($event)"
+              placeholder="{{'created_date_to'|translate}}" formControlName="rangeEndDate" />
+            <mat-datepicker-toggle matSuffix [for]="rangeEndDate"></mat-datepicker-toggle>
+            <mat-datepicker #rangeEndDate></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-2 col-sm-6 filter-btn">
+          <button class="clear-btn" mat-raised-button (click)="clearFilters()">
+            {{"clear_all"|translate}}
+          </button>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <!-- below code is commented because client say we don't need limitation -->
+          <!-- <button [disabled]="disableButton()" mat-raised-button *ngIf="addPermission" mat-raised-button color="primary"
+            class="add-primary-btn" (click)="openDialog()">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            <span [matTooltip]="disableButton() ? tooltipdMessage : ''">{{"add_immunization"|translate}}</span>
+          </button> -->
+          <button  mat-raised-button *ngIf="addPermission" mat-raised-button color="primary"
+          class="add-primary-btn" (click)="openDialog()">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          {{"add_immunization"|translate}}
+          <!-- <span [matTooltip]="disableButton() ? tooltipdMessage : ''">{{"add_immunization"|translate}}</span> -->
+        </button>
+        </div>
+      </div>
+    </form>
+    <div class="row">
+      <div class="col-sm-6 mt-20 immunize custom-card custom-card-header" *ngFor="let immunization of immunizationList">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>
+              {{ immunization.vaccineName }}
+            </mat-card-title>
+            <mat-card-actions>
+              <button *ngIf="updatePermission" mat-button (click)="openDialog(immunization)">
+                <i class="fa fa-pencil"></i>
+              </button>
+              <button *ngIf="deletePermission" mat-button (click)="deleteImmunization(immunization.id)">
+                <i class="fa fa-close"></i>
+              </button>
+            </mat-card-actions>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              {{"amount"|translate}} :
+              <span>{{
+                immunization.amountAdministered > 0
+                ? immunization.amountAdministered
+                : "0"
+                }}
+                ml</span>
+            </p>
+            <p>
+              {{"administered_date"|translate}} :
+              <span>{{
+                immunization.administeredDate | date : "dd-MM-yyyy"
+                }}</span>
+            </p>
+            <p>
+              {{"route_of_administration"|translate}} :
+              <span>{{ immunization.routeOfAdministration }}</span>
+            </p>
+            <p>
+              Administration Site :
+              <span>{{ immunization.administrationSite }}</span>
+            </p>
+            <p>
+              {{"immunity_status"|translate}} : <span>{{ immunization.conceptName }}</span>
+            </p>
+          </mat-card-content>
+        </mat-card>
+        <div class="rejectedmsg" *ngIf="immunization.rejectedImmunization">
+          <p>
+            <span class="redfont">Rejected!</span> Reason:
+            {{ immunization.rejectionReasonNote }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>

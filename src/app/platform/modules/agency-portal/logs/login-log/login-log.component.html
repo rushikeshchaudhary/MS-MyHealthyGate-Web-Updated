@@ -1,0 +1,26 @@
+<div>
+  <div class="readmin-panel two audit_block">
+    <!-- <h2 class="page_title">{{'manage_login_logs'|translate}}</h2> -->
+    <div class="clearfix"></div>
+    <div class="no-gutters">
+      <div class="col-md-7 justify-content-start pull-left">
+        <div class="row">
+          <div class="col-7 mtm-27">
+            <form class="readmin-form custom_form pos">
+              <button class="search-button"></button>
+              <mat-form-field class="example-full-width">
+                <input matInput [(ngModel)]="searchText" (keyup)="applyFilter()" placeholder="{{'search'|translate}}">
+              </mat-form-field>
+            </form>
+          </div>
+          <div class="col-5 filter-btn">
+            <button class="clear-btn" mat-raised-button (click)='applyFilter()'>{{'clear_all'|translate}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+
+
+    <app-data-table [inputColumns]="displayedColumns" [inputSource]="loginLogData" [inputMeta]="metaData" (onPageOrSortChange)="onPageOrSortChange($event)">
+    </app-data-table>

@@ -1,0 +1,41 @@
+<!-- chat -->
+<button mat-raised-button color="primary" class="chat-btn" (click)="onToggleChatModal()">
+  <img *ngIf="!showChatModal" class="chat-showicon" src="../../../assets/img/chat-icon.svg" alt="" />
+  <img *ngIf="showChatModal" class="chat-hideicon" src="../../../assets/img/chat-close.svg" alt="" />
+</button>
+<div class="chat-box" *ngIf="showChatModal">
+  <nav class="nav" id="nav">
+    <div class="default-nav">
+      <div class="main-nav">
+        <div class="main-nav-item">
+          <img src="{{imgSource}}" alt="" class="fluid-img" />
+          <a class="main-nav-item-link" href="javascript:void(0)"> {{title}}</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="inner" id="inner">
+    <ng-scrollbar #scrollbar>
+      <div class="content" id="content">
+        <div *ngFor="let value of allMessageArray" class="message-wrapper" [ngClass]="{'client-chat text-right': !value.isRecieved, 'response-chat text-left': value.isRecieved }">
+          <div class="text-wrapper">
+            {{value.message}}
+          </div>
+        </div>
+
+        <!-- <div *ngIf="value.isRecieved" class="text-left">
+        {{value.message}}
+      </div>
+      <div *ngIf="!value.isRecieved" class="text-right">
+        {{value.message}}
+      </div> -->
+      </div>
+    </ng-scrollbar>
+  </div>
+  <div class="send-chat" id="bottom">
+    <form (ngSubmit)="sendMessage()">
+      <input class="input" type="text" placeholder="Type a message" [(ngModel)]="message" name="message" id="message" />
+      <button class="send" (click)="sendMessage()"></button>
+    </form>
+  </div>
+</div>

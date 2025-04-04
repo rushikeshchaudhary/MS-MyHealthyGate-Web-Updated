@@ -1,0 +1,147 @@
+<div class="custom_modal">
+    <h3 mat-dialog-title>{{"family_history"|translate}}</h3>
+    <div mat-dialog-content>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <form (ngSubmit)="onSubmit()" id="familyHistoryForm" #documentForm="ngForm" class="readmin-form custom_form" [formGroup]="familyHistoryForm">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <mat-form-field class="example-full-width">
+                                <input matInput autofocus placeholder="{{'first_name'|translate}}" maxlength="10" formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && formControls['firstName'].errors }" required />
+                                <mat-error *ngIf="formControls['firstName'].errors?.['required']">
+                                    {{"please_enter_first_name"|translate}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-4">
+                            <mat-form-field class="example-full-width">
+                                <input matInput autofocus placeholder="{{'last_name'|translate}}" maxlength="10" formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && formControls['lastName'].errors }" required />
+                                <mat-error *ngIf="formControls['lastName'].errors?.['required']">
+                                    {{"please_enter_last_name"|translate}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-4">
+                            <mat-form-field class="example-full-width">
+                                <mat-select placeholder="{{'gender'|translate}}" formControlName="genderID" matInput [ngClass]="{ 'is-invalid': submitted && formControls['genderID'].errors }" required>
+                                    <mat-option *ngFor="let option of masterGender" [value]="option.id">
+                                        {{option.value}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="formControls['genderID']?.errors">
+                                    {{"please_select_gender"|translate}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <mat-form-field class="example-full-width">
+                                <input matInput [matDatepicker]="dob" [max]="maxDate" placeholder="{{'dob'|translate}}" formControlName="dob" [ngClass]="{ 'is-invalid': submitted && formControls['dob'].errors }" readonly required>
+                                <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+                                <mat-datepicker #dob></mat-datepicker>
+                                <mat-error *ngIf="formControls['dob'].errors">
+                                    {{"please_enter_dob"|translate}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-6">
+                            <mat-form-field class="example-full-width">
+                                <mat-select placeholder="{{'relationship'|translate}}" formControlName="relationshipID" matInput [ngClass]="{ 'is-invalid': submitted && formControls['relationshipID'].errors }" required>
+                                    <mat-option *ngFor="let option of masterRelationship" [value]="option.id">
+                                        {{option.value}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="formControls['relationshipID']?.errors">
+                                    {{"please_select_relationship"|translate}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <mat-form-field class="example-full-width">
+                                <input matInput [matDatepicker]="dateOfDeath" [min]="formControls['dob'].value" [max]="maxDate" readonly placeholder="{{'date_of_death'|translate}}" formControlName="dateOfDeath">
+                                <mat-datepicker-toggle matSuffix [for]="dateOfDeath"></mat-datepicker-toggle>
+                                <mat-datepicker #dateOfDeath></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-6">
+                            <mat-form-field class="example-full-width">
+                                <input matInput placeholder="{{'cause_of_death'|translate}}" maxlength="50" formControlName="causeOfDeath" [readonly]="(formControls['dateOfDeath'].value!=null?false:true)" [ngClass]="{ 'is-invalid': submitted && formControls['causeOfDeath'].errors &&formControls['dateOfDeath'].value!=null}"
+                                    [required]="formControls['dateOfDeath'].value!=null?true:false" />
+                                <mat-error *ngIf="formControls['causeOfDeath']?.errors &&formControls['dateOfDeath'].value!=null">
+                                    {{"please_enter_cause_of_death"|translate}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 not-border">
+                            <mat-form-field class="example-full-width">
+                                <textarea matInput placeholder="{{'observation'|translate}}" maxlength="1000" formControlName="observation"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div formArrayName="patientMedicalFamilyHistoryDiseases">
+                        <div *ngFor="let X of patientMedicalFamilyHistoryDiseases['controls']; let ix=index">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div formGroupName="{{ix}}" class="Xs">
+                                        <mat-form-field class="example-full-width">
+                                            <!-- <mat-select placeholder="Disease" formControlName="diseaseID" matInput>
+                                                <mat-option *ngFor="let option of masterICD" [value]="option.id">
+                                                    {{option.value}}
+                                                </mat-option>
+                                            </mat-select> -->
+                                            <input type="text" placeholder="{{'disease'|translate}}"
+                                                formControlName="disease" matInput>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div formGroupName="{{ix}}" class="Xs">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-select placeholder="{{'disease_status'|translate}}" formControlName="diseaseStatus" matInput>
+                                                <mat-option *ngFor="let option of masterStatus" [value]="option.id">
+                                                    {{option.value}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 pdl-40">
+                                    <div formGroupName="{{ix}}" class="Xs">
+                                        <!-- Issue 53  Fix Start -->
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput placeholder="{{'age_of_diagnosis'|translate}}" maxlength="5" (change)="ageValueChange($event)" formControlName="ageOfDiagnosis" appNumbersOnly />
+                                        </mat-form-field>
+                                        <!-- Issue 53  Fix End -->
+                                    </div>
+                                </div>
+                                <button *ngIf="(ix > 0) || (patientMedicalFamilyHistoryDiseases['controls'].length > 1)" type="button" class="additem removeitem" title="Remove Disease" (click)=removeDiseaseFields(ix)>
+                                    <b class="fa fa-minus-square orangefont" aria-hidden="true"></b>
+                                </button>
+                                <button *ngIf="(ix + 1) === patientMedicalFamilyHistoryDiseases['controls'].length" type="button" class="additem" title="Add modifier" (click)=addDiseaseFields()>
+                                    <b class="fa fa-plus-square greenfont" aria-hidden="true"></b>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Issue 53  Fix Start -->
+<div>
+    <span *ngIf="showError" class="mat-error ng-star-inserted spnCenter" role="alert"> Age of diagnosis cannot be greater than age of person </span>
+</div>
+<!-- Issue 53  Fix end -->
+<div mat-dialog-actions style="display: flex; justify-content: space-between;">
+    <button class="cancel-btn" mat-raised-button (click)="closeDialog('close')">{{"close"|translate}}</button>
+    <!-- Issue 53  Fix Start -->
+    <button mat-raised-button color="primary" (click)="onSubmit()" form="familyHistoryForm" [disabled]="submitted" cdkFocusInitial>{{submitted ? 'Saving...' : ('save'|translate)}}</button>
+    <!-- Issue 53  Fix end -->
+</div>

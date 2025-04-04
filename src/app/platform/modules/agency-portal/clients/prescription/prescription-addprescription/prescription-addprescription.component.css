@@ -1,0 +1,10 @@
+.test_name_block{
+    display: -webkit-box; /* Required for -webkit-line-clamp to work */
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4; /* Limit to 4 lines */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal; /* Allow the text to wrap */
+    max-height: 7em; /* Adjust this value to fit four lines, depends on line-height */
+    line-height: 1.5em; /* Adjust this value according to your font size */
+}

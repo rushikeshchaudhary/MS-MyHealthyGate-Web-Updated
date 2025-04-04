@@ -1,0 +1,125 @@
+<div class="provider-container">
+  <h2 class="page_title">My Appointments</h2>
+  <div class="clearfix"></div>
+  <div class="readmin-panel">
+    <div *ngIf="staffProfile">
+      <h2 class="ppname text-center mt-3">
+        Dr. {{ staffProfile.firstName + " " +staffProfile.middleName + " " + staffProfile.lastName}}
+      </h2>
+    </div>
+    <div class="row no-gutters">
+      <div class="col-md-12 justify-content-start pull-left">
+        <form class="readmin-form custom_form" id="paymentFormGroup" #documentForm="ngForm"
+          [formGroup]="paymentFormGroup">
+          <div id="accordion">
+            <div class="card p-0">
+              <div class="card-header" id="headingOne">
+                <div class="d-flex justify-content-between" data-toggle="collapse" data-target="#collapseOne"
+                  aria-expanded="true" aria-controls="collapseOne">
+                  <h2 class="head-filter m-0">{{'filter'|translate}}</h2>
+                  <i class="fa fa-caret-down" aria-hidden="true"></i>
+                </div>
+              </div>
+              <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body filter_blk">
+                  <div class="row">
+                    <div class="col-lg-4 col-md-3">
+                      <mat-form-field class="example-full-width">
+                        <mat-select (openedChange)="onDropDownClose($event)" placeholder="patients" formControlName="patients"
+                          matInput multiple>
+                          <mat-option *ngFor="let provider of patientList" [value]="provider.patientId">{{ provider.name
+                            }}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-lg-4 col-md-3" *ngIf="!isSpecificProvider">
+                      <mat-form-field class="example-full-width">
+                        <mat-select (openedChange)="onDropDownClose($event)" placeholder="Providers"
+                          formControlName="providers" matInput multiple>
+                          <mat-option *ngFor="let provider of providerList" [value]="provider.staffID">{{ provider.name
+                            }}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <!-- <div class="col-md-3">
+                    <mat-form-field class="example-full-width">
+                      <mat-select (openedChange)="onDropDownClose($event)" placeholder="Appointment Status"
+                        formControlName="appStatus" matInput multiple>
+                        <mat-option [value]="'Home Visit'">Home Visit</mat-option>
+                        <mat-option [value]="'Face to Face'">Face to Face</mat-option>
+                        <mat-option [value]="'Online'">Online</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div> -->
+                    <div class="book-appt-type book-appt-check col-lg-4 col-md-4 col-sm-6 col-12">
+                      <label class="type_label">Appointment Mode : </label>
+                      <div>
+                        <mat-radio-group formControlName="appStatus">
+                          <mat-radio-button (change)="onModeChange(mode)" class="example-radio-button"
+                            *ngFor="let mode of appointmentMode" [value]="mode">
+                            {{ mode }}
+                          </mat-radio-button>
+                        </mat-radio-group>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-12">
+                      <label class="type_label">Appointment Status : </label>
+                      <div>
+                        <mat-form-field class="example-full-width">
+                          <mat-label>Select Status</mat-label>
+                          <mat-select [(value)]="selected" (selectionChange)="statusChangeHandler($event.value)">
+                            <mat-option *ngFor="let status of appointmentStatus" [value]="status">
+                              {{ status }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-12">
+                      <label class="type_label">&nbsp;</label>
+                      <mat-form-field class="example-full-width">
+                        <input matInput readonly [matDatepicker]="rangeStartDate" (dateChange)="applyStartDateFilter($event)"
+                          placeholder="Appointment Start Date Range" formControlName="rangeStartDate" />
+                        <mat-datepicker-toggle matSuffix [for]="rangeStartDate"></mat-datepicker-toggle>
+                        <mat-datepicker #rangeStartDate></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-12">
+                      <label class="type_label">&nbsp;</label>
+                      <mat-form-field class="example-full-width">
+                        <input matInput readonly [matDatepicker]="rangeEndDate" (dateChange)="applyEndDateFilter($event)"
+                          placeholder="Appointment End Date Range" formControlName="rangeEndDate" />
+                        <mat-datepicker-toggle matSuffix [for]="rangeEndDate"></mat-datepicker-toggle>
+                        <mat-datepicker #rangeEndDate></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-3 filter-btn block_filter">
+                      <button class="clear-btn" mat-raised-button (click)="clearFilters()">
+                        Clear All
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+     
+        </form>
+      </div>
+      <!-- <div class="export-btn-rt">
+        <button mat-raised-button color="primary" class="ml-2 add-primary-btn" (click)="exportPaymentPdf()">
+          <i class="fa fa-download" aria-hidden="true"></i>
+          <span>Export</span>
+        </button>
+      </div> -->
+    </div>
+    <div class="clearfix"></div>
+
+    <app-data-table [inputColumns]="displayedColumns" [inputSource]="payments" [inputMeta]="metaData"
+      [inputButtons]="actionButtons" (onPageOrSortChange)="onPageOrSortChange($event)"
+      (onTableActionClick)="onTableActionClick($event)">
+    </app-data-table>
+  </div>
+</div>

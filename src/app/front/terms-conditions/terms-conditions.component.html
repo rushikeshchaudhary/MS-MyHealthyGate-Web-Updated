@@ -1,0 +1,37 @@
+<div class="terms-block">
+    <section class="the-benefits policy-blk">
+        <i (click)="closeDialog('close')" class="fa fa-close" aria-hidden="true"></i>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="section-heading">{{"terms_and_conditions" | translate}}</h4>
+                    <div class="wedo-box">
+                        <p>{{"our_simple_terms_and_conditions_template_can_instantly_generate_a_custom_terms_of_service_policy_for_your_business" | translate}}
+                            <a [routerLink]="['/terms-and-conditions']" target="_blank">{{'terms_and_conditions'|translate}}</a>
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="the-benefits policy-blk">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="section-heading">{{"privacy_policy" | translate}}</h4>
+                    <div class="wedo-box">
+                        <p>{{"our_simple_privacy_policies_can_help_you_grow_your_business_privacy_policy"| translate }}
+                            <a [routerLink]="['/privacy-policy']" target="_blank">{{'privacy_policy'|translate}}</a>
+                        </p>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

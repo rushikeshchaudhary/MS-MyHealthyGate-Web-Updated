@@ -1,0 +1,262 @@
+<div *ngIf="isFormAdd" class="custom_modal">
+  <h3 mat-dialog-title>{{ "upload_card" | translate }}</h3>
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-sm-12">
+        <form
+          id="addCardForm"
+          #documentForm="ngForm"
+          class="readmin-form custom_form"
+          [formGroup]="addCardForm"
+        >
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  placeholder="{{ 'card_number' | translate }}"
+                  formControlName="cardNumber"
+                  [ngClass]="{
+                    'is-invalid': submitted && formControls['cardNumber'].errors
+                  }"
+                  required
+                />
+
+                <mat-error *ngIf="formControls['cardNumber'].errors">
+                  {{ "please_enter_card_number" | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-2">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  placeholder="{{ 'month' | translate }}"
+                  formControlName="month"
+                  [ngClass]="{
+                    'is-invalid': submitted && formControls['month'].errors
+                  }"
+                  required
+                />
+
+                <mat-error *ngIf="formControls['month'].errors">
+                  {{ "please_enter_month" | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-3">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  placeholder="{{ 'year' | translate }}"
+                  formControlName="year"
+                  [ngClass]="{
+                    'is-invalid': submitted && formControls['year'].errors
+                  }"
+                  required
+                />
+
+                <mat-error *ngIf="formControls['year'].errors">
+                  {{ "please_enter_year" | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <!-- <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  [matDatepicker]="expirationDate"
+                  placeholder="{{ 'expiry_date' | translate }}"
+                  formControlName="expiryDate"
+                  [ngClass]="{
+                    'is-invalid': submitted && formControls.expiryDate.errors
+                  }"
+                  readonly
+                  required
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="expirationDate"
+                ></mat-datepicker-toggle>
+                <mat-datepicker
+                  #expirationDate
+                  startView="multi-year"
+                  (monthSelected)="setMonthAndYear($event, expirationDate)"
+                  panelClass="example-month-picker"
+                ></mat-datepicker>
+                <mat-error *ngIf="formControls.expiryDate.errors">
+                  {{ "please_enter_expiration_date" | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div> -->
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  placeholder="{{ 'name_on_card' | translate }}"
+                  formControlName="nameOnCard"
+                  [ngClass]="{
+                    'is-invalid': submitted && formControls['nameOnCard'].errors
+                  }"
+                  required
+                />
+
+                <mat-error *ngIf="formControls['nameOnCard'].errors">
+                  {{ "please_enter_name_on_card" | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button class="cancel-btn" (click)="closeDialog('close')">
+      {{ "close" | translate }}
+    </button>
+    <button
+      name="Save"
+      mat-raised-button
+      color="primary"
+      (click)="onSubmit()"
+      form="addCardForm"
+      class="text-uppercase"
+      [disabled]="submitted"
+      cdkFocusInitial
+    >
+      {{ submitted ? "Uploading..." : ("save" | translate) }}
+    </button>
+  </div>
+</div>
+<div *ngIf="!isFormAdd" class="custom_modal">
+  <h3 mat-dialog-title>{{ "upload_card" | translate }}</h3>
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-sm-12">
+        <form
+          id="editCardForm"
+          #documentForm="ngForm"
+          class="readmin-form custom_form"
+          [formGroup]="editCardForm"
+        >
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  placeholder="{{ 'card_number' | translate }}"
+                  formControlName="cardNumber"
+                  [ngClass]="{
+                    'is-invalid': submitted && formControls['cardNumber'].errors
+                  }"
+                  required
+                />
+
+                <mat-error *ngIf="formControls['cardNumber'].errors">
+                  {{ "please_enter_card_number" | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-2">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  placeholder="{{ 'month' | translate }}"
+                  formControlName="month"
+                  [ngClass]="{
+                    'is-invalid': submitted && formControls['month'].errors
+                  }"
+                  required
+                />
+
+                <mat-error *ngIf="formControls['month'].errors">
+                  {{ "please_enter_month" | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-3">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  placeholder="{{ 'year' | translate }}"
+                  formControlName="year"
+                  [ngClass]="{
+                    'is-invalid': submitted && formControls['year'].errors
+                  }"
+                  required
+                />
+
+                <mat-error *ngIf="formControls['year'].errors">
+                  {{ "please_enter_year" | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <!-- <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  [matDatepicker]="expirationDate"
+                  placeholder="{{ 'expiry_date' | translate }}"
+                  formControlName="expiryDate"
+                  [ngClass]="{
+                    'is-invalid': submitted && formControls.expiryDate.errors
+                  }"
+                  readonly
+                  required
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="expirationDate"
+                ></mat-datepicker-toggle>
+                <mat-datepicker
+                  #expirationDate
+                  startView="multi-year"
+                  (monthSelected)="setMonthAndYear($event, expirationDate)"
+                  panelClass="example-month-picker"
+                ></mat-datepicker>
+                <mat-error *ngIf="formControls.expiryDate.errors">
+                  {{ "please_enter_expiration_date" | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div> -->
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  placeholder="{{ 'name_on_card' | translate }}"
+                  formControlName="nameOnCard"
+                  [ngClass]="{
+                    'is-invalid': submitted && formControls['nameOnCard'].errors
+                  }"
+                  required
+                />
+
+                <mat-error *ngIf="formControls['nameOnCard'].errors">
+                  {{ "please_enter_name_on_card" | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button class="cancel-btn" (click)="closeDialog('close')">
+      {{ "close" | translate }}
+    </button>
+    <button
+      name="Save"
+      mat-raised-button
+      color="primary"
+      (click)="onEditSubmit()"
+      form="editCardForm"
+      class="text-uppercase"
+      [disabled]="submitted"
+      cdkFocusInitial
+    >
+      {{ submitted ? "Uploading..." : ("save" | translate) }}
+    </button>
+  </div>
+</div>

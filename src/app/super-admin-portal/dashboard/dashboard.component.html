@@ -1,0 +1,384 @@
+<div class="hgt100">
+  <div>
+    <span> </span>
+    <div>
+      <div>
+        <h1 class="page_title">Dashboard</h1>
+        <div class="clearfix"></div>
+      </div>
+      <div>
+
+
+        <!-- 
+        <h2 class="page_title">Registered user details:</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="row dashboardchart">
+        <ng-container *ngFor="let dashboardTotal of dashboardTotalCountList">
+          <div class="col-xl-3" style="cursor: pointer;" [style.display]="dashboardTotal.roleName=='Superadmin' ? 'none' : 'block'">
+            <div class="card" (click)="goToDetailPage(dashboardTotal.roleName)">
+              <div class="card-header p-3 pt-2">
+                <div class="text-end pt-1" >
+                  <p class="text-sm mb-0 text-capitalize">
+                    Total {{dashboardTotal.roleName}} -->
+
+
+
+
+
+        <!-- <ng-container
+                      *ngIf="dashboardTotal.roleName == 'Patient'"
+                      )
+                    >
+                      Total Paitents
+                    </ng-container>
+                    <ng-container *ngIf="dashboardTotal.roleName == 'Provider'">
+                      Total Doctors
+                    </ng-container>
+                    <ng-container *ngIf="dashboardTotal.roleName == 'Lab'">
+                      Total Labs
+                    </ng-container>
+                    <ng-container *ngIf="dashboardTotal.roleName == 'Pharmacy'">
+                      Total Pharmacies
+                    </ng-container>
+                    <ng-container
+                      *ngIf="dashboardTotal.roleName == 'Radiology'"
+                    >
+                      Total Radiologies
+                    </ng-container>
+                    <ng-container
+                      *ngIf="dashboardTotal.roleName == 'Appointment'"
+                    >
+                      Total Bookings
+                    </ng-container> -->
+
+
+
+        <!-- </p>
+                  <h4 class="mb-0">{{ dashboardTotal.totalCount }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <div class="col-xl-3" style="cursor: pointer;">
+          <div class="card" (click)="goToDetailPage('Users')">
+            <div class="card-header p-3 pt-2">
+              <div class="text-end pt-1">
+                <p class="text-sm mb-0 text-capitalize">
+                  <ng-container> Total Users </ng-container>
+                </p>
+                <h4 class="mb-0">{{ total }}</h4>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+
+
+
+        <!-- <div class="col-xl-3" style="cursor: pointer;">
+          <div class="card" (click)="gotoPageDetalisOfAppointement('Appointement')">
+            <div class="card-header p-3 pt-2">
+              <div class="text-end pt-1">
+                <p class="text-sm mb-0 text-capitalize">
+                  <ng-container> Total Appointement </ng-container>
+                </p>
+                <h4 class="mb-0">{{ TotalAppointement }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3" style="cursor: pointer;">
+          <div class="card" (click)="gotoPageDetalisOfAppointementCancelled('AppointementCancelled')">
+            <div class="card-header p-3 pt-2">
+              <div class="text-end pt-1">
+                <p class="text-sm mb-0 text-capitalize">
+                  <ng-container> Total AppointementCancelled </ng-container>
+                </p>
+                <h4 class="mb-0">{{ TotalAppointementCancelled }}</h4>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+
+
+        <!--         
+      </div>
+      <div>
+        <br>
+        <br>
+        <h2 class="page_title">Appointment details:</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="row dashboardchart">
+      <div class="col-xl-3" style="cursor: pointer;">
+        <div class="card" (click)="gotoPageDetalisOfAppointement('Appointement')">
+          <div class="card-header p-3 pt-2">
+            <div class="text-end pt-1">
+              <p class="text-sm mb-0 text-capitalize">
+                <ng-container> Total Appointement </ng-container>
+              </p>
+              <h4 class="mb-0">{{ TotalAppointement }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3" style="cursor: pointer;">
+        <div class="card" (click)="gotoPageDetalisOfAppointementCancelled('AppointementCancelled')">
+          <div class="card-header p-3 pt-2">
+            <div class="text-end pt-1">
+              <p class="text-sm mb-0 text-capitalize">
+                <ng-container> Total AppointementCancelled </ng-container>
+              </p>
+              <h4 class="mb-0">{{ TotalAppointementCancelled }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3" style="cursor: pointer;">
+        <div class="card" (click)="gotoPageDetalisOfAppointementCancelled('AppointementApproved')">
+          <div class="card-header p-3 pt-2">
+            <div class="text-end pt-1">
+              <p class="text-sm mb-0 text-capitalize">
+                <ng-container> Total AppointementApproved </ng-container>
+              </p>
+              <h4 class="mb-0">{{ TotalAppointementApproved }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3" style="cursor: pointer;">
+        <div class="card" (click)="gotoPageDetalisOfAppointementCancelled('AppointementPending')">
+          <div class="card-header p-3 pt-2">
+            <div class="text-end pt-1">
+              <p class="text-sm mb-0 text-capitalize">
+                <ng-container> Total AppointementPending </ng-container>
+              </p>
+              <h4 class="mb-0">{{ TotalAppointementPending }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3" style="cursor: pointer;">
+        <div class="card" (click)="gotoPageDetalisOfAppointementCancelled('AppointementCompleted')">
+          <div class="card-header p-3 pt-2">
+            <div class="text-end pt-1">
+              <p class="text-sm mb-0 text-capitalize">
+                <ng-container> Total AppointementCompleted </ng-container>
+              </p>
+              <h4 class="mb-0">{{ TotalAppointementCompleted }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3" style="cursor: pointer;">
+        <div class="card" (click)="gotoPageDetalisOfAppointementCancelled('OnlineAppointement')">
+          <div class="card-header p-3 pt-2">
+            <div class="text-end pt-1">
+              <p class="text-sm mb-0 text-capitalize">
+                <ng-container> Total OnlineAppointement </ng-container>
+              </p>
+              <h4 class="mb-0">{{ TotalOnlineAppointement }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3" style="cursor: pointer;">
+        <div class="card" (click)="gotoPageDetalisOfAppointementCancelled('FaceToFaceAppointement')">
+          <div class="card-header p-3 pt-2">
+            <div class="text-end pt-1">
+              <p class="text-sm mb-0 text-capitalize">
+                <ng-container> Total FaceToFaceAppointement </ng-container>
+              </p>
+              <h4 class="mb-0">{{ TotalFaceToFaceAppointement }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3" style="cursor: pointer;">
+        <div class="card" (click)="gotoPageDetalisOfAppointementCancelled('HomeVisitAppointement')">
+          <div class="card-header p-3 pt-2">
+            <div class="text-end pt-1">
+              <p class="text-sm mb-0 text-capitalize">
+                <ng-container> Total HomeVisitAppointement </ng-container>
+              </p>
+              <h4 class="mb-0">{{ TotalHomeVisitAppointement }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <br>
+      <br>
+      <h2 class="page_title">Payment details:</h2>
+      <div class="clearfix"></div>
+      <div class="row dashboardchart">
+        <div class="col-xl-3">
+          <div class="card" >
+            <div class="card-header p-3 pt-2">
+              <div class="text-end pt-1">
+                <p class="text-sm mb-0 text-capitalize">
+                  <ng-container> Total payment received </ng-container>
+                </p>
+                <h4 class="mb-0">{{ TotalPaymentReceived }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3">
+          <div class="card" >
+            <div class="card-header p-3 pt-2">
+              <div class="text-end pt-1">
+                <p class="text-sm mb-0 text-capitalize">
+                  <ng-container> Total Online AppointementPayment received </ng-container>
+                </p>
+                <h4 class="mb-0">{{ TotalOnlinepaymentRecieved }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3">
+          <div class="card" >
+            <div class="card-header p-3 pt-2">
+              <div class="text-end pt-1">
+                <p class="text-sm mb-0 text-capitalize">
+                  <ng-container> Total home visit payment received </ng-container>
+                </p>
+                <h4 class="mb-0">{{ TotalHomeVisitPaymentReceived }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3">
+          <div class="card" >
+            <div class="card-header p-3 pt-2">
+              <div class="text-end pt-1">
+                <p class="text-sm mb-0 text-capitalize">
+                  <ng-container> Total face to face payment received </ng-container>
+                </p>
+                <h4 class="mb-0">{{ TotalFaceToFacePaymentReceived }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3">
+          <div class="card" >
+            <div class="card-header p-3 pt-2">
+              <div class="text-end pt-1">
+                <p class="text-sm mb-0 text-capitalize">
+                  <ng-container> Total refund received for cancelled appointments </ng-container>
+                </p>
+                <h4 class="mb-0">{{ TotalRefundReceivedForCancelledappointement }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <br> -->
+
+
+
+        <div>
+          <div class="col-md-12">
+            <div class="readmin-panel righticonmenu">
+              <h5>Registered Details</h5>
+              <div class="panel-body dashboard_body">
+                <app-bar-chart [barChartData]="registeredChartData" [barChartLabels]="ChartLabels"
+                  [barChartOptions]="registeredChartOptions" [barChartColors]="registeredChartColors"></app-bar-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+        <div>
+          <div class="col-md-12">
+            <div class="readmin-panel righticonmenu">
+              <h5>Appointments</h5>
+              <div class="panel-body dashboard_body">
+                <app-bar-chart [barChartData]="appointmentChartData" [barChartLabels]="ChartLabels"
+                  [barChartOptions]="appoiintmentChartOptions" [barChartColors]="appoiintmentChartColors">
+                </app-bar-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+        <div>
+          <div class="col-md-12">
+            <div class="readmin-panel righticonmenu">
+              <h5>Payments</h5>
+              <div class="panel-body dashboard_body">
+                <app-bar-chart [barChartData]="paymentChartData" [barChartLabels]="ChartLabels"
+                  [barChartOptions]="paymentChartOptions" [barChartColors]="paymentChartColors">
+                </app-bar-chart>
+              </div>
+            </div>
+            <!-- <div class="readmin-panel righticonmenu">
+           
+            </div> -->
+          </div>
+        </div>
+
+
+        <br>
+
+        <!-- <div class="row dashboardchart">
+        <div class="col-md-12">
+          <div class="readmin-panel righticonmenu">
+            <h5>Total Sales</h5>
+            <div class="panel-body dashboard_body">
+              <app-line-chart
+                [lineChartData]="lineChartData"
+                [lineChartLabels]="lineChartLabels"
+              ></app-line-chart>
+            </div>
+          </div>
+        </div>
+      </div> -->
+        <br>
+
+
+
+
+        <div class="clearfix"></div>
+        <div class="clearfix"></div>
+        <div class="clearfix"></div>
+        <div class="clearfix"></div>
+        <div class="row m-5">
+          <div class="col-4 mtm-27 search_manage_provide">
+            <mat-form-field class="exmaple-full-width">
+              <input matInput [(ngModel)]="searchText" name="searchText" (ngModelChange)="modelChanged($event)"
+                placeholder="Search" />
+            </mat-form-field>
+          </div>
+          <div class="col-3 filter-btn">
+            <mat-form-field appearance="fill">
+              <mat-label>Select User</mat-label>
+              <mat-select multiple [(ngModel)]="selectedUsers" (ngModelChange)="onChangeUsers($event)"
+                (closed)="onSelectLeave()" name="Users">
+                <mat-option *ngFor="let role of userRoles" [value]="role.RoleId">
+                  {{ role.RoleName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-12">
+            <app-data-table [inputColumns]="userColumns" [inputSource]="allUsers" [inputMeta]="userMeta"
+              (onTableActionClick)="onTableActionClick()" (onPageOrSortChange)="onPageOrSortChange($event)">
+            </app-data-table>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="clearfix"></div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>

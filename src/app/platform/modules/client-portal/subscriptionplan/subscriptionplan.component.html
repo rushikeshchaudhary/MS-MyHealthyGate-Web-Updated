@@ -1,0 +1,153 @@
+<!-- <div class="readmin-panel">
+ 
+  <div class="clearfix"></div>
+  <div
+    class="col-lg-4 col-sm-6 mt-20 custom-card custom-card-header"
+    *ngFor="let plan of subscriptionPlan"
+  >
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          {{ plan.planumentTitle }}
+        </mat-card-title>
+        <mat-card-actions>
+          <button
+            *ngIf="downloadPermission"
+            mat-button
+            (click)="getPatientSubscriptionPlan(plan)"
+          >
+            <i class="fa fa-download"></i>
+          </button>
+           <button
+          *ngIf="deletePermission"
+          mat-button
+          (click)="deleteUserplanument(plan.id)"
+        >
+          <i class="fa fa-close"></i>
+        </button> 
+        </mat-card-actions>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="text-left">
+          <p>
+            plan Type:
+            <span ngif="plan.planType!=null">{{ plan.planType }} </span>
+          </p>
+          
+
+          <p>
+            Plan Amount
+            <span ngif="plan.amountPerClient!=null"
+              >{{ plan.amountPerClient }}
+            </span>
+          </p>
+          <p>
+            Plans
+            <span ngif="plan.descriptions!=null">{{ plan.descriptions }} </span>
+          </p>
+          <p>
+            Start Date:
+            <span>{{ plan.startDate | date: 'dd/MM/yyyy' }}</span>
+          </p>
+          <p>
+            Expiration Date:
+            <span>{{ plan.expiryDate | date: 'dd/MM/yyyy' }}</span>
+          </p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div> -->
+
+<div class="readmin-panel" *ngIf="subscriptionPlan.length>0">
+  
+  <section class="plan">
+    <div class="container">
+      <div class="sub_heading">
+        <h2>{{'current_membership_plans'|translate}}</h2>
+        
+        <!-- <label class="switch_t">
+          <span class="toggle_left_text">{{'bill_monthly'|translate}}</span>
+          <input type="checkbox" checked />
+          <span class="slider_t round"></span>
+          <span class="toggle_right_text">{{'bill_anually'|translate}}</span>
+        </label> -->
+      </div>
+      <div class="member_area">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <div class="member_card" *ngFor="let basic of subscriptionPlan">
+              <h3>{{basic.title}}</h3>
+              <div *ngFor="let basic of subscriptionPlan">
+                <div [innerHTML]="basic.descriptions" class="descptn"></div>
+              </div>
+              
+              <p class="plan_cost" *ngFor="let basic of subscriptionPlan">{{"fees"|translate}} / ${{basic.amountPerClient}} <span> 
+              </span></p>
+              <!-- <button class="btn btn-primary btn-green btn-block">
+               {{'start_free'|translate}}
+              </button> -->
+            </div>
+          </div>
+          <div class="col-md-4 " style=" margin:20px; padding: 15px;">
+            <p class="plan_cost" *ngFor="let premium of premiumPlan">${{premium.amountPerClient}} /<span>{{'month'|translate}}</span>
+            </p>
+            <button class="btn btn-primary btn-dark-green btn-block" style="padding:15px;">
+              {{'start_your_premium_membership'|translate}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="readmin-panel" *ngIf="subscriptionPlan.length == 0">
+  <section class="plan">
+    <div class="container">
+      <div class="sub_heading">
+        <h2>{{'current_membership_plans'|translate}}</h2>
+        
+        <!-- <label class="switch_t">
+          <span class="toggle_left_text">{{'bill_monthly'|translate}}</span>
+          <input type="checkbox" checked />
+          <span class="slider_t round"></span>
+          <span class="toggle_right_text">{{'bill_anually'|translate}}</span>
+        </label> -->
+      </div>
+      <div class="member_area">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <div class="member_card" >
+              <h3>Basic Plan</h3>
+              <div class="descptn">
+                <!-- <div [innerHTML]="basic.descriptions"></div> -->
+                <ul>
+                  <li>{{"choose_and_keep_your_doctor"|translate}}</li>
+                  <li>{{"choose_convenient_time_and_date"|translate}}<br></li>
+                  <li>{{"choose_from_available_online_home_visits_or_face_to_face"|translate}}<br></li>
+                  <li>{{"check_first_available_appointment"|translate}}<br></li>
+                  <li>{{"electronic_prescriptions_lab_test_and_referrals"|translate}}<br></li>
+                  <li>{{"manage_your_health_records"|translate}}</li>
+                </ul>
+              </div>
+              
+              <p class="plan_cost">{{"fees"|translate}} / $0 <span> 
+              </span></p>
+              <!-- <button class="btn btn-primary btn-green btn-block">
+               {{'start_free'|translate}}
+              </button> -->
+            </div>
+          </div>
+          <div class="col-md-4 " style=" margin:20px; padding: 15px;">
+            <p class="plan_cost" *ngFor="let premium of subscriptionPlan">${{premium.amountPerClient}} /<span>{{'month'|translate}}</span>
+            </p>
+            <button class="btn btn-primary btn-dark-green btn-block" style="padding:15px;">
+              {{'start_your_premium_membership'|translate}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

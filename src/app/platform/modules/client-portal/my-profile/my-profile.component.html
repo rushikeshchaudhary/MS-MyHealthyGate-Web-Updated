@@ -1,0 +1,332 @@
+<h2 class="page_title sm-title pd-10">{{"profile_summary" | translate}}</h2>
+<div class="top-btns">
+  <!-- <button name="ccda" mat-raised-button color="primary" class="text-uppercase" (click)="getPatientCCDA()" cdkFocusInitial [disabled]="downloadingCcda">
+    <i class="fa fa fa-download" aria-hidden="true"></i> {{ downloadingCcda ? 'Downloading...' : 'CCDA'}} </button>
+     -->
+  <button *ngIf="isPatient==true" name="Save" mat-raised-button color="primary" (click)="pastAppoinment()"
+    class="text-uppercase" cdkFocusInitial>
+    <i class="fa fa fa-pencil" aria-hidden="true"></i>
+    {{ "past_appointments" | translate }}
+  </button>
+  <button *ngIf="isPatient==true" name="Save" mat-raised-button color="primary" (click)="editProfile($event)"
+    class="text-uppercase" cdkFocusInitial>
+    <i class="fa fa fa-pencil" aria-hidden="true"></i> {{"profile_details" | translate}}
+  </button>
+</div>
+<div class="clearfix"></div>
+<div class="row">
+  <div class="col-sm-12 pd-15">
+    <div class="readmin-panel crop">
+      <div class="panel-body pd15">
+        <div class="lineheader">
+          <p>{{ "basic_information" | translate }}</p>
+        </div>
+        <div class="flex-row d-flex clientdetail profile-edit-nw" *ngIf="
+            clientProfileModel && clientProfileModel.patientInfo.length > 0
+          ">
+          <div class="clientpic">
+            <img src="{{
+                clientProfileModel &&
+                clientProfileModel.patientInfo[0] != undefined
+                  ? clientProfileModel.patientInfo[0].photoThumbnailPath ||
+                    '../assets/img/noimage3.png'
+                  : '../assets/img/noimage3.png'
+              }}" alt="" />
+          </div>
+          <div class="">
+            <p>
+              <label>{{ "name" | translate }} : </label> &nbsp;
+              <span>{{
+                clientProfileModel &&
+                clientProfileModel.patientInfo[0] != undefined
+                ? clientProfileModel.patientInfo[0].name
+                : ""
+                }}</span>
+            </p>
+            <p>
+              <label>{{ "age" | translate }} : </label> &nbsp;
+              <span>{{
+                (clientProfileModel &&
+                clientProfileModel.patientInfo[0].age + " yrs") ||
+                ""
+                }}</span>
+            </p>
+            <p>
+              <label>{{ "gender" | translate }} : </label> &nbsp;
+              <span>{{
+                (clientProfileModel &&
+                clientProfileModel.patientInfo[0].gender) ||
+                ""
+                }}</span>
+            </p>
+            <!-- <p>
+              <label>{{ "ssn" | translate }} : </label> &nbsp;
+              <span
+                >{{
+                  (clientProfileModel &&
+                    clientProfileModel.patientInfo[0].ssn) ||
+                    ""
+                }}<i aria-hidden="true"></i
+              ></span>
+            </p> -->
+            <p>
+              <label>{{ "mrn" | translate }} : </label> &nbsp;
+              <span>{{
+                (clientProfileModel && clientProfileModel.patientInfo[0].mrn) ||
+                ""
+                }}</span>
+            </p>
+            <p>
+              <label>{{ "status" | translate }} : </label> &nbsp;
+              <span [ngClass]="{
+                  greenfont:
+                    clientProfileModel &&
+                    clientProfileModel.patientInfo[0].status == 'Active',
+                  redfont:
+                    clientProfileModel &&
+                    clientProfileModel.patientInfo[0].status == 'Inactive'
+                }">{{
+                (clientProfileModel &&
+                clientProfileModel.patientInfo[0].status) ||
+                ""
+                }}</span>
+            </p>
+            <p>
+              <label>{{ "phone" | translate }} : </label> &nbsp;
+              <span>{{
+                (clientProfileModel &&
+                clientProfileModel.patientInfo[0].phone + " (Mobile)") ||
+                ""
+                }}</span>
+            </p>
+            <p>
+              <label>{{ "email" | translate }} : </label> &nbsp;
+              <span>{{
+                (clientProfileModel &&
+                clientProfileModel.patientInfo[0].email) ||
+                ""
+                }}</span>
+            </p>
+            <address class="w-50">
+              <label>{{ "address" | translate }} : </label> &nbsp;
+              <span>{{
+                (clientProfileModel &&
+                clientProfileModel.patientInfo[0].address) ||
+                ""
+                }}</span>
+            </address>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <!--Diagnosis-->
+  <div class="col-sm-6 col-lg-6 mb-30" *ngIf="
+  clientProfileModel &&
+  clientProfileModel.patientDiagnosisDetails.length > 0 &&
+  clientProfileModel.patientDiagnosisDetails[0]
+  ">
+    <div class="readmin-panel crop pd-15" *ngIf="
+        clientProfileModel &&
+        clientProfileModel.patientDiagnosisDetails.length > 0 &&
+        clientProfileModel.patientDiagnosisDetails[0]
+      ">
+      <div class="clientdetail viewdiagnosis">
+        <div class="client-title">{{"diagnosis" | translate}}</div>
+        <div class="row">
+          <div class="history_card">
+            <div class="carditems">
+              <span><label>Last Updated Diagnosis :</label>&nbsp;
+                {{
+                clientProfileModel &&
+                clientProfileModel.patientDiagnosisDetails[0].diagnosisDate
+                | date: 'dd/MM/yyyy'
+                }}</span>
+              <ul>
+                <li>
+                  <label>{{"code" | translate}} : </label>&nbsp;
+                  <span>{{
+                    (clientProfileModel &&
+                    clientProfileModel.patientDiagnosisDetails[0] !=
+                    undefined &&
+                    clientProfileModel.patientDiagnosisDetails[0].code) ||
+                    ""
+                    }}</span>
+                </li>
+                <li class="mb-2">
+                  <label>{{"description" | translate}} : </label>&nbsp;
+                  <span>{{
+                    (clientProfileModel &&
+                    clientProfileModel.patientDiagnosisDetails[0] !=
+                    undefined &&
+                    clientProfileModel.patientDiagnosisDetails[0]
+                    .description) ||
+                    ""
+                    }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Appointment Details-->
+  <!-- <div class="col-sm-6 col-lg-6 mb-30">
+    <div class="readmin-panel crop appoint pd-15">
+        <div class="lineheader">
+            <p>
+                <a>Appointment Details</a>
+            </p>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 lastdr">
+                <h3>Upcoming Appointment</h3>
+                <div *ngIf="clientProfileModel.upcomingAppointmentDetails && clientProfileModel.upcomingAppointmentDetails.length > 0">
+                    <div class="latestdoctor">
+                        <img src="{{(clientProfileModel.upcomingAppointmentDetails!=undefined && clientProfileModel.upcomingAppointmentDetails.length>0  && clientProfileModel.upcomingAppointmentDetails[0].staffImageUrl)||''}}" onerror="this.src='../../../../../../assets/img/noimage.png';" alt="profilePic"/>
+                    </div>
+                    <div class="latestcontent">
+                        <ul>
+                            <li>{{(clientProfileModel.upcomingAppointmentDetails!=undefined && clientProfileModel.upcomingAppointmentDetails.length>0 && clientProfileModel.upcomingAppointmentDetails[0].upcomingAppointmentStaff)||''}}</li>
+                            <li>{{(clientProfileModel.upcomingAppointmentDetails!=undefined && clientProfileModel.upcomingAppointmentDetails.length>0 && clientProfileModel.upcomingAppointmentDetails[0].upcomingAppointment)}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div *ngIf="clientProfileModel.upcomingAppointmentDetails == null || clientProfileModel.upcomingAppointmentDetails.length == 0">No Appointments Found.
+                </div>
+            </div>
+            <div class="col-sm-6 lastdr">
+                <h3>Last Appointment</h3>
+                <div *ngIf="clientProfileModel.lastAppointmentDetails && clientProfileModel.lastAppointmentDetails.length > 0">
+                    <div class="latestdoctor">
+                        <img src="{{(clientProfileModel.lastAppointmentDetails!=undefined &&clientProfileModel.lastAppointmentDetails.length>0 &&  clientProfileModel.lastAppointmentDetails[0].staffImageUrl)||''}}" onerror="this.src='../../../../../../assets/img/noimage.png';" alt="profilePic"/>
+                    </div>
+                    <div class="latestcontent">
+                        <ul>
+                            <li>{{(clientProfileModel.lastAppointmentDetails !=undefined && clientProfileModel.lastAppointmentDetails.length>0 && clientProfileModel.lastAppointmentDetails[0].lastAppointmentStaff)||''}}</li>
+                            <li>{{(clientProfileModel.lastAppointmentDetails !=undefined && clientProfileModel.lastAppointmentDetails.length>0 && clientProfileModel.lastAppointmentDetails[0].lastAppointment)| date:'MM/d/yyyy'}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div *ngIf="clientProfileModel.lastAppointmentDetails == null || clientProfileModel.lastAppointmentDetails.length == 0">No Appointments Found.
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+  <!--Vitals-->
+  <div class="col-sm-6 col-lg-6 mb-30" [style.display]="isSuperAdmin ? 'none' : 'block'">
+    <div class="readmin-panel crop vitalbox pd-15">
+      <div class="lineheader">
+        <p>
+          <a>{{"vitals" | translate}}</a>
+        </p>
+        <!-- <span>{{"last_update" | translate}} -
+          {{
+          (clientProfileModel.patientVitals[0] != undefined &&
+          clientProfileModel.patientVitals[0].vitalDate) ||
+          ""
+          }}</span> -->
+          <span *ngIf="clientProfileModel">
+            {{ "last_update" | translate }} -
+            {{
+              (clientProfileModel.patientVitals && clientProfileModel.patientVitals[0].vitalDate) || ""
+            }}
+          </span>
+          
+      </div>
+      <div class="vitald">
+        <ul>
+          <li>
+            <span>{{"heart_rate" | translate}}</span>
+            <i class="flaticon-healthy orangefont"></i>
+            <font class="orangefont">{{
+              (clientProfileModel.patientVitals[0] != undefined &&
+              clientProfileModel.patientVitals[0].heartRate) ||
+              ""
+              }}
+            </font>
+          </li>
+          <li>
+            <span>{{"blood_pressure" | translate}}</span>
+            <i class="flaticon-medical-3 greenfont"></i>
+            <font class="greenfont">{{
+              ((clientProfileModel.patientVitals[0] != undefined &&
+              clientProfileModel.patientVitals[0].bpDiastolic) ||
+              "") +
+              "/" +
+              ((clientProfileModel.patientVitals[0] != undefined &&
+              clientProfileModel.patientVitals[0].bpSystolic) ||
+              "")
+              }}</font>
+          </li>
+          <li>
+            <span>{{"bmi" | translate}}</span>
+            <i class="flaticon-black bluefont"></i>
+            <font class="bluefont">{{
+              (clientProfileModel.patientVitals[0] != undefined &&
+              clientProfileModel.patientVitals[0].bmi) ||
+              ""
+              }}
+            </font>
+          </li>
+          <li>
+            <span>{{"temperature" | translate}}</span>
+            <i class="flaticon-weather brownfont"></i>
+            <font class="brownfont">{{
+              ((clientProfileModel.patientVitals[0] != undefined &&
+              clientProfileModel.patientVitals[0].temperature) ||
+              "") + " (°F)"
+              }}
+            </font>
+          </li>
+          <li>
+            <span>{{"height" | translate}}</span>
+            <i class="flaticon-man yellowfont"></i>
+            <font class="yellowfont">{{
+              ((clientProfileModel.patientVitals[0] != undefined &&
+              clientProfileModel.patientVitals[0].heightIn) ||
+              "") + "Cm"
+              }}
+            </font>
+          </li>
+          <li>
+            <span>{{"weight" | translate}}</span>
+            <i class="flaticon-scales purplefont"></i>
+            <font class="purplefont">{{
+              ((clientProfileModel.patientVitals[0] != undefined &&
+              clientProfileModel.patientVitals[0].weightLbs) ||
+              "") + "Kg"
+              }}</font>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- Tags -->
+  <div class="col-sm-6 col-lg-6 mb-30">
+    <div class="readmin-panel crop pd-15">
+      <div class="lineheader">
+        <p>{{"tags" | translate}}</p>
+      </div>
+      <div class="quicksubmenu tagbox mhgt80">
+        <ul class="tags">
+          <li *ngFor="let tag of clientProfileModel.patientTagsModel">
+            <span class="tagafter" [ngStyle]="{ backgroundColor: tag.colorCode }"></span>
+            <span class="tag" [ngStyle]="{ backgroundColor: tag.colorCode }">{{
+              tag.tag
+              }}</span>
+          </li>
+          <li *ngIf="
+              clientProfileModel.patientTagsModel == undefined &&
+              clientProfileModel?.patientTagsModel?.length == 0
+            " class="tag">
+            No tags found.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

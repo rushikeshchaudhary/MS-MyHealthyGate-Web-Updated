@@ -1,0 +1,100 @@
+<div>
+  <router-outlet></router-outlet>
+  <notifier-container></notifier-container>
+  <div>
+    <div
+      #videoDiv
+      
+      style="left: 15px;"
+      (dragEnd)="onDragVideo($event)"
+      class="video-tool video-tool-hide readmin-panel"
+      [ngStyle]="styleVideo"
+    >
+      <!-- <div class="resize-handle-top" mwlResizeHandle [resizeEdges]="{ top: true }"></div>
+      <div class="resize-handle-left" mwlResizeHandle [resizeEdges]="{ left: true }"></div>
+      <div class="resize-handle-right" mwlResizeHandle [resizeEdges]="{ right: true }"></div>
+      <div class="resize-handle-bottom" mwlResizeHandle [resizeEdges]="{ bottom: true }"></div> -->
+      <!-- <div class="video-tool video-tool-hide readmin-panel col-sm-6"> -->
+      <div
+        *ngIf="session && isVideoStarted"
+        class="video-call ots-widget-container"
+      >
+        <app-publisher
+          [session]="session"
+          [patientAppointmentId]="apptId"
+          [otSessionId]="otSessionId"
+        ></app-publisher>
+        <app-subscriber
+          class="app-subscriber"
+          (click)="toggleActivation(i)"
+          [index]="i"
+          [class.sub-active]="i == 0"
+          [class.sub-not-active]="i != 0"
+          *ngFor="let stream of streams; let i = index"
+          [stream]="stream"
+          [session]="session"
+        ></app-subscriber>
+      </div>
+    </div>
+  </div>
+  <div
+    #textChat
+    
+    style="right: 15px;"
+    (dragEnd)="onDragChat($event)"
+    mwlResizable
+    class="text-chat-app"
+    [resizeEdges]="{ bottom: true, right: true, top: true, left: true }"
+    (resizing)="onResizingChat($event)"
+    [validateResize]="onValidateResizeChat"
+    [ngStyle]="styleChat"
+    (resizeEnd)="onResizeChatEnd($event)"
+  >
+    <div
+      class="resize-handle-top"
+      mwlResizeHandle
+      [resizeEdges]="{ top: true }"
+    ></div>
+    <div
+      class="resize-handle-left"
+      mwlResizeHandle
+      [resizeEdges]="{ left: true }"
+    ></div>
+    <div
+      class="resize-handle-right"
+      mwlResizeHandle
+      [resizeEdges]="{ right: true }"
+    ></div>
+    <div
+      class="resize-handle-bottom"
+      mwlResizeHandle
+      [resizeEdges]="{ bottom: true }"
+    ></div>
+    <div *ngIf="isChatActivated">
+      <!-- <app-text-chat
+        [chatInitModel]="chatInitModel"
+        [textChatModel]="textChatModel"
+        [currentRoomId]="roomId"
+        [allMessageArray]="chatHistory"
+        [userInChatRoom]="userInChatRoom"
+      ></app-text-chat> -->
+    </div>
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="basse">  
+   <svg version="1.2" height="300" width="600" xmlns="http://www.w3.org/2000/svg" viewport="0 0 60 60" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <path id="pulsar" stroke="rgba(0,155,155,1)" fill="none" stroke-width="2" stroke-linejoin="round" d="M0,90L250,90Q257,60 262,87T267,95 270,88 273,92t6,35 7,-60T290,127 297,107s2,-11 10,-10 1,1 8,-10T319,95c6,4 8,-6 10,-17s2,10 9,11h210"></path>
+    </svg>
+  </ngx-spinner>   
+<!-- <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
+  <p style="color: white">Please Wait. </p>  
+  </ngx-spinner>    -->
+  
+
+<div id="hc-preloader" *ngIf="this.loaderHide">
+  <div class="hc-loading">
+    <svg version="1.2" height="300" width="600" xmlns="http://www.w3.org/2000/svg" viewport="0 0 60 60" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <path id="pulsar" stroke="rgba(0,155,155,1)" fill="none" stroke-width="2" stroke-linejoin="round" d="M0,90L250,90Q257,60 262,87T267,95 270,88 273,92t6,35 7,-60T290,127 297,107s2,-11 10,-10 1,1 8,-10T319,95c6,4 8,-6 10,-17s2,10 9,11h210"></path>
+    </svg>
+  </div>
+</div>

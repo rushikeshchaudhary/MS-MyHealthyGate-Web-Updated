@@ -1,0 +1,7 @@
+<div [class]="cssHide ? 'timer' : 'empty'" [style.color]="dynamicColor" *ngIf="show">
+    <h4> {{heading}} </h4>
+    <span class="abc" *ngIf="isShowDays"><span id="days" class="impotant_time" > {{daysToDday}} </span>{{"day"|translate}}(s) </span>
+    <span class="abc"  *ngIf="isShowHours"><span id="hours"  class="impotant_time"> {{hoursToDday}} </span>{{"hrs"|translate}} </span>
+    <span class="abc"  *ngIf="isShowMints"><span id="minutes"  class="impotant_time"> {{minutesToDday}} </span>Min </span>
+    <span class="abc"  *ngIf="isShowSeconds"><span id="seconds"  class="impotant_time"> {{secondsToDday}} </span>S</span>
+</div>

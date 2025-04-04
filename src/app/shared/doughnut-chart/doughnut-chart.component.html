@@ -1,0 +1,33 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-12 mb-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <!-- <h5 class="card-title text-center">Chart </h5> -->
+          <div class="row">
+            <div class="col-md-6 mb-4">
+              <div class="chart-container" style="position: relative; height: 40vh;">
+                <canvas
+                  baseChart
+                  [datasets]="doughnutChartData"
+                  [labels]="doughnutChartLabels"
+                  [chartType]="chartType"
+                  [options]="chartOptions"
+                  (chartClick)="onChartClicked($event)">
+                </canvas>
+              </div>
+            </div>
+            <div class="col-md-6 mb-4">
+              <div class="d-flex flex-column">
+                <div *ngFor="let item of doughnutChartLabels; let i = index;" class="d-flex align-items-center mb-2">
+                  <div class="legend-indicator me-2" [style.background-color]="doughnutChartData[0].backgroundColor[i]"></div>
+                  <div class="legend-label text-truncate">&nbsp;{{ item }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

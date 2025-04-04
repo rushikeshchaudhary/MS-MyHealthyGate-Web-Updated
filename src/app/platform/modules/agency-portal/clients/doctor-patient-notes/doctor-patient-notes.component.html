@@ -1,0 +1,49 @@
+<div class="custom_modal p-4">
+  <h3 mat-dialog-title>Add Patient Notes</h3>
+  <div mat-dialog-content>
+    <div class="row mb-2">
+      <div class="col-sm-12">
+        <form
+          class="readmin-form custom_form"
+          [formGroup]="patientNotesForm"
+          (ngSubmit)="onSubmit()"
+        >
+          <div class="row">
+            <div class="col-sm-12">
+              <!-- <mat-form-field matInput class="example-full-width textarea-field"> -->
+              <!-- <textarea name="notesArea" placeholder="Notes" rows="2" matInput
+                  formControlName="patientNotes"></textarea> -->
+              <angular-editor
+                formControlName="patientNotes"
+                [config]="editorConfig"
+              >
+              </angular-editor>
+              <!-- </mat-form-field> -->
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- <div class="row">
+      <app-data-table [inputColumns]="displayColumns" [inputSource]="notes" [inputMeta]="metaData">
+      </app-data-table>
+    </div> -->
+  </div>
+  <div mat-dialog-actions style="display: flex; justify-content: space-between;">
+    <button mat-raised-button class="cancel-btn" (click)="closeDialog('close')">
+      Close
+    </button>
+    <button
+      name="Save"
+      mat-raised-button
+      color="primary"
+      form="patientNotesForm"
+      class="text-uppercase"
+      [disabled]="patientNotesForm.invalid"
+      (click)="onSubmit()"
+      cdkFocusInitial
+    >
+      Save
+    </button>
+  </div>
+</div>

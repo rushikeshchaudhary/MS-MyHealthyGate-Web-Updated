@@ -1,0 +1,435 @@
+<div class="provider-container">
+  <div class="payment-blk">
+    <!-- <h2 class="page_title">My Appointments</h2>
+    <div class="clearfix"></div> -->
+
+    <mat-tab-group (selectedIndexChange)="tabChangehandler($event)">
+      <mat-tab label="{{'appointments'|translate}}">
+        <ng-template matTabContent>
+          <div class="readmin-panel">
+            <div class="no-gutters row">
+              <div class="col-md-12 justify-content-start">
+                <form class="readmin-form custom_form" id="paymentFormGroup" #documentForm="ngForm"
+                  [formGroup]="paymentFormGroup">
+                  <div id="accordion">
+                    <div class="card">
+                      <div class="card-header" id="headingOne">
+                        <div class="d-flex justify-content-between" data-toggle="collapse" data-target="#collapseOne"
+                          aria-expanded="true" aria-controls="collapseOne">
+                          <h2 class="head-filter m-0">{{'filter'|translate}}</h2>
+                          <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        </div>
+                      </div>
+                      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body filter_blk">
+                          <div class="row">
+                            <div class="col-lg-4 col-md-6 col-sm-12 book-appt-check">
+                              <mat-form-field class="example-full-width pos">
+                                <input
+                                  matInput
+                                  placeholder="Search Patient"
+                                  formControlName="searchPatient"
+                                  [(ngModel)]="filterString"
+                                  [matAutocomplete]="auto"
+                                  (ngModelChange)="documentTypeHandler($event)"
+                                />
+                                <button
+                                  *ngIf="filterString"
+                                  mat-icon-button
+                                  aria-label="Clear"
+                                  (click)="clearSearch()"
+                                  class="clear-button"
+                                >
+                                  <mat-icon>close</mat-icon>
+                                </button>
+                                <mat-autocomplete #auto="matAutocomplete">
+                                  <mat-option
+                                    *ngFor="let patient of filterMasterSearchPatients"
+                                    [value]="patient.nameWithMRN"
+                                    (onSelectionChange)="patientStatusChangeHandler(patient)"
+                                  >
+                                    {{ patient.nameWithMRN }}
+                                  </mat-option>
+                                </mat-autocomplete>
+                              </mat-form-field>
+                            </div>
+                            
+                            <div class="col-lg-4 col-md-6 col-sm-12 book-appt-type book-appt-check">
+                              <label class="type_label">{{'appointment_mode'|translate}} : </label>
+                              <div>
+                                <mat-radio-group formControlName="appStatus">
+                                  <mat-radio-button (change)="onModeChange(mode)" class="example-radio-button"
+                                    *ngFor="let mode of appointmentMode" [value]="mode">
+
+                                    {{ mode === 'Online' ? ('online' | translate) : mode &&
+                                    mode === 'Face to Face' ? ('face_to_face' | translate) : mode &&
+                                    mode === 'Home Visit' ? ('home_visit' | translate) : mode
+                                    }}
+
+                                  </mat-radio-button>
+                                </mat-radio-group>
+                              </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12 book-appt-check">
+                              <label class="type_label">{{'appointment_type'|translate}} : </label>
+                              <div>
+                                <mat-radio-group formControlName="appType">
+                                  <mat-radio-button (change)="onAppointmentTypeChange(mode)"
+                                    class="example-radio-button" *ngFor="let mode of appointmenType" [value]="mode">
+                                    {{ mode === 'New' ? ('new' | translate) : mode &&
+                                    mode === 'Follow-up' ? ('follow_up' | translate) : mode
+                                    }}
+
+
+
+                                  </mat-radio-button>
+                                </mat-radio-group>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row margin_block">
+                            <div class="col-lg-3 col-md-4 col-sm-4 col-12">
+                              <label class="type_label">{{'appointment_status'|translate}} : </label>
+                              <div>
+                                <mat-form-field class="example-full-width">
+                                  <mat-label>{{'select_status'|translate}}</mat-label>
+                                  <mat-select [(value)]="selected" (selectionChange)="
+                                      statusChangeHandler($event.value)
+                                    ">
+                                    <mat-option *ngFor="let status of appointmentStatus" [value]="status">
+                                      {{status === 'All' ? ('all' | translate) : status &&
+                                      status === 'Approved' ? ('approved' | translate) : status &&
+                                      status === 'Completed' ? ('completed' | translate) : status &&
+                                      status === 'Cancelled' ? ('cancelled' | translate) : status &&
+                                      status === 'Pending' ? ('pendding' | translate) : status
+                                      }}
+                                    </mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                              </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-4 col-sm-4 col-12">
+                              <label class="type_label">&nbsp;</label>
+                              <mat-form-field class="example-full-width">
+                                <input matInput readonly [matDatepicker]="rangeStartDate"
+                                  (dateChange)="applyStartDateFilter($event)"
+                                  placeholder="{{'appointment_start_date_range'|translate}}"
+                                  formControlName="rangeStartDate" />
+                                <mat-datepicker-toggle matSuffix [for]="rangeStartDate"></mat-datepicker-toggle>
+                                <mat-datepicker #rangeStartDate></mat-datepicker>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-4 col-12">
+                              <label class="type_label">&nbsp;</label>
+                              <mat-form-field class="example-full-width">
+                                <input matInput readonly [matDatepicker]="rangeEndDate"
+                                  (dateChange)="applyEndDateFilter($event)"
+                                  placeholder="{{'appointment_end_date_range'|translate}}"
+                                  formControlName="rangeEndDate" />
+                                <mat-datepicker-toggle matSuffix [for]="rangeEndDate"></mat-datepicker-toggle>
+                                <mat-datepicker #rangeEndDate></mat-datepicker>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-3 col-12 filter-btn">
+                              <button class="clear-btn" mat-raised-button (click)="clearFilters()">
+                                {{'clear_all'|translate}}
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="export-btn-rt">
+                <button mat-raised-button color="primary" class="ml-2 add-primary-btn" (click)="exportPaymentPdf()">
+                  <i class="fa fa-download" aria-hidden="true"></i>
+                  <span>{{'export'|translate}}</span>
+                </button>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <app-data-table [inputColumns]="displayedColumns" [inputSource]="payments" [inputMeta]="metaData"
+              [inputButtons]="actionButtons" (onPageOrSortChange)="onPageOrSortChange($event)"
+              (onTableActionClick)="onTableActionClick($event)">
+            </app-data-table>
+            
+          </div>
+          <span style="visibility: hidden; position: fixed"
+          [style.left]="menuPosition.x"
+          [style.top]="menuPosition.y" [matMenuTriggerFor]="basicMenu">
+          </span>
+          <!-- <context-menu #basicMenu> -->
+            <!-- <ng-template contextMenuItem (execute)="addEvent($event.item,'1')">New appointment
+              </ng-template> -->
+            <!-- <ng-template contextMenuItem let-item (execute)="addEvent($event, '2')">
+              {{'view_appointment'|translate}}
+            </ng-template>
+            <ng-template [visible]="CheckIstimeExpired" contextMenuItem (execute)="addEvent($event.item, '3')">
+              <span class="disabled"> {{'reschedule'|translate}}</span>
+            </ng-template>
+            <ng-template [visible]="CheckIstimeExpired" contextMenuItem
+              (execute)="addEvent($event.item, '4')">{{'cancel_appointment'|translate}}
+            </ng-template> -->
+            <!-- <ng-template contextMenuItem (execute)="addEvent($event.item, '5')">Set Reminder
+            </ng-template> -->
+            <!-- <ng-template contextMenuItem (execute)="addEvent($event.item, '6')">
+            Set Availability
+            </ng-template> -->
+            <!-- <ng-template contextMenuItem (execute)="addEvent($event.item, '7')">
+              {{'send_invitation'|translate}}
+            </ng-template>
+            <ng-template contextMenuItem (execute)="addEvent($event, '8')">
+              View Patient Profile
+            </ng-template>
+          </context-menu> -->
+          
+          <!-- <mat-menu #basicMenu="matMenu">
+            <button mat-menu-item (click)="addEvent($event, '2')">
+              {{'view_appointment' | translate}}
+            </button>
+            
+            <button mat-menu-item [disabled]="!CheckIstimeExpired" (click)="addEvent($event, '3')">
+              <span>{{'reschedule' | translate}}</span>
+            </button>
+            
+            <button mat-menu-item [disabled]="!CheckIstimeExpired" (click)="addEvent($event, '4')">
+              {{'cancel_appointment' | translate}}
+            </button>
+            
+            <button mat-menu-item (click)="addEvent($event, '7')">
+              {{'send_invitation' | translate}}
+            </button>
+            
+            <button mat-menu-item (click)="addEvent($event, '8')">
+              View Patient Profile
+            </button>
+            
+          </mat-menu> -->
+          <mat-menu #basicMenu="matMenu">
+            <button mat-menu-item (click)="addEvent($event, '2')">
+              {{ 'view_appointment' | translate }}
+            </button>
+            <button mat-menu-item [disabled]="!CheckIstimeExpired(null)" (click)="addEvent($event, '3')">
+              <span>{{ 'reschedule' | translate }}</span>
+            </button>
+            <button mat-menu-item [disabled]="!CheckIstimeExpired(null)" (click)="addEvent($event, '4')">
+              {{ 'cancel_appointment' | translate }}
+            </button>
+            <button [disabled]="!CheckIstimeExpired(null)" mat-menu-item (click)="addEvent($event, '7')">
+              {{ 'send_invitation' | translate }}
+            </button>
+            <button mat-menu-item (click)="addEvent($event, '8')">
+              View Patient Profile
+            </button>
+          </mat-menu>
+          
+        </ng-template>
+      </mat-tab>
+      <!-- <mat-tab label="Cancelled Appointments">
+        <ng-template matTabContent>
+          <div class="readmin-panel">
+            <div class="no-gutters">
+              <div class="col-md-12 justify-content-start pull-left">
+                <form
+                  class="readmin-form custom_form"
+                  id="paymentFormGroup"
+                  #documentForm="ngForm"
+                  [formGroup]="paymentFormGroup"
+                >
+                  <div class="row">
+                    <div class="book-appt-type col-md-3">
+                      <label class="type_label">Appointment Mode : </label>
+                      <div>
+                        <mat-radio-group>
+                          <mat-radio-button
+                            (change)="onModeChange(mode)"
+                            formControlName="appStatus"
+                            class="example-radio-button"
+                            *ngFor="let mode of appointmentMode"
+                            [value]="mode"
+                          >
+                            {{ mode }}
+                          </mat-radio-button>
+                        </mat-radio-group>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <mat-form-field class="example-full-width">
+                        <input
+                          matInput
+                          readonly
+                          [matDatepicker]="rangeStartDate"
+                          (dateChange)="applyStartDateFilter($event)"
+                          placeholder="Appointment Start Date Range"
+                          formControlName="rangeStartDate"
+                        />
+                        <mat-datepicker-toggle
+                          matSuffix
+                          [for]="rangeStartDate"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #rangeStartDate></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                      <mat-form-field class="example-full-width">
+                        <input
+                          matInput
+                          readonly
+                          [matDatepicker]="rangeEndDate"
+                          (dateChange)="applyEndDateFilter($event)"
+                          placeholder="Appointment End Date Range"
+                          formControlName="rangeEndDate"
+                        />
+                        <mat-datepicker-toggle
+                          matSuffix
+                          [for]="rangeEndDate"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #rangeEndDate></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-2 filter-btn">
+                      <button
+                        class="clear-btn"
+                        mat-raised-button
+                        (click)="clearFilters()"
+                      >
+                        Clear All
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="export-btn-rt">
+                <button
+                  mat-raised-button
+                  color="primary"
+                  class="ml-2 add-primary-btn"
+                  (click)="exportPaymentPdf()"
+                >
+                  <i class="fa fa-download" aria-hidden="true"></i>
+                  <span>Export</span>
+                </button>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <app-data-table
+              [inputColumns]="displayedCancelledColumns"
+              [inputSource]="payments"
+              [inputMeta]="metaData"
+              (onPageOrSortChange)="onPageOrSortChange($event)"
+              (onTableActionClick)="onTableActionClick($event)"
+            >
+            </app-data-table>
+          </div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Pending Invitation Appointments">
+        <ng-template matTabContent>
+          <div class="readmin-panel">
+            <div class="no-gutters">
+              <div class="col-md-12 justify-content-start pull-left">
+                <form
+                  class="readmin-form custom_form"
+                  id="paymentFormGroup"
+                  #documentForm="ngForm"
+                  [formGroup]="paymentFormGroup"
+                >
+                  <div class="row">
+                    <div class="book-appt-type col-md-3">
+                      <label class="type_label">Appointment Mode : </label>
+                      <div>
+                        <mat-radio-group>
+                          <mat-radio-button
+                            (change)="onModeChange(mode)"
+                            formControlName="appStatus"
+                            class="example-radio-button"
+                            *ngFor="let mode of appointmentMode"
+                            [value]="mode"
+                          >
+                            {{ mode }}
+                          </mat-radio-button>
+                        </mat-radio-group>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <mat-form-field class="example-full-width">
+                        <input
+                          matInput
+                          readonly
+                          [matDatepicker]="rangeStartDate"
+                          (dateChange)="applyStartDateFilter($event)"
+                          placeholder="Appointment Start Date Range"
+                          formControlName="rangeStartDate"
+                        />
+                        <mat-datepicker-toggle
+                          matSuffix
+                          [for]="rangeStartDate"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #rangeStartDate></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                      <mat-form-field class="example-full-width">
+                        <input
+                          matInput
+                          readonly
+                          [matDatepicker]="rangeEndDate"
+                          (dateChange)="applyEndDateFilter($event)"
+                          placeholder="Appointment End Date Range"
+                          formControlName="rangeEndDate"
+                        />
+                        <mat-datepicker-toggle
+                          matSuffix
+                          [for]="rangeEndDate"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #rangeEndDate></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-2 filter-btn">
+                      <button
+                        class="clear-btn"
+                        mat-raised-button
+                        (click)="clearFilters()"
+                      >
+                        Clear All
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="export-btn-rt">
+                <button
+                  mat-raised-button
+                  color="primary"
+                  class="ml-2 add-primary-btn"
+                  (click)="exportPaymentPdf()"
+                >
+                  <i class="fa fa-download" aria-hidden="true"></i>
+                  <span>Export</span>
+                </button>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <app-data-table
+              [inputColumns]="displayedPenddingColumns"
+              [inputSource]="payments"
+              [inputMeta]="metaData"
+              (onPageOrSortChange)="onPageOrSortChange($event)"
+              (onTableActionClick)="onTableActionClick($event)"
+            >
+            </app-data-table>
+          </div>
+        </ng-template>
+      </mat-tab> -->
+    </mat-tab-group>
+  </div>
+</div>
+<div class="text-center" *ngIf="showLoader" style="display: none">
+  <span class="more-load"></span>
+</div>

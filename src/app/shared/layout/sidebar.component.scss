@@ -1,0 +1,23 @@
+
+  .mat-list, .mat-nav-list, .mat-selection-list {
+    padding:0px;
+  }
+  :hover > .mat-list-item:not(.expanded), :focus > .mat-list-item:not(.expanded){
+    background-color: transparent !important;
+  }
+
+  .example-app-name img { width: 180px; height: auto; filter: brightness(0) invert(1);
+   // -webkit-filter: brightness(0) invert(1);
+  //  filter: brightness(0) invert(1);
+  }
+  .app-menu-button mat-icon{ color: rgba(255,255,255,0.6);}
+  .mat-drawer{
+    position: fixed !important;
+}
+  @media (max-width:991px){
+    .mat-drawer{
+      transform: none;
+  }
+
+  }
+

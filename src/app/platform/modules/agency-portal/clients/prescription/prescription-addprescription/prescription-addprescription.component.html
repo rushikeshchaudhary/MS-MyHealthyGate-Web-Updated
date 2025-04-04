@@ -1,0 +1,188 @@
+<div class="readmin-panel">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-12 pull-right justify-content-md-end d-flex flex-wrap" *ngIf="showbuttons == true">
+        <button *ngIf="addPermission" mat-raised-button color="primary" class="add-primary-btn mb-2"
+          (click)="openDialog()">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          <span>Add Prescription</span>
+        </button>
+        <!-- <button *ngIf="addPermission" mat-raised-button color="primary" class="ml-1 add-primary-btn mb-2"
+          (click)="sharePrescriptionToPharmacy()" [disabled]="disabled">
+          <i class="fa fa-share" aria-hidden="true"></i>
+          <span>{{ "share_prescription" | translate }}</span>
+        </button> -->
+        <button *ngIf="addPermission" mat-raised-button color="primary" class="ml-1 add-primary-btn mb-2"
+          (click)="sharePrescriptionToPharmacy()" >
+          <i class="fa fa-share" aria-hidden="true"></i>
+          <span>{{ "share_prescription" | translate }}</span>
+        </button>
+
+        <button *ngIf="addPermission" mat-raised-button color="primary" class="ml-1 add-primary-btn mb-2"
+          (click)="DownloadPrescription()">
+          <i class="fa fa-download" aria-hidden="true"></i>
+          <span>Download RX</span>
+        </button>
+
+        <button *ngIf="addPermission" mat-raised-button color="primary" class="ml-1 add-primary-btn mb-2"
+          (click)="openfaxDialog()" style="text-transform: none !important;">
+          <i class="fa fa-fax" aria-hidden="true"></i>
+          <span>Send RX as FAX</span>
+        </button>
+      </div>
+    </div>
+
+    <form class="readmin-form custom_form flex-wrap" id="testFormGroup" #documentForm="ngForm"
+      [formGroup]="testFormGroup">
+      <div class="row">
+        <div class="col-lg-3 col-sm-6">
+          <mat-form-field class="example-full-width pos">
+            <input matInput placeholder="Search here..." formControlName="searchKey" />
+           
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+          <mat-form-field class="example-full-width">
+            <input matInput readonly [matDatepicker]="rangeStartDate" (dateChange)="applyStartDateFilter($event)"
+              placeholder="From Date" formControlName="rangeStartDate" />
+            <mat-datepicker-toggle matSuffix [for]="rangeStartDate"></mat-datepicker-toggle>
+            <mat-datepicker #rangeStartDate></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+          <mat-form-field class="example-full-width">
+            <input matInput readonly [matDatepicker]="rangeEndDate" (dateChange)="applyEndDateFilter($event)"
+              placeholder="To Date" formControlName="rangeEndDate" />
+            <mat-datepicker-toggle matSuffix [for]="rangeEndDate"></mat-datepicker-toggle>
+            <mat-datepicker #rangeEndDate></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-2 col-sm-6 filter-btn">
+          <button class="clear-btn" mat-raised-button (click)="clearFilters()">
+            Clear All
+          </button>
+        </div>
+
+      </div>
+    </form>   
+
+    <div class="table-responsive mt-15">
+      <table mat-table [dataSource]="dataSource" class="table table-hover customtable group-table mat-table">
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="masterToggle()" [checked]="selection.hasValue() && isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="toggle($event, row)"
+              [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+
+
+        <!-- <ng-container matColumnDef="drugName">
+          <th mat-header-cell *matHeaderCellDef>{{"drug_name"|translate}}</th>
+          <td mat-cell *matCellDef="let element">{{ element.drugName }}</td>
+        </ng-container>
+        <ng-container matColumnDef="strength">
+          <th mat-header-cell *matHeaderCellDef>{{"strength"|translate}}</th>
+          <td mat-cell *matCellDef="let element">{{ element.strength }}</td>
+        </ng-container>
+        <ng-container matColumnDef="directions">
+          <th mat-header-cell *matHeaderCellDef>{{"directions"|translate}}</th>
+          <td mat-cell *matCellDef="let element">{{ element.directions }}</td>
+        </ng-container>
+        <ng-container matColumnDef="startDate">
+          <th mat-header-cell *matHeaderCellDef>{{"start_date"|translate}}</th>
+          <td mat-cell *matCellDef="let element">{{ element.startDate }}</td>
+        </ng-container> -->
+        <!-- <ng-container matColumnDef="endDate">
+          <th mat-header-cell *matHeaderCellDef>{{"end_date"|translate}}</th>
+          <td mat-cell *matCellDef="let element">{{ element.endDate }}</td>
+        </ng-container> -->
+
+        <ng-container matColumnDef="prescriptionNo">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "prescriptionNo" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.prescriptionNo }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="creatorName">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "creatorName" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.creatorName }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="createdDate">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "createdDate" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.createdDate }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="drugNames">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-cell
+            [title]="element.drugNames"
+            *matCellDef="let element"
+            class="test_name_block"
+            style="display: flex; flex-direction: column"
+          >
+            <div
+              *ngFor="let item of element.drugNames.split('|'); let i = index"
+              style="width: 100%"
+            >
+              <div
+                *ngIf="i < 3"
+                style="
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  width: 100%;
+                "
+              >
+              &#x2022;&nbsp;{{ item }}
+              </div>
+            </div>
+
+            <div
+              *ngIf="element.drugNames.split('|').length > 3"
+              style="width: 100%; display: flex; justify-content: right"
+            >
+              .....
+            </div>
+          </mat-cell>
+          </th>
+          <!-- <td mat-cell *matCellDef="let element">
+            {{ element.drugNames }}
+          </td> -->
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef width="10%">{{"actions"|translate}}</th>
+          <td mat-cell *matCellDef="let element">
+            <button type="button" title="Edit" class="tbactionbtn" (click)="openDialog(element.prescriptionNo)">
+              <i class="fa fa-pencil" aria-hidden="true"></i>
+            </button>
+            <button type="button" title="Delete" class="tbactionbtn"
+              (click)="deleteDetails(element.prescriptionNo, element.patientID)">
+              <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <mat-paginator [length]="metaData['totalRecords']" [pageIndex]="metaData['currentPage'] - 1"
+        [pageSize]="metaData['pageSize']" (page)="onPageOrSortChange($event)" [pageSizeOptions]="metaData['pageSizeOptions'] || [5,10,20,50,100]" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+.resultData {
+  border-bottom: 1px dotted gray;
+  /* text-align: center; */
+  margin-left: 5px;
+}
+
+.resultData:hover{
+color: rgb(42, 99, 255);
+cursor: pointer;
+}
+
+.img_block {
+  width:200px
+}
+/* .data_block{
+  word-break: break-all;
+} */
+
+@media (max-width:520px) {
+  h4 {
+      font-size: 20px;
+  }
+  span{
+      font-size: 16px;
+  }
+}

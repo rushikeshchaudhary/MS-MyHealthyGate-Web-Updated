@@ -1,0 +1,53 @@
+<div class="appointment-panel">
+  <div class="container">
+    <div class="title">
+      <div>Request Submitted</div>
+    </div>
+    <div class="app-booked" style="text-align: center">
+      <ng-container *ngIf="!isBooked">
+        <!--<p>
+          Your Payment have successfully done, please stay with us, don't close
+          web browser. <br /></p>-->
+        <p>
+          Please do not refresh or close the browser, until
+          the payment is successfully done. <br />
+        </p>
+      </ng-container>
+
+      <ng-container *ngIf="isBooked">
+        <h3>{{"thank_you"| translate}}</h3>
+        <p>
+          {{"Your_appointment_has_been_successfully_booked_with_us_for" | translate}} <br />
+          <span>
+            Type Of Consultation : {{confirmation.Mode}}
+
+          </span>
+          <br />
+          <span>Dr. {{userInfo.firstName}} {{userInfo.lastName}}
+          </span>
+          <br />
+          <span *ngFor="let spl of staffSpecialities">{{ spl.speciality }} </span>
+          <br />
+          <span>{{"day"| translate}} : {{ confirmation.StartDateTime | date: "fullDate" }}</span>
+          <br />
+          <span>{{"time"| translate}}: {{confirmation.StartDateTime | date: "shortTime"}} - {{ confirmation.EndDateTime | date:
+            "shortTime"}}</span>
+          <!--  on {{ confirmation.StartDateTime | date: "shortTime" }} between
+        {{ confirmation.StartDateTime }} to {{ confirmation.EndDateTime }}.-->
+        </p>
+        <p class="mt-3">
+          <!--Please check your email for further assistance. We will contact you as
+        soon as possible.-->
+          We Will Send you and email with a booking confirmation as soon as your provider accepts the booking
+        </p>
+        <div class="text-center">
+          <button mat-raised-button color="primary" (click)="closeDialog()">
+            Done
+          </button>
+        </div>
+      </ng-container>
+
+      <!-- <img src="{{Message.imgSrc}}" alt="user-register-icon" /> -->
+    </div>
+  </div>
+</div>
